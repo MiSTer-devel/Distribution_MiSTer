@@ -1,0 +1,20 @@
+name: Test Scripts
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: develop
+    - name: Test Calculate Db
+      run: |
+        set -euo pipefail
+        cd .github/tests
+        ./test_calculate_db.py

@@ -1,0 +1,28 @@
+name: Update Distribution
+
+on:
+  schedule:
+  - cron:  "*/20 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: develop
+
+    - name: Update Distribution
+      run: |
+        set -euo pipefail
+        git config --global user.email "theypsilon@gmail.com"
+        git config --global user.name "The CI/CD Bot"
+        ./.github/update_distribution.sh . --push
+      env:
+        DB_ID: distribution_mister
+        DB_URL: https://raw.githubusercontent.com/theypsilon/BetaDistrib/main/db.json.zip
+        BASE_FILES_URL: https://raw.githubusercontent.com/theypsilon/BetaDistrib/%s/
+        LATEST_ZIP_URL: https://github.com/theypsilon/BetaDistrib/archive/refs/heads/main.zip
+        LINUX_GITHUB_REPOSITORY: MiSTer-devel/SD-Installer-Win64_MiSTer

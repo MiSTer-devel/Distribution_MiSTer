@@ -285,7 +285,7 @@ install_atari800() {
         "_Computer") NAME="Atari800" ;;
         "_Console") NAME="Atari5200" ;;
         *)
-            echo "Could not install Atari 800 core."
+            echo "Could not install Atari 800 core. (CATEGORY=${CATEGORY})"
             exit 1
             ;;
     esac

@@ -301,6 +301,21 @@ install_atari800() {
 
         copy_file "${TMP_FOLDER}/releases/${LAST_RELEASE_FILE}" "${TARGET_DIR}/${CATEGORY}/${LAST_RELEASE_FILE}"
     done
+
+    for folder in $(game_folders "${TMP_FOLDER}") ; do
+
+        if [[ "${CATEGORY}" == "_Computer" ]] ; then
+            for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
+                copy_file "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}/games/${folder}/${file}"
+            done
+        fi
+
+        for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
+            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/games/${folder}/${readme}"
+        done
+
+        touch_folder "${TARGET_DIR}/games/${folder}"
+    done
 }
 
 install_main_binary() {

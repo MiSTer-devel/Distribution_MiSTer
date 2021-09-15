@@ -137,6 +137,10 @@ process_url() {
         "user-content-fonts") INSTALLER=install_fonts ;;
         *) INSTALLER=install_other_core ;;
     esac
+    
+    if [[ "${URL}" =~ Atari800 ]] ; then
+        INSTALLER=install_atari800
+    fi
 
     ${INSTALLER} "${TMP_FOLDER}" "${TARGET_DIR}" "${CATEGORY}"
 
@@ -258,6 +262,35 @@ install_other_core() {
     local IFS=$'\n'
 
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
+
+        get_latest_release "${TMP_FOLDER}" "${bin}"
+        local LAST_RELEASE_FILE="${GET_LATEST_RELEASE_RET}"
+
+        if is_not_rbf_release "${LAST_RELEASE_FILE}" ; then
+            continue
+        fi
+
+        copy_file "${TMP_FOLDER}/releases/${LAST_RELEASE_FILE}" "${TARGET_DIR}/${CATEGORY}/${LAST_RELEASE_FILE}"
+    done
+}
+
+install_atari800() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+    local CATEGORY="${3}"
+    local IFS=$'\n'
+    
+    local NAME=
+    case "${CATEGORY}" in
+        "_Computer") NAME="Atari800" ;;
+        "_Console") NAME="Atari5200" ;;
+        *)
+            echo "Could not install Atari 800 core."
+            exit 1
+            ;;
+    esac
+
+    for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | grep "${NAME}" | uniq) ; do
 
         get_latest_release "${TMP_FOLDER}" "${bin}"
         local LAST_RELEASE_FILE="${GET_LATEST_RELEASE_RET}"

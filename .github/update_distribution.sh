@@ -53,6 +53,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-folders"$'\n'"games/TGFX16-CD"
 }
 
 cat_local_core_urls() {
@@ -71,6 +72,7 @@ classify_core_categories() {
             "user-content-service-cores") CURRENT_CORE_CATEGORY="_Utility" ;;
             "user-content-zip-release") ;&
             "user-content-scripts") ;&
+            "user-content-folders") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
             "user-content-fpga-cores") ;&
             "user-content-development") ;&
@@ -109,6 +111,10 @@ process_url() {
     case "${CATEGORY}" in
         "user-content-scripts")
             install_script "${URL}" "${TARGET_DIR}"
+            return
+            ;;
+        "user-content-folders")
+            install_folder "${URL}" "${TARGET_DIR}"
             return
             ;;
         *) ;;
@@ -378,6 +384,12 @@ install_script() {
     pushd "${TARGET_DIR}/Scripts" > /dev/null 2>&1
     curl -sSLf "${URL}" -O
     popd > /dev/null 2>&1
+}
+
+install_folder() {
+    local URL="${1}"
+    local TARGET_DIR="${2}"
+    touch_folder "${TARGET_DIR}/${URL}"
 }
 
 GET_LATEST_RELEASE_RET=

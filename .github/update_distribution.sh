@@ -249,6 +249,10 @@ install_computer_core() {
 
     for folder in $(game_folders "${TMP_FOLDER}") ; do
 
+        if [[ "${folder}" == "Minimig" ]] ; then
+            folder="Amiga"
+        fi
+
         for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
             copy_file "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}/games/${folder}/${file}"
         done

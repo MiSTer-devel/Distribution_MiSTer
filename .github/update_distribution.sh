@@ -251,6 +251,8 @@ install_computer_core() {
 
         if [[ "${folder}" == "Minimig" ]] ; then
             folder="Amiga"
+        elif [[ "${folder}" == "SHARP MZ SERIES" ]] ; then
+            folder="SharpMZ"
         fi
 
         for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do

@@ -6,12 +6,14 @@ calculate_db = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(calculate_db)
 
 db = calculate_db.create_db('../..', {
+    'sha': 3,
     'latest_zip_url': 'w/',
-    'base_files_url': 'x/',
+    'base_files_url': 'x/%s/a',
     'db_url': 'y/lala.json.zip',
     'db_files': 'lala.json.zip',
     'db_id': 'z/',
-    'linux_github_repository': ''
+    'linux_github_repository': '',
+    'zips_config': ''
 })
 
 calculate_db.save_data_to_compressed_json(db, 'db.json', 'db1.json.zip')

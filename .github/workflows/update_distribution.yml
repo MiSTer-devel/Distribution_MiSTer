@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+    - name: Install detox
+      run: sudo apt-get install detox
+
     - uses: actions/checkout@v2
       with:
         ref: develop
@@ -19,10 +22,14 @@ jobs:
         set -euo pipefail
         git config --global user.email "theypsilon@gmail.com"
         git config --global user.name "The CI/CD Bot"
+
+        export DB_ID=distribution_mister
+        export DB_URL=https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/main/db.json.zip
+        export BASE_FILES_URL=https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/%s/
+        export LATEST_ZIP_URL=https://github.com/MiSTer-devel/Distribution_MiSTer/archive/refs/heads/main.zip
+        export ZIPS_CONFIG=./.github/zips_config.json
+        export LINUX_GITHUB_REPOSITORY=MiSTer-devel/SD-Installer-Win64_MiSTer
+
+
         ./.github/update_distribution.sh . --push
-      env:
-        DB_ID: distribution_mister
-        DB_URL: https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/main/db.json.zip
-        BASE_FILES_URL: https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/%s/
-        LATEST_ZIP_URL: https://github.com/MiSTer-devel/Distribution_MiSTer/archive/refs/heads/main.zip
-        LINUX_GITHUB_REPOSITORY: MiSTer-devel/SD-Installer-Win64_MiSTer
+

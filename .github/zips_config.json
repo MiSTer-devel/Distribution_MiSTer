@@ -1,0 +1,26 @@
+{
+    "cheats_folder_": {
+        "source": "Cheats",
+        "mode": "subfolders"
+    },
+    "nes_palettes": {
+        "source": "games/NES/Palettes"
+    },
+    "gameboy_palettes": {
+        "source": "games/GAMEBOY/Palettes"
+    },
+    "gameboy2p_palettes": {
+        "source": "games/GAMEBOY2P/Palettes"
+    },
+    "global_filters": {
+        "path": ".",
+        "sources": ["Filters", "Filters_Audio", "Gamma"],
+        "mode": "multi"
+    },
+    "global_fonts": {
+        "source": "font"
+    },
+    "mra_alternatives": {
+        "source": "_Arcade/_alternatives"
+    }
+}

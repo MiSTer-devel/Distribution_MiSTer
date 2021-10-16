@@ -23,7 +23,10 @@ update_distribution() {
     done
 
     if [[ "${PUSH_COMMAND}" == "--push" ]] ; then
-        git checkout -f develop -b main 
+        git checkout -f develop -b main
+        echo "Running detox"
+        detox -v -s utf_8-only -r *
+        echo "Detox done"
         git add "${OUTPUT_FOLDER}"
         git commit -m "-"
         git fetch origin main || true
@@ -54,6 +57,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folders"$'\n'"games/TGFX16-CD"
+    CORE_URLS=${CORE_URLS}$'\n'"user-cheats"$'\n'"https://gamehacking.org/mister/"
 }
 
 cat_local_core_urls() {
@@ -72,6 +76,7 @@ classify_core_categories() {
             "user-content-service-cores") CURRENT_CORE_CATEGORY="_Utility" ;;
             "user-content-zip-release") ;&
             "user-content-scripts") ;&
+            "user-cheats") ;&
             "user-content-folders") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
             "user-content-fpga-cores") ;&
@@ -108,17 +113,18 @@ process_url() {
     local CATEGORY="${2}"
     local TARGET_DIR="${3}"
 
+    local EARLY_INSTALLER=
     case "${CATEGORY}" in
-        "user-content-scripts")
-            install_script "${URL}" "${TARGET_DIR}"
-            return
-            ;;
-        "user-content-folders")
-            install_folder "${URL}" "${TARGET_DIR}"
-            return
-            ;;
+        "user-content-scripts") EARLY_INSTALLER=install_script ;;
+        "user-content-folders") EARLY_INSTALLER=install_folder ;;
+        "user-cheats") EARLY_INSTALLER=install_cheats ;;
         *) ;;
     esac
+    
+    if [[ "${EARLY_INSTALLER}" != "" ]] ; then
+        ${EARLY_INSTALLER} "${URL}" "${TARGET_DIR}"
+        return
+    fi
 
     if ! [[ ${URL} =~ ^([a-zA-Z]+://)?github.com(:[0-9]+)?/([a-zA-Z0-9_-]*)/([a-zA-Z0-9_-]*)(/tree/([a-zA-Z0-9_-]+))?$ ]] ; then
         >&2 echo "WARNING! Wrong repository url '${URL}'."
@@ -215,15 +221,12 @@ install_console_core() {
                 continue
             fi
 
-            local PALETTES_TMP=$(mktemp -d)
-            unzip -o "${TMP_FOLDER}/palettes/${LAST_PALETTE_FILE}" -d "${PALETTES_TMP}/"
-            pushd "${PALETTES_TMP}" > /dev/null 2>&1
+            local PALETTES_FOLDER="${TARGET_DIR}/games/${folder}/Palettes/"
+            mkdir -p "${PALETTES_FOLDER}"
+            unzip -q -o "${TMP_FOLDER}/palettes/${LAST_PALETTE_FILE}" -d "${PALETTES_FOLDER}"
+            pushd "${PALETTES_FOLDER}" > /dev/null 2>&1
             find . -type f -not -iname '*.pal' -and -not -iname '*.gbp' -delete
-            find . -type f -print0 | while IFS= read -r -d '' file ; do touch -a -m -t 202108231405 "${file}" ; done
-            zip -q -0 -D -X -A -r "Palettes.zip" *
             popd > /dev/null 2>&1
-            mv "${PALETTES_TMP}/Palettes.zip" "${TARGET_DIR}/games/${folder}/Palettes.zip"
-            rm -rf "${PALETTES_TMP}"
         done
 
         touch_folder "${TARGET_DIR}/games/${folder}"
@@ -367,7 +370,8 @@ install_zip_release() {
             continue
         fi
 
-        unzip -o "${TMP_FOLDER}/releases/${GET_LATEST_RELEASE_RET}" -d "${TARGET_DIR}/"
+        echo "unzip ${TMP_FOLDER}/releases/${GET_LATEST_RELEASE_RET} to ${TARGET_DIR}/"
+        unzip -q -o "${TMP_FOLDER}/releases/${GET_LATEST_RELEASE_RET}" -d "${TARGET_DIR}/"
     done
 }
 
@@ -396,6 +400,42 @@ install_folder() {
     local URL="${1}"
     local TARGET_DIR="${2}"
     touch_folder "${TARGET_DIR}/${URL}"
+}
+
+
+declare -A CHEAT_MAPPINGS=( \
+    ["fds"]="NES" \
+    ["gb"]="GameBoy" \
+    ["gba"]="GBA" \
+    ["gbc"]="GameBoy" \
+    ["gen"]="Genesis" \
+    ["gg"]="SMS" \
+    ["lnx"]="AtariLynx" \
+    ["nes"]="NES" \
+    ["pce"]="TGFX16" \
+    ["pcd"]="TGFX16" \
+    ["scd"]="MegaCD" \
+    ["sms"]="SMS" \
+    ["snes"]="SNES" \
+)
+
+install_cheats() {
+    local URL="${1}"
+    local TARGET_DIR="${2}"
+
+    mkdir -p "${TARGET_DIR}/Cheats/"
+
+    local CHEAT_URLS=$(curl -sSLf --cookie "challenge=BitMitigate.com" "${URL}" | grep -oE '"mister_[^_]+_[0-9]{8}.zip"' | sed 's/"//g')
+    for cheat_key in ${!CHEAT_MAPPINGS[@]} ; do
+        local cheat_platform=${CHEAT_MAPPINGS[${cheat_key}]}
+        local cheat_zip=$(echo "${CHEAT_URLS}" | grep "mister_${cheat_key}_")
+        local cheat_url="${URL}${cheat_zip}"
+        echo "cheat_key: ${cheat_key}, cheat_platform: ${cheat_platform}, cheat_zip: ${cheat_zip}, cheat_url: ${cheat_url}"
+
+        mkdir -p "${TARGET_DIR}/Cheats/${cheat_platform}"
+        curl --silent --show-error --fail --location -o "/tmp/${cheat_platform}.zip" "${cheat_url}"
+        unzip -q -o "/tmp/${cheat_platform}.zip" -d "${TARGET_DIR}/Cheats/${cheat_platform}"
+    done
 }
 
 GET_LATEST_RELEASE_RET=

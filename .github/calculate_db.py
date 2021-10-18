@@ -216,14 +216,14 @@ class MultiSourcesZipCreator:
             db_finder.ignore_folder('./' + source_parent + '/' + source)
             zip_finder = Finder(source_parent + '/' + source)
             zip_summary = create_summary(zip_finder, options)
-            zip_summary['folders'].append(str(Path(source_parent + '/' + source)))
+            zip_summary['folders'][str(Path(source_parent + '/' + source))] = {}
             multi_summary['files_count'] += zip_summary['files_count']
             multi_summary['folders_count'] += zip_summary['folders_count']
             multi_summary['files'].update(zip_summary['files'])
-            multi_summary['folders'].extend(zip_summary['folders'])
+            multi_summary['folders'].update(zip_summary['folders'])
             source_name_list.append(Path(source).name)
 
-        multi_summary['folders'] = list(set(multi_summary['folders']))
+        multi_summary['folders'] = multi_summary['folders']
 
         zip_description['raw_files_size'] = 0
         zip_description['path'] = source_parent + '/'
@@ -232,6 +232,9 @@ class MultiSourcesZipCreator:
         zip_description['folders_count'] = multi_summary['folders_count']
         zip_description['base_files_url'] = options['base_files_url'] % options['sha']
         zip_description.pop('sources')
+
+        for folder in multi_summary['folders']:
+            multi_summary['folders'][folder]['zip_id'] = zip_id
 
         for file in multi_summary['files']:
             multi_summary['files'][file]['zip_id'] = zip_id
@@ -259,16 +262,16 @@ class MultiSourcesZipCreator:
 
 
 def create_summary(finder: Finder, options):
-    folders = dict()
     delete_list_regex = re.compile("^(.*_)[0-9]{8}(\.[a-zA-Z0-9]+)*$", )
 
     summary = {
-        'files': dict()
+        'files': dict(),
+        'folders': dict()
     }
 
     for file in finder.find_all():
         strfile = str(file)
-        folders[str(file.parent)] = True
+        summary['folders'][str(file.parent)] = {}
 
         if file.name in ['.delme'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt']:
             continue
@@ -289,9 +292,8 @@ def create_summary(finder: Finder, options):
             summary["files"][strfile]['path'] = 'system'
             summary["files"][strfile]['reboot'] = True
 
-    folders.pop(finder.dir, None)
+    summary['folders'].pop(finder.dir, None)
 
-    summary['folders'] = sorted(list(folders.keys()))
     summary['files_count'] = len(summary['files'])
     summary['folders_count'] = len(summary['folders'])
     return summary

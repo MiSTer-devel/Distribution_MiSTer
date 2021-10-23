@@ -42,11 +42,12 @@ update_distribution() {
 CORE_URLS=
 fetch_core_urls() {
     local MISTER_URL="https://github.com/MiSTer-devel/Main_MiSTer"
-    CORE_URLS=$(curl -sSLf "$MISTER_URL/wiki"| awk '/user-content-fpga-cores/,/user-content-development/' | grep -ioE '(https://github.com/[a-zA-Z0-9./_-]*[_-]MiSTer/tree/[a-zA-Z0-9-]+)|(https://github.com/[a-zA-Z0-9./_-]*[_-]MiSTer)|(user-content-[a-zA-Z0-9-]*)')
+    CORE_URLS="user-content-mra-alternatives"$'\n'"https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'$(curl -sSLf "$MISTER_URL/wiki"| awk '/user-content-fpga-cores/,/user-content-development/' | grep -ioE '(https://github.com/[a-zA-Z0-9./_-]*[_-]MiSTer/tree/[a-zA-Z0-9-]+)|(https://github.com/[a-zA-Z0-9./_-]*[_-]MiSTer)|(user-content-[a-zA-Z0-9-]*)')
     local MENU_URL=$(echo "${CORE_URLS}" | grep -io 'https://github.com/[a-zA-Z0-9./_-]*Menu_MiSTer')
     CORE_URLS=$(echo "${CORE_URLS}" |  sed 's/https:\/\/github.com\/[a-zA-Z0-9.\/_-]*Menu_MiSTer//')
     CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/wiki-content/,/wiki-rightbar/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-zip-release"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-filters"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-scripts"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"
@@ -78,6 +79,8 @@ classify_core_categories() {
             "user-content-scripts") ;&
             "user-cheats") ;&
             "user-content-folders") ;&
+            "user-content-filters") ;&
+            "user-content-mra-alternatives") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
             "user-content-fpga-cores") ;&
             "user-content-development") ;&
@@ -147,6 +150,8 @@ process_url() {
         "main") INSTALLER=install_main_binary ;;
         "user-content-zip-release") INSTALLER=install_zip_release ;;
         "user-content-fonts") INSTALLER=install_fonts ;;
+        "user-content-mra-alternatives") INSTALLER=install_mra_alternatives ;;
+        "user-content-filters") INSTALLER=install_filters ;;
         *) INSTALLER=install_other_core ;;
     esac
     
@@ -154,7 +159,7 @@ process_url() {
         INSTALLER=install_atari800
     fi
 
-    ${INSTALLER} "${TMP_FOLDER}" "${TARGET_DIR}" "${CATEGORY}"
+    ${INSTALLER} "${TMP_FOLDER}" "${TARGET_DIR}" "${CATEGORY}" "${URL}"
 
     rm -rf "${TMP_FOLDER}"
 }
@@ -169,7 +174,6 @@ install_arcade_core() {
 
     local BINARY_NAMES=$(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq)
     if [[ "${BINARY_NAMES}" == "MRA-Alternatives" ]] ; then
-        install_zip_release "${TMP_FOLDER}" "${TARGET_DIR}/_Arcade" 
         return
     fi
 
@@ -375,10 +379,33 @@ install_zip_release() {
     done
 }
 
+install_mra_alternatives() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+
+    echo "Installing MRA Alternatives ${4}"
+
+    mkdir -p "${TARGET_DIR}/_Arcade"
+    copy_file "${TMP_FOLDER}/_alternatives" "${TARGET_DIR}/_Arcade/_alternatives"
+}
+
+install_filters() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+
+    echo "Installing Filters ${4}"
+
+    copy_file "${TMP_FOLDER}/Filters" "${TARGET_DIR}/Filters"
+    copy_file "${TMP_FOLDER}/Filters_Audio" "${TARGET_DIR}/Filters_Audio"
+    copy_file "${TMP_FOLDER}/Gamma" "${TARGET_DIR}/Gamma"
+}
+
 install_fonts() {
     local TMP_FOLDER="${1}"
     local TARGET_DIR="${2}"
     local IFS=$'\n'
+
+    echo "Installing Fonts ${4}"
 
     for font in $(ls "${TMP_FOLDER}" | grep .pf) ; do
         copy_file "${TMP_FOLDER}/${font}" "${TARGET_DIR}/font/${font}"

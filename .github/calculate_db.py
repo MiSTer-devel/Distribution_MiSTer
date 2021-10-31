@@ -151,11 +151,10 @@ def create_db(folder, options):
             zips[zip_id]['contents_file']['url'] = (options['base_files_url'] % zip_sha) + '%s.zip' % zip_id
             zips[zip_id]['summary_file']['url'] = (options['base_files_url'] % zip_sha) + '%s_summary.json.zip' % zip_id
 
-        db['zips'] = zips
-
     db_summary = create_summary(db_finder, options)
     db['files'] = db_summary['files']
     db['folders'] = db_summary['folders']
+    db['zips'] = zips
     db['files_count'] = db_summary['files_count']
     db['folders_count'] = db_summary['folders_count']
 

@@ -103,7 +103,9 @@ def create_db(folder, options):
         "db_files": options['db_files'],
         "latest_zip_url": options['latest_zip_url'],
         "files": dict(),
-        "base_files_url": options['base_files_url'] % options['sha']
+        "base_files_url": options['base_files_url'] % options['sha'],
+        "default_options": dict(),
+        "timestamp": int(time.time())
     }
 
     zips = dict()

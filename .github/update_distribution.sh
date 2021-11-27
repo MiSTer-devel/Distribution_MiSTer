@@ -422,9 +422,7 @@ install_shadow_masks() {
 
     echo "Installing Shadow Masks ${4}"
 
-    for file in $(ls "${TMP_FOLDER}") ; do
-        copy_file "${TMP_FOLDER}/${file}" "${TARGET_DIR}/Shadow_Masks/${file}"
-    done
+    copy_file "${TMP_FOLDER}/Shadow_Masks" "${TARGET_DIR}/Shadow_Masks"
 }
 
 install_script() {

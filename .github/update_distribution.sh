@@ -49,6 +49,7 @@ fetch_core_urls() {
     CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
     CORE_URLS=${CORE_URLS}$'\n'"user-content-filters"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-shadow-masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer.git"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-scripts"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"
@@ -80,6 +81,7 @@ classify_core_categories() {
             "user-cheats") ;&
             "user-content-folders") ;&
             "user-content-filters") ;&
+            "user-content-shadow-masks") ;&
             "user-content-mra-alternatives") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
             "user-content-fpga-cores") ;&
@@ -152,6 +154,7 @@ process_url() {
         "user-content-fonts") INSTALLER=install_fonts ;;
         "user-content-mra-alternatives") INSTALLER=install_mra_alternatives ;;
         "user-content-filters") INSTALLER=install_filters ;;
+        "user-content-shadow-masks") INSTALLER=install_shadow_masks ;;
         *) INSTALLER=install_other_core ;;
     esac
     
@@ -409,6 +412,18 @@ install_fonts() {
 
     for font in $(ls "${TMP_FOLDER}" | grep .pf) ; do
         copy_file "${TMP_FOLDER}/${font}" "${TARGET_DIR}/font/${font}"
+    done
+}
+
+install_shadow_masks() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+    local IFS=$'\n'
+
+    echo "Installing Shadow Masks ${4}"
+
+    for file in $(ls "${TMP_FOLDER}" | grep .pf) ; do
+        copy_file "${TMP_FOLDER}/${file}" "${TARGET_DIR}/Shadow_Masks/${file}"
     done
 }
 

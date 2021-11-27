@@ -49,7 +49,7 @@ fetch_core_urls() {
     CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
     CORE_URLS=${CORE_URLS}$'\n'"user-content-filters"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-shadow-masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer.git"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-shadow-masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-scripts"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"

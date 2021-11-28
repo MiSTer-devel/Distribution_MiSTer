@@ -20,6 +20,9 @@
     "global_fonts": {
         "source": "font"
     },
+    "global_shadow_masks": {
+        "source": "Shadow_Masks"
+    },
     "mra_alternatives": {
         "source": "_Arcade/_alternatives"
     }

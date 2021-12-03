@@ -12,6 +12,9 @@
     "gameboy2p_palettes": {
         "source": "games/GAMEBOY2P/Palettes"
     },
+    "atari7800_palettes": {
+        "source": "games/ATARI7800/Palettes"
+    },
     "global_filters": {
         "path": ".",
         "sources": ["Filters", "Filters_Audio", "Gamma"],

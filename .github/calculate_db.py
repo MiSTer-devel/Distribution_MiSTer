@@ -58,8 +58,10 @@ class Tags:
         suffix = path.suffix.lower()
         stem = path.stem.lower()
 
-        if stem == 'readme' and (suffix == '.txt' or suffix == '.md'):
+        if (stem == 'readme' or (parent == 'games' and 'readme' in stem)) and (suffix == '.txt' or suffix == '.md'):
             self._append(result, self._get_term('docs'))
+            self._append(result, self._get_term('readme'))
+            
         elif suffix == '.mra':
             self._append(result, self._get_term('mra'))
             mra_fields = read_mra_fields(path, ['rbf'])
@@ -94,7 +96,7 @@ class Tags:
             if nodates in ['gba2p', 'gameboy2p']:
                 self._append(result, self._get_term('handheld2p'))
 
-        elif parent == 'games':
+        if parent == 'games':
             first_level = path.parts[1].lower()
             self._append(result, self._get_term(first_level))
             if path.parts[2].lower() == 'palettes':

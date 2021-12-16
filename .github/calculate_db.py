@@ -28,25 +28,24 @@ class Tags:
         for alias_list in [
             # Consoles
             ['nes', 'famicom', 'nintendo'],
-            ['snes', 'sufami', 'super_nes', 'super_nintendo', 'super_famicom'],
-            ['tgfx16', 'turbografx16', 'turbografx_16', 'turbografx', 'pcengine', 'pc_engine'],
-            ['tgfx16cd', 'tgfx16_cd', 'turbografx16cd', 'pcenginecd', 'turbografx16_cd', 'turbografx_16_cd', 'turbografx_cd', 'pcengine_cd', 'pc_engine_cd'],
-            ['mega_drive', 'megadrive', 'genesis'],
-            ['megacd', 'mega_cd', 'segacd', 'sega_cd'],
-            ['sms', 'mastersystem', 'master_system'],
+            ['snes', 'sufami', 'supernes', 'supernintendo', 'superfamicom'],
+            ['pcengine', 'tgfx16', 'turbografx16', 'turbografx'],
+            ['pcenginecd', 'tgfx16cd', 'turbografx16cd', 'turbografxcd'],
+            ['megadrive', 'genesis'],
+            ['megacd', 'segacd'],
+            ['sms', 'mastersystem'],
             ['coleco', 'colecovision'],
 
             # Computers
-            ['ti_99_4a', 'ti994a'],
-            ['vector_06c', 'vector06'],
+            ['vector06c', 'vector06'],
             ['amiga', 'minimig'],
             
             # General
-            ['console-cores', 'console'],
-            ['arcade-cores', 'arcade'],
-            ['computer-cores', 'computer'],
-            ['other-cores', 'other'],
-            ['service-cores', 'utility'],
+            ['consolecores', 'console'],
+            ['arcadecores', 'arcade'],
+            ['computercores', 'computer'],
+            ['othercores', 'other'],
+            ['servicecores', 'utility'],
         ]:
             for alias in alias_list:
                 self._dict[self._clean_term(alias)] = self._index
@@ -183,7 +182,7 @@ class Tags:
     def _clean_term(self, term: str):
         if not term:
             raise Exception('Term is empty')
-        return ''.join(filter(lambda chr: filter_part_regex.match(chr), term.replace(' ', '_').replace('-', '_')))
+        return ''.join(filter(lambda chr: filter_part_regex.match(chr), term.replace(' ', '').replace('-', '').replace('_', '')))
 
     def _from_dict(self, term: str):
         if term == 'menu.rbf':

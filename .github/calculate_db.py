@@ -28,8 +28,8 @@ class Tags:
         for alias_list in [
             ['nes', 'famicom', 'nintendo'],
             ['snes', 'sufami', 'super_nes', 'super_nintendo', 'super_famicom'],
-            ['tgfx16', 'turbografx16', 'turbografx_16', 'pcengine', 'pc_engine'],
-            ['tgfx16cd', 'tgfx16_cd', 'turbografx16cd', 'pcenginecd', 'turbografx16_cd', 'turbografx_16_cd', 'pcengine_cd', 'pc_engine_cd'],
+            ['tgfx16', 'turbografx16', 'turbografx_16', 'turbografx', 'pcengine', 'pc_engine'],
+            ['tgfx16cd', 'tgfx16_cd', 'turbografx16cd', 'pcenginecd', 'turbografx16_cd', 'turbografx_16_cd', 'turbografx_cd', 'pcengine_cd', 'pc_engine_cd'],
             ['mega_drive', 'megadrive', 'genesis'],
             ['megacd', 'mega_cd', 'segacd', 'sega_cd'],
             ['sms', 'mastersystem', 'master_system'],

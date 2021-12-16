@@ -26,6 +26,7 @@ class Tags:
 
     def init_aliases(self):
         for alias_list in [
+            # Consoles
             ['nes', 'famicom', 'nintendo'],
             ['snes', 'sufami', 'super_nes', 'super_nintendo', 'super_famicom'],
             ['tgfx16', 'turbografx16', 'turbografx_16', 'turbografx', 'pcengine', 'pc_engine'],
@@ -33,7 +34,14 @@ class Tags:
             ['mega_drive', 'megadrive', 'genesis'],
             ['megacd', 'mega_cd', 'segacd', 'sega_cd'],
             ['sms', 'mastersystem', 'master_system'],
+            
+            # Computers
             ['ti_99_4a', 'ti994a'],
+            ['vector_06c', 'vector06'],
+            ['coleco', 'colecovision'],
+            ['amiga', 'minimig'],
+            
+            # General
             ['console-cores', 'console'],
             ['arcade-cores', 'arcade'],
             ['computer-cores', 'computer'],

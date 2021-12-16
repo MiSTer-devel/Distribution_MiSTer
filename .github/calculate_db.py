@@ -41,7 +41,7 @@ class Tags:
             ['service-cores', 'utility'],
         ]:
             for alias in alias_list:
-                self._dict[alias] = self._index
+                self._dict[self._clean_term(alias)] = self._index
             self._index += 1
 
     def get_tags_for_file(self, path: Path):

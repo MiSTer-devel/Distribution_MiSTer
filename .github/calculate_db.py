@@ -167,10 +167,10 @@ class Tags:
         return self._from_dict(self._clean_term(term))
 
     def _get_arcade_term(self, term: str):
-        return self._from_dict('arcade-' + self._clean_term(term))
+        return self._from_dict(self._clean_term('arcade-' + term))
 
     def _get_cores_term(self, term: str):
-        return self._from_dict(self._clean_term(term) + '-cores')
+        return self._from_dict(self._clean_term(term + '-cores'))
 
     def _clean_term(self, term: str):
         if not term:

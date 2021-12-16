@@ -34,11 +34,11 @@ class Tags:
             ['mega_drive', 'megadrive', 'genesis'],
             ['megacd', 'mega_cd', 'segacd', 'sega_cd'],
             ['sms', 'mastersystem', 'master_system'],
-            
+            ['coleco', 'colecovision'],
+
             # Computers
             ['ti_99_4a', 'ti994a'],
             ['vector_06c', 'vector06'],
-            ['coleco', 'colecovision'],
             ['amiga', 'minimig'],
             
             # General

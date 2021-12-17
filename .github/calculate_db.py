@@ -15,6 +15,31 @@ import xml.etree.cElementTree as ET
 from inspect import currentframe, getframeinfo
 from typing import Dict, List, Any
 
+
+ distribution_mister_aliases = [
+    # Consoles
+    ['nes', 'famicom', 'nintendo'],
+    ['snes', 'sufami', 'supernes', 'supernintendo', 'superfamicom'],
+    ['pcengine', 'tgfx16', 'turbografx16', 'turbografx'],
+    ['pcenginecd', 'tgfx16cd', 'turbografx16cd', 'turbografxcd'],
+    ['megadrive', 'genesis'],
+    ['megacd', 'segacd'],
+    ['sms', 'mastersystem'],
+    ['coleco', 'colecovision'],
+
+    # Computers
+    ['vector06c', 'vector06'],
+    ['amiga', 'minimig'],
+    
+    # General
+    ['console-cores', 'console'],
+    ['arcade-cores', 'arcade'],
+    ['computer-cores', 'computer'],
+    ['other-cores', 'other'],
+    ['service-cores', 'utility'],
+]
+
+
 filter_part_regex = re.compile("[-_a-z0-9.]$", )
 
 
@@ -23,30 +48,10 @@ class Tags:
         self._dict = {}
         self._alternatives = {}
         self._index = 0
+        self._report_set = set()
 
-    def init_aliases(self):
-        for alias_list in [
-            # Consoles
-            ['nes', 'famicom', 'nintendo'],
-            ['snes', 'sufami', 'supernes', 'supernintendo', 'superfamicom'],
-            ['pcengine', 'tgfx16', 'turbografx16', 'turbografx'],
-            ['pcenginecd', 'tgfx16cd', 'turbografx16cd', 'turbografxcd'],
-            ['megadrive', 'genesis'],
-            ['megacd', 'segacd'],
-            ['sms', 'mastersystem'],
-            ['coleco', 'colecovision'],
-
-            # Computers
-            ['vector06c', 'vector06'],
-            ['amiga', 'minimig'],
-            
-            # General
-            ['consolecores', 'console'],
-            ['arcadecores', 'arcade'],
-            ['computercores', 'computer'],
-            ['othercores', 'other'],
-            ['servicecores', 'utility'],
-        ]:
+    def init_aliases(self, aliases):
+        for alias_list in aliases:
             for alias in alias_list:
                 self._dict[self._clean_term(alias)] = self._index
             self._index += 1
@@ -182,7 +187,9 @@ class Tags:
     def _clean_term(self, term: str):
         if not term:
             raise Exception('Term is empty')
-        return ''.join(filter(lambda chr: filter_part_regex.match(chr), term.replace(' ', '').replace('-', '').replace('_', '')))
+        result = ''.join(filter(lambda chr: filter_part_regex.match(chr), term.replace(' ', '')))
+        self._report_set.add(result)
+        return result.replace('-', '').replace('_', '')
 
     def _from_dict(self, term: str):
         if term == 'menu.rbf':
@@ -208,6 +215,9 @@ class Tags:
 
     def get_dictionary(self):
         return self._dict
+
+    def get_report_terms(self):
+        return sorted(list(self._report_set))
 
 
 class Finder:
@@ -264,6 +274,8 @@ def main(dryrun):
     db_file_zip = Path(db_url).name
     db_file_json = Path(db_url).stem
 
+    tags = Tags()
+
     db = create_db('.', {
         'sha': sha,
         'base_files_url': envvar('BASE_FILES_URL'),
@@ -274,11 +286,12 @@ def main(dryrun):
         'latest_zip_url': envvar('LATEST_ZIP_URL'),
         'linux_github_repository': os.getenv('LINUX_GITHUB_REPOSITORY', '').strip(),
         'zips_config': os.getenv('ZIPS_CONFIG', '').strip()
-    })
+    }, tags)
 
     save_data_to_compressed_json(db, db_file_json, db_file_zip)
 
-    tag_list = '`' + '`, `'.join(sorted(list(db['tag_dictionary']))) + '`'
+    tag_list = '`' + '`, `'.join(tags.get_report_terms()) + '`'
+    print('TAG_LIST: ' + tag_list)
 
     with open("README.md", "rt") as fin:
         readme_content = fin.read()
@@ -296,9 +309,8 @@ def envvar(var):
     return result
 
 
-def create_db(folder, options):
-    tags = Tags()
-    tags.init_aliases()
+def create_db(folder, options, tags):
+    tags.init_aliases(distribution_mister_aliases)
 
     db_finder = Finder(folder)
     db_finder.ignore_folder('./.git')

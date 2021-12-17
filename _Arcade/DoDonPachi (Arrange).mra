@@ -1,0 +1,52 @@
+<misterromdescription>
+  <name>DoDonPachi (20120212 Arrange Ver. 1.1)</name>
+  <mameversion>0226</mameversion>
+  <setname>ddonpach</setname>
+  <year>2012</year>
+  <manufacturer>Hack (trap15)</manufacturer>
+  <category>Shooter</category>
+  <rbf>cave</rbf>
+
+  <buttons names="Shots/Laser,Spread/Laser Bomber,Full-Auto,Start,Coin,Pause" default="A,B,X,R,L,Start" />
+
+  <!-- select game -->
+  <rom index="1">
+    <part>1</part>
+  </rom>
+
+  <!-- ROM data -->
+  <rom index="0" zip="ddonpach.zip|ddonpacha.zip" md5="none">
+	<!-- main CPU -->
+    <interleave output="16">
+      <part name="arrange_u27.bin" crc="44b899ae" map="10" />
+      <part name="arrange_u26.bin" crc="727a09a8" map="01" />
+    </interleave>
+
+    <!-- sprites -->
+    <part name="u50.bin" crc="14b260ec" />
+    <part name="arrange_u51.bin" crc="0f3e5148" />
+    <part name="u52.bin" crc="02492ee0" />
+    <part name="u53.bin" crc="cb4c10f0" />
+
+    <!-- layer 0 -->
+    <part name="u60.bin" crc="903096a7" />
+
+    <!-- layer 1 -->
+    <part name="u61.bin" crc="d89b7631" />
+
+    <!-- layer 2 -->
+    <part name="arrange_u62.bin" crc="42e4c6c5" />
+
+    <!-- samples -->
+    <part name="u6.bin" crc="9dfdafaf" />
+    <part name="u7.bin" crc="795b17d5" />
+
+    <!-- eeprom -->
+    <part name="eeprom-ddonpach.bin" crc="2df16438" />
+
+    <!-- skip CRC -->
+    <patch offset="0x005410">00 60 0C 00</patch>
+    <!-- skip warning -->
+    <patch offset="0x0054EC">00 60 50 00</patch>
+  </rom>
+</misterromdescription>

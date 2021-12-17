@@ -1,0 +1,49 @@
+# range -128..128
+# sum of line must not exceed the range!
+
+# Lanczos3
+# Horizontal Compression Factor 1.5x
+# for Horz. Scaling
+
+# Lanczos2
+# Horizontal Compression Factor 1.0x (Standard Lanczos2)
+# for Vert. Scaling
+
+# This is essentially identical (few coefficients different)
+# to the polyphase filter previously used for the VIP Scaler
+
+# horizontal coefficients
+ -24, 176, -24,   0
+ -20, 174, -26,   0
+ -16, 169, -26,   1
+ -11, 160, -23,   2
+  -6, 147, -16,   3
+  -1, 130,  -5,   4
+   2, 108,  12,   6
+   5,  83,  33,   7
+   6,  58,  58,   6
+   7,  33,  83,   5
+   6,  12, 108,   2
+   4,  -5, 130,  -1
+   3, -16, 147,  -6
+   2, -23, 160, -11
+   1, -26, 169, -16
+   0, -26, 174, -20
+
+# vertical coefficients
+   0, 128,   0,   0
+  -4, 126,   6,  -0
+  -8, 124,  13,  -1
+ -10, 118,  21,  -1
+ -11, 111,  30,  -2
+ -11, 103,  40,  -4
+ -10,  93,  50,  -5
+  -9,  82,  61,  -6
+  -8,  72,  72,  -8
+  -6,  61,  82,  -9
+  -5,  50,  93, -10
+  -4,  40, 103, -11
+  -2,  30, 111, -11
+  -1,  21, 118, -10
+  -1,  13, 124,  -8
+  -0,   6, 126,  -4

@@ -1,0 +1,71 @@
+<misterromdescription>
+	<name>DoDonPachi</name>
+	<region>Japan</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform>CAVE 68000</platform>
+	<series>DonPachi</series>
+	<year>1997</year>
+	<manufacturer>Cave</manufacturer>
+	<category>Shooter - Vertical</category>
+
+	<setname>ddonpach</setname>
+	<parent>ddonpach</parent>
+	<mameversion>0226</mameversion>
+	<rbf>cave</rbf>
+	<about author="nullobject" source="https://github.com/MiSTer-devel/Arcade-Cave_MiSTer" twitter="@nullobject" webpage="https://www.patreon.com/nullobject"></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>yes</flip>
+
+	<players>2 (simultaneous)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>3</num_buttons>
+	<buttons default="A,B,X,R,L,Start" names="Shots/Laser,Spread/Laser Bomber,Full-Auto,Start,Coin,Pause"></buttons>
+
+	<switches></switches>
+
+	<rom index="1">
+		<part>1</part>
+		</rom>
+	<rom index="0" md5="none" zip="ddonpach.zip|ddonpachj.zip">
+		<!-- main CPU -->
+		<interleave output="16">
+		<part crc="2432ff9b" map="10" name="u27.bin"></part>
+		<part crc="4f3a914a" map="01" name="u26.bin"></part>
+		</interleave>
+		<!-- sprites -->
+		<part crc="14b260ec" name="u50.bin"></part>
+		<part crc="e7ba8cce" name="u51.bin"></part>
+		<part crc="02492ee0" name="u52.bin"></part>
+		<part crc="cb4c10f0" name="u53.bin"></part>
+		<!-- layer 0 -->
+		<part crc="903096a7" name="u60.bin"></part>
+		<!-- layer 1 -->
+		<part crc="d89b7631" name="u61.bin"></part>
+		<!-- layer 2 -->
+		<part crc="292bfb6b" name="u62.bin"></part>
+		<!-- samples -->
+		<part crc="9dfdafaf" name="u6.bin"></part>
+		<part crc="795b17d5" name="u7.bin"></part>
+		<!-- eeprom -->
+		<part crc="315fb546" name="eeprom-ddonpach.bin"></part>
+		<!-- skip CRC -->
+		<patch offset="0x005410">00 60 0C 00</patch>
+		<!-- skip warning -->
+		<patch offset="0x0054EC">00 60 50 00</patch>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+
+	<nvram></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,44 @@
+#File Originally named Nearest_Neighbor.txt
+
+# range -128..128
+# sum of line must not exceed the range!
+
+# Mearest Neighbor on x-axis and y-axis
+# Phase 0 is centered at T1 so this should
+# be correct and not have 0.5 pixel offset?
+
+# horizontal coefficients
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+
+# vertical coefficients
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0, 128,   0,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0
+   0,   0, 128,   0

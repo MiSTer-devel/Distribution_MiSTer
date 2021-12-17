@@ -1,0 +1,63 @@
+<misterromdescription>
+	<name>Gorf</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1981</year>
+	<manufacturer>Dave Nutting Associates</manufacturer>
+	<manufacturer>Midway</manufacturer>
+	<category>Shooter - Gallery</category>
+
+	<setname>gorf</setname>
+	<parent>gorf</parent>
+	<mameversion>0219</mameversion>
+	<rbf>astrocade</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>1</num_buttons>
+	<button_names></button_names>
+
+	<switches default="00,00,03,FF">
+		<dip bits="16" ids="Cocktail,Upright" name="Cabinet"></dip>
+		<dip bits="17" ids="On,Off" name="Service"></dip>
+		<dip bits="25,26" ids="1c/5cr,1c/3cr,2c/1cr,1c/1cr" name="Coinage"></dip>
+		<dip bits="28" ids="3,2" name="Lives"></dip>
+		<dip bits="29" ids="None,Mission 5" name="Bonus"></dip>
+		<dip bits="30" ids="On,Off" name="Freeplay"></dip>
+		<dip bits="31" ids="Off,On" name="demo sound"></dip>
+		</switches>
+
+	<rom index="1">
+		<part>04</part>
+		</rom>
+	<rom index="0" md5="cf4fe2ecfdc33a1dd4ee9e000a1c7bc2" type="nonmerged" zip="gorf.zip">
+		<part crc="5b348321" name="gorf-a.bin"></part>
+		<part crc="62d6de77" name="gorf-b.bin"></part>
+		<part crc="1d3bc9c9" name="gorf-c.bin"></part>
+		<part crc="70046e56" name="gorf-d.bin"></part>
+		<part crc="2d456eb5" name="gorf-e.bin"></part>
+		<part crc="f7e4e155" name="gorf-f.bin"></part>
+		<part crc="4e2bd9b9" name="gorf-g.bin"></part>
+		<part crc="fe7b863d" name="gorf-h.bin"></part>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+
+	<nvram></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,46 @@
+<misterromdescription>
+	<name>Arkanoid (US, older)</name>
+	<mameversion>0220</mameversion>
+	<setname>arkanoiduo</setname>
+	<mratimestamp>202007120000</mratimestamp>
+	<year>1986</year>
+	<manufacturer>Taito (modified from Tayto bootleg)</manufacturer>
+	<category>Platform / Breakout</category>
+	<rbf>Arkanoid</rbf>
+	<switches default="80">
+		<dip bits="0,1" name="Credits" ids="1c/1cr,2c/1cr,1c/2cr,1c/6cr"/>
+		<dip bits="2"   name="Lives" ids="3,5"/>
+		<dip bits="3"   name="Bonus" ids="20K/60K+,20000 only"/>
+		<dip bits="4"   name="Difficulty" ids="Easy,Hard"/>
+		<dip bits="5"   name="Test mode" ids="Off,On"/>
+		<dip bits="6"   name="Flip screen" ids="Off,On"/>
+		<dip bits="7"   name="Continues" ids="Off,On"/>
+	</switches>
+	<rom index="0" zip="arkanoid.zip|arkatayt.zip" md5="None">
+		<part crc="154e2c6f" name="ic81-v.3f"/>
+		<part crc="4fa8cefa" name="ic82-w.5f"/>
+		<part crc="038b74ba" name='a75-03.ic64'/>
+		<part crc="71fae199" name='a75-04.ic63'/>
+		<part crc="c76374e2" name='a75-05.ic62'/>
+		<part crc="0af8b289" name='a75-07.ic24'/>
+		<part crc="abb002fb" name='a75-08.ic23'/>
+		<part crc="a7c6c277" name='a75-09.ic22'/>
+		<patch offset="0x33C2">49</patch>
+		<patch offset="0x33F4">49</patch>
+		<patch offset="0x3437">49</patch>
+		<patch offset="0x5042">	
+			00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+			00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+			00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+			00 00 00 00 00 00 00 00 00 00 FF 00 00 00 00 00
+			00 00 00 00 00
+		</patch>
+		<patch offset="0x7B82">4E 4F 54 49 43 45 BE 54</patch>
+		<patch offset="0x7D9F">49</patch>
+		<patch offset="0x8000">15</patch>
+		<patch offset="0x9713">EB</patch>
+		<patch offset="0x9769">AF</patch>
+		<patch offset="0xBDA5">ED</patch>
+		<patch offset="0xBFFF">92</patch>
+	</rom>
+</misterromdescription>

@@ -16,7 +16,7 @@ from inspect import currentframe, getframeinfo
 from typing import Dict, List, Any
 
 
- distribution_mister_aliases = [
+distribution_mister_aliases = [
     # Consoles
     ['nes', 'famicom', 'nintendo'],
     ['snes', 'sufami', 'supernes', 'supernintendo', 'superfamicom'],

@@ -529,7 +529,7 @@ def create_summary(finder: Finder, tags: Tags):
         strfile = str(file)
         summary['folders'][str(file.parent)] = {"path": file.parent} 
 
-        if file.name in ['.delme'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt']:
+        if file.name in ['.delme'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:
             continue
 
         summary["files"][strfile] = {

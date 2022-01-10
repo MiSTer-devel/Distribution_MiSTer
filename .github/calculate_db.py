@@ -65,10 +65,6 @@ def main(dryrun):
     with open("README.md", "wt") as fout:
         fout.write(readme_content.replace('ALL_TAGS_GO_HERE', tag_list))
 
-    if not dryrun:
-        force_push_file(db_file_zip, 'main')
-
-    return
     try:
         test_db_file_zip(db_id, db_file_zip)
     except RunException as e:
@@ -80,6 +76,9 @@ def main(dryrun):
         print('Exception:')
         print(str(e))
         exit(1)
+
+    if not dryrun:
+        force_push_file(db_file_zip, 'main')
 
 distribution_mister_aliases = [
     # Consoles
@@ -615,12 +614,19 @@ def test_db_file_zip(db_id, db_file_zip):
     run_succesfully('echo "[mister]" > delme_test/downloader.ini')
     run_succesfully('echo "base_path = delme_test" >> delme_test/downloader.ini')
     run_succesfully('echo "base_system_path = delme_test" >> delme_test/downloader.ini')
+    run_succesfully('echo "update_linux = false" >> delme_test/downloader.ini')
+    run_succesfully('echo "allow_reboot  = 0" >> delme_test/downloader.ini')
     run_succesfully('echo "verbose = true" >> delme_test/downloader.ini')
+    run_succesfully('echo "downloader_retries = 0" >> delme_test/downloader.ini')
     run_succesfully('echo "[%s]" >> delme_test/downloader.ini' % db_id)
     run_succesfully('echo "db_url = %s" >> delme_test/downloader.ini' % db_file_zip)
     run_succesfully('curl --show-error --fail --location -o "delme_test/downloader.sh" "https://raw.githubusercontent.com/MiSTer-devel/Downloader_MiSTer/main/downloader.sh"')
     run_succesfully('chmod +x delme_test/downloader.sh')
-    run_succesfully('./delme_test/downloader.sh')
+    
+    test_env = os.environ.copy()
+    test_env['CURL_SSL'] = ''
+    test_env['DEBUG'] = 'true'
+    run_succesfully('./delme_test/downloader.sh', env=test_env)
 
 def force_push_file(file_name, branch):
     run_succesfully('git add %s' % file_name)
@@ -630,41 +636,25 @@ def force_push_file(file_name, branch):
     print()
     print("New %s ready to be used." % file_name)
 
-
-def run_conditional(command):
-    result = subprocess.run(command, shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE)
-
-    stdout = result.stdout.decode()
-    if stdout.strip():
-        print(stdout)
-        
-    return result.returncode == 0
-
-
 class RunException(Exception):
     pass
 
-def run_succesfully(command):
-    print('Running with success check: ' + command)
-    result = subprocess.run(command, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
-    stdout = result.stdout.decode()
-    stderr = result.stderr.decode()
-    if stdout.strip():
-        print(stdout)
-    
-    if stderr.strip():
-        print(stderr)
+def run_conditional(command):
+    print('run_conditional: ' + command)
+    result = subprocess.run(command, shell=True, stderr=subprocess.STDOUT)
+    return result.returncode == 0
 
+def run_succesfully(command, env=None):
+    print('run_succesfully: ' + command)
+    result = subprocess.run(command, shell=True, stderr=subprocess.STDOUT, env=env)
     if result.returncode != 0:
         raise RunException("subprocess.run Return Code was '%d'" % result.returncode)
 
 
 def run_stdout(command):
-    print('Running to get stdout: ' + command)
-
-    result = subprocess.run(command, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-
+    print('run_stdout: ' + command)
+    result = subprocess.run(command, shell=True, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE)
     if result.returncode != 0:
         raise RunException("subprocess.run Return Code was '%d'" % result.returncode)
 

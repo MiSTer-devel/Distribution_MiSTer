@@ -12,6 +12,7 @@ import sys
 import os
 import tempfile
 import xml.etree.cElementTree as ET
+from zipfile import ZipFile
 from inspect import currentframe, getframeinfo
 from typing import Dict, List, Any
 
@@ -55,6 +56,9 @@ def main(dryrun):
     }, tags)
 
     save_data_to_compressed_json(db, db_file_json, db_file_zip)
+    if db_has_no_changes(db, db_url):
+        print('No changes deteted.')
+        return
 
     tag_list = '`' + '`, `'.join(tags.get_report_terms()) + '`'
     print('TAG_LIST: ' + tag_list)
@@ -142,7 +146,7 @@ class Tags:
             rbf, zips = read_mra_fields(path)
 
             if rbf is not None:
-                self._append(result, self._get_arcade_term(rbf))
+                self._append(result, self._use_arcade_term(rbf))
             
             if self._contains_hbmame_rom(zips):
                 self._append(result, self._use_term('hbmame'))
@@ -162,8 +166,8 @@ class Tags:
                 nodates = stem
 
             self._append(result, self._use_term('cores'))
-            if parent == 'arcade':
-                self._append(result, self._get_arcade_term(nodates))
+            if parent == 'arcade' or nodates.startswith('arcade-'):
+                self._append(result, self._use_arcade_term(nodates))
             else:
                 self._append(result, self._use_term(nodates))
 
@@ -237,7 +241,7 @@ class Tags:
                 for rbf in self._alternatives[second_level]:
                     if not rbf:
                         continue
-                    self._append(result, self._get_arcade_term(rbf))
+                    self._append(result, self._use_arcade_term(rbf))
 
         if second_level in ['palettes']:
             self._append(result, self._use_term(second_level))
@@ -247,10 +251,10 @@ class Tags:
     def _use_term(self, term: str):
         return self._use_from_dict(self._clean_term(term))
 
-    def _get_arcade_term(self, term: str):
+    def _use_arcade_term(self, term: str):
         return self._use_from_dict(self._clean_term('arcade-' + term))
 
-    def _get_cores_term(self, term: str):
+    def _use_cores_term(self, term: str):
         return self._use_from_dict(self._clean_term(term + '-cores'))
 
     def _clean_term(self, term: str):
@@ -276,9 +280,9 @@ class Tags:
 
     def _add_cores_terms(self, parent, result):
         if parent in ['console', 'computer', 'other', 'arcade']:
-            self._append(result, self._get_cores_term(parent))
+            self._append(result, self._use_cores_term(parent))
         elif parent == 'utility':
-            self._append(result, self._get_cores_term('service'))
+            self._append(result, self._use_cores_term('service'))
 
     def _append(self, result, term):
         if term in result:
@@ -608,6 +612,38 @@ def save_data_to_compressed_json(db, json_name, zip_name):
 
     run_succesfully('touch -a -m -t 202108231405 %s' % json_name)
     run_succesfully('zip -q -D -X -9  %s %s' % (zip_name, json_name))
+
+def db_has_no_changes(new_db, db_url):
+    old_db = load_db_from_url(db_url)
+
+    new_json = json.dumps(clean_db(new_db), sort_keys=True)
+    old_json = json.dumps(clean_db(old_db), sort_keys=True)
+
+    return new_json == old_json
+
+def load_db_from_url(url_db):
+    with tempfile.NamedTemporaryFile() as tmp_file:
+        run_succesfully('curl --show-error --fail --location -o "%s" "%s"' % (tmp_file.name, url_db))
+        path = Path(url_db)
+        json_name = path.stem
+        with ZipFile(tmp_file.name, 'r') as zipf:
+            with zipf.open(json_name, 'r') as jsonf:
+                return json.load(jsonf)
+
+def clean_db(db):
+    db['timestamp'] = 0
+    db['base_files_url'] = ''
+    if 'zips' not in db:
+        return db
+
+    for zip in db['zips'].values():
+        zip['base_files_url'] = ''
+        if 'summary_file' in zip:
+            zip['summary_file']['url'] = ''
+        if 'contents_file' in zip:
+            zip.pop('contents_file')
+
+    return db
 
 def test_db_file_zip(db_id, db_file_zip):
     run_succesfully('mkdir delme_test')

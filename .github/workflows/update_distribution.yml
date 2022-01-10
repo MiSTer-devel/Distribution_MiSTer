@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Install detox
-      run: sudo apt-get install detox
+    - name: Install apt-get utilities
+      run: sudo apt-get install detox sharutils
 
     - uses: actions/checkout@v2
       with:

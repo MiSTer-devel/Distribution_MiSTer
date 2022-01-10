@@ -18,9 +18,11 @@ update_distribution() {
 
     for url in ${!CORE_CATEGORIES[@]} ; do
         for category in ${CORE_CATEGORIES[${url}]} ; do
-            process_url "${url}" "${category}" "${OUTPUT_FOLDER}"
+            process_url "${url}" "${category}" "${OUTPUT_FOLDER}" &
         done
     done
+
+    wait
 
     if [[ "${PUSH_COMMAND}" == "--push" ]] ; then
         git checkout -f develop -b main

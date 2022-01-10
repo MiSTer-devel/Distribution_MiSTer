@@ -15,6 +15,65 @@ import xml.etree.cElementTree as ET
 from inspect import currentframe, getframeinfo
 from typing import Dict, List, Any
 
+def benchtime(func):
+    def benchfn(*args, **kwargs):
+        begin_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print("%s: %ss" % (func.__name__, end_time - begin_time))
+        return result
+
+    return benchfn
+
+@benchtime
+def main(dryrun):
+    sha = run_stdout('git rev-parse --verify HEAD').strip()
+    print('sha: %s' % sha)
+
+    db_url = envvar('DB_URL')
+    db_file_zip = Path(db_url).name
+    db_file_json = Path(db_url).stem
+    db_id = envvar('DB_ID')
+
+    tags = Tags()
+
+    db = create_db('.', {
+        'sha': sha,
+        'base_files_url': envvar('BASE_FILES_URL'),
+        'db_url': db_url,
+        'db_files': [db_file_zip],
+        'db_id': db_id,
+        'dryrun': dryrun,
+        'latest_zip_url': envvar('LATEST_ZIP_URL'),
+        'linux_github_repository': os.getenv('LINUX_GITHUB_REPOSITORY', '').strip(),
+        'zips_config': os.getenv('ZIPS_CONFIG', '').strip()
+    }, tags)
+
+    save_data_to_compressed_json(db, db_file_json, db_file_zip)
+
+    tag_list = '`' + '`, `'.join(tags.get_report_terms()) + '`'
+    print('TAG_LIST: ' + tag_list)
+
+    with open("README.md", "rt") as fin:
+        readme_content = fin.read()
+
+    with open("README.md", "wt") as fout:
+        fout.write(readme_content.replace('ALL_TAGS_GO_HERE', tag_list))
+
+    if not dryrun:
+        force_push_file(db_file_zip, 'main')
+
+    try:
+        test_db_file_zip(db_id, db_file_zip)
+    except RunException as e:
+        print()
+        print('############')
+        print('TEST FAILED!')
+        print('############')
+        print()
+        print('Exception:')
+        print(str(e))
+        exit(1)
 
 distribution_mister_aliases = [
     # Consoles
@@ -39,9 +98,7 @@ distribution_mister_aliases = [
     ['service-cores', 'utility'],
 ]
 
-
 filter_part_regex = re.compile("[-_a-z0-9.]$", )
-
 
 class Tags:
     def __init__(self) -> None:
@@ -49,6 +106,7 @@ class Tags:
         self._alternatives = {}
         self._index = 0
         self._report_set = set()
+        self._used = set()
 
     def init_aliases(self, aliases):
         for alias_list in aliases:
@@ -63,7 +121,7 @@ class Tags:
 
         result = []
         if len(path.parts) > 1:
-            self._append(result, self._get_term(parent))
+            self._append(result, self._use_term(parent))
 
         self._add_cores_terms(parent, result)
 
@@ -71,63 +129,69 @@ class Tags:
         stem = path.stem.lower()
 
         if (stem == 'readme' or (parent == 'games' and 'readme' in stem)) and (suffix == '.txt' or suffix == '.md'):
-            self._append(result, self._get_term('docs'))
-            self._append(result, self._get_term('readme'))
+            self._append(result, self._use_term('docs'))
+            self._append(result, self._use_term('readme'))
             
         elif suffix == '.mra':
-            self._append(result, self._get_term('mra'))
-            mra_fields = read_mra_fields(path, ['rbf'])
-            if 'rbf' in mra_fields and not mra_fields['rbf']:
-                mra_fields.pop('rbf')
-            else:
-                mra_fields['rbf'] = mra_fields['rbf'].lower()
+            self._append(result, self._use_term('mra'))
+            rbf, zips = read_mra_fields(path, ['rbf'])
 
-            if 'rbf' in mra_fields:
-                self._append(result, self._get_arcade_term(mra_fields['rbf']))
+            if rbf is not None:
+                self._append(result, self._get_arcade_term(rbf))
+            
+            if self._contains_hbmame_rom(zips):
+                self._append(result, self._use_term('hbmame'))
 
             if len(path.parts) > 1 and path.parts[1].lower() == '_alternatives':
-                self._append(result, self._get_term('alternatives'))
+                self._append(result, self._use_term('alternatives'))
 
-                if 'rbf' in mra_fields and len(path.parts) > 2:
+                if rbf is not None and len(path.parts) > 2:
                     alternative_subfolder = path.parts[2].lower()[1:]
                     if alternative_subfolder not in self._alternatives:
                         self._alternatives[alternative_subfolder] = set()
-                    self._alternatives[alternative_subfolder].add(mra_fields['rbf'])
+                    self._alternatives[alternative_subfolder].add(rbf)
 
         elif suffix == '.rbf':
             nodates = stem[0:-9]
             if not nodates:
                 nodates = stem
 
-            self._append(result, self._get_term('cores'))
+            self._append(result, self._use_term('cores'))
             if parent == 'arcade':
                 self._append(result, self._get_arcade_term(nodates))
             else:
-                self._append(result, self._get_term(nodates))
+                self._append(result, self._use_term(nodates))
 
             if nodates in ['gba2p', 'gameboy2p']:
-                self._append(result, self._get_term('handheld2p'))
+                self._append(result, self._use_term('handheld2p'))
 
         if parent == 'games':
             first_level = path.parts[1].lower()
-            self._append(result, self._get_term(first_level))
+            self._append(result, self._use_term(first_level))
             if path.parts[2].lower() == 'palettes':
-                self._append(result, self._get_term('palettes'))
+                self._append(result, self._use_term('palettes'))
             if first_level in ['gba2p', 'gameboy2p']:
-                self._append(result, self._get_term('handheld2p'))
+                self._append(result, self._use_term('handheld2p'))
         elif parent == 'cheats':
-            self._append(result, self._get_term(path.parts[1].lower()))
+            self._append(result, self._use_term(path.parts[1].lower()))
 
         if parent in ['gamma', 'filters', 'filters_audio', 'shadow_masks']:
-            self._append(result, self._get_term('all_filters'))
+            self._append(result, self._use_term('all_filters'))
         
         if parent in ['gamma', 'filters', 'shadow_masks']:
-            self._append(result, self._get_term('filters_video'))
+            self._append(result, self._use_term('filters_video'))
 
         if stem in ['menu', 'mister']:
-            self._append(result, self._get_term('essential'))
+            self._append(result, self._use_term('essential'))
 
         return result
+
+    def _contains_hbmame_rom(zips):
+        for z in zips:
+            if 'hbmame' in z.lower():
+                return True
+
+        return False
 
     def get_tags_for_folder(self, path: Path):
         if len(path.parts) == 0:
@@ -137,10 +201,10 @@ class Tags:
         if parent[0] == '_':
             parent = parent[1:]
 
-        result = [self._get_term(parent)]
+        result = [self._use_term(parent)]
 
         if parent in ['console', 'computer', 'other', 'utility']:
-            self._append(result, self._get_term('cores'))
+            self._append(result, self._use_term('cores'))
         
         self._add_cores_terms(parent, result)
 
@@ -152,9 +216,9 @@ class Tags:
             first_level = first_level[1:]
 
         if parent == 'games' and first_level in ['gba2p', 'gameboy2p']:
-            self._append(result, self._get_term('handheld2p'))
+            self._append(result, self._use_term('handheld2p'))
 
-        self._append(result, self._get_term(first_level))
+        self._append(result, self._use_term(first_level))
             
         if len(path.parts) == 2:
             return result
@@ -171,27 +235,28 @@ class Tags:
                     self._append(result, self._get_arcade_term(rbf))
 
         if second_level in ['palettes']:
-            self._append(result, self._get_term(second_level))
+            self._append(result, self._use_term(second_level))
 
         return result
 
-    def _get_term(self, term: str):
-        return self._from_dict(self._clean_term(term))
+    def _use_term(self, term: str):
+        return self._use_from_dict(self._clean_term(term))
 
     def _get_arcade_term(self, term: str):
-        return self._from_dict(self._clean_term('arcade-' + term))
+        return self._use_from_dict(self._clean_term('arcade-' + term))
 
     def _get_cores_term(self, term: str):
-        return self._from_dict(self._clean_term(term + '-cores'))
+        return self._use_from_dict(self._clean_term(term + '-cores'))
 
     def _clean_term(self, term: str):
         if not term:
             raise Exception('Term is empty')
         result = ''.join(filter(lambda chr: filter_part_regex.match(chr), term.replace(' ', '')))
-        self._report_set.add(result)
+        if result not in self._report_set:
+            self._report_set.add(result)
         return result.replace('-', '').replace('_', '')
 
-    def _from_dict(self, term: str):
+    def _use_from_dict(self, term: str):
         if term == 'menu.rbf':
             raise Exception('should not happen')
         if not term:
@@ -199,6 +264,8 @@ class Tags:
         if term not in self._dict:
             self._dict[term] = self._index
             self._index += 1
+
+        self._used.add(self._dict[term])
 
         return self._dict[term]
 
@@ -214,11 +281,18 @@ class Tags:
         result.append(term)
 
     def get_dictionary(self):
-        return self._dict
+        result = {}
+        for k, v in self._dict.items():
+            if v in self._used:
+                result[k] = v
+        return result
 
     def get_report_terms(self):
-        return sorted(list(self._report_set))
-
+        result = []
+        for entry in self._report_set:
+            if self._dict[self._clean_term(entry)] in self._used:
+                result.append(entry)
+        return sorted(result)
 
 class Finder:
     def __init__(self, dir: str):
@@ -252,55 +326,6 @@ class EmptyFinder(Finder):
 
     def find_all(self):
         return []
-
-
-def benchtime(func):
-    def benchfn(*args, **kwargs):
-        begin_time = time.time()
-        result = func(*args, **kwargs)
-        end_time = time.time()
-        print("%s: %ss" % (func.__name__, end_time - begin_time))
-        return result
-
-    return benchfn
-
-
-@benchtime
-def main(dryrun):
-    sha = run_stdout('git rev-parse --verify HEAD').strip()
-    print('sha: %s' % sha)
-
-    db_url = envvar('DB_URL')
-    db_file_zip = Path(db_url).name
-    db_file_json = Path(db_url).stem
-
-    tags = Tags()
-
-    db = create_db('.', {
-        'sha': sha,
-        'base_files_url': envvar('BASE_FILES_URL'),
-        'db_url': db_url,
-        'db_files': [db_file_zip],
-        'db_id': envvar('DB_ID'),
-        'dryrun': dryrun,
-        'latest_zip_url': envvar('LATEST_ZIP_URL'),
-        'linux_github_repository': os.getenv('LINUX_GITHUB_REPOSITORY', '').strip(),
-        'zips_config': os.getenv('ZIPS_CONFIG', '').strip()
-    }, tags)
-
-    save_data_to_compressed_json(db, db_file_json, db_file_zip)
-
-    tag_list = '`' + '`, `'.join(tags.get_report_terms()) + '`'
-    print('TAG_LIST: ' + tag_list)
-
-    with open("README.md", "rt") as fin:
-        readme_content = fin.read()
-
-    with open("README.md", "wt") as fout:
-        fout.write(readme_content.replace('ALL_TAGS_GO_HERE', tag_list))
-
-    if not dryrun:
-        force_push_file(db_file_zip, 'main')
 
 
 def envvar(var):
@@ -579,6 +604,17 @@ def save_data_to_compressed_json(db, json_name, zip_name):
     run_succesfully('touch -a -m -t 202108231405 %s' % json_name)
     run_succesfully('zip -q -D -X -9  %s %s' % (zip_name, json_name))
 
+def test_db_file_zip(db_id, db_file_zip):
+    run_succesfully('mkdir delme_test')
+    run_succesfully('echo "[mister]" > delme_test/downloader.ini')
+    run_succesfully('echo "base_path = delme_test" >> delme_test/downloader.ini')
+    run_succesfully('echo "base_system_path = delme_test" >> delme_test/downloader.ini')
+    run_succesfully('echo "verbose = true" >> delme_test/downloader.ini')
+    run_succesfully('echo "[%s]" >> delme_test/downloader.ini' % db_id)
+    run_succesfully('echo "db_url = %s" >> delme_test/downloader.ini' % db_file_zip)
+    run_succesfully('curl --show-error --fail --location -o "delme_test/downloader.sh" "https://raw.githubusercontent.com/MiSTer-devel/Downloader_MiSTer/main/downloader.sh"')
+    run_succesfully('chmod +x delme_test/downloader.sh')
+    run_succesfully('./delme_test/downloader.sh')
 
 def force_push_file(file_name, branch):
     run_succesfully('git add %s' % file_name)
@@ -599,7 +635,11 @@ def run_conditional(command):
     return result.returncode == 0
 
 
+class RunException(Exception):
+    pass
+
 def run_succesfully(command):
+    print('Running with success check: ' + command)
     result = subprocess.run(command, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
     stdout = result.stdout.decode()
@@ -611,14 +651,16 @@ def run_succesfully(command):
         print(stderr)
 
     if result.returncode != 0:
-        raise Exception("subprocess.run Return Code was '%d'" % result.returncode)
+        raise RunException("subprocess.run Return Code was '%d'" % result.returncode)
 
 
 def run_stdout(command):
+    print('Running to get stdout: ' + command)
+
     result = subprocess.run(command, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
     if result.returncode != 0:
-        raise Exception("subprocess.run Return Code was '%d'" % result.returncode)
+        raise RunException("subprocess.run Return Code was '%d'" % result.returncode)
 
     return result.stdout.decode()
 
@@ -647,24 +689,36 @@ def size(file):
 def lineno():
     return getframeinfo(currentframe().f_back).lineno
 
-def read_mra_fields(mra_path, tags):
-    fields = { i : '' for i in tags }
+def et_iterparse(mra_file, events):
+    with open(mra_file, 'r') as f:
+        text = f.read()
 
-    try:
-        context = ET.iterparse(str(mra_path), events=("start",))
-        for _, elem in context:
-            elem_tag = elem.tag.lower()
-            if elem_tag in tags:
-                tags.remove(elem_tag)
-                elem_value = elem.text
-                if isinstance(elem_value, str):
-                    fields[elem_tag] = elem_value
-                if len(tags) == 0:
-                    break
-    except Exception as e:
-        print("Line %s || %s (%s)" % (lineno(), e, mra_path))
+    with tempfile.NamedTemporaryFile() as temp:
+        with open(temp.name, 'w') as f:
+            f.write(text.lower())
 
-    return fields
+        return ET.iterparse(temp.name, events=events)
+
+def read_mra_fields(mra_path):
+    rbf = None
+    zips = set()
+
+    context = et_iterparse(str(mra_path), events=("start",))
+    for _, elem in context:
+        elem_tag = elem.tag.lower()
+        if elem_tag == 'rbf':
+            if rbf is not None:
+                print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mra_path),rbf,elem.text))
+                continue
+            if elem.text is None:
+                continue
+            rbf = elem.text.strip().lower()
+        elif elem_tag == 'rom':
+            attributes = {k.strip().lower(): v for k, v in elem.attrib.items()}
+            if 'zip' in attributes and attributes['zip'] is not None:
+                zips |= {z.strip().lower() for z in attributes['zip'].strip().lower().split('|')}
+
+    return rbf, list(zips)
 
 if __name__ == '__main__':
     dryrun = len(sys.argv) == 2 and sys.argv[1] == '-d'

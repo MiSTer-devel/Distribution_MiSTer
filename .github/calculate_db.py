@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2021 José Manuel Barroso Galindo <theypsilon@gmail.com>
+# Copyright (c) 2021-2022 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
 import os
 from pathlib import Path
@@ -373,16 +373,16 @@ def create_db(folder, options, tags):
                 make_zip_creator(zip_description)\
                     .create_zip(db_finder, zips, zip_id, zip_description, options, tags, stored_folders, zip_creators)
 
-    db_summary = create_summary(db_finder, tags)
+    db_summary = create_summary(db_finder, tags, None)
     db['files'] = db_summary['files']
     db['folders'] = db_summary['folders']
 
     print("Fixing folders...")
 
     for folders in stored_folders:
-        fix_folders(folders, tags)
+        give_folders_tags(folders, tags)
 
-    fix_folders(db['folders'], tags)
+    give_folders_tags(db['folders'], tags)
 
     print('Saving zips...')
 
@@ -434,15 +434,17 @@ def create_db(folder, options, tags):
 
     return db
 
-def fix_folders(folders, tags):
-    for folder in folders:
+def give_folders_tags(folders, tags):
+    for folder in list(sorted(folders, key=len, reverse=True)):
         folder_description = folders[folder]
         if 'path' not in folder_description:
             continue
-        folder_tags = tags.get_tags_for_folder(folder_description['path'])
+        path = folder_description['path']
+        folder_tags = tags.get_tags_for_folder(path)
         if len(folder_tags) > 0:
             folder_description["tags"] = folder_tags
         folder_description.pop('path')
+
 
 class ZipCreator:
     def create_zip(self, db_finder: Finder, zips: Dict[str, Any], zip_id: str, zip_description: Dict[str, Any], options: Dict[str, Any], tags: Tags, stored_folders, zip_creators) -> None:
@@ -491,15 +493,16 @@ class MultiSourcesZipCreator:
         source_parent = zip_description['path']
         summary_name = '%s_summary.json' % zip_id
 
-        multi_summary = create_summary(EmptyFinder(), tags)
+        multi_summary = create_summary(EmptyFinder(), tags, source_parent)
 
         source_name_list = []
         for source in zip_description['sources']:
             db_finder.ignore_folder('./' + source_parent + '/' + source)
             zip_finder = Finder(source_parent + '/' + source)
-            zip_summary = create_summary(zip_finder, tags)
+            zip_summary = create_summary(zip_finder, tags, source)
             file_parent = Path(source_parent + '/' + source)
             zip_summary['folders'][str(file_parent)] = {"path": file_parent}
+            add_missing_folders(zip_summary['folders'], source)
             multi_summary['files'].update(zip_summary['files'])
             multi_summary['folders'].update(zip_summary['folders'])
             source_name_list.append(Path(source).name)
@@ -551,7 +554,7 @@ class MultiSourcesZipCreator:
 
         print('Created zip: ' + self._zip_name)
 
-def create_summary(finder: Finder, tags: Tags):
+def create_summary(finder: Finder, tags: Tags, source):
     delete_list_regex = re.compile("^(.*_)[0-9]{8}(\.[a-zA-Z0-9]+)*$", )
 
     summary = {
@@ -561,7 +564,7 @@ def create_summary(finder: Finder, tags: Tags):
 
     for file in finder.find_all():
         strfile = str(file)
-        summary['folders'][str(file.parent)] = {"path": file.parent} 
+        summary['folders'][str(file.parent)] = {"path": file.parent}
 
         if file.name in ['.delme'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:
             continue
@@ -584,8 +587,23 @@ def create_summary(finder: Finder, tags: Tags):
             summary["files"][strfile]['reboot'] = True
 
     summary['folders'].pop(finder.dir, None)
+    add_missing_folders(summary['folders'], source)
     return summary
 
+def add_missing_folders(folders, source):
+    source = None if source is None else str(source)
+
+    for folder in list(folders):
+        path = Path(folder)
+
+        for parent in path.parents:
+            strparent = str(parent)
+            if strparent in folders or strparent == '.':
+                break
+            if source is not None and strparent == source:
+                break
+
+            folders[strparent] = {"path": parent}
 
 def create_linux_description(repository):
     sd_installer_output = run_stdout('curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/%s/git/trees/HEAD' % repository)

@@ -177,8 +177,14 @@ class Tags:
         if parent == 'games':
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
-            if path.parts[2].lower() == 'palettes':
-                self._append(result, self._use_term('palettes'))
+            
+            second_level = path.parts[2].lower()
+            if len(path.parts) > 3:
+                self._append(result, self._use_term(second_level))
+                
+            if second_level.startswith('boot') and second_level.endswith('.rom):
+               self._append(result, self._use_term('bios'))
+
             if first_level in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
         elif parent == 'cheats':
@@ -578,8 +584,10 @@ def create_summary(finder: Finder, tags: Tags, source):
         delete_list = create_delete_list(strfile, delete_list_regex)
         if len(delete_list) > 0:
             summary["files"][strfile]["delete"] = delete_list
+            
+        file_name = file.name.lower()
 
-        if file.name.lower() == "boot.rom":
+        if file_name == 'boot.rom' or file_name = 'boot1.rom' or file_name = 'boot0.rom':
             summary["files"][strfile]['overwrite'] = False
 
         if strfile in ['MiSTer', 'menu.rbf']:

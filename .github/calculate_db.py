@@ -137,7 +137,9 @@ class Tags:
         suffix = path.suffix.lower()
         stem = path.stem.lower()
 
+        is_doc = False
         if (stem == 'readme' or (parent == 'games' and 'readme' in stem)) and (suffix == '.txt' or suffix == '.md'):
+            is_doc = True
             self._append(result, self._use_term('docs'))
             self._append(result, self._use_term('readme'))
             
@@ -182,9 +184,11 @@ class Tags:
             if len(path.parts) > 3:
                 self._append(result, self._use_term(second_level))
                 
-            if second_level.startswith('boot') and second_level.endswith('.rom):
+            if second_level.endswith('.rom'):
                self._append(result, self._use_term('bios'))
-
+            elif second_level != 'palettes' and suffix != '.rbf' and suffix != '.mra' and not is_doc:
+                self._append(result, self._use_term('extra-utilities))
+                                                  
             if first_level in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
         elif parent == 'cheats':

@@ -187,7 +187,7 @@ class Tags:
             if second_level.endswith('.rom'):
                self._append(result, self._use_term('bios'))
             elif second_level != 'palettes' and suffix != '.rbf' and suffix != '.mra' and not is_doc:
-                self._append(result, self._use_term('extra-utilities))
+                self._append(result, self._use_term('extra-utilities'))
                                                   
             if first_level in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))

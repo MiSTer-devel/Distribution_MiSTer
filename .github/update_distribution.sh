@@ -50,6 +50,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-shadow-masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-scripts"
+    CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Downloader_MiSTer/main/downloader.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_on.sh"

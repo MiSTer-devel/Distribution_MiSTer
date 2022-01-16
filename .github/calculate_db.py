@@ -702,7 +702,7 @@ def force_push_file(file_name, branch):
     run_succesfully('git add README.md || true')
     run_succesfully('git commit -m "-"')
     run_succesfully('git push --force origin %s' % branch)
-    run_unattended('
+    run_unattended("""
         if gh release download all_releases --pattern releases.txt ; then
           cat releases.txt
         fi
@@ -710,7 +710,7 @@ def force_push_file(file_name, branch):
         echo "$DATE: $(git rev-parse --verify HEAD)" >> releases.txt
         gh release create all_releases
         gh release upload all_releases releases.txt --clobber
-                   ')
+                   """)
     print()
     print("New %s ready to be used." % file_name)
 

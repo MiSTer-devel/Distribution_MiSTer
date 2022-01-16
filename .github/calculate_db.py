@@ -702,6 +702,15 @@ def force_push_file(file_name, branch):
     run_succesfully('git add README.md || true')
     run_succesfully('git commit -m "-"')
     run_succesfully('git push --force origin %s' % branch)
+    run_unattended('
+        if gh release download all_releases --pattern releases.txt ; then
+          cat releases.txt
+        fi
+        DATE=$(date +"%Y-%m-%d %T")
+        echo "$DATE: $(git rev-parse --verify HEAD)" >> releases.txt
+        gh release create all_releases
+        gh release upload all_releases releases.txt --clobber
+                   ')
     print()
     print("New %s ready to be used." % file_name)
 
@@ -728,6 +737,11 @@ def run_stdout(command):
         raise RunException("subprocess.run Return Code was '%d'" % result.returncode)
 
     return result.stdout.decode()
+
+
+def run_unattended(command, env=None):
+    print('run_unattended: ' + command)
+    return subprocess.run(command, shell=True, stderr=subprocess.STDOUT, env=env)
 
 
 def create_delete_list(strfile, regex):

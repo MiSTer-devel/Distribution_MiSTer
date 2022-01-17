@@ -703,17 +703,11 @@ def force_push_file(file_name, branch):
     run_succesfully('git commit -m "-"')
     run_succesfully('git push --force origin %s' % branch)
     run_unattended("""
-        sha=$(git rev-parse --verify HEAD)
-        git checkout --orphan trash
-        git reset
-        ech "${sha}" > trash.txt
-        git add trash.txt
-        git commit -m "-"
         if gh release download all_releases --pattern releases.txt ; then
           cat releases.txt
         fi
         DATE=$(date +"%Y-%m-%d %T")
-        echo "$DATE: ${sha}" >> releases.txt
+        echo "$DATE: $(git rev-parse --verify HEAD)" >> releases.txt
         gh release create all_releases
         gh release upload all_releases releases.txt --clobber
                    """)

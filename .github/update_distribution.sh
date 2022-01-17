@@ -22,7 +22,15 @@ update_distribution() {
         done
     done
 
-    wait
+    FAILING_CHILD=
+    for job in `jobs -p` ; do
+        wait ${job} || let "FAILING_CHILD=${job}"
+    done
+
+    if [[ "${FAILING_CHILD}" != "" ]] ; then
+        echo "Child failed: ${FAILING_CHILD}"
+        exit 1
+    fi
 
     if [[ "${PUSH_COMMAND}" != "--push" ]] ; then
         return

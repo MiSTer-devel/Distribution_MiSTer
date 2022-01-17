@@ -1,0 +1,38 @@
+####
+# Name: Nintendo Game Boy Advanced SP
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: RGB
+####
+
+Resolution=0
+v2
+4,4
+52a,32a,61d,61d
+52a,32a,70a,70a
+52a,32a,61d,61d
+00d,00d,00d,00d
+
+Resolution=1080
+v2
+6,6
+52a,52a,32a,32a,62a,62a
+52a,52a,32a,32a,62a,62a
+52a,52a,32a,32a,62a,62a
+52a,52a,32a,32a,62a,62a
+52a,52a,32a,32a,62a,62a
+00d,00d,00d,00d,00d,00d
+
+Resolution=1440
+v2
+9,9
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+52a,52a,52a,32a,32a,32a,62a,62a,62a
+00d,00d,00d,00d,00d,00d,00d,00d,00d

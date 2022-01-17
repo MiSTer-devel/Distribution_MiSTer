@@ -1,0 +1,41 @@
+####
+# Name: Nintendo Game Boy Pocket
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: Monochrome
+####
+
+Resolution=0
+v2
+5,5
+70f,70f,70f,70f,73b
+70f,00e,00e,00e,73b
+70f,00e,00e,00e,73b
+70f,00e,00e,00e,73b
+73b,73b,73b,73b,73b
+
+Resolution=1080
+v2
+7,7
+70f,70f,70f,70f,70f,70f,73b
+70f,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,73b
+73b,73b,73b,73b,73b,73b,73b
+
+Resolution=1440
+v2
+10,10
+70f,70f,70f,70f,70f,70f,70f,70f,70f,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+70f,00e,00e,00e,00e,00e,00e,00e,00e,73b
+73b,73b,73b,73b,73b,73b,73b,73b,73b,73b

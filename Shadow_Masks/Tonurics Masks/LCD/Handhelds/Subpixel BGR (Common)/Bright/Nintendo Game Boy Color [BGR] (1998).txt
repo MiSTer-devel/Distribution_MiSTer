@@ -1,0 +1,41 @@
+####
+# Name: Nintendo Game Boy Color
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: BGR
+####
+
+Resolution=0
+v2
+5,5
+32a,61d,70d,21d,52a
+32a,61d,70d,21d,52a
+32a,61d,70d,21d,52a
+32a,61d,70d,21d,52a
+01c,01c,01c,01c,01c
+
+Resolution=1080
+v2
+7,7
+33a,61d,61d,70a,21d,21d,53a
+33a,61d,61d,70a,21d,21d,53a
+33a,61d,61d,70a,21d,21d,53a
+33a,61d,61d,70a,21d,21d,53a
+33a,61d,61d,70a,21d,21d,53a
+33a,61d,61d,70a,21d,21d,53a
+01c,01c,01c,01c,01c,01c,01c
+
+Resolution=1440
+v2
+10,10
+33a,61d,61d,61d,70a,70a,21d,21d,21d,53a
+33a,31d,61d,61d,70a,70a,21d,21d,51d,53a
+33a,61d,61d,61d,70a,70a,21d,21d,21d,53a
+33a,31d,61d,61d,70a,70a,21d,21d,51d,53a
+33a,61d,61d,61d,70a,70a,21d,21d,21d,53a
+33a,31d,61d,61d,70a,70a,21d,21d,51d,53a
+33a,61d,61d,61d,70a,70a,21d,21d,21d,53a
+33a,31d,61d,61d,70a,70a,21d,21d,51d,53a
+01c,01c,01c,01c,01c,01c,01c,01c,01c,01c
+01c,01c,01c,01c,01c,01c,01c,01c,01c,01c

@@ -1,0 +1,41 @@
+####
+# Name: Sega Game Gear
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: RGB
+####
+
+Resolution=0
+v2
+5,5
+52a,60e,70d,60e,32a
+52a,60e,70d,60e,32a
+52a,60e,70d,60e,32a
+52a,60e,70d,60e,32a
+01e,01e,01e,01e,01e
+
+Resolution=1080
+v2
+7,7
+52a,60e,60e,70d,60e,60e,32a
+52a,60e,60e,70d,60e,60e,32a
+52a,60e,60e,70d,60e,60e,32a
+52a,60e,60e,70d,60e,60e,32a
+52a,60e,60e,70d,60e,60e,32a
+52a,60e,60e,70d,60e,60e,32a
+01e,01e,01e,01e,01e,01e,01e
+
+Resolution=1440
+v2
+10,10
+52a,01e,01e,01e,01e,01e,01e,01e,01e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+52a,60e,60e,60e,70d,70d,60e,60e,60e,32a
+01e,01e,01e,01e,01e,01e,01e,01e,01e,01e

@@ -1,0 +1,41 @@
+####
+# Name: Nintendo Game Boy
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: Monochrome
+####
+
+Resolution=0
+v2
+5,5
+00e,00e,00e,00e,74a
+00e,00e,00e,00e,74a
+00e,00e,00e,00e,74a
+00e,00e,00e,00e,74a
+74a,74a,74a,74a,74a
+
+Resolution=1080
+v2
+7,7
+00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,74a
+74a,74a,74a,74a,74a,74a,74a
+
+Resolution=1440
+v2
+10,10
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+00e,00e,00e,00e,00e,00e,00e,00e,00e,74a
+74a,74a,74a,74a,74a,74a,74a,74a,74a,74a

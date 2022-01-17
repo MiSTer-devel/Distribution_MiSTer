@@ -1,0 +1,12 @@
+####
+# Name: RBgg (Green)
+# Author: Tonurics
+# Type: LED
+# Genre: Mosaic
+####
+
+Resolution=0
+v2
+2,2
+42a,21d
+12a,21d

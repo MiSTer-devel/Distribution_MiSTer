@@ -1,0 +1,41 @@
+####
+# Name: Sega Game Gear
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: BGR
+####
+
+Resolution=0
+v2
+5,5
+12a,20e,70d,20e,42a
+12a,20e,70d,20e,42a
+12a,20e,70d,20e,42a
+12a,20e,70d,20e,42a
+01e,01e,01e,01e,01e
+
+Resolution=1080
+v2
+7,7
+12a,20e,20e,70d,20e,20e,42a
+12a,20e,20e,70d,20e,20e,42a
+12a,20e,20e,70d,20e,20e,42a
+12a,20e,20e,70d,20e,20e,42a
+12a,20e,20e,70d,20e,20e,42a
+12a,20e,20e,70d,20e,20e,42a
+01e,01e,01e,01e,01e,01e,01e
+
+Resolution=1440
+v2
+10,10
+12a,01e,01e,01e,01e,01e,01e,01e,01e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+12a,20e,20e,20e,70d,70d,20e,20e,20e,42a
+01e,01e,01e,01e,01e,01e,01e,01e,01e,01e

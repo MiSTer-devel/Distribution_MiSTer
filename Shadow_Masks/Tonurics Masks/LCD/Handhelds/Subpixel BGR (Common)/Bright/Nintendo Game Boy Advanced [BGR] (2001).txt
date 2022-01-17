@@ -1,0 +1,38 @@
+####
+# Name: Nintendo Game Boy Advanced
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: BGR
+####
+
+Resolution=0
+v2
+4,4
+31d,51d,51d,61d
+31d,51d,61d,61d
+31d,51d,61d,31d
+118,418,20c,20c
+
+Resolution=1080
+v2
+6,6
+31d,31d,51d,51d,61d,61d
+31d,31d,51d,51d,61d,61d
+31b,31b,51b,51b,61b,61b
+31d,31d,51d,51d,61d,61d
+31d,31d,51d,51d,61d,61d
+118,118,418,418,218,218
+
+Resolution=1440
+v2
+9,9
+30e,30e,30e,50e,50e,50e,60e,60e,60e
+30e,30e,30e,50e,50e,50e,60e,60e,60e
+30e,30e,30e,50e,50e,50e,60e,60e,60e
+30e,31b,30e,50e,51b,50e,60e,61b,60e
+30e,31b,30e,50e,51b,50e,60e,61b,60e
+30e,30e,30e,50e,50e,50e,60e,60e,60e
+30e,30e,30e,50e,50e,50e,60e,60e,60e
+30e,30e,30e,50e,50e,50e,60e,60e,60e
+118,118,118,418,418,418,218,218,218

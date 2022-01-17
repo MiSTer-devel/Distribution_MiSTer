@@ -1,0 +1,41 @@
+####
+# Name: Bandai WonderSwan SwanCrystal
+# Author: Tonurics
+# Type: LCD
+# Genre: Handheld
+# Sub-Pixel Layout: RGB
+####
+
+Resolution=0
+v2
+5,5
+42a,21d,72a,21d,12a
+42a,21d,72a,21d,12a
+42a,21d,72a,21d,12a
+42a,21d,72a,21d,12a
+42a,21d,72a,21d,12a
+
+Resolution=1080
+v2
+7,7
+42a,41d,22a,72a,22a,11d,12a
+42a,41d,22a,72a,22a,11d,12a
+42a,41d,22a,72a,22a,11d,12a
+42a,41d,22a,72a,22a,11d,12a
+42a,41d,22a,72a,22a,11d,12a
+42a,41d,22a,72a,22a,11d,12a
+42a,41d,22a,72a,22a,11d,12a
+
+Resolution=1440
+v2
+10,10
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a
+42a,42a,21d,21d,72a,72a,21d,21d,12a,12a

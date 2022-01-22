@@ -703,9 +703,7 @@ def force_push_file(file_name, branch):
     run_succesfully('git commit -m "-"')
     run_succesfully('git push --force origin %s' % branch)
     run_unattended("""
-        if gh release download all_releases --pattern releases.txt ; then
-          cat releases.txt
-        fi
+        gh release download all_releases --pattern releases.txt
         DATE=$(date +"%Y-%m-%d %T")
         echo "$DATE: $(git rev-parse --verify HEAD)" >> releases.txt
         gh release create all_releases

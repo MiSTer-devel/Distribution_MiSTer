@@ -15,3 +15,24 @@ For downloading all of these files directly from your MiSTer, use the [MiSTer Do
 #### List of Tags that you may use with the Downloader and the 'Custom Download Filters' feature.
 
 ALL_TAGS_GO_HERE
+
+##### Some relevant tag descriptions:
+
+- `arcade-cores` / `arcade`: All arcade cores and MRA files.
+- `computer-cores` / `computer`: All computer cores.
+- `console-cores` / `console`: All console cores.
+- `other-cores` / `other`: All other cores.
+- `service-cores` / `utility`: All utility cores.
+- `cores`: All cores (RBF files).
+- `mra`: All MRA files & folders.
+- `alternatives`: All MRA Alternatives
+- `hbmame`: All files & folders linked to the HBMame collection.
+- `handheld2p`: All 2 Player versions for Handheld cores.
+- `filters_video`: All video filters (`gamma` & `filters` & `shadow_masks`).
+- `all_filters`: All video & audio filters (`filters_video` & `filters_audio`).
+- `essential`: Menu core & MiSTer firmware.
+- `readme`: All README files.
+- `docs`: All documentation files & folders, including README files.
+- `extra-utilities`: All extra utilities that are installed in games folders of some computer cores.
+- `bios`: All bioses that are installed in the games folders for some computer & console cores.
+- `cheats`: All cheat files & folders.

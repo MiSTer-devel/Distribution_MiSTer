@@ -12,7 +12,11 @@ If you want to check more about the MiSTer project, please check [this wiki](htt
 
 For downloading all of these files directly from your MiSTer, use the [MiSTer Downloader](https://github.com/MiSTer-devel/Downloader_MiSTer).
 
-#### List of Tags that you may use with the Downloader and the 'Custom Download Filters' feature.
+#### Tags that you may use with 'Download Filters' feature
+
+Read about how to use them [here](https://github.com/MiSTer-devel/Downloader_MiSTer/blob/main/docs/download-filters.md).
+
+##### List:
 
 ALL_TAGS_GO_HERE
 

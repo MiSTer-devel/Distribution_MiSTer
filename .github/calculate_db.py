@@ -124,6 +124,9 @@ class Tags:
             self._index += 1
 
     def get_tags_for_file(self, path: Path):
+        return sorted(self._get_tags_for_file(path))
+
+    def _get_tags_for_file(self, path: Path):
         parent = path.parts[0].lower()
         if parent[0] == '_':
             parent = parent[1:]
@@ -213,6 +216,9 @@ class Tags:
         return False
 
     def get_tags_for_folder(self, path: Path):
+        return sorted(self._get_tags_for_folder(path))
+
+    def _get_tags_for_folder(self, path: Path):
         if len(path.parts) == 0:
             return []
 

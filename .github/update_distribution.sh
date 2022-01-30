@@ -53,7 +53,7 @@ fetch_core_urls() {
     CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
     CORE_URLS=${CORE_URLS}$'\n'"user-content-filters"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-shadow-masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-folder-Shadow_Masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-scripts"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"
@@ -62,7 +62,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-folders"$'\n'"games/TGFX16-CD"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-empty-folder"$'\n'"games/TGFX16-CD"
     CORE_URLS=${CORE_URLS}$'\n'"user-cheats"$'\n'"https://gamehacking.org/mister/"
 }
 
@@ -83,9 +83,9 @@ classify_core_categories() {
             "user-content-zip-release") ;&
             "user-content-scripts") ;&
             "user-cheats") ;&
-            "user-content-folders") ;&
+            "user-content-empty-folder") ;&
             "user-content-filters") ;&
-            "user-content-shadow-masks") ;&
+            "user-content-folder-"*) ;&
             "user-content-mra-alternatives") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
             "user-content-fpga-cores") ;&
@@ -125,7 +125,7 @@ process_url() {
     local EARLY_INSTALLER=
     case "${CATEGORY}" in
         "user-content-scripts") EARLY_INSTALLER=install_script ;;
-        "user-content-folders") EARLY_INSTALLER=install_folder ;;
+        "user-content-empty-folder") EARLY_INSTALLER=install_empty_folder ;;
         "user-cheats") EARLY_INSTALLER=install_cheats ;;
         *) ;;
     esac
@@ -158,7 +158,7 @@ process_url() {
         "user-content-fonts") INSTALLER=install_fonts ;;
         "user-content-mra-alternatives") INSTALLER=install_mra_alternatives ;;
         "user-content-filters") INSTALLER=install_filters ;;
-        "user-content-shadow-masks") INSTALLER=install_shadow_masks ;;
+        "user-content-folder-"*) INSTALLER=install_folder ;;
         *) INSTALLER=install_other_core ;;
     esac
     
@@ -419,16 +419,6 @@ install_fonts() {
     done
 }
 
-install_shadow_masks() {
-    local TMP_FOLDER="${1}"
-    local TARGET_DIR="${2}"
-    local IFS=$'\n'
-
-    echo "Installing Shadow Masks ${4}"
-
-    copy_file "${TMP_FOLDER}/Shadow_Masks" "${TARGET_DIR}/Shadow_Masks"
-}
-
 install_script() {
     local URL="${1}"
     local TARGET_DIR="${2}"
@@ -441,6 +431,25 @@ install_script() {
 }
 
 install_folder() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+    local CATEGORY="${3}"
+    local URL="${4}"
+    local IFS=$'\n'
+
+    if ! [[ ${CATEGORY} =~ ^user-content-folder-([a-zA-Z0-9_-]+)$ ]] ; then
+        >&2 echo "WARNING! Wrong category '${CATEGORY}' or wrong repository url '${URL}'."
+        return
+    fi
+
+    local FOLDER="${BASH_REMATCH[1]}"
+
+    echo "Installing folder '${FOLDER}' from ${URL}"
+
+    copy_file "${TMP_FOLDER}/${FOLDER}" "${TARGET_DIR}/${FOLDER}"
+}
+
+install_empty_folder() {
     local URL="${1}"
     local TARGET_DIR="${2}"
     touch_folder "${TARGET_DIR}/${URL}"

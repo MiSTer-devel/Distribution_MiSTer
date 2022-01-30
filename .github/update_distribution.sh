@@ -51,8 +51,8 @@ fetch_core_urls() {
     local MENU_URL=$(echo "${CORE_URLS}" | grep -io 'https://github.com/[a-zA-Z0-9./_-]*Menu_MiSTer')
     CORE_URLS=$(echo "${CORE_URLS}" |  sed 's/https:\/\/github.com\/[a-zA-Z0-9.\/_-]*Menu_MiSTer//')
     CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-filters"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-folder-Filters|Filters_Audio|Gamma"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folder-Shadow_Masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-scripts"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"
@@ -84,7 +84,6 @@ classify_core_categories() {
             "user-content-scripts") ;&
             "user-cheats") ;&
             "user-content-empty-folder") ;&
-            "user-content-filters") ;&
             "user-content-folder-"*) ;&
             "user-content-mra-alternatives") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
@@ -157,8 +156,7 @@ process_url() {
         "user-content-zip-release") INSTALLER=install_zip_release ;;
         "user-content-fonts") INSTALLER=install_fonts ;;
         "user-content-mra-alternatives") INSTALLER=install_mra_alternatives ;;
-        "user-content-filters") INSTALLER=install_filters ;;
-        "user-content-folder-"*) INSTALLER=install_folder ;;
+        "user-content-folder-"*) INSTALLER=install_folders ;;
         *) INSTALLER=install_other_core ;;
     esac
     
@@ -396,17 +394,6 @@ install_mra_alternatives() {
     copy_file "${TMP_FOLDER}/_alternatives" "${TARGET_DIR}/_Arcade/_alternatives"
 }
 
-install_filters() {
-    local TMP_FOLDER="${1}"
-    local TARGET_DIR="${2}"
-
-    echo "Installing Filters ${4}"
-
-    copy_file "${TMP_FOLDER}/Filters" "${TARGET_DIR}/Filters"
-    copy_file "${TMP_FOLDER}/Filters_Audio" "${TARGET_DIR}/Filters_Audio"
-    copy_file "${TMP_FOLDER}/Gamma" "${TARGET_DIR}/Gamma"
-}
-
 install_fonts() {
     local TMP_FOLDER="${1}"
     local TARGET_DIR="${2}"
@@ -430,23 +417,26 @@ install_script() {
     popd > /dev/null 2>&1
 }
 
-install_folder() {
+install_folders() {
     local TMP_FOLDER="${1}"
     local TARGET_DIR="${2}"
     local CATEGORY="${3}"
     local URL="${4}"
     local IFS=$'\n'
 
-    if ! [[ ${CATEGORY} =~ ^user-content-folder-([a-zA-Z0-9_-]+)$ ]] ; then
+    if ! [[ ${CATEGORY} =~ ^user-content-folder-(([a-zA-Z0-9_-]+[|]?)+)$ ]] ; then
         >&2 echo "WARNING! Wrong category '${CATEGORY}' or wrong repository url '${URL}'."
         return
     fi
 
-    local FOLDER="${BASH_REMATCH[1]}"
+    local FOLDERS="${BASH_REMATCH[1]}"
 
-    echo "Installing folder '${FOLDER}' from ${URL}"
+    local IFS="|"
+    for folder in ${FOLDERS} ; do
+        echo "Installing folder '${folder}' from ${URL}"
 
-    copy_file "${TMP_FOLDER}/${FOLDER}" "${TARGET_DIR}/${FOLDER}"
+        copy_file "${TMP_FOLDER}/${folder}" "${TARGET_DIR}/${folder}"
+    done
 }
 
 install_empty_folder() {

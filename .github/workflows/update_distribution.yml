@@ -3,6 +3,9 @@ name: Update Distribution
 on:
   schedule:
   - cron:  "*/20 * * * *"
+  push:
+    branches:
+      - develop
   workflow_dispatch:
 
 jobs:

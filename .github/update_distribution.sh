@@ -52,9 +52,9 @@ fetch_core_urls() {
     CORE_URLS=$(echo "${CORE_URLS}" |  sed 's/https:\/\/github.com\/[a-zA-Z0-9.\/_-]*Menu_MiSTer//')
     CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-folder-Filters|Filters_Audio|Gamma"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-folder-Shadow_Masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-folder-Presets"$'\n'"https://github.com/MiSTer-devel/Presets_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Filters|Filters_Audio|Gamma"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Shadow_Masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Presets"$'\n'"https://github.com/MiSTer-devel/Presets_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-scripts"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"
@@ -85,7 +85,7 @@ classify_core_categories() {
             "user-content-scripts") ;&
             "user-cheats") ;&
             "user-content-empty-folder") ;&
-            "user-content-folder-"*) ;&
+            "user-content-folders-"*) ;&
             "user-content-mra-alternatives") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
             "user-content-fpga-cores") ;&
@@ -157,7 +157,7 @@ process_url() {
         "user-content-zip-release") INSTALLER=install_zip_release ;;
         "user-content-fonts") INSTALLER=install_fonts ;;
         "user-content-mra-alternatives") INSTALLER=install_mra_alternatives ;;
-        "user-content-folder-"*) INSTALLER=install_folders ;;
+        "user-content-folders-"*) INSTALLER=install_folders ;;
         *) INSTALLER=install_other_core ;;
     esac
     
@@ -425,7 +425,7 @@ install_folders() {
     local URL="${4}"
     local IFS=$'\n'
 
-    if ! [[ ${CATEGORY} =~ ^user-content-folder-(([a-zA-Z0-9_-]+[|]?)+)$ ]] ; then
+    if ! [[ ${CATEGORY} =~ ^user-content-folders-(([a-zA-Z0-9_-]+[|]?)+)$ ]] ; then
         >&2 echo "WARNING! Wrong category '${CATEGORY}' or wrong repository url '${URL}'."
         return
     fi

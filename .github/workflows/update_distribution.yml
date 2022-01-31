@@ -20,6 +20,12 @@ jobs:
       with:
         ref: develop
 
+    - name: Test Calculate Db
+      run: |
+        set -euo pipefail
+        cd .github/tests
+        ./test_calculate_db.py
+
     - name: Update Distribution
       run: |
         set -euo pipefail

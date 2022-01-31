@@ -17,11 +17,11 @@ db = calculate_db.create_db('../..', {
     'zips_config': ''
 }, tags)
 
-calculate_db.save_data_to_compressed_json(db, 'db1.json', 'db1.json.zip')
+calculate_db.save_data_to_compressed_json(db, 'db.json', 'db1.json.zip')
 
 hash1 = calculate_db.hash('db1.json.zip')
 
-calculate_db.save_data_to_compressed_json(db, 'db2.json', 'db2.json.zip')
+calculate_db.save_data_to_compressed_json(db, 'db.json', 'db2.json.zip')
 
 hash2 = calculate_db.hash('db2.json.zip')
 

@@ -117,10 +117,13 @@ is_standard_core() {
     fi
 }
 
+PROCESS_URL_CTX=
 process_url() {
     local URL="${1}"
     local CATEGORY="${2}"
     local TARGET_DIR="${3}"
+
+    PROCESS_URL_CTX="${URL}"
 
     local EARLY_INSTALLER=
     case "${CATEGORY}" in
@@ -536,7 +539,7 @@ is_not_file_extension() {
     local EXPECTED_EXTENSION="${2}"
     local ACTUAL_EXTENSION="${INPUT_FILE#*.}"
     if [[ "${INPUT_FILE}" == "" ]] || [[ "${ACTUAL_EXTENSION,,}" != "${EXPECTED_EXTENSION,,}" ]] ; then
-        >&2 echo "Not ${EXPECTED_EXTENSION^^}."
+        >&2 echo "${PROCESS_URL_CTX}: ${INPUT_FILE} is NOT a ${EXPECTED_EXTENSION^^} file."
         return 0
     fi
     return 1

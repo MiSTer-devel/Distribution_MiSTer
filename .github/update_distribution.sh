@@ -224,23 +224,33 @@ install_console_core() {
         for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
             copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/games/${folder}/${readme}"
         done
-
-        for palette in $(files_with_stripped_date "${TMP_FOLDER}/palettes" | uniq) ; do
-
-            get_latest_palette "${TMP_FOLDER}" "palettes"
-            local LAST_PALETTE_FILE="${GET_LATEST_PALETTE_RET}"
-
-            if is_not_zip_release "${LAST_PALETTE_FILE}" ; then
-                continue
-            fi
-
+        
+        if [ -d "${TMP_FOLDER}/Palette" ] ; then
             local PALETTES_FOLDER="${TARGET_DIR}/games/${folder}/Palettes/"
-            mkdir -p "${PALETTES_FOLDER}"
-            unzip -q -o "${TMP_FOLDER}/palettes/${LAST_PALETTE_FILE}" -d "${PALETTES_FOLDER}"
+            cp -r "${TMP_FOLDER}/Palette" "${PALETTES_FOLDER}"
             pushd "${PALETTES_FOLDER}" > /dev/null 2>&1
             find . -type f -not -iname '*.pal' -and -not -iname '*.gbp' -delete
             popd > /dev/null 2>&1
-        done
+        else
+
+            for palette in $(files_with_stripped_date "${TMP_FOLDER}/palettes" | uniq) ; do
+
+                get_latest_palette "${TMP_FOLDER}" "palettes"
+                local LAST_PALETTE_FILE="${GET_LATEST_PALETTE_RET}"
+
+                if is_not_zip_release "${LAST_PALETTE_FILE}" ; then
+                    continue
+                fi
+
+                local PALETTES_FOLDER="${TARGET_DIR}/games/${folder}/Palettes/"
+                mkdir -p "${PALETTES_FOLDER}"
+                unzip -q -o "${TMP_FOLDER}/palettes/${LAST_PALETTE_FILE}" -d "${PALETTES_FOLDER}"
+                pushd "${PALETTES_FOLDER}" > /dev/null 2>&1
+                find . -type f -not -iname '*.pal' -and -not -iname '*.gbp' -delete
+                popd > /dev/null 2>&1
+            done
+        
+        fi
 
         touch_folder "${TARGET_DIR}/games/${folder}"
     done

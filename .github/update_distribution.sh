@@ -220,7 +220,7 @@ install_console_core() {
         copy_file "${TMP_FOLDER}/releases/${LAST_RELEASE_FILE}" "${TARGET_DIR}/_Console/${LAST_RELEASE_FILE}"
     done
 
-    for folder in $(game_folders "${TMP_FOLDER}") ; dod
+    for folder in $(game_folders "${TMP_FOLDER}") ; do
         for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
             copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/games/${folder}/${readme}"
         done

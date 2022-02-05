@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import importlib.util
+from pathlib import Path
+
 spec = importlib.util.spec_from_file_location("calculate_db", "../calculate_db.py")
 calculate_db = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(calculate_db)
@@ -28,6 +30,9 @@ hash2 = calculate_db.hash('db2.json.zip')
 print("hash1 %s" % hash1)
 print("hash2 %s" % hash2)
 
+Path('db.json').unlink(missing_ok=True)
+Path('db1.json.zip').unlink(missing_ok=True)
+Path('db2.json.zip').unlink(missing_ok=True)
 
 if hash1 != hash2:
     print("hash1 is not same as hash2")

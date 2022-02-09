@@ -109,6 +109,8 @@ distribution_mister_aliases = [
 
 filter_part_regex = re.compile("[-_a-z0-9.]$", )
 
+main_binaries = ['MiSTer', 'menu.rbf']
+
 class Tags:
     def __init__(self) -> None:
         self._dict = {}
@@ -572,7 +574,7 @@ class MultiSourcesZipCreator:
         }
 
         print('Created zip: ' + self._zip_name)
-
+            
 def create_summary(finder: Finder, tags: Tags, source):
     delete_list_regex = re.compile("^(.*_)[0-9]{8}(\.[a-zA-Z0-9]+)*$", )
 
@@ -602,9 +604,11 @@ def create_summary(finder: Finder, tags: Tags, source):
 
         if file_name == 'boot.rom' or file_name == 'boot1.rom' or file_name == 'boot0.rom':
             summary["files"][strfile]['overwrite'] = False
-
-        if strfile in ['MiSTer', 'menu.rbf']:
+            
+        if strfile in main_binaries or strfile.startswith('linux/'):
             summary["files"][strfile]['path'] = 'system'
+            
+        if strfile in main_binaries:
             summary["files"][strfile]['reboot'] = True
 
     summary['folders'].pop(finder.dir, None)

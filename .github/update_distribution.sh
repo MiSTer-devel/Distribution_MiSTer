@@ -63,6 +63,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-linux-binary"$'\n'"https://github.com/MiSTer-devel/PDFViewer_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-empty-folder"$'\n'"games/TGFX16-CD"
     CORE_URLS=${CORE_URLS}$'\n'"user-cheats"$'\n'"https://gamehacking.org/mister/"
 }
@@ -81,6 +82,7 @@ classify_core_categories() {
             "user-content-consoles---classic") CURRENT_CORE_CATEGORY="_Console" ;;
             "user-content-other-systems") CURRENT_CORE_CATEGORY="_Other" ;;
             "user-content-service-cores") CURRENT_CORE_CATEGORY="_Utility" ;;
+            "user-content-linux-binary") CURRENT_CORE_CATEGORY="linux" ;;
             "user-content-zip-release") ;&
             "user-content-scripts") ;&
             "user-cheats") ;&
@@ -158,6 +160,7 @@ process_url() {
         "_Console") INSTALLER=install_console_core ;;
         "main") INSTALLER=install_main_binary ;;
         "user-content-zip-release") INSTALLER=install_zip_release ;;
+        "user-content-linux-binary") INSTALLER=install_linux_binary ;;
         "user-content-fonts") INSTALLER=install_fonts ;;
         "user-content-mra-alternatives") INSTALLER=install_mra_alternatives ;;
         "user-content-folders-"*) INSTALLER=install_folders ;;
@@ -363,6 +366,24 @@ install_main_binary() {
         fi
 
         copy_file "${TMP_FOLDER}/releases/${LAST_RELEASE_FILE}" "${TARGET_DIR}/${bin%%?????????}${FILE_EXTENSION}"
+    done
+}
+
+install_linux_binary() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+    local IFS=$'\n'
+
+    for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
+
+        get_latest_release "${TMP_FOLDER}" "${bin}"
+        local LAST_RELEASE_FILE="${GET_LATEST_RELEASE_RET}"
+
+        if is_empty_release "${LAST_RELEASE_FILE}" ; then
+            continue
+        fi
+
+        copy_file "${TMP_FOLDER}/releases/${LAST_RELEASE_FILE}" "${TARGET_DIR}/linux/${LAST_RELEASE_FILE%%?????????}"
     done
 }
 

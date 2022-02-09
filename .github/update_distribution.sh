@@ -50,7 +50,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'$(curl -sSLf "$MISTER_URL/wiki"| awk '/user-content-fpga-cores/,/user-content-development/' | grep -ioE '(https://github.com/[a-zA-Z0-9./_-]*[_-]MiSTer/tree/[a-zA-Z0-9-]+)|(https://github.com/[a-zA-Z0-9./_-]*[_-]MiSTer)|(user-content-[a-zA-Z0-9-]*)')
     local MENU_URL=$(echo "${CORE_URLS}" | grep -io 'https://github.com/[a-zA-Z0-9./_-]*Menu_MiSTer')
     CORE_URLS=$(echo "${CORE_URLS}" |  sed 's/https:\/\/github.com\/[a-zA-Z0-9.\/_-]*Menu_MiSTer//')
-    CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
+    CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'"user-content-linux-binary"$'\n'"https://github.com/MiSTer-devel/PDFViewer_MiSTer"$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/[a-zA-Z0-9./_-]*_MiSTer\)' | awk '!a[$0]++')
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Filters|Filters_Audio|Gamma"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Shadow_Masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
@@ -63,7 +63,6 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"
-    CORE_URLS=${CORE_URLS}$'\n'"user-content-linux-binary"$'\n'"https://github.com/MiSTer-devel/PDFViewer_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-empty-folder"$'\n'"games/TGFX16-CD"
     CORE_URLS=${CORE_URLS}$'\n'"user-cheats"$'\n'"https://gamehacking.org/mister/"
 }

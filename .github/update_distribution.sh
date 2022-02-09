@@ -171,6 +171,7 @@ process_url() {
         INSTALLER=install_atari800
     fi
 
+    echo ${INSTALLER} "${TMP_FOLDER}" "${TARGET_DIR}" "${CATEGORY}" "${URL}"
     ${INSTALLER} "${TMP_FOLDER}" "${TARGET_DIR}" "${CATEGORY}" "${URL}"
 
     rm -rf "${TMP_FOLDER}"

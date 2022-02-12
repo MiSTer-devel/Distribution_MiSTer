@@ -213,6 +213,10 @@ install_console_core() {
 
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
 
+        if is_arcade_core "${bin}" ; then
+            continue
+        fi
+        
         get_latest_release "${TMP_FOLDER}" "${bin}"
         local LAST_RELEASE_FILE="${GET_LATEST_RELEASE_RET}"
 
@@ -567,6 +571,13 @@ is_empty_release() {
     local RELEASE_FILE="${1}"
     if [[ "${RELEASE_FILE}" == "" ]] ; then
         >&2 echo "Empty."
+        return 0
+    fi
+    return 1
+}
+
+is_arcade_core() {
+    if [[ "${1^^}" =~ ^ARCADE-.*$ ]] ; then
         return 0
     fi
     return 1

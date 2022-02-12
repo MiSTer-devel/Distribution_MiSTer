@@ -188,6 +188,8 @@ install_arcade_core() {
     if [[ "${BINARY_NAMES}" == "MRA-Alternatives" ]] ; then
         return
     fi
+    
+    local ARCADE_INSTALLED="false"
 
     for bin in ${BINARY_NAMES} ; do
 
@@ -195,6 +197,12 @@ install_arcade_core() {
         local LAST_RELEASE_FILE="${GET_LATEST_RELEASE_RET}"
 
         if is_not_rbf_release "${LAST_RELEASE_FILE}" ; then
+            continue
+        fi
+
+        if is_arcade_core "${bin}" ; then
+            ARCADE_INSTALLED="true"
+        elif [[ "${ARCADE_INSTALLED}" == "true" ]] ; then
             continue
         fi
 

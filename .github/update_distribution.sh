@@ -184,6 +184,10 @@ install_arcade_core() {
     touch_folder "${TARGET_DIR}/games/hbmame"
     touch_folder "${TARGET_DIR}/games/mame"
 
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
+
     local BINARY_NAMES=$(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq)
     if [[ "${BINARY_NAMES}" == "MRA-Alternatives" ]] ; then
         return
@@ -219,6 +223,10 @@ install_console_core() {
     local TARGET_DIR="${2}"
     local IFS=$'\n'
 
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
+
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
 
         if is_arcade_core "${bin}" ; then
@@ -237,9 +245,19 @@ install_console_core() {
 
     for folder in $(game_folders "${TMP_FOLDER}") ; do
         for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
-            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/games/${folder}/${readme}"
+            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/docs/${folder}/${readme}"
         done
-        
+
+        for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
+            local EXTENSION="${file##*.}"
+            if [[ "${EXTENSION,,}" == "mra" ]] ; then
+                continue
+            fi
+            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
+        done
+
+        touch_folder "${TARGET_DIR}/games/${folder}"
+
         local TARGET_PALETTES_FOLDER="${TARGET_DIR}/games/${folder}/Palettes/"
         for palette_folder in Palette Palettes palettes ; do
             local SOURCE_PALETTES_FOLDER="${TMP_FOLDER}/${palette_folder}/"
@@ -254,7 +272,6 @@ install_console_core() {
             break
         done
 
-        touch_folder "${TARGET_DIR}/games/${folder}"
     done
 }
 
@@ -262,6 +279,10 @@ install_computer_core() {
     local TMP_FOLDER="${1}"
     local TARGET_DIR="${2}"
     local IFS=$'\n'
+
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
 
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
 
@@ -283,12 +304,12 @@ install_computer_core() {
             folder="SharpMZ"
         fi
 
-        for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
-            copy_file "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}/games/${folder}/${file}"
+        for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
+            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/docs/${folder}/${readme}"
         done
 
-        for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
-            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/games/${folder}/${readme}"
+        for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
+            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
         done
 
         touch_folder "${TARGET_DIR}/games/${folder}"
@@ -301,6 +322,10 @@ install_other_core() {
     local CATEGORY="${3}"
     local IFS=$'\n'
 
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
+
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
 
         get_latest_release "${TMP_FOLDER}" "${bin}"
@@ -311,6 +336,17 @@ install_other_core() {
         fi
 
         copy_file "${TMP_FOLDER}/releases/${LAST_RELEASE_FILE}" "${TARGET_DIR}/${CATEGORY}/${LAST_RELEASE_FILE}"
+    done
+
+    for folder in $(game_folders "${TMP_FOLDER}") ; do
+
+        for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
+            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/docs/${folder}/${readme}"
+        done
+
+        for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
+            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
+        done
     done
 }
 
@@ -330,6 +366,10 @@ install_atari800() {
             ;;
     esac
 
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
+
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | grep "${NAME}" | uniq) ; do
 
         get_latest_release "${TMP_FOLDER}" "${bin}"
@@ -346,12 +386,12 @@ install_atari800() {
 
         if [[ "${CATEGORY}" == "_Computer" ]] ; then
             for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
-                copy_file "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}/games/${folder}/${file}"
+                copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
             done
         fi
 
         for readme in $(ls "${TMP_FOLDER}" | grep -i "readme.") ; do
-            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/games/${folder}/${readme}"
+            copy_file "${TMP_FOLDER}/${readme}" "${TARGET_DIR}/docs/${folder}/${readme}"
         done
 
         touch_folder "${TARGET_DIR}/games/${folder}"
@@ -362,6 +402,10 @@ install_main_binary() {
     local TMP_FOLDER="${1}"
     local TARGET_DIR="${2}"
     local IFS=$'\n'
+
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
 
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
 
@@ -386,6 +430,10 @@ install_linux_binary() {
     local TARGET_DIR="${2}"
     local IFS=$'\n'
 
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
+
     for bin in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
 
         get_latest_release "${TMP_FOLDER}" "${bin}"
@@ -403,6 +451,10 @@ install_zip_release() {
     local TMP_FOLDER="${1}"
     local TARGET_DIR="${2}"
     local IFS=$'\n'
+
+    if [ ! -d "${TMP_FOLDER}/releases" ] ; then
+        return
+    fi
 
     for zip in $(files_with_stripped_date "${TMP_FOLDER}/releases" | uniq) ; do
 
@@ -545,6 +597,35 @@ copy_file() {
 
     mkdir -p "${TARGET%/*}"
     cp -r "${SOURCE}" "${TARGET}"
+}
+
+copy_file_according_to_extension() {
+    local SOURCE="${1}"
+    local TARGET_DIR="${2}"
+    local SYSTEM_FOLDER="${3}"
+    local FILE="${4}"
+
+    if is_doc_file "${FILE}" ; then
+        copy_file "${SOURCE}" "${TARGET_DIR}/docs/${SYSTEM_FOLDER}/${FILE}"
+    else
+        copy_file "${SOURCE}" "${TARGET_DIR}/games/${SYSTEM_FOLDER}/${FILE}"
+    fi
+}
+
+is_doc_file() {
+    local FILE="${1}"
+    local EXTENSION="${FILE##*.}"
+    case "${EXTENSION,,}" in
+            "pdf") ;&
+            "md") ;&
+            "txt") ;&
+            "rtf")
+                return 0
+                ;;
+            *)
+                return 1
+                ;;
+    esac
 }
 
 touch_folder() {

@@ -196,6 +196,16 @@ class Tags:
                                                   
             if first_level in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
+
+        if parent == 'docs':
+            first_level = path.parts[1].lower()
+            self._append(result, self._use_term(first_level))
+            second_level = path.parts[2].lower()
+            if len(path.parts) > 3:
+                self._append(result, self._use_term(second_level))
+            if first_level in ['gba2p', 'gameboy2p']:
+                self._append(result, self._use_term('handheld2p'))
+
         elif parent == 'cheats':
             self._append(result, self._use_term(path.parts[1].lower()))
 
@@ -242,7 +252,7 @@ class Tags:
         if first_level[0] == '_':
             first_level = first_level[1:]
 
-        if parent == 'games' and first_level in ['gba2p', 'gameboy2p']:
+        if (parent == 'games' or parent == 'docs') and first_level in ['gba2p', 'gameboy2p']:
             self._append(result, self._use_term('handheld2p'))
 
         self._append(result, self._use_term(first_level))

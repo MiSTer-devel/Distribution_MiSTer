@@ -256,7 +256,7 @@ KEY_volumectl=(
 )
 
 KEY_fb_terminal=(
-	"Enables the framebuffer terminl (the one you are using now) for the Scripts menu"
+	"Enables the framebuffer terminal (the one you are using now) for the Scripts menu"
 	"0|Off"
 	"1|On"
 )

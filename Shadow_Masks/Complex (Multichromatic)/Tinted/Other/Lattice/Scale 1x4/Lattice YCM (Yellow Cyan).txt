@@ -1,0 +1,26 @@
+####
+# Name: Lattice YCM (Yellow Cyan)
+# Author: Tonurics
+# Type: Other
+# Genre: Tinted
+####
+
+Resolution=0
+v2
+4,16
+62a,32a,62a,32a
+62a,32a,62a,32a
+62a,32a,62a,32a
+62a,32a,62a,32a
+62a,32a,52a,52a
+62a,32a,52a,52a
+62a,32a,52a,52a
+62a,32a,52a,52a
+62a,32a,62a,32a
+62a,32a,62a,32a
+62a,32a,62a,32a
+62a,32a,62a,32a
+52a,52a,62a,32a
+52a,52a,62a,32a
+52a,52a,62a,32a
+52a,52a,62a,32a

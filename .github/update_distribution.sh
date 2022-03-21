@@ -89,6 +89,7 @@ classify_core_categories() {
             "user-content-empty-folder") ;&
             "user-content-folders-"*) ;&
             "user-content-mra-alternatives") ;&
+            "user-content-mra-alternatives-under-releases") ;&
             "user-content-fonts") CURRENT_CORE_CATEGORY="${url}" ;;
             "user-content-fpga-cores") ;&
             "user-content-development") ;&
@@ -163,6 +164,7 @@ process_url() {
         "user-content-linux-binary") INSTALLER=install_linux_binary ;;
         "user-content-fonts") INSTALLER=install_fonts ;;
         "user-content-mra-alternatives") INSTALLER=install_mra_alternatives ;;
+        "user-content-mra-alternatives-under-releases") INSTALLER=install_mra_alternatives_under_releases ;;
         "user-content-folders-"*) INSTALLER=install_folders ;;
         *) INSTALLER=install_other_core ;;
     esac
@@ -478,6 +480,16 @@ install_mra_alternatives() {
 
     mkdir -p "${TARGET_DIR}/_Arcade"
     copy_file "${TMP_FOLDER}/_alternatives" "${TARGET_DIR}/_Arcade/_alternatives"
+}
+
+install_mra_alternatives_under_releases() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+
+    echo "Installing MRA Alternatives under /releases ${4}"
+
+    mkdir -p "${TARGET_DIR}/_Arcade"
+    copy_file "${TMP_FOLDER}/releases/_alternatives" "${TARGET_DIR}/_Arcade/_alternatives"
 }
 
 install_fonts() {

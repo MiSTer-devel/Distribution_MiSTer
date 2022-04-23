@@ -487,9 +487,14 @@ install_mra_alternatives_under_releases() {
     local TARGET_DIR="${2}"
 
     echo "Installing MRA Alternatives under /releases ${4}"
+    
+    if [[ "$(ls -a ${TMP_FOLDER}/releases/_alternatives/ 2> /dev/null)" == "" ]] ; then
+        >&2 echo "WARNING! _alternatives folder is empty."
+        return
+    fi
 
-    mkdir -p "${TARGET_DIR}/_Arcade"
-    copy_file "${TMP_FOLDER}/releases/_alternatives" "${TARGET_DIR}/_Arcade/_alternatives"
+    mkdir -p "${TARGET_DIR}/_Arcade/_alternatives"
+    cp -r "${TMP_FOLDER}/releases/_alternatives/*" "${TARGET_DIR}/_Arcade/_alternatives/"
 }
 
 install_fonts() {

@@ -612,7 +612,7 @@ def create_summary(finder: Finder, tags: Tags, source):
             
         file_name = file.name.lower()
 
-        if file_name == 'boot.rom' or file_name == 'boot1.rom' or file_name == 'boot0.rom':
+        if (file_name == 'boot.rom' or file_name == 'boot1.rom' or file_name == 'boot0.rom') and not strfile.startswith('games/AO486/'):
             summary["files"][strfile]['overwrite'] = False
             
         if strfile in main_binaries or strfile.startswith('linux/'):

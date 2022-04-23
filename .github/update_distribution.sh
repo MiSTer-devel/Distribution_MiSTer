@@ -494,7 +494,7 @@ install_mra_alternatives_under_releases() {
     fi
 
     mkdir -p "${TARGET_DIR}/_Arcade/_alternatives"
-    cp -r "${TMP_FOLDER}/releases/_alternatives/*" "${TARGET_DIR}/_Arcade/_alternatives/"
+    cp -r "${TMP_FOLDER}/releases/_alternatives/"* "${TARGET_DIR}/_Arcade/_alternatives/"
 }
 
 install_fonts() {

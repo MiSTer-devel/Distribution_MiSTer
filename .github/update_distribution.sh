@@ -579,7 +579,7 @@ declare -A CHEAT_MAPPINGS=( \
 install_cheats() {
     local URL="${1}"
     local TARGET_DIR="${2}"
-    install_cheats_backup "${TARGET_DIR}"
+    #install_cheats_backup "${TARGET_DIR}"
     return
 
     mkdir -p "${TARGET_DIR}/Cheats/"

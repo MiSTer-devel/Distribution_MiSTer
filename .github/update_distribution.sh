@@ -21,7 +21,7 @@ update_distribution() {
         for category in ${CORE_CATEGORIES[${url}]} ; do
             process_url "${url}" "${category}" "${OUTPUT_FOLDER}" &
         done
-        if [ ${job_counter} -ge 20 ] ; then
+        if [ ${job_counter} -ge 0 ] ; then
             wait_jobs
             job_counter=0
         else

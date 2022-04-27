@@ -599,7 +599,7 @@ install_cheats() {
 
 install_cheats_backup() {
     local TARGET_DIR="${1}"
-    curl --silent --show-error --fail --location -o "/tmp/old_main.zip" "ttps://github.com/MiSTer-devel/Distribution_MiSTer/archive/refs/heads/main.zip"
+    curl --silent --show-error --fail --location -o "/tmp/old_main.zip" "https://github.com/MiSTer-devel/Distribution_MiSTer/archive/refs/heads/main.zip"
     unzip -q -o "/tmp/old_main.zip" -d "/tmp/"
     cp -r "/tmp/Distribution_MiSTer-main/Cheats/" "${TARGET_DIR}/Cheats/"
 }

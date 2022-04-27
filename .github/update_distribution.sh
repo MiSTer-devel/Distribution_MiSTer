@@ -21,7 +21,7 @@ update_distribution() {
         for category in ${CORE_CATEGORIES[${url}]} ; do
             process_url "${url}" "${category}" "${OUTPUT_FOLDER}" &
         done
-        if [ ${job_counter} -ge 0 ] ; then
+        if [ ${job_counter} -ge 100 ] ; then
             wait_jobs
             job_counter=0
         else
@@ -579,6 +579,8 @@ declare -A CHEAT_MAPPINGS=( \
 install_cheats() {
     local URL="${1}"
     local TARGET_DIR="${2}"
+    install_cheats_backup "${TARGET_DIR}"
+    return
 
     mkdir -p "${TARGET_DIR}/Cheats/"
 
@@ -593,6 +595,13 @@ install_cheats() {
         curl --silent --show-error --fail --location -o "/tmp/${cheat_platform}.zip" "${cheat_url}"
         unzip -q -o "/tmp/${cheat_platform}.zip" -d "${TARGET_DIR}/Cheats/${cheat_platform}"
     done
+}
+
+install_cheats_backup() {
+    local TARGET_DIR="${1}"
+    curl --silent --show-error --fail --location -o "/tmp/old_main.zip" "ttps://github.com/MiSTer-devel/Distribution_MiSTer/archive/refs/heads/main.zip"
+    unzip -q -o "/tmp/old_main.zip" -d "/tmp/"
+    cp -r "/tmp/Distribution_MiSTer-main/Cheats/" "${TARGET_DIR}/Cheats/"
 }
 
 GET_LATEST_RELEASE_RET=

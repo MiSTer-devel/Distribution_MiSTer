@@ -15,19 +15,21 @@ update_distribution() {
         local LATEST_LINUX=$(echo $LINUX_JSON_STR | jq -r '.tree[].path' | grep '^release.*\.7[zZ]$' | sort | tail -n 1)
         echo "${LATEST_LINUX}" > latest_linux.txt
     fi
-
+    
+    local job_counter=0
     for url in ${!CORE_CATEGORIES[@]} ; do
         for category in ${CORE_CATEGORIES[${url}]} ; do
             process_url "${url}" "${category}" "${OUTPUT_FOLDER}" &
         done
+        if [ ${job_counter} -ge 20 ] ; then
+            wait_jobs
+            job_counter=0
+        else
+            job_counter=$((job_counter + 1))
+        fi
     done
-
-    for job in `jobs -p` ; do
-        wait ${job} || {
-            echo "Failed job ${job}!"
-            exit 1
-        }
-    done
+    
+    wait_jobs
 
     if [[ "${PUSH_COMMAND}" != "--push" ]] ; then
         return
@@ -41,6 +43,15 @@ update_distribution() {
     git commit -m "-"
     git fetch origin main || true
     ./.github/calculate_db.py
+}
+
+wait_jobs() {
+    for job in `jobs -p` ; do
+        wait ${job} || {
+            echo "Failed job ${job}!"
+            exit 1
+        }
+    done
 }
 
 CORE_URLS=

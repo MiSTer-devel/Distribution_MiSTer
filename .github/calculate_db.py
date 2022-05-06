@@ -54,6 +54,9 @@ def main(dryrun):
         'linux_github_repository': os.getenv('LINUX_GITHUB_REPOSITORY', '').strip(),
         'zips_config': os.getenv('ZIPS_CONFIG', '').strip()
     }, tags)
+    
+    db['files'] = to_external_paths(db['files'])
+    db['folders'] = to_external_paths(db['folders'])
 
     save_data_to_compressed_json(db, db_file_json, db_file_zip)
     if db_has_no_changes(db, db_url):
@@ -84,6 +87,15 @@ def main(dryrun):
     if not dryrun:
         force_push_file(db_file_zip, 'main')
 
+def to_external_paths(input):
+    output = {}
+    for path, description in input.items():
+        if path.startswith('games') or path.startswith('docs'):
+            path = '|' + path
+        output[path] = description
+
+    return output        
+        
 distribution_mister_aliases = [
     # Consoles
     ['nes', 'famicom', 'nintendo'],

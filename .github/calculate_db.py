@@ -90,12 +90,15 @@ def main(dryrun):
 def to_external_paths(input):
     output = {}
     for path, description in input.items():
-        if path.startswith('games') or path.startswith('docs'):
-            path = '|' + path
-        output[path] = description
+        output[external_path(path)] = description
 
     return output        
-        
+
+def external_path(path):
+    if path.startswith('games') or path.startswith('docs'):
+        path = '|' + path
+    return path   
+
 distribution_mister_aliases = [
     # Consoles
     ['nes', 'famicom', 'nintendo'],
@@ -514,7 +517,7 @@ class SimpleZipCreator:
     def create_zip(self, db_finder: Finder, zips: Dict[str, Any], zip_id: str, zip_description: Dict[str, Any], options: Dict[str, Any], tags: Tags, stored_folders, zip_creators) -> None:
         source_path = Path(zip_description['source'])
         zip_description['sources'] = [source_path.name]
-        zip_description['path'] = str(source_path.parent)
+        zip_description['path'] = external_path(str(source_path.parent))
         self._multi = MultiSourcesZipCreator()
         self._multi.create_zip(db_finder, zips, zip_id, zip_description, options, tags, stored_folders, zip_creators)
         return
@@ -553,7 +556,7 @@ class MultiSourcesZipCreator:
         multi_summary['folders'] = multi_summary['folders']
 
         zip_description['raw_files_size'] = 0
-        zip_description['path'] = source_parent + '/'
+        zip_description['path'] = external_path(source_parent + '/')
         zip_description['contents'] = zip_description['sources']
         zip_description['base_files_url'] = options['base_files_url'] % options['sha']
         zip_description.pop('sources')
@@ -565,8 +568,8 @@ class MultiSourcesZipCreator:
             multi_summary['files'][file]['zip_id'] = zip_id
             zip_description['raw_files_size'] += multi_summary['files'][file]['size']
 
-        #multi_summary['files'] = to_external_paths(multi_summary['files'])
-        #multi_summary['folders'] = to_external_paths(multi_summary['folders'])
+        multi_summary['files'] = to_external_paths(multi_summary['files'])
+        multi_summary['folders'] = to_external_paths(multi_summary['folders'])
         
         summary_zip = summary_name + '.zip'
         zip_name = zip_id + '.zip'

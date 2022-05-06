@@ -565,6 +565,9 @@ class MultiSourcesZipCreator:
             multi_summary['files'][file]['zip_id'] = zip_id
             zip_description['raw_files_size'] += multi_summary['files'][file]['size']
 
+        multi_summary['files'] = to_external_paths(multi_summary['files'])
+        multi_summary['folders'] = to_external_paths(multi_summary['folders'])
+        
         summary_zip = summary_name + '.zip'
         zip_name = zip_id + '.zip'
         zips[zip_id] = zip_description

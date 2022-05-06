@@ -58,6 +58,9 @@ def main(dryrun):
     db['files'] = to_external_paths(db['files'])
     db['folders'] = to_external_paths(db['folders'])
 
+    for zip_description in db['zips'].values():
+        zip_description['path'] = external_path(zip_description['path'])
+
     save_data_to_compressed_json(db, db_file_json, db_file_zip)
     if db_has_no_changes(db, db_url):
         print('No changes deteted.')
@@ -517,7 +520,7 @@ class SimpleZipCreator:
     def create_zip(self, db_finder: Finder, zips: Dict[str, Any], zip_id: str, zip_description: Dict[str, Any], options: Dict[str, Any], tags: Tags, stored_folders, zip_creators) -> None:
         source_path = Path(zip_description['source'])
         zip_description['sources'] = [source_path.name]
-        zip_description['path'] = external_path(str(source_path.parent))
+        zip_description['path'] = str(source_path.parent)
         self._multi = MultiSourcesZipCreator()
         self._multi.create_zip(db_finder, zips, zip_id, zip_description, options, tags, stored_folders, zip_creators)
         return
@@ -556,7 +559,7 @@ class MultiSourcesZipCreator:
         multi_summary['folders'] = multi_summary['folders']
 
         zip_description['raw_files_size'] = 0
-        zip_description['path'] = external_path(source_parent + '/')
+        zip_description['path'] = source_parent + '/'
         zip_description['contents'] = zip_description['sources']
         zip_description['base_files_url'] = options['base_files_url'] % options['sha']
         zip_description.pop('sources')

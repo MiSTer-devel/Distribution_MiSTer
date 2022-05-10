@@ -8,6 +8,10 @@ update_distribution() {
     local PUSH_COMMAND="${2:-}"
 
     fetch_core_urls
+    echo
+    echo "CORE_URLs:"
+    echo ${CORE_URLS}
+    echo
     classify_core_categories
 
     if [[ "${LINUX_GITHUB_REPOSITORY:-}" != "" ]] ; then

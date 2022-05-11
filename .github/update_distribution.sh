@@ -45,6 +45,7 @@ update_distribution() {
     echo "Detox done"
     echo "Removing colons"
     find . -name "*:*" -exec rename 's|:|-|g' {} \;
+    for i in $(ind . -name "*:*"); do mv "${i}" "${i/:/-}" ; done
     echo "Colons removed"
     git add "${OUTPUT_FOLDER}"
     git commit -m "-"
@@ -578,7 +579,7 @@ declare -A CHEAT_MAPPINGS=( \
     ["nes"]="NES" \
     ["pce"]="TGFX16" \
     ["pcd"]="TGFX16-CD" \
-#    ["psx"]="PSX" \
+    ["psx"]="PSX" \
     ["scd"]="MegaCD" \
     ["sms"]="SMS" \
     ["snes"]="SNES" \

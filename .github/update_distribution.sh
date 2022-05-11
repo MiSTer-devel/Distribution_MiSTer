@@ -43,6 +43,9 @@ update_distribution() {
     echo "Running detox"
     detox -v -s utf_8-only -r *
     echo "Detox done"
+    echo "Removing colons"
+    find . -name "*:*" -exec rename 's|:|-|g' {} \;
+    echo "Colons removed"
     git add "${OUTPUT_FOLDER}"
     git commit -m "-"
     git fetch origin main || true
@@ -575,6 +578,7 @@ declare -A CHEAT_MAPPINGS=( \
     ["nes"]="NES" \
     ["pce"]="TGFX16" \
     ["pcd"]="TGFX16-CD" \
+    ["psx"]="PSX" \
     ["scd"]="MegaCD" \
     ["sms"]="SMS" \
     ["snes"]="SNES" \

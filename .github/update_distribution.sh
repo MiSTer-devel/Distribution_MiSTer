@@ -44,7 +44,7 @@ update_distribution() {
     detox -v -s utf_8-only -r *
     echo "Detox done"
     echo "Removing colons"
-    for i in $(find . -name "*:*"); do mv "${i}" "${i/:/-}" ; done
+    for i in $(find . -name "*:*"); do mv "'${i}'" "'${i/:/-}'" ; done
     echo "Colons removed"
     git add "${OUTPUT_FOLDER}"
     git commit -m "-"

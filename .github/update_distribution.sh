@@ -47,7 +47,7 @@ update_distribution() {
     local IFS=$'\n'
     for i in $(find . -name "*:*"); do
         echo mv "${i}" "${i/:/-}"
-        mv "${i}" "${i/:/-}"
+        #mv "${i}" "${i/:/-}"
     done
     echo "Colons removed"
     git add "${OUTPUT_FOLDER}"
@@ -582,7 +582,7 @@ declare -A CHEAT_MAPPINGS=( \
     ["nes"]="NES" \
     ["pce"]="TGFX16" \
     ["pcd"]="TGFX16-CD" \
-    ["psx"]="PSX" \
+#    ["psx"]="PSX" \
     ["scd"]="MegaCD" \
     ["sms"]="SMS" \
     ["snes"]="SNES" \

@@ -45,7 +45,7 @@ update_distribution() {
     echo "Detox done"
     echo "Removing colons"
     local IFS=$'\n'
-    for i in $(find . -name "*:*"); do mv "${i}" "${i/:/-}" ; done
+    for i in $(find . -name "*:*"); do echo mv "${i}" "${i/:/-}" ; done
     echo "Colons removed"
     git add "${OUTPUT_FOLDER}"
     git commit -m "-"

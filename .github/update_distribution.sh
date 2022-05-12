@@ -7,6 +7,8 @@ update_distribution() {
     local OUTPUT_FOLDER="${1}"
     local PUSH_COMMAND="${2:-}"
 
+    git fetch --unshallow origin
+
     fetch_core_urls
     echo
     echo "CORE_URLs:"

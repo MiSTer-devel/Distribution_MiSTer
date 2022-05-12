@@ -582,7 +582,6 @@ declare -A CHEAT_MAPPINGS=( \
     ["nes"]="NES" \
     ["pce"]="TGFX16" \
     ["pcd"]="TGFX16-CD" \
-    ["psx"]="PSX" \
     ["scd"]="MegaCD" \
     ["sms"]="SMS" \
     ["snes"]="SNES" \

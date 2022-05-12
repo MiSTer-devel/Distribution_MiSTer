@@ -447,8 +447,7 @@ def create_db(folder, options, tags):
             if current_branch == 'zips':
                 raise Exception('Should not start on branch "zip"')
 
-            run_succesfully('git branch -D zips || true')
-            run_succesfully('git checkout --orphan zips')
+            run_succesfully('git checkout --orphan new_zips')
             run_succesfully('git reset')
 
             for zip_id in zips:
@@ -461,7 +460,7 @@ def create_db(folder, options, tags):
             run_succesfully('git fetch origin main || true')
             if not run_conditional('git diff --quiet main origin/zip'):
                 print('zip branch has changes')
-                run_succesfully('git push --force origin zips')
+                run_succesfully('git push --force origin new_zips:zips')
             else:
                 print('Using old zip branch from origin')
                 zip_sha = run_stdout('git rev-parse --verify origin/zip').strip()

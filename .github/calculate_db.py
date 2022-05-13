@@ -460,8 +460,9 @@ def create_db(folder, options, tags):
             run_succesfully('git fetch origin main || true')
             if not run_conditional('git diff --quiet main origin/zips'):
                 print('zip branch has changes')
-                run_succesfully('git update-ref -d refs/remotes/origin/zips')
-                run_succesfully('git push --force origin new_zips:zips')
+                run_succesfully('git push origin :zips zips_backup')
+                run_succesfully('git push origin new_zips:zips')
+                run_succesfully('git push origin --delete zips_backup')
             else:
                 print('Using old zip branch from origin')
                 zip_sha = run_stdout('git rev-parse --verify origin/zip').strip()

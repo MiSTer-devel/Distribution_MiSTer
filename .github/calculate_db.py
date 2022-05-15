@@ -60,6 +60,10 @@ def main(dryrun):
 
     for zip_description in db['zips'].values():
         zip_description['path'] = external_path(zip_description['path'])
+        if 'target_folder_path' not in zip_description:
+            continue
+        
+        zip_description['target_folder_path'] = external_path(zip_description['target_folder_path'])
 
     save_data_to_compressed_json(db, db_file_json, db_file_zip)
     if db_has_no_changes(db, db_url):

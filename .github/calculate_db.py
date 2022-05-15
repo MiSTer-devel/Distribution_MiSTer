@@ -120,7 +120,13 @@ distribution_mister_aliases = [
     # Computers
     ['vector06c', 'vector06'],
     ['amiga', 'minimig'],
+    ['zxspectrum', 'spectrum'],
+    ['pc88', 'pc8801'],
+    ['laser310', 'laser'],
     
+    # Other
+    ['flappybird', 'flappy'],
+
     # General
     ['console-cores', 'console'],
     ['arcade-cores', 'arcade'],

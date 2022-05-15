@@ -562,8 +562,11 @@ class MultiSourcesZipCreator:
         multi_summary['folders'] = multi_summary['folders']
 
         zip_description['raw_files_size'] = 0
+        zip_description['kind'] = 'extract_all_contents'
         zip_description['path'] = source_parent + '/'
+        zip_description['target_folder_path'] = source_parent + '/'
         zip_description['contents'] = zip_description['sources']
+        zip_description['description'] = self._zip_description_message(zip_description['sources'], zip_description['target_folder_path'])
         zip_description['base_files_url'] = options['base_files_url'] % options['sha']
         zip_description.pop('sources')
 
@@ -593,6 +596,14 @@ class MultiSourcesZipCreator:
         stored_folders.append(multi_summary['folders'])
         zip_creators.append(self)
 
+    def _zip_description_message(self, contents, zip_path):
+        if zip_path == './':
+            path_message = 'the root'
+        else:
+            path_message = zip_path
+
+        return 'Unpacking %s at %s' % (', '.join(contents), path_message)
+   
     def save_zip(self):
         save_data_to_compressed_json(self._multi_summary, self._summary_name, self._summary_zip)
         self._zip_description['summary_file'] = {

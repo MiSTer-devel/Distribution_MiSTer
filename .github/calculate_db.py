@@ -622,7 +622,7 @@ class MultiSourcesZipCreator:
         }
         Path(self._summary_name).unlink()
 
-        run_succesfully('cur=$(pwd) && cd %s && zip -q -D -X -A -Z deflate -1 -r $cur/%s %s' % (self._source_parent, self._zip_name, " ".join(self._source_name_list)))
+        run_succesfully('cur=$(pwd) && cd %s && zip -q -D -X -A -1 -r $cur/%s %s' % (self._source_parent, self._zip_name, " ".join(self._source_name_list)))
         self._zip_description['contents_file'] = {
             'size': size(self._zip_name),
             'hash': hash(self._zip_name)

@@ -1,0 +1,18 @@
+####
+# Name: Lattice BGR (Blue Green)
+# Author: Tonurics
+# Type: Other
+# Genre: Tinted
+####
+
+Resolution=0
+v2
+4,8
+12a,22a,12a,22a
+12a,22a,12a,22a
+12a,22a,42a,42a
+12a,22a,42a,42a
+12a,22a,12a,22a
+12a,22a,12a,22a
+42a,42a,12a,22a
+42a,42a,12a,22a

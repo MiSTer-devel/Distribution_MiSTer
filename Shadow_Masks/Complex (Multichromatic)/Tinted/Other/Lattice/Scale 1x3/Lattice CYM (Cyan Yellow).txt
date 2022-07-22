@@ -1,0 +1,22 @@
+####
+# Name: Lattice CYM (Cyan Yellow)
+# Author: Tonurics
+# Type: Other
+# Genre: Tinted
+####
+
+Resolution=0
+v2
+4,12
+32a,62a,32a,62a
+32a,62a,32a,62a
+32a,62a,32a,62a
+32a,62a,52a,52a
+32a,62a,52a,52a
+32a,62a,52a,52a
+32a,62a,32a,62a
+32a,62a,32a,62a
+32a,62a,32a,62a
+52a,52a,32a,62a
+52a,52a,32a,62a
+52a,52a,32a,62a

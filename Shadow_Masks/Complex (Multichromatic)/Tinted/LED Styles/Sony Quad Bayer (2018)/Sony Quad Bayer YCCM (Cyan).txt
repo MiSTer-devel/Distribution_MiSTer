@@ -1,0 +1,14 @@
+####
+# Name: Sony Quad Bayer YCCM (Cyan)
+# Author: Tonurics
+# Type: LED
+# Genre: Mosaic
+####
+
+Resolution=0
+v2
+8,4
+32a,32a,52a,52a,62a,62a,32a,32a
+32a,32a,52a,52a,62a,62a,32a,32a
+62a,62a,32a,32a,32a,32a,52a,52a
+62a,62a,32a,32a,32a,32a,52a,52a

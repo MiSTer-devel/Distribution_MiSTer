@@ -1,0 +1,16 @@
+####
+# Name: Canon Trichromatic CYGM (Trichromatic)
+# Author: Tonurics
+# Type: LED
+# Genre: Mosaic
+####
+
+Resolution=0
+v2
+4,6
+32a,62a,22a,52a
+32a,62a,22a,52a
+32a,62a,22a,52a
+22a,52a,32a,62a
+22a,52a,32a,62a
+22a,52a,32a,62a

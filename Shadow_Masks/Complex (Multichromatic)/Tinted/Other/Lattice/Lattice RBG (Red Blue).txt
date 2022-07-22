@@ -1,0 +1,14 @@
+####
+# Name: Lattice RBG (Red Blue)
+# Author: Tonurics
+# Type: Other
+# Genre: Tinted
+####
+
+Resolution=0
+v2
+4,4
+40d,10d,40d,10d
+40d,10d,20d,20d
+40d,10d,40d,10d
+20d,20d,40d,10d

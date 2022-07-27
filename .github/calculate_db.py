@@ -862,7 +862,7 @@ def read_mra_fields(mra_path):
                 if 'zip' in attributes and attributes['zip'] is not None:
                     zips |= {z.strip().lower() for z in attributes['zip'].strip().lower().split('|')}
     except xml.etree.ElementTree.ParseError as e:
-        print('ERROR: Defect XML for mra file: ' + mra_path)
+        print('ERROR: Defect XML for mra file: ' + str(mra_path))
         raise e
    
     return rbf, list(zips)

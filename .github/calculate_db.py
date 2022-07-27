@@ -11,7 +11,8 @@ import subprocess
 import sys
 import os
 import tempfile
-import xml.etree.cElementTree as ET
+import xml.etree.ElementTree as ET
+import xml.etree.ElementTree
 from zipfile import ZipFile
 from inspect import currentframe, getframeinfo
 from typing import Dict, List, Any

@@ -12,6 +12,7 @@ import sys
 import os
 import tempfile
 import xml.etree.cElementTree as ET
+import xml.etree.ElementTree.ParseError as ParseError
 from zipfile import ZipFile
 from inspect import currentframe, getframeinfo
 from typing import Dict, List, Any
@@ -845,21 +846,25 @@ def read_mra_fields(mra_path):
     rbf = None
     zips = set()
 
-    context = et_iterparse(str(mra_path), events=("start",))
-    for _, elem in context:
-        elem_tag = elem.tag.lower()
-        if elem_tag == 'rbf':
-            if rbf is not None:
-                print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mra_path),rbf,elem.text))
-                continue
-            if elem.text is None:
-                continue
-            rbf = elem.text.strip().lower()
-        elif elem_tag == 'rom':
-            attributes = {k.strip().lower(): v for k, v in elem.attrib.items()}
-            if 'zip' in attributes and attributes['zip'] is not None:
-                zips |= {z.strip().lower() for z in attributes['zip'].strip().lower().split('|')}
-
+    try:
+        context = et_iterparse(str(mra_path), events=("start",))
+        for _, elem in context:
+            elem_tag = elem.tag.lower()
+            if elem_tag == 'rbf':
+                if rbf is not None:
+                    print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mra_path),rbf,elem.text))
+                    continue
+                if elem.text is None:
+                    continue
+                rbf = elem.text.strip().lower()
+            elif elem_tag == 'rom':
+                attributes = {k.strip().lower(): v for k, v in elem.attrib.items()}
+                if 'zip' in attributes and attributes['zip'] is not None:
+                    zips |= {z.strip().lower() for z in attributes['zip'].strip().lower().split('|')}
+    except ParseError as e:
+        print('ERROR: Defect XML for mra file: ' + mra_path)
+        raise e
+   
     return rbf, list(zips)
 
 if __name__ == '__main__':

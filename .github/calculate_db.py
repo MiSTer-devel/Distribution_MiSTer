@@ -69,6 +69,8 @@ def main(dryrun):
         zip_description['target_folder_path'] = external_path(zip_description['target_folder_path'])
 
     save_data_to_compressed_json(db, db_file_json, db_file_zip)
+    
+    print('check_changed: ' + str(check_changed))
     if check_changed and db_has_no_changes(db, db_url):
         print('No changes deteted.')
         return

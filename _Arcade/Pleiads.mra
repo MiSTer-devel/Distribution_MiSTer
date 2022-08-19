@@ -1,0 +1,24 @@
+<misterromdescription>
+	<name>Pleiads (Tehkan)</name>
+	<mameversion>0220</mameversion>
+	<setname>pleiads</setname>
+	<mratimestamp>20200430150001</mratimestamp>
+	<year>1981</year>
+	<manufacturer>Tehkan</manufacturer>
+	<category>Space / Shooter</category>
+	<rbf>pleiads</rbf>
+	<rom index="0" zip="pleiads.zip" md5="648468f93204c48ff27f39018828cb28">
+		<part crc="960212c8" name="ic47.r1"/>
+		<part crc="b254217c" name="ic48.r2"/>
+		<part crc="87e700bb" name="ic47.bin"/>
+		<part crc="2d5198d0" name="ic48.bin"/>
+		<part crc="49c629bc" name="ic51.r5"/>
+		<part crc="f1a8a00d" name="ic50.bin"/>
+		<part crc="b5f07fbc" name="ic53.r7"/>
+		<part crc="b1b5a8a6" name="ic52.bin"/>
+		<part crc="4e30f9e7" name="ic23.bin"/>
+		<part crc="5188fc29" name="ic24.bin"/>
+		<part crc="85866607" name="ic39.bin"/>
+		<part crc="a841d511" name="ic40.bin"/>
+	</rom>
+</misterromdescription>

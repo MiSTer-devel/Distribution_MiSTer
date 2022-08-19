@@ -43,6 +43,7 @@ def main(dryrun):
     db_file_json = os.getenv('DB_JSON_NAME', Path(db_url).stem)
     db_id = envvar('DB_ID')
     check_changed = os.getenv('CHECK_CHANGED', 'true') != 'false' 
+    check_test = os.getenv('CHECK_TEST', 'true') != 'false' 
 
     tags = Tags()
 
@@ -84,17 +85,19 @@ def main(dryrun):
     with open("README.md", "wt") as fout:
         fout.write(readme_content.replace('ALL_TAGS_GO_HERE', tag_list))
 
-    try:
-        test_db_file_zip(db_id, db_file_zip)
-    except RunException as e:
-        print()
-        print('############')
-        print('TEST FAILED!')
-        print('############')
-        print()
-        print('Exception:')
-        print(str(e))
-        exit(1)
+    print('check_test: ' + str(check_test))
+    if check_test:
+        try:
+            test_db_file_zip(db_id, db_file_zip)
+        except RunException as e:
+            print()
+            print('############')
+            print('TEST FAILED!')
+            print('############')
+            print()
+            print('Exception:')
+            print(str(e))
+            exit(1)
 
     if not dryrun:
         force_push_file(db_file_zip, 'main')

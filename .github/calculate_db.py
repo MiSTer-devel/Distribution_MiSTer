@@ -42,6 +42,7 @@ def main(dryrun):
     db_file_zip = os.getenv('DB_ZIP_NAME', Path(db_url).name)
     db_file_json = os.getenv('DB_JSON_NAME', Path(db_url).stem)
     db_id = envvar('DB_ID')
+    check_changed = os.getenv('CHECK_CHANGED', 'true') != 'false' 
 
     tags = Tags()
 
@@ -68,7 +69,7 @@ def main(dryrun):
         zip_description['target_folder_path'] = external_path(zip_description['target_folder_path'])
 
     save_data_to_compressed_json(db, db_file_json, db_file_zip)
-    if db_has_no_changes(db, db_url):
+    if check_changed and db_has_no_changes(db, db_url):
         print('No changes deteted.')
         return
 

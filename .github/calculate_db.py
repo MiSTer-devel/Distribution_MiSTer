@@ -76,14 +76,17 @@ def main(dryrun):
         print('No changes deteted.')
         return
 
-    tag_list = '`' + '`, `'.join(tags.get_report_terms()) + '`'
-    print('TAG_LIST: ' + tag_list)
+    try:
+        tag_list = '`' + '`, `'.join(tags.get_report_terms()) + '`'
+        print('TAG_LIST: ' + tag_list)
 
-    with open("README.md", "rt") as fin:
-        readme_content = fin.read()
+        with open("README.md", "rt") as fin:
+            readme_content = fin.read()
 
-    with open("README.md", "wt") as fout:
-        fout.write(readme_content.replace('ALL_TAGS_GO_HERE', tag_list))
+        with open("README.md", "wt") as fout:
+            fout.write(readme_content.replace('ALL_TAGS_GO_HERE', tag_list))
+    except FileNotFoundError:
+        pass
 
     print('check_test: ' + str(check_test))
     if check_test:

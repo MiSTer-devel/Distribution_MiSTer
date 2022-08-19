@@ -13,6 +13,7 @@ import os
 import tempfile
 import xml.etree.ElementTree as ET
 import xml.etree.ElementTree
+import traceback
 from zipfile import ZipFile
 from inspect import currentframe, getframeinfo
 from typing import Dict, List, Any
@@ -869,4 +870,9 @@ def read_mra_fields(mra_path):
 
 if __name__ == '__main__':
     dryrun = len(sys.argv) == 2 and sys.argv[1] == '-d'
-    main(dryrun)
+    try:
+        main(dryrun)
+    except Exception as e:
+        print(str(e))
+        print(traceback.format_exc())
+        exit(1)

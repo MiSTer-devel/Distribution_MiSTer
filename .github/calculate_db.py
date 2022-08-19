@@ -38,8 +38,8 @@ def main(dryrun):
     print('sha: %s' % sha)
 
     db_url = envvar('DB_URL')
-    db_file_zip = Path(db_url).name
-    db_file_json = Path(db_url).stem
+    db_file_zip = os.getenv('DB_ZIP_NAME', Path(db_url).name)
+    db_file_json = os.getenv('DB_JSON_NAME', Path(db_url).stem)
     db_id = envvar('DB_ID')
 
     tags = Tags()

@@ -89,6 +89,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-linux-binary"$'\n'"https://github.com/MiSTer-devel/PDFViewer_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-empty-folder"$'\n'"games/TGFX16-CD"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-gamecontrollerdb"$'\n'"https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/master/gamecontrollerdb.txt"
     CORE_URLS=${CORE_URLS}$'\n'"user-cheats"$'\n'"https://gamehacking.org/mister/"
 }
 
@@ -111,6 +112,7 @@ classify_core_categories() {
             "user-content-scripts") ;&
             "user-cheats") ;&
             "user-content-empty-folder") ;&
+            "user-content-gamecontrollerdb") ;*
             "user-content-folders-"*) ;&
             "user-content-mra-alternatives") ;&
             "user-content-mra-alternatives-under-releases") ;&
@@ -157,6 +159,7 @@ process_url() {
         "user-content-scripts") EARLY_INSTALLER=install_script ;;
         "user-content-empty-folder") EARLY_INSTALLER=install_empty_folder ;;
         "user-cheats") EARLY_INSTALLER=install_cheats ;;
+        "user-content-gamecontrollerdb") EARLY_INSTALLER=install_gamecontrollerdb ;;
         *) ;;
     esac
     
@@ -572,6 +575,16 @@ install_empty_folder() {
     touch_folder "${TARGET_DIR}/${URL}"
 }
 
+install_gamecontrollerdb() {
+    local URL="${1}"
+    local TARGET_DIR="${2}"
+
+    mkdir -p "${TARGET_DIR}/linux/gamecontrollerdb/" || true
+    echo "SDL Game Controller DB: ${URL}"
+    pushd "${TARGET_DIR}/linux/gamecontrollerdb/" > /dev/null 2>&1
+    curl -sSLf "${URL}" -O
+    popd > /dev/null 2>&1
+}
 
 declare -A CHEAT_MAPPINGS=( \
     ["fds"]="NES" \

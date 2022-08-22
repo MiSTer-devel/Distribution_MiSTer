@@ -112,7 +112,7 @@ classify_core_categories() {
             "user-content-scripts") ;&
             "user-cheats") ;&
             "user-content-empty-folder") ;&
-            "user-content-gamecontrollerdb") ;*
+            "user-content-gamecontrollerdb") ;&
             "user-content-folders-"*) ;&
             "user-content-mra-alternatives") ;&
             "user-content-mra-alternatives-under-releases") ;&

@@ -87,6 +87,7 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"
     CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"
+    CORE_URLS=${CORE_URLS}$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/bluetooth_pair.sh"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-linux-binary"$'\n'"https://github.com/MiSTer-devel/PDFViewer_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-empty-folder"$'\n'"games/TGFX16-CD"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-gamecontrollerdb"$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"

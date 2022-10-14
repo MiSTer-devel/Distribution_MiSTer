@@ -1,0 +1,24 @@
+<misterromdescription>
+	<name>Pleiads (Centuri)</name>
+	<mameversion>0220</mameversion>
+	<setname>pleiadce</setname>
+	<mratimestamp>20200511230000</mratimestamp>
+	<year>1981</year>
+	<manufacturer>Centuri</manufacturer>
+	<category>Space / Shooter</category>
+	<rbf>pleiads</rbf>
+	<rom index="0" zip="pleiads.zip|pleiadce.zip" md5="902681424345327ad18175bde6505592">
+		<part crc="711e2ba0" name="pleiades.47"/>
+		<part crc="93a36943" name="pleiades.48"/>
+		<part crc="87e700bb" name="ic47.bin"/>
+		<part crc="5a9beba0" name="pleiades.50"/>
+		<part crc="1d828719" name="pleiades.51"/>
+		<part crc="f1a8a00d" name="ic50.bin"/>
+		<part crc="037b319c" name="pleiades.53"/>
+		<part crc="ca264c7c" name="pleiades.54"/>
+		<part crc="8dbd3785" name="pleiades.45"/>
+		<part crc="0db3e436" name="pleiades.44"/>
+		<part crc="85866607" name="ic39.bin"/>
+		<part crc="a841d511" name="ic40.bin"/>
+	</rom>
+</misterromdescription>

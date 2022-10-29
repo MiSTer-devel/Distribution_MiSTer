@@ -40,3 +40,9 @@ ALL_TAGS_GO_HERE
 - `extra-utilities`: All extra utilities that are installed in games folders of some computer cores.
 - `bios`: All bioses that are installed in the games folders for some computer & console cores.
 - `cheats`: All cheat files & folders.
+
+### Contributing
+
+You are more than welcome to contribute to the MiSTer FPGA Organization. But you can't do it by openening PRs to the main branch of this repository. This repository is only for file distribution. Whatever content shows up here depends on the other repositories of this organization, so you should target your PRs there.
+
+There is a development branch in this repository for the content collection. Is fine to send PRs there but they should only modify the content collection scripts that are being used by the workflows.

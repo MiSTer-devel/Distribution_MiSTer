@@ -283,7 +283,7 @@ install_console_core() {
             if [[ "${EXTENSION,,}" == "mra" ]] ; then
                 continue
             fi
-            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
+            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}" "_Console"
         done
 
         touch_folder "${TARGET_DIR}/games/${folder}"
@@ -339,7 +339,7 @@ install_computer_core() {
         done
 
         for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
-            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
+            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}" "_Computer"
         done
 
         touch_folder "${TARGET_DIR}/games/${folder}"
@@ -375,7 +375,7 @@ install_other_core() {
         done
 
         for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
-            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
+            copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}" "${CATEGORY}"
         done
     done
 }
@@ -416,7 +416,7 @@ install_atari800() {
 
         if [[ "${CATEGORY}" == "_Computer" ]] ; then
             for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
-                copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}"
+                copy_file_according_to_extension "${TMP_FOLDER}/releases/${file}" "${TARGET_DIR}" "${folder}" "${file}" "${CATEGORY}"
             done
         fi
 
@@ -669,11 +669,22 @@ copy_file_according_to_extension() {
     local TARGET_DIR="${2}"
     local SYSTEM_FOLDER="${3}"
     local FILE="${4}"
+    local CATEGORY="${5}"
 
-    if is_doc_file "${FILE}" ; then
+    if is_mgl_file "${FILE}" ; then
+        copy_file "${SOURCE}" "${TARGET_DIR}/${CATEGORY}/${FILE}"
+    elif is_doc_file "${FILE}" ; then
         copy_file "${SOURCE}" "${TARGET_DIR}/docs/${SYSTEM_FOLDER}/${FILE}"
     else
         copy_file "${SOURCE}" "${TARGET_DIR}/games/${SYSTEM_FOLDER}/${FILE}"
+    fi
+}
+
+is_mgl_file() {
+    if is_not_file_extension "${1}" "mgl" ; then
+        return 1
+    else
+        return 0
     fi
 }
 

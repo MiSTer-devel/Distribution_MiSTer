@@ -681,11 +681,7 @@ copy_file_according_to_extension() {
 }
 
 is_mgl_file() {
-    if is_not_file_extension "${1}" "mgl" ; then
-        return 1
-    else
-        return 0
-    fi
+    is_file_extension "${1}" "mgl"
 }
 
 is_doc_file() {
@@ -724,12 +720,21 @@ is_not_zip_release() {
 is_not_file_extension() {
     local INPUT_FILE="${1}"
     local EXPECTED_EXTENSION="${2}"
+    if is_file_extension "${INPUT_FILE}" "${EXPECTED_EXTENSION}" ; then
+        return 1
+    fi
+    >&2 echo "${PROCESS_URL_CTX}: ${INPUT_FILE} is NOT a ${EXPECTED_EXTENSION^^} file."
+    return 0
+}
+
+is_file_extension() {
+    local INPUT_FILE="${1}"
+    local EXPECTED_EXTENSION="${2}"
     local ACTUAL_EXTENSION="${INPUT_FILE#*.}"
     if [[ "${INPUT_FILE}" == "" ]] || [[ "${ACTUAL_EXTENSION,,}" != "${EXPECTED_EXTENSION,,}" ]] ; then
-        >&2 echo "${PROCESS_URL_CTX}: ${INPUT_FILE} is NOT a ${EXPECTED_EXTENSION^^} file."
-        return 0
+        return 1
     fi
-    return 1
+    return 0
 }
 
 is_empty_release() {

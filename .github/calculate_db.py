@@ -125,11 +125,10 @@ distribution_mister_aliases = [
     ['pcenginecd', 'tgfx16cd', 'turbografx16cd', 'turbografxcd'],
     ['megadrive', 'genesis'],
     ['megacd', 'segacd'],
-    ['sms', 'mastersystem'],
+    ['sms', 'mastersystem', 'segamark3'],
     ['coleco', 'colecovision'],
     ['gb', 'gameboy'],
     ['gbc', 'gameboycolor'],
-    ['sgb', 'supergameboy'],
     ['sgb', 'supergameboy'],
     ['gba', 'gameboyadvance'],
 

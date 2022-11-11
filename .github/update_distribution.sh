@@ -803,7 +803,7 @@ game_folders() {
         echo "${folder}"
         for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
             if is_mgl_file "${file}" ; then
-                extract_from_setname_tag "${file}"
+                extract_from_setname_tag "${TMP_FOLDER}/releases/${file}"
             fi
         done
     done

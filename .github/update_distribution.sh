@@ -70,11 +70,12 @@ wait_jobs() {
 CORE_URLS=
 fetch_core_urls() {
     local MISTER_URL="https://github.com/MiSTer-devel/Main_MiSTer"
+    local WIKI_URL="https://github.com/MiSTer-devel/Wiki_MiSTer/wiki"
     CORE_URLS="user-content-mra-alternatives"$'\n'"https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer"
-    CORE_URLS=${CORE_URLS}$'\n'$(curl -sSLf "$MISTER_URL/wiki"| awk '/user-content-fpga-cores/,/user-content-development/' | grep -ioE '(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer/tree/[a-zA-Z0-9-]+)|(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer)|(user-content-[a-zA-Z0-9-]*)')
+    CORE_URLS=${CORE_URLS}$'\n'$(curl -sSLf "${WIKI_URL}"| awk '/user-content-fpga-cores/,/user-content-development/' | grep -ioE '(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer/tree/[a-zA-Z0-9-]+)|(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer)|(user-content-[a-zA-Z0-9-]*)')
     local MENU_URL=$(echo "${CORE_URLS}" | grep -io 'https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*Menu_MiSTer')
     CORE_URLS=$(echo "${CORE_URLS}" |  sed 's/https:\/\/github.com\/[a-zA-Z0-9.\/_-]*Menu_MiSTer//')
-    CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "$MISTER_URL/wiki/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*_MiSTer\)' | awk '!a[$0]++')
+    CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "${WIKI_URL}/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*_MiSTer\)' | awk '!a[$0]++')
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Filters|Filters_Audio|Gamma"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Shadow_Masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"

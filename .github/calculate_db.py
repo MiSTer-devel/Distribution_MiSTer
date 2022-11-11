@@ -221,11 +221,12 @@ class Tags:
                 self._append(result, self._use_term('handheld2p'))
 
         elif suffix == '.mgl':
+            self._append(result, self._use_term('mgl'))
             self._append(result, self._use_term('cores'))
             self._append(result, self._use_term(stem))
             rbf, setname = read_mgl_fields(path)
             if rbf is not None:
-                self._append(result, self._use_term(Path(rbf).name))
+                self._append(result, self._use_term(Path(rbf).name.lower()))
 
         if parent == 'games':
             first_level = path.parts[1].lower()

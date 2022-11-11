@@ -127,6 +127,11 @@ distribution_mister_aliases = [
     ['megacd', 'segacd'],
     ['sms', 'mastersystem'],
     ['coleco', 'colecovision'],
+    ['gb', 'gameboy'],
+    ['gbc', 'gameboycolor'],
+    ['sgb', 'supergameboy'],
+    ['sgb', 'supergameboy'],
+    ['gba', 'gameboyadvance'],
 
     # Computers
     ['vector06c', 'vector06'],

@@ -798,12 +798,25 @@ mra_files() {
 }
 
 game_folders() {
+    local TMP_FOLDER="${1}"
+    for folder in $(game_folders_from_conf_str "${TMP_FOLDER}") ; do
+        echo "${folder}"
+        for file in $(files_with_no_date "${TMP_FOLDER}/releases") ; do
+            if is_mgl_file "${file}" ; then
+                extract_from_setname_tag "${file}"
+            fi
+        done
+    done
+}
+
+game_folders_from_conf_str() {
     local FOLDER="${1}"
     pushd "${FOLDER}" > /dev/null 2>&1
     extract_from_conf_str "localparam"
     extract_from_conf_str "parameter"
     popd > /dev/null 2>&1
 }
+
 
 extract_from_conf_str() {
     local PARAMETER="${1}"
@@ -817,6 +830,23 @@ extract_from_conf_str() {
             fi
         fi
     done
+}
+
+extract_from_setname_tag() {
+    local FILE="${1}"
+    source <(python3 -c "
+import xml.etree.ElementTree as ET
+try:
+    context = ET.iterparse('${FILE}', events=('start',))
+    for _, elem in context:
+        elem_tag = elem.tag.lower()
+        if elem_tag == 'setname':
+            if elem.text is None:
+                continue
+            print('echo %s' % elem.text.strip())
+except ET.ParseError as e:
+    pass
+")
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then

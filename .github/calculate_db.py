@@ -220,6 +220,13 @@ class Tags:
             if nodates in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
 
+        elif suffix == '.mgl':
+            self._append(result, self._use_term('cores'))
+            self._append(result, self._use_term(stem))
+            rbf, setname = read_mgl_fields(path)
+            if rbf is not None:
+                self._append(result, self._use_term(Path(rbf).name))
+
         if parent == 'games':
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
@@ -876,6 +883,34 @@ def read_mra_fields(mra_path):
         raise e
    
     return rbf, list(zips)
+
+def read_mgl_fields(mgl_path):
+    rbf = None
+    setname = None
+
+    try:
+        context = et_iterparse(str(mgl_path), events=("start",))
+        for _, elem in context:
+            elem_tag = elem.tag.lower()
+            if elem_tag == 'rbf':
+                if rbf is not None:
+                    print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mgl_path),rbf,elem.text))
+                    continue
+                if elem.text is None:
+                    continue
+                rbf = elem.text.strip().lower()
+            elif setname == 'rom':
+                if setname is not None:
+                    print('WARNING! Duplicated setname tag on file %s, first value %s, later value %s' % (str(mgl_path),setname,elem.text))
+                    continue
+                if elem.text is None:
+                    continue
+                setname = elem.text.strip().lower()
+    except xml.etree.ElementTree.ParseError as e:
+        print('ERROR: Defect XML for mgl file: ' + str(mgl_path))
+        raise e
+
+    return rbf, setname
 
 if __name__ == '__main__':
     dryrun = len(sys.argv) == 2 and sys.argv[1] == '-d'

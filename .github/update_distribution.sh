@@ -784,6 +784,9 @@ files_with_no_date() {
         if [[ "${file}" == "Game Boy Color.mgl" ]] ; then
             continue
         fi
+        if [[ "${file}" == "SG-1000.mgl" ]] ; then
+            continue
+        fi
         if ! [[ "${file}" =~ ^.+_([0-9]{8})(\..+)?$ ]] ; then
             echo "${file}"
         fi

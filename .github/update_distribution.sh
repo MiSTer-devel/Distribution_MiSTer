@@ -69,13 +69,11 @@ wait_jobs() {
 
 CORE_URLS=
 fetch_core_urls() {
-    local MISTER_URL="https://github.com/MiSTer-devel/Main_MiSTer"
-    local WIKI_URL="https://github.com/MiSTer-devel/Wiki_MiSTer/wiki"
-    CORE_URLS="user-content-mra-alternatives"$'\n'"https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer"
-    CORE_URLS=${CORE_URLS}$'\n'$(curl -sSLf "${WIKI_URL}"| awk '/user-content-fpga-cores/,/user-content-development/' | grep -ioE '(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer/tree/[a-zA-Z0-9-]+)|(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer)|(user-content-[a-zA-Z0-9-]*)')
-    local MENU_URL=$(echo "${CORE_URLS}" | grep -io 'https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*Menu_MiSTer')
-    CORE_URLS=$(echo "${CORE_URLS}" |  sed 's/https:\/\/github.com\/[a-zA-Z0-9.\/_-]*Menu_MiSTer//')
-    CORE_URLS=${MISTER_URL}$'\n'${MENU_URL}$'\n'${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(curl -sSLf "${WIKI_URL}/Arcade-Cores-List"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -io '\(https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*_MiSTer\)' | awk '!a[$0]++')
+    local WIKI_URL="https://raw.githubusercontent.com/wiki/MiSTer-devel/Wiki_MiSTer"
+    CORE_URLS="https://github.com/MiSTer-devel/Main_MiSTer"$'\n'"https://github.com/MiSTer-devel/Menu_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-mra-alternatives"$'\n'"https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer"
+    CORE_URLS=${CORE_URLS}$'\n'$(most_cores "${WIKI_URL}" | uniq -u)
+    CORE_URLS=${CORE_URLS}$'\n'"user-content-arcade-cores"$'\n'$(arcade_cores "${WIKI_URL}" | uniq -u)
     CORE_URLS=${CORE_URLS}$'\n'"user-content-fonts"$'\n'"https://github.com/MiSTer-devel/Fonts_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Filters|Filters_Audio|Gamma"$'\n'"https://github.com/MiSTer-devel/Filters_MiSTer"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-folders-Shadow_Masks"$'\n'"https://github.com/MiSTer-devel/ShadowMasks_MiSTer"
@@ -92,6 +90,43 @@ fetch_core_urls() {
     CORE_URLS=${CORE_URLS}$'\n'"user-content-empty-folder"$'\n'"games/TGFX16-CD"
     CORE_URLS=${CORE_URLS}$'\n'"user-content-gamecontrollerdb"$'\n'"https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"
     CORE_URLS=${CORE_URLS}$'\n'"user-cheats"$'\n'"https://gamehacking.org/mister/"
+}
+
+most_cores() {
+    local WIKI_URL="${1}"
+    curl -sSLf "${WIKI_URL}/_Sidebar.md" | python3 -c "
+import sys, re
+regex = re.compile(r'https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer(/tree/[a-zA-Z0-9-]+)?', re.I)
+reading = False
+for line in sys.stdin.readlines():
+    line = line.strip().lower()
+    if 'fpga cores' in line or 'service cores' in line:
+        reading = True
+    if reading is False:
+        continue
+    match = regex.search(line)
+    if line.startswith('###'):
+        if 'development' in line[4:] or 'arcade cores' in line[4:]:
+            reading = False
+        else:
+            print('user-content-%s' % line[4:].replace(' ', '-'))
+    elif match is not None:
+        core = match.group(0)
+        if 'menu_mister' not in core.lower():
+            print(core)
+"
+}
+
+arcade_cores() {
+    local WIKI_URL="${1}"
+    curl -sSLf "${WIKI_URL}/Arcade-Cores-List.md" | python3 -c "
+import sys, re
+regex = re.compile(r'https://github.com/MiSTer-devel/Arcade-[a-zA-Z0-9._-]*[_-]MiSTer', re.I)
+for line in sys.stdin.readlines():
+    match = regex.search(line)
+    if match is not None:
+        print(match.group(0))
+"
 }
 
 cat_local_core_urls() {
@@ -818,15 +853,15 @@ extract_from_conf_str() {
 
 extract_from_setname_tag() {
     local FILE="${1}"
-    source <(python3 -c "
+    python3 -c "
 import xml.etree.ElementTree as ET
 try:
     for _, elem in ET.iterparse('${FILE}', events=('start',)):
         if elem.tag.lower() == 'setname' and elem.text is not None:
-            print('echo %s' % elem.text.strip())
+            print(elem.text.strip())
 except ET.ParseError as e:
     pass
-")
+"
 }
 
 install_folders() {

@@ -821,8 +821,7 @@ extract_from_setname_tag() {
     source <(python3 -c "
 import xml.etree.ElementTree as ET
 try:
-    context = ET.iterparse('${FILE}', events=('start',))
-    for _, elem in context:
+    for _, elem in ET.iterparse('${FILE}', events=('start',)):
         if elem.tag.lower() == 'setname' and elem.text is not None:
             print('echo %s' % elem.text.strip())
 except ET.ParseError as e:

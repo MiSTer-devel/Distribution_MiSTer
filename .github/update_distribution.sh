@@ -548,28 +548,6 @@ install_script() {
     popd > /dev/null 2>&1
 }
 
-install_folders() {
-    local TMP_FOLDER="${1}"
-    local TARGET_DIR="${2}"
-    local CATEGORY="${3}"
-    local URL="${4}"
-    local IFS=$'\n'
-
-    if ! [[ ${CATEGORY} =~ ^user-content-folders-(([a-zA-Z0-9_-]+[|]?)+)$ ]] ; then
-        >&2 echo "WARNING! Wrong category '${CATEGORY}' or wrong repository url '${URL}'."
-        return
-    fi
-
-    local FOLDERS="${BASH_REMATCH[1]}"
-
-    local IFS="|"
-    for folder in ${FOLDERS} ; do
-        echo "Installing folder '${folder}' from ${URL}"
-
-        copy_file "${TMP_FOLDER}/${folder}" "${TARGET_DIR}/${folder}"
-    done
-}
-
 install_empty_folder() {
     local URL="${1}"
     local TARGET_DIR="${2}"
@@ -853,6 +831,28 @@ try:
 except ET.ParseError as e:
     pass
 ")
+}
+
+install_folders() {
+    local TMP_FOLDER="${1}"
+    local TARGET_DIR="${2}"
+    local CATEGORY="${3}"
+    local URL="${4}"
+    local IFS=$'\n'
+
+    if ! [[ ${CATEGORY} =~ ^user-content-folders-(([a-zA-Z0-9_-]+[|]?)+)$ ]] ; then
+        >&2 echo "WARNING! Wrong category '${CATEGORY}' or wrong repository url '${URL}'."
+        return
+    fi
+
+    local FOLDERS="${BASH_REMATCH[1]}"
+
+    local IFS="|"
+    for folder in ${FOLDERS} ; do
+        echo "Installing folder '${folder}' from ${URL}"
+
+        copy_file "${TMP_FOLDER}/${folder}" "${TARGET_DIR}/${folder}"
+    done
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then

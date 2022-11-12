@@ -12,8 +12,17 @@
     "gameboy2p_palettes": {
         "source": "games/GAMEBOY2P/Palettes"
     },
+    "gbc_palettes": {
+        "source": "games/GBC/Palettes"
+    },
+    "megaduck_palettes": {
+        "source": "games/MegaDuck/Palettes"
+    },
     "atari7800_palettes": {
         "source": "games/ATARI7800/Palettes"
+    },
+    "atari2600_palettes": {
+        "source": "games/Atari2600/Palettes"
     },
     "global_filters": {
         "path": ".",

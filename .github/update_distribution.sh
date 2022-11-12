@@ -99,12 +99,12 @@ import sys, re
 regex = re.compile(r'https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer(/tree/[a-zA-Z0-9-]+)?', re.I)
 reading = False
 for line in sys.stdin.readlines():
+    match = regex.search(line)
     line = line.strip().lower()
     if 'fpga cores' in line or 'service cores' in line:
         reading = True
     if reading is False:
         continue
-    match = regex.search(line)
     if line.startswith('###'):
         if 'development' in line[4:] or 'arcade cores' in line[4:]:
             reading = False
@@ -121,11 +121,11 @@ arcade_cores() {
     local WIKI_URL="${1}"
     curl -sSLf "${WIKI_URL}/Arcade-Cores-List.md" | python3 -c "
 import sys, re
-regex = re.compile(r'https://github.com/MiSTer-devel/Arcade-[a-zA-Z0-9._-]*[_-]MiSTer', re.I)
+regex = re.compile(r'https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer[^\/]', re.I)
 for line in sys.stdin.readlines():
     match = regex.search(line)
     if match is not None:
-        print(match.group(0))
+        print(match.group(0)[0:-1])
 "
 }
 

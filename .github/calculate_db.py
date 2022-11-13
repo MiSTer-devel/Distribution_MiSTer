@@ -162,7 +162,6 @@ class Tags:
         self._report_set = set()
         self._used = set()
         self._mgls = set()
-        self._core_kind = {}
 
     def init_aliases(self, aliases):
         for alias_list in aliases:
@@ -182,6 +181,8 @@ class Tags:
 
     def _get_tags_for_file(self, path: Path):
         parent = path.parts[0].lower()
+        if parent[0] == '|':
+            parent = parent[1:]
         if parent[0] == '_':
             parent = parent[1:]
 
@@ -301,9 +302,10 @@ class Tags:
             return []
 
         parent = path.parts[0].lower()
+        if parent[0] == '|':
+            parent = parent[1:]
         if parent[0] == '_':
             parent = parent[1:]
-
         result = [self._use_term(parent)]
 
         if parent in ['console', 'computer', 'other', 'utility']:
@@ -318,8 +320,11 @@ class Tags:
         if first_level[0] == '_':
             first_level = first_level[1:]
 
-        if (parent == 'games' or parent == 'docs') and first_level in ['gba2p', 'gameboy2p']:
-            self._append(result, self._use_term('handheld2p'))
+        if (parent == 'games' or parent == 'docs'):
+            if first_level in ['gba2p', 'gameboy2p']:
+                self._append(result, self._use_term('handheld2p'))
+            if first_level in self._mgls:
+                self._append(result, self._use_term('mgl'))
 
         self._append(result, self._use_term(first_level))
             

@@ -466,6 +466,9 @@ def create_db(folder, options, tags):
     zip_creators = []
     stored_folders = []
 
+    for file in db_finder.find_all():
+        tags.pre_process_file(file)
+
     if options['zips_config'] != '':
         print('reading zips_config: ' + options['zips_config'])
         with open(options['zips_config']) as zips_config_file:
@@ -681,11 +684,7 @@ def create_summary(finder: Finder, tags: Tags, source):
         'folders': dict()
     }
 
-    files = finder.find_all()
-    for file in files:
-        tags.pre_process_file(file)
-
-    for file in files:
+    for file in finder.find_all():
         strfile = str(file)
         summary['folders'][str(file.parent)] = {"path": file.parent}
 

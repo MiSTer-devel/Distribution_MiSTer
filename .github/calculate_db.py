@@ -161,12 +161,21 @@ class Tags:
         self._index = 0
         self._report_set = set()
         self._used = set()
+        self._mgls = set()
+        self._core_kind = {}
 
     def init_aliases(self, aliases):
         for alias_list in aliases:
             for alias in alias_list:
                 self._dict[self._clean_term(alias)] = self._index
             self._index += 1
+
+    def pre_process_file(self, path: Path):
+        suffix = path.suffix.lower()
+        if suffix == '.mgl':
+            rbf, setname = read_mgl_fields(path)
+            if setname is not None:
+                self._mgls.add(setname)
 
     def get_tags_for_file(self, path: Path):
         return sorted(self._get_tags_for_file(path))
@@ -235,6 +244,9 @@ class Tags:
         if parent == 'games':
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
+
+            if first_level in self._mgls:
+                self._append(result, self._use_term('mgl'))
             
             second_level = path.parts[2].lower()
             if len(path.parts) > 3:
@@ -251,6 +263,9 @@ class Tags:
         if parent == 'docs':
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
+            if first_level in self._mgls:
+                self._append(result, self._use_term('mgl'))
+
             second_level = path.parts[2].lower()
             if len(path.parts) > 3:
                 self._append(result, self._use_term(second_level))
@@ -661,7 +676,11 @@ def create_summary(finder: Finder, tags: Tags, source):
         'folders': dict()
     }
 
-    for file in finder.find_all():
+    files = finder.find_all()
+    for file in files:
+        tags.pre_process_file(file)
+
+    for file in files:
         strfile = str(file)
         summary['folders'][str(file.parent)] = {"path": file.parent}
 

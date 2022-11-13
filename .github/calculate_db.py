@@ -175,7 +175,7 @@ class Tags:
         if suffix == '.mgl':
             rbf, setname = read_mgl_fields(path)
             if setname is not None:
-                self._mgls.add(setname)
+                self._mgls.add(setname.lower())
 
     def get_tags_for_file(self, path: Path):
         return sorted(self._get_tags_for_file(path))

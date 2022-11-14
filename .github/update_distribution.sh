@@ -794,9 +794,6 @@ files_with_no_date() {
     local FOLDER="${1}"
     pushd "${FOLDER}" > /dev/null 2>&1
     for file in *; do
-        if [[ "${file}" == "SG-1000.mgl" ]] ; then
-            continue
-        fi
         if ! [[ "${file}" =~ ^.+_([0-9]{8})(\..+)?$ ]] ; then
             echo "${file}"
         fi

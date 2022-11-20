@@ -520,7 +520,7 @@ def create_db(folder, options, tags):
                 run_succesfully('git push origin zips_backup || true')
                 run_succesfully('git push origin --delete zips || true')
                 run_succesfully('git push origin new_zips:zips')
-                run_succesfully('git push origin --delete zips_backup')
+                run_succesfully('git push origin --delete zips_backup || true')
             else:
                 print('Using old zip branch from origin')
                 zip_sha = run_stdout('git rev-parse --verify origin/zip').strip()

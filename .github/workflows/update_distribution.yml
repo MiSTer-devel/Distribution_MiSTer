@@ -30,7 +30,13 @@ jobs:
         cd .github/tests
         ./test_calculate_db.py
 
-    - name: Update Distribution
+    - name: Download Distribution
+      run: ./.github/update_distribution.sh .
+
+    - name: Commit Distribution
+      run: ./.github/commit_distribution.sh
+
+    - name: Calculate and Push Database
       run: |
         set -euo pipefail
         git config --global user.email "theypsilon@gmail.com"
@@ -43,9 +49,7 @@ jobs:
         export ZIPS_CONFIG=./.github/zips_config.json
         export LINUX_GITHUB_REPOSITORY=MiSTer-devel/SD-Installer-Win64_MiSTer
 
-
-        ./.github/update_distribution.sh . --push
+        ./.github/calculate_db.py
 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

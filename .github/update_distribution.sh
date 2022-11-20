@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-# Copyright (c) 2021 José Manuel Barroso Galindo <theypsilon@gmail.com>
+# Copyright (c) 2021-2022 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
 set -euo pipefail
 
 update_distribution() {
     local OUTPUT_FOLDER="${1}"
-    local PUSH_COMMAND="${2:-}"
 
     git fetch --unshallow origin
 
@@ -36,26 +35,6 @@ update_distribution() {
     done
     
     wait_jobs
-
-    if [[ "${PUSH_COMMAND}" != "--push" ]] ; then
-        return
-    fi
-    
-    git checkout -f develop -b main
-    echo "Running detox"
-    detox -v -s utf_8-only -r *
-    echo "Detox done"
-    echo "Removing colons"
-    local IFS=$'\n'
-    for i in $(find . -name "*:*"); do
-        echo mv "${i}" "${i/:/-}"
-        mv "${i}" "${i/:/-}"
-    done
-    echo "Colons removed"
-    git add "${OUTPUT_FOLDER}"
-    git commit -m "-"
-    git fetch origin main || true
-    ./.github/calculate_db.py
 }
 
 wait_jobs() {
@@ -881,5 +860,5 @@ install_folders() {
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then
-    update_distribution "${1}" "${2:-}"
+    update_distribution "${1}"
 fi

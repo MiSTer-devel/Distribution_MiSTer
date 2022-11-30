@@ -879,11 +879,8 @@ def lineno():
 
 def et_iterparse(mra_file, events):
     try:
-        with open(mra_file, 'r') as f:
-            text = f.read()
-
-        with io.StringIO() as f:
-            f.write(text.lower())
+        with open(mra_file, 'r') as ftemp, io.StringIO() as f:
+            f.write(ftemp.read().lower())
             f.seek(0)
             return ET.iterparse(f, events=events)
     except Error as e:

@@ -878,17 +878,17 @@ def lineno():
     return getframeinfo(currentframe().f_back).lineno
 
 def et_iterparse(mra_file, events):
-    with open(mra_file, 'r') as f:
-        text = f.read()
+    try:
+        with open(mra_file, 'r') as f:
+            text = f.read()
 
-    with io.StringIO() as f:
-        f.write(text.lower())
-        f.seek(0)
-        try:
+        with io.StringIO() as f:
+            f.write(text.lower())
+            f.seek(0)
             return ET.iterparse(f, events=events)
-        except Error as e:
-            print('Exception during %s !' % mra_file)
-            raise e
+    except Error as e:
+        print('Exception during %s !' % mra_file)
+        raise e
 
 def read_mra_fields(mra_path):
     rbf = None

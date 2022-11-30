@@ -9,7 +9,7 @@ import time
 import re
 import subprocess
 import sys
-import os
+import io
 import tempfile
 import xml.etree.ElementTree as ET
 import xml.etree.ElementTree
@@ -881,11 +881,14 @@ def et_iterparse(mra_file, events):
     with open(mra_file, 'r') as f:
         text = f.read()
 
-    with tempfile.NamedTemporaryFile() as temp:
-        with open(temp.name, 'w') as f:
-            f.write(text.lower())
-
-        return ET.iterparse(temp.name, events=events)
+    with io.StringIO() as f:
+        f.write(text.lower())
+        f.seek(0)
+        try:
+            return ET.iterparse(f, events=events)
+        except Error as e:
+            print('Exception during %s !' % mra_file)
+            raise e
 
 def read_mra_fields(mra_path):
     rbf = None

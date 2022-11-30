@@ -884,7 +884,7 @@ def et_iterparse(mra_file, events):
             f.write(ftemp.read().lower())
             f.seek(0)
             return ET.iterparse(f, events=events)
-    except Error as e:
+    except Exception as e:
         print('Exception during %s !' % mra_file)
         raise e
 

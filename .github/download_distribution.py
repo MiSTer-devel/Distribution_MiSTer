@@ -516,9 +516,6 @@ def install_cheats(mapping, target_dir):
     tmp_zip = f'/tmp/{cheat_key}{cheat_platform}.zip'
     cheat_folder = f'{target_dir}/Cheats/{cheat_platform}'
 
-    if Path(cheat_folder).exists():
-        shutil.rmtree(cheat_folder, ignore_errors=True)
-
     print(f'cheat_keys: {cheat_key}, cheat_platform: {cheat_platform}, cheat_zip: {cheat_zip}, cheat_url: {cheat_url}')
 
     download_file(cheat_url, tmp_zip)

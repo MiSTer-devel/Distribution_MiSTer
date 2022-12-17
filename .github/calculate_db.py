@@ -155,28 +155,27 @@ filter_part_regex = re.compile("[-_a-z0-9.]$", )
 
 main_binaries = ['MiSTer', 'menu.rbf']
 
+class Metadata:
+    def __init__(self, props):
+        self._props = props
+
+    def is_mgl_folder(self, folder):
+        return folder in self._props['folders'] and self._props['folders'][folder]['is_mgl']
+
 class Tags:
     def __init__(self, metadata) -> None:
-        self._metadata = metadata
+        self._metadata = Metadata(metadata)
         self._dict = {}
         self._alternatives = {}
         self._index = 0
         self._report_set = set()
         self._used = set()
-        self._mgls = set()
 
     def init_aliases(self, aliases):
         for alias_list in aliases:
             for alias in alias_list:
                 self._dict[self._clean_term(alias)] = self._index
             self._index += 1
-
-    def pre_process_file(self, path: Path):
-        suffix = path.suffix.lower()
-        if suffix == '.mgl':
-            rbf, setname = read_mgl_fields(path)
-            if setname is not None:
-                self._mgls.add(setname.lower())
 
     def get_tags_for_file(self, path: Path):
         return sorted(self._get_tags_for_file(path))
@@ -248,7 +247,7 @@ class Tags:
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
 
-            if first_level in self._mgls:
+            if self._metadata.is_mgl_folder(first_level):
                 self._append(result, self._use_term('mgl'))
             
             second_level = path.parts[2].lower()
@@ -266,7 +265,7 @@ class Tags:
         if parent == 'docs':
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
-            if first_level in self._mgls:
+            if self._metadata.is_mgl_folder(first_level):
                 self._append(result, self._use_term('mgl'))
 
             second_level = path.parts[2].lower()
@@ -325,7 +324,7 @@ class Tags:
         if (parent == 'games' or parent == 'docs'):
             if first_level in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
-            if first_level in self._mgls:
+            if self._metadata.is_mgl_folder(first_level):
                 self._append(result, self._use_term('mgl'))
 
         self._append(result, self._use_term(first_level))
@@ -467,9 +466,6 @@ def create_db(folder, options, tags):
     zips = dict()
     zip_creators = []
     stored_folders = []
-
-    for file in db_finder.find_all():
-        tags.pre_process_file(file)
 
     if options['zips_config'] != '':
         print('reading zips_config: ' + options['zips_config'])

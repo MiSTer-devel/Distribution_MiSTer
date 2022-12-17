@@ -46,7 +46,7 @@ def main(dryrun):
     check_test = os.getenv('CHECK_TEST', 'true') != 'false' 
     download_metadata_json = os.getenv('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json')
 
-    tags = Tags(try_read_json(download_metadata_json, {}))
+    tags = Tags(try_read_json(download_metadata_json, {'home': {}}))
 
     db = create_db('.', {
         'sha': sha,

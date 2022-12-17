@@ -13,16 +13,20 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: develop
+
     - name: Install apt-get utilities
       run: sudo apt-get install detox sharutils
 
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.8'
+        cache: 'pip'
+        cache-dependency-path: .github/requirements.txt
 
-    - uses: actions/checkout@v2
-      with:
-        ref: develop
+    - run: pip install -r .github/requirements.txt
 
     - name: Test Calculate Db
       run: |
@@ -31,7 +35,7 @@ jobs:
         ./test_calculate_db.py
 
     - name: Download Distribution
-      run: ./.github/update_distribution.sh .
+      run: ./.github/download_distribution.py .
 
     - name: Commit Distribution
       run: ./.github/commit_distribution.sh

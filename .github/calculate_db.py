@@ -44,8 +44,9 @@ def main(dryrun):
     db_id = envvar('DB_ID')
     check_changed = os.getenv('CHECK_CHANGED', 'true') != 'false' 
     check_test = os.getenv('CHECK_TEST', 'true') != 'false' 
+    download_metadata_json = os.getenv('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json')
 
-    tags = Tags()
+    tags = Tags(try_read_json(download_metadata_json, {}))
 
     db = create_db('.', {
         'sha': sha,
@@ -155,7 +156,8 @@ filter_part_regex = re.compile("[-_a-z0-9.]$", )
 main_binaries = ['MiSTer', 'menu.rbf']
 
 class Tags:
-    def __init__(self) -> None:
+    def __init__(self, metadata) -> None:
+        self._metadata = metadata
         self._dict = {}
         self._alternatives = {}
         self._index = 0
@@ -732,7 +734,7 @@ def add_missing_folders(folders, source):
             folders[strparent] = {"path": parent}
 
 def create_linux_description(repository):
-    sd_installer_output = run_stdout('curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/%s/git/trees/HEAD' % repository)
+    sd_installer_output = run_stdout(f'curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer {os.environ.get("GITHUB_TOKEN", "")}" https://api.github.com/repos/{repository}/git/trees/HEAD')
     sd_installer_json = json.loads(sd_installer_output)
 
     releases = sorted([x['path'] for x in sd_installer_json['tree'] if x['path'][0:8].lower() == 'release_' and x['path'][-3:].lower() == '.7z'])
@@ -912,6 +914,14 @@ def read_mra_fields(mra_path):
         raise e
    
     return rbf, list(zips)
+
+def try_read_json(filename, default):
+    try:
+        with open(filename) as f:
+            return json.load(f)
+    except:
+        print('WARNING! No JSON! Using default instead.')
+        return default
 
 def read_mgl_fields(mgl_path):
     rbf = None

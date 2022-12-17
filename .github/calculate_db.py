@@ -199,13 +199,7 @@ class Tags:
         suffix = path.suffix.lower()
         stem = path.stem.lower()
 
-        is_doc = False
-        if (stem == 'readme' or (parent == 'games' and 'readme' in stem)) and (suffix == '.txt' or suffix == '.md'):
-            is_doc = True
-            self._append(result, self._use_term('docs'))
-            self._append(result, self._use_term('readme'))
-            
-        elif suffix == '.mra':
+        if suffix == '.mra':
             self._append(result, self._use_term('mra'))
             rbf, zips = read_mra_fields(path)
 
@@ -246,30 +240,7 @@ class Tags:
             if rbf is not None:
                 self._append(result, self._use_term(Path(rbf).name.lower()))
 
-        if parent == 'games':
-            first_level = path.parts[1].lower()
-            self._append(result, self._use_term(first_level))
-
-            if self._metadata.is_mgl_home(first_level):
-                self._append(result, self._use_term('mgl'))
-
-            category = self._metadata.category_by_home(first_level)
-            if category is not None:
-                self._append(result, self._use_term(category))
-
-            second_level = path.parts[2].lower()
-            if len(path.parts) > 3:
-                self._append(result, self._use_term(second_level))
-                
-            if second_level.endswith('.rom'):
-               self._append(result, self._use_term('bios'))
-            elif second_level not in ['palettes'] and suffix != '.rbf' and suffix != '.mra' and not is_doc:
-                self._append(result, self._use_term('extra-utilities'))
-                                                  
-            if first_level in ['gba2p', 'gameboy2p']:
-                self._append(result, self._use_term('handheld2p'))
-
-        if parent == 'docs':
+        if parent in ['games', 'docs']:
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
             if self._metadata.is_mgl_home(first_level):
@@ -278,12 +249,21 @@ class Tags:
             category = self._metadata.category_by_home(first_level)
             if category is not None:
                 self._append(result, self._use_term(category))
+    
+            if first_level in ['gba2p', 'gameboy2p']:
+                self._append(result, self._use_term('handheld2p'))
 
             second_level = path.parts[2].lower()
             if len(path.parts) > 3:
                 self._append(result, self._use_term(second_level))
-            if first_level in ['gba2p', 'gameboy2p']:
-                self._append(result, self._use_term('handheld2p'))
+            
+            if parent == 'games':
+                if second_level.endswith('.rom'):
+                    self._append(result, self._use_term('bios'))
+                elif second_level not in ['palettes'] and suffix != '.rbf' and suffix != '.mra':
+                    self._append(result, self._use_term('extra-utilities'))
+            elif parent == 'docs':
+                self._append(result, self._use_term('readme'))
 
         elif parent == 'cheats':
             self._append(result, self._use_term(path.parts[1].lower()))
@@ -332,7 +312,7 @@ class Tags:
         if first_level[0] == '_':
             first_level = first_level[1:]
 
-        if (parent == 'games' or parent == 'docs'):
+        if parent in ['games', 'docs']:
             if first_level in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
             if self._metadata.is_mgl_home(first_level):

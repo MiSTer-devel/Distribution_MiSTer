@@ -6,7 +6,7 @@ You may download all of them at once as a zip through the [following link](https
 
 ### MiSTer Project
 
-If you want to check more about the MiSTer project, please check [this wiki](https://github.com/MiSTer-devel/Main_MiSTer/wiki).
+If you want to check more about the MiSTer project, please check [this wiki](https://github.com/MiSTer-devel/Wiki_MiSTer/wiki).
 
 ### MiSTer Downloader
 

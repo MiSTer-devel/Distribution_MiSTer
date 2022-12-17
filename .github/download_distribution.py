@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 amount_of_cores_validation_limit = 200
-amount_of_extra_content_urls_validation_limit = 240
+amount_of_extra_content_urls_validation_limit = 25
 
 def main():
 
@@ -173,8 +173,6 @@ def fetch_extra_content_urls():
     result = []
     result.extend(['https://github.com/MiSTer-devel/Main_MiSTer', 'https://github.com/MiSTer-devel/Menu_MiSTer'])
     result.extend(['user-content-mra-alternatives', 'https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer'])
-    result.extend(old_most_cores())
-    result.extend(['user-content-arcade-cores', *old_arcade_cores()])
     result.extend(["user-cheats"])  # @TODO Modify this mapping whenever there is a new system with cheats
     result.extend(["fds|NES"])
     result.extend(["gb|GameBoy"])
@@ -209,49 +207,11 @@ def fetch_extra_content_urls():
     result.extend(["user-content-gamecontrollerdb", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
     return result
 
-def old_most_cores():  # @TODO Remove this function, is now redundant
-    text = fetch_text('https://raw.githubusercontent.com/wiki/MiSTer-devel/Wiki_MiSTer/_Sidebar.md')
-    regex = re.compile(r'https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer(/tree/[a-zA-Z0-9-]+)?', re.I)
-    reading = False
-    cores = []
-    for line in text.splitlines():
-        match = regex.search(line)
-        line = line.strip().lower()
-        if 'fpga cores' in line or 'service cores' in line:
-            reading = True
-        if reading is False:
-            continue
-        if line.startswith('###'):
-            if 'development' in line[4:] or 'arcade cores' in line[4:]:
-                reading = False
-            else:
-                cores.append('user-content-%s' % line[4:].replace(' ', '-'))
-        elif match is not None:
-            core = match.group(0)
-            if 'menu_mister' not in core.lower():
-                cores.append(core)
-    return cores
-
-def old_arcade_cores():  # @TODO Remove this function, is now redundant
-    text = fetch_text('https://raw.githubusercontent.com/wiki/MiSTer-devel/Wiki_MiSTer/Arcade-Cores-List.md')
-    cores = []
-    regex = re.compile(r'https://github.com/MiSTer-devel/[a-zA-Z0-9._-]*[_-]MiSTer[^\/]', re.I)
-    for line in text.splitlines():
-        match = regex.search(line)
-        if match is not None:
-            cores.append(match.group(0)[0:-1])
-    return cores
-
 def classify_extra_content(extra_content_urls):
     current_category = 'main'
     extra_content_categories = {}
     for url in extra_content_urls:
-        if url == "user-content-computers---classic": current_category = "_Computer"
-        elif url == "user-content-arcade-cores": current_category = "_Arcade"
-        elif url == "user-content-consoles---classic": current_category = "_Console"
-        elif url == "user-content-other-systems": current_category = "_Other"
-        elif url == "user-content-service-cores": current_category = "_Utility"
-        elif url == "user-content-linux-binary": current_category = url
+        if url == "user-content-linux-binary": current_category = url
         elif url == "user-content-zip-release": current_category = url
         elif url == "user-content-scripts": current_category = url
         elif url == "user-cheats": current_category = url
@@ -264,11 +224,9 @@ def classify_extra_content(extra_content_urls):
         elif url in ["user-content-fpga-cores", "user-content-development", ""]: print('WARNING! Ignored url: ' + url)
         else:
             if url not in extra_content_categories:
-                extra_content_categories[url] = [current_category]
-            elif is_standard_core_category(extra_content_categories[url][0]) and is_standard_core_category(current_category):
-                extra_content_categories[url].append(current_category)
-            elif current_category not in extra_content_categories[url]:
-                print(f'Already processed {url} as {extra_content_categories[url][0]}. Tried to be processed again as {current_category}.')
+                extra_content_categories[url] = current_category
+            elif current_category != extra_content_categories[url]:
+                print(f'Already processed {url} as {extra_content_categories[url]}. Tried to be processed again as {current_category}.')
 
     return extra_content_categories
 
@@ -278,9 +236,8 @@ def process_all(extra_content_categories, core_descriptions, target):
     delme = subprocess.run(['mktemp', '-d'], shell=False, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).stdout.decode().strip()
     metadata_props = Metadata.new_props()
 
-    cores_set = {core['url'] for core in core_descriptions if 'MiSTer-devel/Menu_MiSTer' not in core['url']}
     core_jobs = [(core, delme, target, metadata_props) for core in core_descriptions if 'MiSTer-devel/Menu_MiSTer' not in core['url']]
-    extra_content_jobs = [(url, category, delme, target) for url, categories in extra_content_categories.items() if url not in cores_set for category in categories]
+    extra_content_jobs = [(url, category, delme, target) for url, category in extra_content_categories.items()]
 
     with ThreadPool(processes=30) as pool:
         core_results = pool.starmap_async(process_core, core_jobs)

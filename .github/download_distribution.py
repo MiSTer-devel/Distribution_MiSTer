@@ -333,7 +333,7 @@ def impl_install_generic_core(path, target_dir, core, metadata, touch_games_fold
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/{core["category"]}/{latest_release}')
         binaries.append(bin)
 
-    metadata.add_folder(core['home'])
+    metadata.add_home(core['home'], core['category'])
     home_folders = [core['home']]
 
     for mgl in mgl_files(releases_dir):
@@ -346,7 +346,7 @@ def impl_install_generic_core(path, target_dir, core, metadata, touch_games_fold
             continue
 
         home_folders.append(setname)
-        metadata.add_mgl_folder(setname)
+        metadata.add_mgl_home(setname, core['category'])
 
     for folder in home_folders:
         for readme in list_readmes(path):
@@ -501,17 +501,17 @@ extra_content_early_installers = {
 class Metadata:
     @staticmethod
     def new_props():
-        return {'folders': {}}
+        return {'home': {}}
 
     def __init__(self, props):
         self._props = props
     
-    def add_mgl_folder(self, folder):
-        self._props['folders'][folder] = self._props['folders'].get(folder, {'is_mgl': True})
+    def add_mgl_home(self, folder, category):
+        self._props['home'][folder] = self._props['home'].get(folder, {'is_mgl': True, 'category': category.lower()[1:]})
 
-    def add_folder(self, folder):
-        self._props['folders'][folder] = self._props['folders'].get(folder, {'is_mgl': True})
-        self._props['folders'][folder]['is_mgl'] = False
+    def add_home(self, folder, category):
+        self._props['home'][folder] = self._props['home'].get(folder, {'is_mgl': True, 'category': category.lower()[1:]})
+        self._props['home'][folder]['is_mgl'] = False
 
 def mra_files(folder):
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mra']

@@ -159,8 +159,11 @@ class Metadata:
     def __init__(self, props):
         self._props = props
 
-    def is_mgl_folder(self, folder):
-        return folder in self._props['folders'] and self._props['folders'][folder]['is_mgl']
+    def is_mgl_home(self, home):
+        return home in self._props['home'] and self._props['home'][home]['is_mgl']
+
+    def category_by_home(self, home):
+        return None if home not in self._props['home'] else self._props['home'][home]['category']
 
 class Tags:
     def __init__(self, metadata) -> None:
@@ -247,9 +250,13 @@ class Tags:
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
 
-            if self._metadata.is_mgl_folder(first_level):
+            if self._metadata.is_mgl_home(first_level):
                 self._append(result, self._use_term('mgl'))
-            
+
+            category = self._metadata.category_by_home(first_level)
+            if category is not None:
+                self._append(result, self._use_term(category))
+
             second_level = path.parts[2].lower()
             if len(path.parts) > 3:
                 self._append(result, self._use_term(second_level))
@@ -265,8 +272,12 @@ class Tags:
         if parent == 'docs':
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
-            if self._metadata.is_mgl_folder(first_level):
+            if self._metadata.is_mgl_home(first_level):
                 self._append(result, self._use_term('mgl'))
+
+            category = self._metadata.category_by_home(first_level)
+            if category is not None:
+                self._append(result, self._use_term(category))
 
             second_level = path.parts[2].lower()
             if len(path.parts) > 3:
@@ -324,8 +335,11 @@ class Tags:
         if (parent == 'games' or parent == 'docs'):
             if first_level in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
-            if self._metadata.is_mgl_folder(first_level):
+            if self._metadata.is_mgl_home(first_level):
                 self._append(result, self._use_term('mgl'))
+            category = self._metadata.category_by_home(first_level)
+            if category is not None:
+                self._append(result, self._use_term(category))
 
         self._append(result, self._use_term(first_level))
             

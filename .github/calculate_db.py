@@ -262,7 +262,7 @@ class Tags:
                     self._append(result, self._use_term('bios'))
                 elif second_level not in ['palettes'] and suffix != '.rbf' and suffix != '.mra':
                     self._append(result, self._use_term('extra-utilities'))
-            elif parent == 'docs':
+            elif parent == 'docs' and 'readme' in stem:
                 self._append(result, self._use_term('readme'))
 
         elif parent == 'cheats':

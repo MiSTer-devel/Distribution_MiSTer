@@ -87,7 +87,7 @@ def validate_cores(cores):
             print(c)
             raise ValueError(f'Not valid uri "{url}" for core with name "{c.get("name", None)}".')
 
-    for c in [*console_cores, *computer_cores]:
+    for c in [*console_cores, *computer_cores, *other_cores, *service_cores]:
         home = c.get('home', None)
         if home is None or len(home) == 0:
             print(c)
@@ -148,7 +148,10 @@ def fetch_cores():
             name = matches.group(1).strip()
             url = matches.group(2).strip()
             home = columns[2].strip()
-            result.append({'name': name, 'url': url, 'home': home, 'category': category})
+            if 'MiSTer-devel/Menu_MiSTer' in url:
+                print('Ignoring menu core on cores list parsing.')
+            else:
+                result.append({'name': name, 'url': url, 'home': home, 'category': category})
 
         elif reading_arcade_list:
             if 'arcade_list_end' in line:
@@ -236,7 +239,7 @@ def process_all(extra_content_categories, core_descriptions, target):
     delme = subprocess.run(['mktemp', '-d'], shell=False, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).stdout.decode().strip()
     metadata_props = Metadata.new_props()
 
-    core_jobs = [(core, delme, target, metadata_props) for core in core_descriptions if 'MiSTer-devel/Menu_MiSTer' not in core['url']]
+    core_jobs = [(core, delme, target, metadata_props) for core in core_descriptions]
     extra_content_jobs = [(url, category, delme, target) for url, category in extra_content_categories.items()]
 
     with ThreadPool(processes=30) as pool:

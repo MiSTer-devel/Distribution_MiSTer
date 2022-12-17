@@ -734,7 +734,9 @@ def add_missing_folders(folders, source):
             folders[strparent] = {"path": parent}
 
 def create_linux_description(repository):
-    sd_installer_output = run_stdout(f'curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer {os.environ.get("GITHUB_TOKEN", "")}" https://api.github.com/repos/{repository}/git/trees/HEAD')
+    token = os.environ.get("GITHUB_TOKEN", None)
+    auth = '' if token is None else f'-H "Authorization: Bearer {token}"'
+    sd_installer_output = run_stdout(f'curl -H "Accept: application/vnd.github.v3+json" {auth} https://api.github.com/repos/{repository}/git/trees/HEAD')
     sd_installer_json = json.loads(sd_installer_output)
 
     releases = sorted([x['path'] for x in sd_installer_json['tree'] if x['path'][0:8].lower() == 'release_' and x['path'][-3:].lower() == '.7z'])

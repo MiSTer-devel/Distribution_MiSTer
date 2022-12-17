@@ -608,7 +608,7 @@ def collect_cheat_zips(url):
 
 def download_mister_devel_repository(input_url, delme, category):
     name = get_repository_name(input_url)
-    name, branch = get_branch(name)
+    branch = get_branch(input_url)
 
     path = f'{delme}/{name}'
 
@@ -622,16 +622,16 @@ def download_mister_devel_repository(input_url, delme, category):
     download_repository(path, git_url, branch)
     return path
 
-def get_repository_name(input_url):
-    return str(Path(urlparse(input_url).path.split('/')[2]).with_suffix(''))
+def get_repository_name(url):
+    return str(Path(urlparse(url).path.split('/')[2]).with_suffix(''))
+
+def get_branch(url):
+    pos = url.find('/tree/')
+    if pos == -1:
+        return ""
+    return url[pos + len('/tree/'):]
 
 # file system utilities
-
-def get_branch(name):
-    pos = name.find('/tree/')
-    if pos == -1:
-        return name, ""
-    return name[0:pos], name[pos + len('/tree/'):]
 
 def list_files(directory, recursive):
     for f in os.scandir(directory):

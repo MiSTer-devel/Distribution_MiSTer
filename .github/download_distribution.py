@@ -607,7 +607,7 @@ def collect_cheat_zips(url):
     return [f[f.find('mister_'):f.find('.zip') + 4] for f in text.splitlines() if 'mister_' in f and '.zip' in f]
 
 def download_mister_devel_repository(input_url, delme, category):
-    name = input_url.rsplit('/', 1)[-1]
+    name = get_repository_name(input_url)
     name, branch = get_branch(name)
 
     path = f'{delme}/{name}'
@@ -621,6 +621,9 @@ def download_mister_devel_repository(input_url, delme, category):
     git_url = f'{input_url.replace("/tree/" + branch, "")}.git'
     download_repository(path, git_url, branch)
     return path
+
+def get_repository_name(input_url):
+    return str(Path(urlparse(input_url).path.split('/')[2]).with_suffix(''))
 
 # file system utilities
 

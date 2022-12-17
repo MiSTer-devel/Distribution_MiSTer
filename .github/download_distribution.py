@@ -507,11 +507,13 @@ class Metadata:
         self._props = props
     
     def add_mgl_home(self, folder, category):
-        self._props['home'][folder] = self._props['home'].get(folder, {'is_mgl': True, 'category': category.lower()[1:]})
+        lower = folder.lower()
+        self._props['home'][lower] = self._props['home'].get(lower, {'is_mgl': True, 'category': category.lower()[1:]})
 
     def add_home(self, folder, category):
-        self._props['home'][folder] = self._props['home'].get(folder, {'is_mgl': True, 'category': category.lower()[1:]})
-        self._props['home'][folder]['is_mgl'] = False
+        lower = folder.lower()
+        self._props['home'][lower] = self._props['home'].get(lower, {'is_mgl': True, 'category': category.lower()[1:]})
+        self._props['home'][lower]['is_mgl'] = False
 
 def mra_files(folder):
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mra']

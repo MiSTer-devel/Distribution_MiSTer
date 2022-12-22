@@ -183,9 +183,18 @@ class Tags:
                 self._dict[term] = index
 
     def _matching_dict_index(self, clean_terms):
+        result = None
         for term in clean_terms:
-            if term in self._dict:
-                return self._dict[term]
+            if term not in self._dict:
+                continue
+
+            if result is None:
+                result = self._dict[term]
+            elif result != self._dict[term]:
+                raise Exception(f'Aliases with different indexes should not happen. {str(result)} != {str(self._dict[term])}')
+
+        if result is not None:
+            return result
 
         result = self._index
         self._index += 1

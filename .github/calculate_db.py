@@ -296,7 +296,9 @@ class Tags:
                 self._append(result, self._use_term('readme'))
 
         elif parent == 'cheats':
-            self._append(result, self._use_term(path.parts[1].lower()))
+            first_level = path.parts[1].lower()
+            self._append(result, self._use_term(first_level))
+            self._append(result, self._use_term('console'))
 
         elif parent in ['gamma', 'filters', 'filters_audio', 'shadow_masks']:
             self._append(result, self._use_term('all_filters'))
@@ -329,7 +331,9 @@ class Tags:
 
         if parent in ['console', 'computer', 'other', 'utility']:
             self._append(result, self._use_term('cores'))
-        
+        elif parent == 'cheats':
+            self._append(result, self._use_term('console'))
+
         self._add_cores_terms(parent, result)
 
         if len(path.parts) == 1:

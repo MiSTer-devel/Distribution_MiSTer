@@ -153,7 +153,13 @@ class Metadata:
         self._props = props
 
     def is_mgl_home(self, home):
-        return home in self._props['home'] and self._props['home'][home]['is_mgl']
+        return home in self._props['home'] and self._props['home'][home]['mgl_dependency'] != ''
+
+    def mgl_dependency(self, home):
+        mgl_dependency = self._props['home'][home]['mgl_dependency']
+        if len(mgl_dependency) == 0:
+            return Exception('This method should be used after is_mgl_home is true')
+        return mgl_dependency
 
     def category_by_home(self, home):
         return None if home not in self._props['home'] else self._props['home'][home]['category']
@@ -268,6 +274,7 @@ class Tags:
             self._append(result, self._use_term(first_level))
             if self._metadata.is_mgl_home(first_level):
                 self._append(result, self._use_term('mgl'))
+                self._append(result, self._use_term(self._metadata.mgl_dependency(first_level)))
 
             category = self._metadata.category_by_home(first_level)
             if category is not None:
@@ -337,6 +344,7 @@ class Tags:
                 self._append(result, self._use_term('handheld2p'))
             if self._metadata.is_mgl_home(first_level):
                 self._append(result, self._use_term('mgl'))
+                self._append(result, self._use_term(self._metadata.mgl_dependency(first_level)))
             category = self._metadata.category_by_home(first_level)
             if category is not None:
                 self._append(result, self._use_term(category))

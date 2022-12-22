@@ -333,7 +333,7 @@ def impl_install_generic_core(path, target_dir, core, metadata, touch_games_fold
             continue
 
         home_folders.append(setname)
-        metadata.add_mgl_home(setname, core['category'])
+        metadata.add_mgl_home(setname, core['category'], rbf)
         metadata.add_core_aliases([setname, Path(mgl).stem])
 
     for folder in home_folders:
@@ -473,14 +473,14 @@ class Metadata:
     def set_ctx(self, ctx):
         self._ctx = ctx
     
-    def add_mgl_home(self, folder, category):
+    def add_mgl_home(self, folder, category, rbf):
         lower = folder.lower()
-        self._props['home'][lower] = self._props['home'].get(lower, {'is_mgl': True, 'category': category.lower()[1:]})
+        self._props['home'][lower] = self._props['home'].get(lower, {'mgl_dependency': Path(rbf).stem.lower(), 'category': category.lower()[1:]})
 
     def add_home(self, folder, category):
         lower = folder.lower()
-        self._props['home'][lower] = self._props['home'].get(lower, {'is_mgl': True, 'category': category.lower()[1:]})
-        self._props['home'][lower]['is_mgl'] = False
+        self._props['home'][lower] = self._props['home'].get(lower, {'mgl_dependency': '', 'category': category.lower()[1:]})
+        self._props['home'][lower]['mgl_dependency'] = ''
 
     def add_core_aliases(self, core_aliases):
         terms = {to_filter_term(c) for c in core_aliases}

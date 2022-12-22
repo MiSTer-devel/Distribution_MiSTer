@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 amount_of_cores_validation_limit = 200
-amount_of_extra_content_urls_validation_limit = 25
+amount_of_extra_content_urls_validation_limit = 20
 
 def main():
 
@@ -176,24 +176,9 @@ def fetch_extra_content_urls():
     result = []
     result.extend(['https://github.com/MiSTer-devel/Main_MiSTer', 'https://github.com/MiSTer-devel/Menu_MiSTer'])
     result.extend(['user-content-mra-alternatives', 'https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer'])
-    result.extend(["user-cheats"])  # @TODO Modify this mapping whenever there is a new system with cheats
-    result.extend(["fds|NES"])
-    result.extend(["gb|GameBoy"])
-    result.extend(["gba|GBA"])
-    result.extend(["gbc|GameBoy"])
-    result.extend(["gen|Genesis"])
-    result.extend(["gg|SMS"])
-    result.extend(["lnx|AtariLynx"])
-    result.extend(["nes|NES"])
-    result.extend(["pce|TGFX16"])
-    result.extend(["pcd|TGFX16-CD"])
-    result.extend(["psx|PSX"])
-    result.extend(["scd|MegaCD"])
-    result.extend(["sms|SMS"])
-    result.extend(["snes|SNES"])
-    #result.extend(["user-backup-cheats", "https://github.com/MiSTer-devel/Distribution_MiSTer/archive/refs/heads/main.zip"])  # Uncomment if user-cheats breaks (and comment user-cheats instead)
     result.extend(["user-content-fonts", "https://github.com/MiSTer-devel/Fonts_MiSTer"])
     result.extend(["user-content-folders"])
+    result.extend(["https://github.com/MiSTer-devel/Cheats_MiSTer"])
     result.extend(["https://github.com/MiSTer-devel/Filters_MiSTer"])
     result.extend(["https://github.com/MiSTer-devel/ShadowMasks_MiSTer"])
     result.extend(["https://github.com/MiSTer-devel/Presets_MiSTer"])
@@ -217,8 +202,6 @@ def classify_extra_content(extra_content_urls):
         if url == "user-content-linux-binary": current_category = url
         elif url == "user-content-zip-release": current_category = url
         elif url == "user-content-scripts": current_category = url
-        elif url == "user-cheats": current_category = url
-        elif url == "user-backup-cheats": current_category = url
         elif url == "user-content-empty-folder": current_category = url
         elif url == "user-content-gamecontrollerdb": current_category = url
         elif url == "user-content-folders": current_category = url
@@ -265,8 +248,11 @@ def process_core(core, delme, target, metadata_props):
         print(f'Warning! Ignored {category}: {url}')
         return
 
+    metadata = Metadata(metadata_props)
+    metadata.set_ctx(core)
+
     if category in core_installers:
-        return core_installers[category](path, target, core, Metadata(metadata_props))
+        return core_installers[category](path, target, core, metadata)
 
     raise SystemError(f'Ignored core: {url} {category}')
 
@@ -294,7 +280,7 @@ def install_arcade_core(path, target_dir, core, metadata):
     releases_dir = f'{path}/releases'
     arcade_installed = False
 
-    for bin in uniq_files_with_stripped_date(releases_dir, 'Arcade-'):
+    for bin in try_filter_list(uniq_files_with_stripped_date(releases_dir), 'Arcade-'):
         latest_release = get_latest_release(releases_dir, bin)
         if not is_rbf(latest_release):
             print(f'{core["url"]}: {latest_release} is NOT a RBF file')
@@ -320,7 +306,7 @@ def impl_install_generic_core(path, target_dir, core, metadata, touch_games_fold
     releases_dir = f'{path}/releases'
 
     binaries = []
-    for bin in uniq_files_with_stripped_date(releases_dir, core["home"]):
+    for bin in try_filter_list(uniq_files_with_stripped_date(releases_dir), core["home"]):
         if is_arcade_core(bin):
             continue
 
@@ -334,6 +320,7 @@ def impl_install_generic_core(path, target_dir, core, metadata, touch_games_fold
         binaries.append(bin)
 
     metadata.add_home(core['home'], core['category'])
+    metadata.add_core_aliases([core['home'], *binaries])
     home_folders = [core['home']]
 
     for mgl in mgl_files(releases_dir):
@@ -347,6 +334,7 @@ def impl_install_generic_core(path, target_dir, core, metadata, touch_games_fold
 
         home_folders.append(setname)
         metadata.add_mgl_home(setname, core['category'])
+        metadata.add_core_aliases([setname, Path(mgl).stem])
 
     for folder in home_folders:
         for readme in list_readmes(path):
@@ -389,7 +377,7 @@ def install_main_binary(path, target_dir, category, url):
         print(f'Warning! Ignored {category}: {url}')
         return
 
-    for bin in uniq_files_with_stripped_date(releases_dir, None):
+    for bin in uniq_files_with_stripped_date(releases_dir):
         latest_release = get_latest_release(releases_dir, bin)
         if is_empty_release(latest_release):
             continue
@@ -404,7 +392,7 @@ def install_linux_binary(path, target_dir, category, url):
         print(f'Warning! Ignored {category}: {url}')
         return
 
-    for bin in uniq_files_with_stripped_date(releases_dir, None):
+    for bin in uniq_files_with_stripped_date(releases_dir):
         latest_release = get_latest_release(releases_dir, bin)
         if is_empty_release(latest_release):
             continue
@@ -419,7 +407,7 @@ def install_zip_release(path, target_dir, category, url):
         print(f'Warning! Ignored {category}: {url}')
         return
     
-    for zip in uniq_files_with_stripped_date(releases_dir, None):
+    for zip in uniq_files_with_stripped_date(releases_dir):
         latest_release = get_latest_release(releases_dir, zip)
         if is_empty_release(latest_release):
             continue
@@ -464,35 +452,9 @@ def install_gamecontrollerdb(url, target_dir):
     print(f"SDL Game Controller DB: {url}")
     download_file(url, f'{target_dir}/linux/gamecontrollerdb/{Path(url).name}')
 
-def install_cheats(mapping, target_dir):
-    page_url = "https://gamehacking.org/mister"
-
-    parts = mapping.split('|')
-    cheat_key = parts[0].strip()
-    cheat_platform = parts[1].strip()
-
-    cheat_zips = collect_cheat_zips(page_url)
-
-    cheat_zip = next(cheat_zip for cheat_zip in cheat_zips if cheat_key in cheat_zip)
-    cheat_url = f'{page_url}/{cheat_zip}'
-    tmp_zip = f'/tmp/{cheat_key}{cheat_platform}.zip'
-    cheat_folder = f'{target_dir}/Cheats/{cheat_platform}'
-
-    print(f'cheat_keys: {cheat_key}, cheat_platform: {cheat_platform}, cheat_zip: {cheat_zip}, cheat_url: {cheat_url}')
-
-    download_file(cheat_url, tmp_zip)
-    unzip(tmp_zip, cheat_folder)
-
-def install_cheats_backup(url, target_dir):
-    tmp_zip = '/tmp/old_main.zip'
-    download_file(url, tmp_zip)
-    unzip(tmp_zip, f'{target_dir}/Cheats/')
-
 extra_content_early_installers = {
     'user-content-scripts': install_script,
     'user-content-empty-folder': install_empty_folder,
-    'user-cheats': install_cheats,
-    'user-backup-cheats': install_cheats_backup,
     'user-content-gamecontrollerdb': install_gamecontrollerdb,
 }
 
@@ -501,10 +463,15 @@ extra_content_early_installers = {
 class Metadata:
     @staticmethod
     def new_props():
-        return {'home': {}}
+        return {'home': {}, 'aliases': []}
 
     def __init__(self, props):
         self._props = props
+        self._terms = set()
+        self._ctx = None
+    
+    def set_ctx(self, ctx):
+        self._ctx = ctx
     
     def add_mgl_home(self, folder, category):
         lower = folder.lower()
@@ -514,6 +481,15 @@ class Metadata:
         lower = folder.lower()
         self._props['home'][lower] = self._props['home'].get(lower, {'is_mgl': True, 'category': category.lower()[1:]})
         self._props['home'][lower]['is_mgl'] = False
+
+    def add_core_aliases(self, core_aliases):
+        terms = {to_filter_term(c) for c in core_aliases}
+        for t in terms:
+            if t in self._terms:
+                raise ValueError(f'{t} from {str(core_aliases)} was already present!', self._ctx)
+            self._terms.add(t)
+        if len(terms) > 1:
+            self._props['aliases'].append(list(terms))
 
 def mra_files(folder):
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mra']
@@ -529,7 +505,7 @@ def get_latest_release(folder, bin):
     releases = sorted([f for f in files if bin in f and remove_date(f) != f])
     return releases[-1]
 
-def uniq_files_with_stripped_date(folder, home):
+def uniq_files_with_stripped_date(folder):
     result = []
     for f in list_files(folder, recursive=False):
         f = without_folder(folder, str(Path(f).with_suffix('')))
@@ -539,13 +515,14 @@ def uniq_files_with_stripped_date(folder, home):
             continue
 
         result.append(no_date)
-
-    if home is not None:
-        only_home = [f for f in result if home.lower() in f.lower()]
-        if len(only_home) > 0:
-            return only_home
-
     return result
+
+def try_filter_list(col, filter):
+    filtered = [el for el in col if filter.lower() in el.lower()]
+    if len(filtered) > 0:
+        return filtered
+    
+    return col
 
 def clean_palettes(palette_folder):
     for file in list_files(palette_folder, recursive=True):
@@ -616,10 +593,6 @@ def is_empty_release(bin):
 def list_fonts(path):
     return [Path(f).name for f in list_files(path, recursive=True) if Path(f).suffix.lower() == '.pf']
 
-def collect_cheat_zips(url):
-    text = fetch_text(url, cookies={'challenge': 'BitMitigate.com'})
-    return [f[f.find('mister_'):f.find('.zip') + 4] for f in text.splitlines() if 'mister_' in f and '.zip' in f]
-
 def download_mister_devel_repository(input_url, delme, category):
     name = get_repository_name(input_url)
     branch = get_branch(input_url)
@@ -644,6 +617,11 @@ def get_branch(url):
     if pos == -1:
         return ""
     return url[pos + len('/tree/'):]
+
+filter_term_char_regex = re.compile("[-_a-z0-9.]$", )
+def to_filter_term(name: str):
+    result = ''.join(filter(lambda chr: filter_term_char_regex.match(chr), name.lower().replace(' ', '')))
+    return result.replace('-', '').replace('_', '')
 
 # file system utilities
 

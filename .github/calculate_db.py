@@ -46,7 +46,7 @@ def main(dryrun):
     check_test = os.getenv('CHECK_TEST', 'true') != 'false' 
     download_metadata_json = os.getenv('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json')
 
-    tags = Tags(try_read_json(download_metadata_json, {'home': {}}))
+    tags = Tags(try_read_json(download_metadata_json, None))
 
     db = create_db('.', {
         'sha': sha,
@@ -127,21 +127,10 @@ distribution_mister_aliases = [
     ['megadrive', 'genesis'],
     ['megacd', 'segacd'],
     ['sms', 'mastersystem', 'segamark3'],
-    ['coleco', 'colecovision'],
     ['gb', 'gameboy'],
     ['gbc', 'gameboycolor'],
     ['sgb', 'supergameboy'],
     ['gba', 'gameboyadvance'],
-
-    # Computers
-    ['vector06c', 'vector06'],
-    ['amiga', 'minimig'],
-    ['zxspectrum', 'spectrum'],
-    ['pc88', 'pc8801'],
-    ['laser310', 'laser'],
-    
-    # Other
-    ['flappybird', 'flappy'],
 
     # General
     ['console-cores', 'console'],
@@ -156,6 +145,10 @@ filter_part_regex = re.compile("[-_a-z0-9.]$", )
 main_binaries = ['MiSTer', 'menu.rbf']
 
 class Metadata:
+    @staticmethod
+    def new_props():
+        return {'home': {}, 'aliases': []}
+
     def __init__(self, props):
         self._props = props
 
@@ -165,21 +158,39 @@ class Metadata:
     def category_by_home(self, home):
         return None if home not in self._props['home'] else self._props['home'][home]['category']
 
+    def aliases(self):
+        return self._props['aliases']
+
 class Tags:
-    def __init__(self, metadata) -> None:
-        self._metadata = Metadata(metadata)
+    def __init__(self, metadata_props) -> None:
+        self._metadata = Metadata(metadata_props if metadata_props is not None else Metadata.new_props())
         self._dict = {}
         self._alternatives = {}
         self._index = 0
         self._report_set = set()
         self._used = set()
+        self._init = False
 
     def init_aliases(self, aliases):
-        for alias_list in aliases:
-            for alias in alias_list:
-                self._dict[self._clean_term(alias)] = self._index
-            self._index += 1
+        if self._init:
+            raise Exception("Can only be initialised once.")
+        self._init = True
 
+        for alias_list in [*self._metadata.aliases(), *aliases]:
+            clean_terms = [self._clean_term(alias) for alias in alias_list]
+            index = self._matching_dict_index(clean_terms)
+            for term in clean_terms:
+                self._dict[term] = index
+
+    def _matching_dict_index(self, clean_terms):
+        for term in clean_terms:
+            if term in self._dict:
+                return self._dict[term]
+
+        result = self._index
+        self._index += 1
+        return result
+    
     def get_tags_for_file(self, path: Path):
         return sorted(self._get_tags_for_file(path))
 
@@ -240,6 +251,9 @@ class Tags:
             if rbf is not None:
                 self._append(result, self._use_term(Path(rbf).name.lower()))
 
+        if stem in ['menu', 'mister']:
+            self._append(result, self._use_term('essential'))
+
         if parent in ['games', 'docs']:
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))
@@ -268,14 +282,11 @@ class Tags:
         elif parent == 'cheats':
             self._append(result, self._use_term(path.parts[1].lower()))
 
-        if parent in ['gamma', 'filters', 'filters_audio', 'shadow_masks']:
+        elif parent in ['gamma', 'filters', 'filters_audio', 'shadow_masks']:
             self._append(result, self._use_term('all_filters'))
         
-        if parent in ['gamma', 'filters', 'shadow_masks']:
-            self._append(result, self._use_term('filters_video'))
-
-        if stem in ['menu', 'mister']:
-            self._append(result, self._use_term('essential'))
+            if parent in ['gamma', 'filters', 'shadow_masks']:
+                self._append(result, self._use_term('filters_video'))
 
         return result
 
@@ -669,8 +680,6 @@ class MultiSourcesZipCreator:
         print('Created zip: ' + self._zip_name)
             
 def create_summary(finder: Finder, tags: Tags, source):
-    delete_list_regex = re.compile("^(.*_)[0-9]{8}(\.[a-zA-Z0-9]+)*$", )
-
     summary = {
         'files': dict(),
         'folders': dict()
@@ -688,10 +697,6 @@ def create_summary(finder: Finder, tags: Tags, source):
             "hash": hash(file),
             "tags": tags.get_tags_for_file(file)
         }
-
-        delete_list = create_delete_list(strfile, delete_list_regex)
-        if len(delete_list) > 0:
-            summary["files"][strfile]["delete"] = delete_list
             
         file_name = file.name.lower()
 

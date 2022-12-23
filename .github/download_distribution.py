@@ -232,11 +232,7 @@ def process_all(extra_content_categories, core_descriptions, target):
         core_results.get()
         extra_content_results.get()
 
-    print()
-    print('METADATA:')
-    print(json.dumps(metadata_props))
-    with open(os.environ.get('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json'), 'w', encoding='utf-8') as f:
-        json.dump(metadata_props, f, sort_keys=True, indent=4)
+    save_metadata(metadata_props)
 
 def process_core(core, delme, target, metadata_props):
     category = core['category']
@@ -270,6 +266,15 @@ def process_extra_content(url, category, delme, target):
         return
 
     raise SystemError(f'Ignored extra content: {url} {category}')
+
+def save_metadata(metadata_props):
+    metadata_props['aliases'] = sorted(metadata_props['aliases'], key=lambda arr: sorted(arr)[0])  # This allow us to have a deterministic build, otherwise this array would introduce RNG in the tag indexes calculation
+
+    print()
+    print('METADATA:')
+    print(json.dumps(metadata_props))
+    with open(os.environ.get('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json'), 'w', encoding='utf-8') as f:
+        json.dump(metadata_props, f, sort_keys=True, indent=4)
 
 # core installers
 

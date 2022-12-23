@@ -783,6 +783,14 @@ def db_has_no_changes(new_db, db_url):
     new_json = json.dumps(clean_db(new_db), sort_keys=True)
     old_json = json.dumps(clean_db(old_db), sort_keys=True)
 
+    print()
+    print('new_json:')
+    print(new_json)
+    print()
+    print('old_json:')
+    print(old_json)
+    print()
+
     return new_json == old_json
 
 def load_db_from_url(url_db):

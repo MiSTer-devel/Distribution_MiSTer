@@ -23,10 +23,10 @@ ALL_TAGS_GO_HERE
 ##### Some relevant tag descriptions:
 
 - `arcade-cores` / `arcade`: All arcade cores and MRA files.
-- `computer-cores` / `computer`: All computer cores.
-- `console-cores` / `console`: All console cores.
-- `other-cores` / `other`: All other cores.
-- `service-cores` / `utility`: All utility cores.
+- `computer-cores` / `computer`: All computer cores and related folders.
+- `console-cores` / `console`: All console cores and related folders.
+- `other-cores` / `other`: All cores from the top folder Other with their related folders.
+- `service-cores` / `utility`: All utility cores and related folders.
 - `cores`: All cores (RBF files).
 - `mra`: All MRA files & folders.
 - `alternatives`: All MRA Alternatives

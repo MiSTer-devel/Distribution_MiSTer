@@ -426,13 +426,13 @@ def install_mra_alternatives(path, target_dir, category, url):
 
 def install_mra_alternatives_under_releases(path, target_dir, category, url):
     print(f'Installing MRA Alternatives under /releases {url}')
-    alternative_folders = [*list_folders(f'{path}/_alternatives')]
+    alternative_folders = [*list_folders(f'{path}/releases/_alternatives')]
     if len(alternative_folders) == 0:
         print('WARNING! _alternatives folder is empty.')
         return
 
     for folder in alternative_folders:
-        copy_folder(f'{path}/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
+        copy_folder(f'{path}/releases/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
 
 def install_fonts(path, target_dir, category, url):
     print(f'Installing Fonts {url}')

@@ -43,14 +43,7 @@ def main():
     print(json.dumps(extra_content_categories))
     print()
 
-    target = 'delme'
-    if len(sys.argv) > 1:
-        target = sys.argv[1].strip()
-
-    if 'delme' in target.lower():
-        shutil.rmtree(target, ignore_errors=True)
-        Path(target).mkdir(parents=True, exist_ok=True)
-
+    target = read_target_dir()
     process_all(extra_content_categories, cores, target)
 
     print()
@@ -59,6 +52,16 @@ def main():
     print(end - start)
     print()
 
+def read_target_dir():
+    target = 'delme'
+    if len(sys.argv) > 1:
+        target = sys.argv[1].strip()
+
+    if 'delme' in target.lower():
+        shutil.rmtree(target, ignore_errors=True)
+        Path(target).mkdir(parents=True, exist_ok=True)
+        
+    return target
 
 # content validation
 

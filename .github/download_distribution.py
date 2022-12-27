@@ -206,6 +206,7 @@ def classify_extra_content(extra_content_urls):
         elif url == "user-content-gamecontrollerdb": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
+        elif url == "user-content-mra-alternatives-under-releases": current_category = url
         elif url == "user-content-fonts": current_category = url
         elif url in ["user-content-fpga-cores", "user-content-development", ""]: print('WARNING! Ignored url: ' + url)
         else:
@@ -423,6 +424,16 @@ def install_mra_alternatives(path, target_dir, category, url):
     print(f'Installing MRA Alternatives {url}')
     copy_folder(f'{path}/_alternatives', f'{target_dir}/_Arcade/_alternatives')
 
+def install_mra_alternatives_under_releases(path, target_dir, category, url):
+    print(f'Installing MRA Alternatives under /releases {url}')
+    alternative_folders = list_folders(f'{path}/_alternatives')
+    if len(alternative_folders) == 0:
+        print('WARNING! _alternatives folder is empty.')
+        return
+
+    for folder in alternative_folders:
+        copy_folder(f'{path}/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
+
 def install_fonts(path, target_dir, category, url):
     print(f'Installing Fonts {url}')
     for font in list_fonts(path):
@@ -444,6 +455,7 @@ extra_content_late_installers = {
     "user-content-folders": install_folders,
     "user-content-fonts": install_fonts,
     "user-content-mra-alternatives": install_mra_alternatives,
+    "user-content-mra-alternatives-under-releases": install_mra_alternatives_under_releases
 }
 
 def install_script(url, target_dir):

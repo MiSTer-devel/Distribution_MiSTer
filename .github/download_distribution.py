@@ -426,7 +426,7 @@ def install_mra_alternatives(path, target_dir, category, url):
 
 def install_mra_alternatives_under_releases(path, target_dir, category, url):
     print(f'Installing MRA Alternatives under /releases {url}')
-    alternative_folders = list_folders(f'{path}/_alternatives')
+    alternative_folders = [*list_folders(f'{path}/_alternatives')]
     if len(alternative_folders) == 0:
         print('WARNING! _alternatives folder is empty.')
         return

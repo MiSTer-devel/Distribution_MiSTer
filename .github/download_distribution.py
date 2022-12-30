@@ -6,8 +6,8 @@ import os
 import time
 import subprocess
 from pathlib import Path
+from typing import Any, Dict, Generator, List, Optional, Set, Tuple
 from urllib.parse import urlparse
-import requests
 import re
 import shutil
 import shlex
@@ -19,7 +19,7 @@ import sys
 amount_of_cores_validation_limit = 200
 amount_of_extra_content_urls_validation_limit = 20
 
-def main():
+def main() -> None:
 
     start = time.time()
 
@@ -62,7 +62,9 @@ def main():
 
 # content validation
 
-def validate_cores(cores):
+CoreProps = Dict[str, str]
+
+def validate_cores(cores: List[CoreProps]) -> None:
     if len(cores) < amount_of_cores_validation_limit:
         raise ValueError(f'Too few cores! {len(cores)} < {amount_of_cores_validation_limit}. Change the value of "amount_of_cores_validation_limit" when necessary.')
 
@@ -83,9 +85,9 @@ def validate_cores(cores):
 
     for c in cores:
         url = c.get('url', None)
-        if not is_valid_uri(url):
+        if url is None or not is_valid_uri(url):
             print(c)
-            raise ValueError(f'Not valid uri "{url}" for core with name "{c.get("name", None)}".')
+            raise ValueError(f'Not valid uri "{url}" for core with name "{c.get("name", "")}".')
 
     for c in [*console_cores, *computer_cores, *other_cores, *service_cores]:
         home = c.get('home', None)
@@ -93,19 +95,19 @@ def validate_cores(cores):
             print(c)
             raise ValueError(f'Not valid "home" field for core with url "{c.get("url", None)}" and name "{c.get("name", None)}".')
 
-def validate_extra_content_urls(urls):
+def validate_extra_content_urls(urls: List[str]) -> None:
     if len(urls) < amount_of_extra_content_urls_validation_limit:
         raise ValueError(f'Too few urls! {len(urls)} < {amount_of_extra_content_urls_validation_limit}. Change the value of "amount_of_extra_content_urls_validation_limit" when necessary.')
 
 # content description
 
-def fetch_cores():
+def fetch_cores() -> List[CoreProps]:
     text = fetch_text('https://raw.githubusercontent.com/wiki/MiSTer-devel/Wiki_MiSTer/Cores.md')
     link_regex = re.compile(r'\[(.*)\]\((.*)\)')
 
     reading_cores_list = False
     reading_arcade_list = False
-    result = []
+    result: List[CoreProps] = []
 
     category = None
 
@@ -150,6 +152,8 @@ def fetch_cores():
             home = columns[2].strip()
             if 'MiSTer-devel/Menu_MiSTer' in url:
                 print('Ignoring menu core on cores list parsing.')
+            elif category is None:
+                raise ValueError('ERROR! Missing category!')
             else:
                 result.append({'name': name, 'url': url, 'home': home, 'category': category})
 
@@ -172,8 +176,8 @@ def fetch_cores():
 
     return sorted(result, key=lambda element: element['category'].lower() + element['url'].lower())
 
-def fetch_extra_content_urls():
-    result = []
+def fetch_extra_content_urls() -> List[str]:
+    result: List[str] = []
     result.extend(['https://github.com/MiSTer-devel/Main_MiSTer', 'https://github.com/MiSTer-devel/Menu_MiSTer'])
     result.extend(['user-content-mra-alternatives', 'https://github.com/MiSTer-devel/MRA-Alternatives_MiSTer'])
     result.extend(["user-content-fonts", "https://github.com/MiSTer-devel/Fonts_MiSTer"])
@@ -195,9 +199,11 @@ def fetch_extra_content_urls():
     result.extend(["user-content-gamecontrollerdb", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
     return result
 
-def classify_extra_content(extra_content_urls):
+ContentClassification = Dict[str, str]
+
+def classify_extra_content(extra_content_urls: List[str]) -> ContentClassification:
     current_category = 'main'
-    extra_content_categories = {}
+    extra_content_categories: ContentClassification = {}
     for url in extra_content_urls:
         if url == "user-content-linux-binary": current_category = url
         elif url == "user-content-zip-release": current_category = url
@@ -206,6 +212,7 @@ def classify_extra_content(extra_content_urls):
         elif url == "user-content-gamecontrollerdb": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
+        elif url == "user-content-mra-alternatives-under-releases": current_category = url
         elif url == "user-content-fonts": current_category = url
         elif url in ["user-content-fpga-cores", "user-content-development", ""]: print('WARNING! Ignored url: ' + url)
         else:
@@ -216,9 +223,44 @@ def classify_extra_content(extra_content_urls):
 
     return extra_content_categories
 
+# metadata class (up here because of function arg types)
+
+MetadataProps = Dict[str, Any]
+
+class Metadata:
+    @staticmethod
+    def new_props() -> MetadataProps:
+        return {'home': {}, 'aliases': []}
+
+    def __init__(self, props: MetadataProps):
+        self._props = props
+        self._terms: Set[str] = set()
+        self._ctx: Any = None
+    
+    def set_ctx(self, ctx: Any) -> None:
+        self._ctx = ctx
+    
+    def add_mgl_home(self, folder: str, category: str, rbf: str) -> None:
+        lower = folder.lower()
+        self._props['home'][lower] = self._props['home'].get(lower, {'mgl_dependency': Path(rbf).stem.lower(), 'category': category.lower()[1:]})
+
+    def add_home(self, folder: str, category: str) -> None:
+        lower = folder.lower()
+        self._props['home'][lower] = self._props['home'].get(lower, {'mgl_dependency': '', 'category': category.lower()[1:]})
+        self._props['home'][lower]['mgl_dependency'] = ''
+
+    def add_core_aliases(self, core_aliases: List[str]) -> None:
+        terms = {to_filter_term(c) for c in core_aliases}
+        for t in terms:
+            if t in self._terms:
+                raise ValueError(f'{t} from {str(core_aliases)} was already present!', self._ctx)
+            self._terms.add(t)
+        if len(terms) > 1:
+            self._props['aliases'].append(list(terms))
+
 # processors
 
-def process_all(extra_content_categories, core_descriptions, target):
+def process_all(extra_content_categories: ContentClassification, core_descriptions: List[CoreProps], target: str) -> None:
     delme = subprocess.run(['mktemp', '-d'], shell=False, stderr=subprocess.STDOUT, stdout=subprocess.PIPE).stdout.decode().strip()
     metadata_props = Metadata.new_props()
 
@@ -234,7 +276,21 @@ def process_all(extra_content_categories, core_descriptions, target):
 
     save_metadata(metadata_props)
 
-def process_core(core, delme, target, metadata_props):
+def retry(fn: Any) -> Any:
+    def callback(*args: List[Any]):
+        for i in range(5):
+            try:        
+                return fn(*args)
+            except Exception as e:
+                if i == 4:
+                    raise e
+                print(e, flush=True)
+                print('Trying again... ', i, args[0], flush=True)
+
+    return callback
+
+@retry
+def process_core(core: CoreProps, delme: str, target: str, metadata_props: MetadataProps):
     category = core['category']
     url = core['url']
 
@@ -252,7 +308,8 @@ def process_core(core, delme, target, metadata_props):
 
     raise SystemError(f'Ignored core: {url} {category}')
 
-def process_extra_content(url, category, delme, target):
+@retry
+def process_extra_content(url: str, category: str, delme: str, target: str):
     if category in extra_content_early_installers:
         return extra_content_early_installers[category](url, target)
 
@@ -267,7 +324,7 @@ def process_extra_content(url, category, delme, target):
 
     raise SystemError(f'Ignored extra content: {url} {category}')
 
-def save_metadata(metadata_props):
+def save_metadata(metadata_props: MetadataProps):
     metadata_props['aliases'] = sorted(metadata_props['aliases'], key=lambda arr: sorted(arr)[0])  # This allow us to have a deterministic build, otherwise this array would introduce RNG in the tag indexes calculation
 
     print()
@@ -278,7 +335,7 @@ def save_metadata(metadata_props):
 
 # core installers
 
-def install_arcade_core(path, target_dir, core, metadata):
+def install_arcade_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata):
     touch_folder(f'{target_dir}/games/hbmame')
     touch_folder(f'{target_dir}/games/mame')
 
@@ -302,15 +359,15 @@ def install_arcade_core(path, target_dir, core, metadata):
     for mra in mra_files(releases_dir):
         copy_file(f'{releases_dir}/{mra}', f'{target_dir}/_Arcade/{mra}')
 
-def install_console_core(path, target_dir, core, metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
-def install_computer_core(path, target_dir, core, metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
-def install_other_core(path, target_dir, core, metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=False)
-def install_utility_core(path, target_dir, core, metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=False)
+def install_console_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
+def install_computer_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
+def install_other_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=False)
+def install_utility_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=False)
 
-def impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder):
+def impl_install_generic_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata, touch_games_folder: bool):
     releases_dir = f'{path}/releases'
 
-    binaries = []
+    binaries: List[str] = []
     for bin in try_filter_list(uniq_files_with_stripped_date(releases_dir), core["home"]):
         if is_arcade_core(bin):
             continue
@@ -375,7 +432,7 @@ core_installers = {
 
 # extra content installers
 
-def install_main_binary(path, target_dir, category, url):
+def install_main_binary(path: str, target_dir: str, category: str, url: str):
     releases_dir = f'{path}/releases'
 
     if not Path(releases_dir).exists():
@@ -390,7 +447,7 @@ def install_main_binary(path, target_dir, category, url):
         print('BINARY: ' + bin)
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/{remove_date(latest_release)}')
 
-def install_linux_binary(path, target_dir, category, url):
+def install_linux_binary(path: str, target_dir: str, category: str, url: str):
     releases_dir = f'{path}/releases'
 
     if not Path(releases_dir).exists():
@@ -405,7 +462,7 @@ def install_linux_binary(path, target_dir, category, url):
         print('BINARY: ' + bin)
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/linux/{remove_date(latest_release)}')
 
-def install_zip_release(path, target_dir, category, url):
+def install_zip_release(path: str, target_dir: str, category: str, url: str):
     releases_dir = f'{path}/releases'
 
     if not Path(releases_dir).exists():
@@ -419,16 +476,26 @@ def install_zip_release(path, target_dir, category, url):
 
         unzip(f'{releases_dir}/{latest_release}', target_dir)
 
-def install_mra_alternatives(path, target_dir, category, url):
+def install_mra_alternatives(path: str, target_dir: str, category: str, url: str):
     print(f'Installing MRA Alternatives {url}')
     copy_folder(f'{path}/_alternatives', f'{target_dir}/_Arcade/_alternatives')
 
-def install_fonts(path, target_dir, category, url):
+def install_mra_alternatives_under_releases(path: str, target_dir: str, category: str, url: str):
+    print(f'Installing MRA Alternatives under /releases {url}')
+    alternative_folders = [*list_folders(f'{path}/releases/_alternatives')]
+    if len(alternative_folders) == 0:
+        print('WARNING! _alternatives folder is empty.')
+        return
+
+    for folder in alternative_folders:
+        copy_folder(f'{path}/releases/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
+
+def install_fonts(path: str, target_dir: str, category: str, url: str):
     print(f'Installing Fonts {url}')
     for font in list_fonts(path):
         copy_file(f'{path}/{font}', f'{target_dir}/font/{font}')
 
-def install_folders(path, target_dir, category, url):
+def install_folders(path: str, target_dir: str, category: str, url: str):
     ignore_folders = ['releases', 'matlab', 'samples']
     for folder in list_folders(path):
         if folder.lower() in ignore_folders or folder[0] == '.':
@@ -444,16 +511,17 @@ extra_content_late_installers = {
     "user-content-folders": install_folders,
     "user-content-fonts": install_fonts,
     "user-content-mra-alternatives": install_mra_alternatives,
+    "user-content-mra-alternatives-under-releases": install_mra_alternatives_under_releases,
 }
 
-def install_script(url, target_dir):
+def install_script(url: str, target_dir: str):
     print('Script: ' + url)
     download_file(url, f'{target_dir}/Scripts/{Path(url).name}')
 
-def install_empty_folder(url, target_dir):
+def install_empty_folder(url: str, target_dir: str):
     touch_folder(f'{target_dir}/{url}')
 
-def install_gamecontrollerdb(url, target_dir):
+def install_gamecontrollerdb(url: str, target_dir: str):
     print(f"SDL Game Controller DB: {url}")
     download_file(url, f'{target_dir}/linux/gamecontrollerdb/{Path(url).name}')
 
@@ -465,53 +533,22 @@ extra_content_early_installers = {
 
 # mister domain helpers
 
-class Metadata:
-    @staticmethod
-    def new_props():
-        return {'home': {}, 'aliases': []}
-
-    def __init__(self, props):
-        self._props = props
-        self._terms = set()
-        self._ctx = None
-    
-    def set_ctx(self, ctx):
-        self._ctx = ctx
-    
-    def add_mgl_home(self, folder, category, rbf):
-        lower = folder.lower()
-        self._props['home'][lower] = self._props['home'].get(lower, {'mgl_dependency': Path(rbf).stem.lower(), 'category': category.lower()[1:]})
-
-    def add_home(self, folder, category):
-        lower = folder.lower()
-        self._props['home'][lower] = self._props['home'].get(lower, {'mgl_dependency': '', 'category': category.lower()[1:]})
-        self._props['home'][lower]['mgl_dependency'] = ''
-
-    def add_core_aliases(self, core_aliases):
-        terms = {to_filter_term(c) for c in core_aliases}
-        for t in terms:
-            if t in self._terms:
-                raise ValueError(f'{t} from {str(core_aliases)} was already present!', self._ctx)
-            self._terms.add(t)
-        if len(terms) > 1:
-            self._props['aliases'].append(list(terms))
-
-def mra_files(folder):
+def mra_files(folder: str) -> List[str]:
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mra']
 
-def is_arcade_core(path):
+def is_arcade_core(path: str) -> bool:
     return Path(path).name.lower().startswith('arcade-')
 
-def is_rbf(path):
+def is_rbf(path: str) -> bool:
     return Path(path).suffix.lower() == '.rbf'
 
-def get_latest_release(folder, bin):
+def get_latest_release(folder: str, bin: str) -> str:
     files = [without_folder(folder, f) for f in list_files(folder, recursive=False)]
     releases = sorted([f for f in files if bin in f and remove_date(f) != f])
     return releases[-1]
 
-def uniq_files_with_stripped_date(folder):
-    result = []
+def uniq_files_with_stripped_date(folder: str) -> List[str]:
+    result: List[str] = []
     for f in list_files(folder, recursive=False):
         f = without_folder(folder, str(Path(f).with_suffix('')))
 
@@ -522,14 +559,14 @@ def uniq_files_with_stripped_date(folder):
         result.append(no_date)
     return result
 
-def try_filter_list(col, filter):
+def try_filter_list(col: List[str], filter: str) -> List[str]:
     filtered = [el for el in col if filter.lower() in el.lower()]
     if len(filtered) > 0:
         return filtered
     
     return col
 
-def clean_palettes(palette_folder):
+def clean_palettes(palette_folder: str) -> None:
     for file in list_files(palette_folder, recursive=True):
         path = Path(file)
         if path.suffix.lower() in ['.pal', '.gbp']:
@@ -537,36 +574,36 @@ def clean_palettes(palette_folder):
 
         path.unlink()
 
-def find_palette_folder(path):
+def find_palette_folder(path: str) -> Optional[str]:
     for folder in list_folders(path):
         if folder.lower() in ['palette', 'palettes']:
             return folder
         
     return None
 
-def is_standard_core_category(category):
+def is_standard_core_category(category: str) -> bool:
     return category.strip() in ["_Computer", "_Arcade", "_Console", "_Other", "_Utility"]
 
-def is_mgl(file):
+def is_mgl(file: str) -> bool:
     return Path(file).suffix.lower() == '.mgl'
 
-def is_doc(file):
+def is_doc(file: str) -> bool:
     return Path(file).suffix.lower() in ['.md', '.pdf', '.txt', '.rtf']
 
-def is_mra(file):
+def is_mra(file: str) -> bool:
     return Path(file).suffix.lower() == '.mra'
 
-def files_with_no_date(folder):
+def files_with_no_date(folder: str) -> List[str]:
     return [without_folder(folder, f) for f in list_files(folder, recursive=True) if f == remove_date(f)]
 
-def list_readmes(folder):
+def list_readmes(folder: str) -> List[str]:
     files = [without_folder(folder, f) for f in list_files(folder, recursive=False)]
     return [f for f in files if 'readme.' in f.lower()]
 
-def mgl_files(folder):
+def mgl_files(folder: str) -> List[str]:
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mgl']
 
-def extract_mgl(mgl):
+def extract_mgl(mgl: str) -> Tuple[Optional[str], Optional[str]]:
     setname = None
     rbf = None
     try:
@@ -579,7 +616,7 @@ def extract_mgl(mgl):
         print('Warning! extract_mgl error: ' + str(e), flush=True)
     return setname, rbf
 
-def remove_date(path):
+def remove_date(path: str) -> str:
     if len(path) < 10:
         return path
 
@@ -589,16 +626,16 @@ def remove_date(path):
 
     return path
 
-def without_folder(folder, f):
+def without_folder(folder: str, f: str) -> str:
     return f.replace(f'{folder}/', '').replace(folder, '').strip()
 
-def is_empty_release(bin):
+def is_empty_release(bin: str) -> bool:
     return bin == '' or bin is None or len(bin) == 0
 
-def list_fonts(path):
+def list_fonts(path: str) -> List[str]:
     return [Path(f).name for f in list_files(path, recursive=True) if Path(f).suffix.lower() == '.pf']
 
-def download_mister_devel_repository(input_url, delme, category):
+def download_mister_devel_repository(input_url: str, delme: str, category: str) -> str:
     name = get_repository_name(input_url)
     branch = get_branch(input_url)
 
@@ -614,10 +651,10 @@ def download_mister_devel_repository(input_url, delme, category):
     download_repository(path, git_url, branch)
     return path
 
-def get_repository_name(url):
+def get_repository_name(url: str) -> str:
     return str(Path(urlparse(url).path.split('/')[2]).with_suffix(''))
 
-def get_branch(url):
+def get_branch(url: str) -> str:
     pos = url.find('/tree/')
     if pos == -1:
         return ""
@@ -630,39 +667,39 @@ def to_filter_term(name: str):
 
 # file system utilities
 
-def list_files(directory, recursive):
+def list_files(directory: str, recursive: bool) -> Generator[str, None, None]:
     for f in os.scandir(directory):
         if f.is_dir() and recursive:
             yield from list_files(f.path, recursive)
         elif f.is_file():
             yield f.path
 
-def list_folders(directory):
+def list_folders(directory: str) -> Generator[str, None, None]:
     for f in os.scandir(directory):
         if f.is_dir():
             yield (f.path.replace(directory + '/', '').replace(directory, ''))
 
-def copy_file(source, target):
+def copy_file(source: str, target: str) -> None:
     Path(target).parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, target)
 
-def copy_folder(source, target):
+def copy_folder(source: str, target: str) -> None:
     shutil.copytree(source, target)
 
-def touch_folder(folder):
-    folder = Path(folder)
-    if folder.exists():
+def touch_folder(folder: str) -> None:
+    path = Path(folder)
+    if path.exists():
         return
 
-    folder.mkdir(parents=True, exist_ok=True)
+    path.mkdir(parents=True, exist_ok=True)
     Path(f'{folder}/.delme').touch()
 
-def unzip(zip_file, target_dir):
+def unzip(zip_file: str, target_dir: str) -> None:
     Path(target_dir).mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_ref.extractall(target_dir)
 
-def is_valid_uri(x):
+def is_valid_uri(x: str) -> bool:
     try:
         result = urlparse(x)
         return all([result.scheme, result.netloc])
@@ -671,14 +708,10 @@ def is_valid_uri(x):
 
 # network utilities
 
-def fetch_text(url, cookies=None):
-    r = requests.get(url, allow_redirects=True, cookies=cookies)
-    if r.status_code != 200:
-        raise Exception(f'Request to {url} failed')
-    
-    return r.text
+def fetch_text(url: str) -> str:
+    return run_stdout(f'curl --fail --location --silent {url}')
 
-def download_repository(path, url, branch):
+def download_repository(path: str, url: str, branch: str) -> None:
     if Path(path).exists():
         shutil.rmtree(path, ignore_errors=True)
     os.makedirs(path)
@@ -686,25 +719,29 @@ def download_repository(path, url, branch):
     minus_b = '' if len(branch) == 0 else f'-b {branch}'
     run(f'git -c protocol.version=2 clone -q --no-tags --no-recurse-submodules --depth=1 {minus_b} {url} {path}')
 
-def download_file(url, target):
+def download_file(url: str, target: str) -> None:
     Path(target).parent.mkdir(parents=True, exist_ok=True)
-    
-    r = requests.get(url, allow_redirects=True)
-    if r.status_code != 200:
-        raise Exception(f'Request to {url} failed')
-    
-    with open(target, 'wb') as f:
-        f.write(r.content)
+    run(f'curl --show-error --fail --location -o "{target}" "{url}"')
 
 # execution utilities
 
-def run(command, cwd=None):
-    result = subprocess.run(shlex.split(command), cwd=cwd, shell=False, stderr=subprocess.STDOUT)
+def run(command: str, cwd: Optional[str] = None) -> None:
+    _run(command, cwd, stderr=subprocess.STDOUT, stdout=None)
+
+def run_stdout(command: str, cwd: Optional[str] = None) -> str:
+    return _run(command, cwd, stderr=subprocess.DEVNULL, stdout=subprocess.PIPE).stdout.decode().strip()
+
+def _run(command: str, cwd: Optional[str], stderr: Optional[int], stdout: Optional[int]) -> Any:
+    result = subprocess.run(shlex.split(command), cwd=cwd, shell=False, stderr=subprocess.STDOUT, stdout=stdout)
     if result.returncode == -2:
         raise KeyboardInterrupt()
     elif result.returncode != 0:
         print(f'returncode {result.returncode} from: {command}')
-        raise Exception(f'returncode {result.returncode} from: {command}')
+        raise ReturnCodeException(f'returncode {result.returncode} from: {command}')
+    return result
+
+class ReturnCodeException(Exception):
+    pass
 
 if __name__ == '__main__':
     main()

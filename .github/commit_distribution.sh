@@ -3,8 +3,6 @@
 
 set -euo pipefail
 
-git config --global user.email "theypsilon@gmail.com"
-git config --global user.name "The CI/CD Bot"
 git checkout -f develop -b main
 git add .
 git commit -m "-"

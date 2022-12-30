@@ -8,7 +8,7 @@ git fetch --unshallow origin
 
 git stash
 CUR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-ZIPS=$(git ls-files --directory . -o --exclude-standard | grep '.zip$')
+ZIPS=$(git ls-files --directory . -o --exclude-standard | grep '.zip$' || true)
 if [[ "${ZIPS}" != "" ]] ; then
     echo "Adding ZIPs: ${ZIPS}"
     git checkout --orphan zips

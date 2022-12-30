@@ -23,7 +23,7 @@ fi
 DB_ZIP_NAME="${DB_JSON_NAME}.zip"
 echo "Creating ${DB_ZIP_NAME} from ${DB_JSON_NAME}."
 
-git stash pop
+git stash pop || true
 zip "${DB_ZIP_NAME}" "${DB_JSON_NAME}"
 git add "${DB_ZIP_NAME}"
 git add README.md

@@ -43,6 +43,15 @@ def main() -> None:
     print(json.dumps(extra_content_categories))
     print()
 
+    process_all(extra_content_categories, cores, read_target_dir())
+
+    print()
+    print("Time:")
+    end = time.time()
+    print(end - start)
+    print()
+
+def read_target_dir():
     target = 'delme'
     if len(sys.argv) > 1:
         target = sys.argv[1].strip()
@@ -51,14 +60,7 @@ def main() -> None:
         shutil.rmtree(target, ignore_errors=True)
         Path(target).mkdir(parents=True, exist_ok=True)
 
-    process_all(extra_content_categories, cores, target)
-
-    print()
-    print("Time:")
-    end = time.time()
-    print(end - start)
-    print()
-
+    return target
 
 # content validation
 

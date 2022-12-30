@@ -1,0 +1,60 @@
+<misterromdescription>
+    <about author="pram0d" webpage="https://pram0d.com" source="https://github.com/psomashekar" twitter="@pr4m0d"/>
+    <name>Kingdom Grandprix</name>
+    <setname>kingdmgp</setname>
+    <rbf>garegga</rbf>
+    <mameversion>0245</mameversion>
+    <year>1994</year>
+    <manufacturer>Raizing / Eighting</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <platform>Toaplan 2</platform>
+    <category>Shoot'em up</category>
+    <catver>Shooter / Flying Vertical</catver>
+    <mraauthor>pram0d, atrac17</mraauthor>
+    <rom index="0" zip="kingdmgp.zip" md5="None" address="0x30000000">
+        <!-- mapper for game 00 - bgaregga, 01 - sstriker, 02 - kingdmgp -->
+        <part>02</part>
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="ma02rom1.bin" crc="a678b149" map="01"/>
+            <part name="ma02rom0.bin" crc="f226a212" map="10"/>
+        </interleave>
+        <!-- audiocpu - starts at 0x100000 -->
+        <part name="ma02rom2.bin" crc="dde8a57e"/>
+        <!-- gp9001_0 - starts at 0x110000 -->
+        <interleave output="16">
+            <part name="ma02rom3.bin" crc="0e797142" map="01"/>
+            <part name="ma02rom4.bin" crc="72a6fa53" map="10"/>
+        </interleave>
+        <!-- text - starts at 0x510000 -->
+        <part name="ma02rom5.eng" crc="8c28460b"/>
+        <!-- oki1 - starts at 0x518000 -->
+        <part name="ma02rom6.bin" crc="199e7cae"/>
+        <!-- Total 0x598000 bytes - 5728 kBytes -->
+    </rom>
+    <!-- Vertical game -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+    <switches page_id="1" page_name="Switches" base="8" default="00,00,FF">
+        <!-- DSWA -->
+        <dip name="Game Style" bits="0" ids="Coin Play,Free Play"/>
+        <dip name="Picture Indicate" bits="1" ids="Normal,Reverse"/>
+        <dip name="Function" bits="2" ids="Normal,Test"/>
+        <dip name="Demo Sound" bits="3" ids="On,Off"/>
+        <dip name="Coin 1" bits="4,5" ids="1/1,2/1,1/2,3/1,2/1,4/1,2/3"/>
+        <dip name="Coin 2" bits="6,7" ids="1/1,1/2,1/2,1/3,2/1,1/4,2/3,1/6"/>
+        <!-- DSWB -->
+        <dip name="Difficulty" bits="8,9" ids="Normal,Easy,Hard,Very Hard"/>
+        <dip name="Extra Player" bits="10,11" ids="Every 300k,200k and 500k,200k only,None"/>
+        <dip name="Number of Player" bits="12,13" ids="3,5,2,1"/>
+        <dip name="Game Mode" bits="14" ids="Normal,Invincible"/>
+        <dip name="Continue Play" bits="15" ids="On,Off"/>
+        <!-- SYS -->
+        <dip name="Region" bits="16,19" ids="JPN,USA,EU,SEA,CHN,KOR,HK,TWN" values="0,2,4,6,8,10,12,14"/>
+    </switches>
+    <buttons names="Shot,Bomb,Formation,Start,Coin,Pause" default="Y,X,B,R,L,Start" count="3"/>
+</misterromdescription>

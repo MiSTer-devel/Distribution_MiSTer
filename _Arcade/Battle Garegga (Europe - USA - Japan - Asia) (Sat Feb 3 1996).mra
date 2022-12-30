@@ -1,0 +1,72 @@
+<misterromdescription>
+    <about author="pram0d" webpage="https://pram0d.com" source="https://github.com/psomashekar" twitter="@pr4m0d"/>
+    <name>Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb 3 1996)</name>
+    <setname>bgaregga</setname>
+    <rbf>garegga</rbf>
+    <mameversion>0245</mameversion>
+    <year>1996</year>
+    <manufacturer>Raizing / Eighting</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>Japan</region>
+    <platform>Toaplan 2</platform>
+    <category>Shoot'em up</category>
+    <catver>Shooter / Flying Vertical</catver>
+    <mraauthor>pram0d, atrac17</mraauthor>
+    <rom index="0" zip="bgaregga.zip" md5="None" address="0x30000000">
+        <!-- mapper for game 00 - bgaregga, 01 - sstriker, 02 - kingdmgp -->
+        <part>00</part>
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="prg0.bin" crc="f80c2fc2" map="01"/>
+            <part name="prg1.bin" crc="2ccfdd1e" map="10"/>
+        </interleave>
+        <!-- audiocpu - starts at 0x100000 -->
+        <part name="snd.bin" crc="68632952"/>
+        <!-- gp9001_0 - starts at 0x120000 -->
+        <interleave output="16">
+            <part name="rom4.bin" crc="b333d81f" map="01"/>
+            <part name="rom2.bin" crc="b330e5e2" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="rom3.bin" crc="51b9ebfb" map="01"/>
+            <part name="rom1.bin" crc="7eafdd70" map="10"/>
+        </interleave>
+        <!-- text - starts at 0x920000 -->
+        <part name="text.u81" crc="e67fd534"/>
+        <!-- oki1 - starts at 0x928000 -->
+        <part name="rom5.bin" crc="f6d49863"/>
+        <!-- Total 0xA28000 bytes - 10400 kBytes -->
+    </rom>
+    <!-- Vertical game -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+    <!-- default hiscore -->
+    <rom index="2">
+        <part>00 0F 42 40 31 30 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 0D BB A0 20 39 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 0C 35 00 20 38 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 0A AE 60 20 37 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 09 27 C0 20 36 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 07 A1 20 20 35 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 06 1A 80 20 34 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 04 93 E0 20 33 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 03 0D 40 20 32 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00 00 00 00 02 00 01 86 A0 20 31 30 30 30 30 30 00 2A 2A 2A 00 00 00 2A 00</part>
+    </rom>
+    <nvram index="2" size="236"/>
+    <switches page_id="1" page_name="Switches" base="8" default="00,00,00">
+        <!-- DSWA -->
+        <dip name="Test Mode" bits="0" ids="Off,On"/>
+        <dip name="Starting Coin" bits="1" ids="1,2"/>
+        <dip name="Coins" bits="2,4" ids="1/1,1/2,1/3,1/4,2/1,3/1,4/1,Free Play"/>
+        <dip name="Joystick Mode" bits="5" ids="90 degrees ACW,Normal"/>
+        <dip name="Effect" bits="6" ids="Off,On"/>
+        <dip name="Music" bits="7" ids="Off,On"/>
+        <!-- dip name="Coin 2" bits="5,7" ids="1/1,1/2,1/3,1/4,2/1,3/1,4/1"/ -->
+        <!-- DSWB -->
+        <dip name="Start Rank" bits="8,9" ids="Normal,Easy,Hard,Very Hard"/>
+        <dip name="Screen Flip" bits="10" ids="Off,On"/>
+        <dip name="Demo Sound" bits="11" ids="On,Off"/>
+        <dip name="Player Counts" bits="12,14" ids="3,4,2,1,5,6,Infinite,Invulnerability"/>
+        <dip name="Extra Player" bits="15" ids="None,Every 1000k,Every 2000k,1000k and 2000k"/>
+        <!-- JMPR -->
+        <dip name="Region" bits="16,17" ids="Japan,Europe (Tuning),USA (Fabtek),Asia"/>
+        <dip name="Allow Continue" bits="18" ids="Yes,No"/>
+        <dip name="Stage Edit" bits="19" ids="Off,On"/>
+    </switches>
+    <buttons names="Shot,Bomb,Formation,Start,Coin,Pause" default="Y,X,B,R,L,Start" count="3"/>
+</misterromdescription>

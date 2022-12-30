@@ -1,0 +1,22 @@
+####
+# Name: Lattice GRB (Green Red)
+# Author: Tonurics
+# Type: Other
+# Genre: Tinted
+####
+
+Resolution=0
+v2
+4,12
+22a,42a,22a,42a
+22a,42a,22a,42a
+22a,42a,22a,42a
+22a,42a,12a,12a
+22a,42a,12a,12a
+22a,42a,12a,12a
+22a,42a,22a,42a
+22a,42a,22a,42a
+22a,42a,22a,42a
+12a,12a,22a,42a
+12a,12a,22a,42a
+12a,12a,22a,42a

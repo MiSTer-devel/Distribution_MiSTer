@@ -1,0 +1,18 @@
+####
+# Name: Lattice MCY (Magenta Cyan)
+# Author: Tonurics
+# Type: Other
+# Genre: Tinted
+####
+
+Resolution=0
+v2
+4,8
+52a,32a,52a,32a
+52a,32a,52a,32a
+52a,32a,62a,62a
+52a,32a,62a,62a
+52a,32a,52a,32a
+52a,32a,52a,32a
+62a,62a,52a,32a
+62a,62a,52a,32a

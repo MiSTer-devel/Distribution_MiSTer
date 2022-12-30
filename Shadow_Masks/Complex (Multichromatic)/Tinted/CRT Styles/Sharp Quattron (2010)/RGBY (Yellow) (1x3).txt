@@ -1,0 +1,16 @@
+####
+# Name: RGBY
+# Author: Tonurics
+# Type: CRT
+# Genre: Realistic
+####
+
+Resolution=0
+v2
+4,6
+42a,22a,12a,61d
+42a,22a,12a,61d
+42a,22a,12a,61d
+12a,61d,42a,22a
+12a,61d,42a,22a
+12a,61d,42a,22a

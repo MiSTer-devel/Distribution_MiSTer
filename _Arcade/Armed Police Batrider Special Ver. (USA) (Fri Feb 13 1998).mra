@@ -1,0 +1,91 @@
+<misterromdescription>
+    <about author="pram0d" webpage="https://pram0d.com" source="https://github.com/psomashekar" twitter="@pr4m0d"/>
+    <name>Armed Police Batrider (USA) (Fri Feb 13 1998)</name>
+    <setname>batrideru</setname>
+    <rbf>batrider</rbf>
+    <mameversion>0245</mameversion>
+    <year>1998</year>
+    <manufacturer>Raizing / Eighting</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>USA</region>
+    <platform>Toaplan 2</platform>
+    <category>Shoot'em up</category>
+    <catver>Shooter / Flying Vertical</catver>
+    <mraauthor>pram0d, atrac17</mraauthor>
+    <rom index="0" zip="batrideru.zip|batrider.zip" md5="None" address="0x30000000">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="prg0_usa.u22" crc="2049d007" map="01"/>
+            <part name="prg1b.u23" crc="8e70b492" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="prg2.u21" crc="bdaa5fbf" map="01"/>
+            <part name="prg3.u24" crc="7aa9f941" map="10"/>
+        </interleave>
+        <!-- audiocpu - starts at 0x200000 -->
+        <part name="snd.u77" crc="56682696"/>
+        <!-- gp9001_0 - starts at 0x240000 -->
+        <interleave output="16">
+            <part name="rom-1.bin" crc="0df69ca2" map="01"/>
+            <part name="rom-2.bin" crc="1bfea593" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="rom-3.bin" crc="60167d38" map="01"/>
+            <part name="rom-4.bin" crc="bee03c94" map="10"/>
+        </interleave>
+        <!-- oki1 - starts at 0x1240000 -->
+        <part name="rom-5.bin" crc="4274daf6"/>
+        <!-- oki2 - starts at 0x1340000 -->
+        <part name="rom-6.bin" crc="2a1c2426"/>
+        <!-- Total 0x1440000 bytes - 20736 kBytes -->
+
+        <!-- always boot into special ver. -->
+        <patch offset="0x25C">
+            50
+        </patch>
+        
+        <!-- always start at minimum rank -->
+        <patch offset="0x1AA8">
+            00
+        </patch>
+
+    </rom>
+    <!-- Vertical game -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+    <!-- default high score table for special ver -->
+    <rom index="2">
+        <part>
+            00 00 FF 00 00 07 A1 20 20 35 30 30 30 30 30 00 2A 2A 2A 00 90 94 98 00 00 00 20 31 00 00 02 00 00 06 1A 80 20 34 30 30 30 30 30 00 2A 2A 2A 00 9C A0 A4 00 00 00 20 31 00 00 02 00 00 04 93 E0 20 33 30 30 30 30 30 00 2A 2A 2A 00 A8 AC B0 00 00 00 20 31 00 00 02 00 00 03 0D 40 20 32 30 30 30 30 30 00 2A 2A 2A 00 B4 B8 BC 00 00 00 20 31 00 00 02 00 00 01 86 A0 20 31 30 30 30 30 30 00 2A 2A 2A 00 C0 C4 C8 00 00 00 20 31 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30 00 00 02 00 00 07 A1 20 20 35 30 30 30 30 30 00 2B 2B 2B 00 91 95 99 00 00 00 20 31 00 00 02 00 00 06 1A 80 20 34 30 30 30 30 30 00 2B 2B 2B 00 9D A1 A5 00 00 00 20 31 00 00 02 00 00 04 93 E0 20 33 30 30 30 30 30 00 2B 2B 2B 00 A9 AD B1 00 00 00 20 31 00 00 02 00 00 03 0D 40 20 32 30 30 30 30 30 00 2B 2B 2B 00 B5 B9 BD 00 00 00 20 31 00 00 02 00 00 01 86 A0 20 31 30 30 30 30 30 00 2B 2B 2B 00 C1 C5 C9 00 00 00 20 31 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30 00 00 02 00 00 07 A1 20 20 35 30 30 30 30 30 00 23 23 23 00 92 96 9A 00 00 00 20 31 00 00 02 00 00 06 1A 80 20 34 30 30 30 30 30 00 23 23 23 00 9E A2 A6 00 00 00 20 31 00 00 02 00 00 04 93 E0 20 33 30 30 30 30 30 00 23 23 23 00 AA AE B2 00 00 00 20 31 00 00 02 00 00 03 0D 40 20 32 30 30 30 30 30 00 23 23 23 00 B6 BA BE 00 00 00 20 31 00 00 02 00 00 01 86 A0 20 31 30 30 30 30 30 00 23 23 23 00 C2 C6 CA 00 00 00 20 31 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30 00 00 02 00 00 07 A1 20 20 35 30 30 30 30 30 00 3F 3F 3F 00 93 97 9B 00 00 00 20 31 00 00 02 00 00 06 1A 80 20 34 30 30 30 30 30 00 3F 3F 3F 00 9F A3 A7 00 00 00 20 31 00 00 02 00 00 04 93 E0 20 33 30 30 30 30 30 00 3F 3F 3F 00 AB AF B3 00 00 00 20 31 00 00 02 00 00 03 0D 40 20 32 30 30 30 30 30 00 3F 3F 3F 00 B7 BB BF 00 00 00 20 31 00 00 02 00 00 01 86 A0 20 31 30 30 30 30 30 00 3F 3F 3F 00 C3 C7 CB 00 00 00 20 31 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30 00 00 02 00 00 00 00 00 20 20 20 20 20 20 30 00 20 20 20 00 90 90 90 00 00 00 20 30
+        </part>
+    </rom>
+    <nvram index="2" size="784"/>
+    <switches page_id="1" page_name="Switches" base="8" default="00,00,00">
+        <!-- DSW -->
+        <dip name="Test Mode" bits="0" ids="Off,On"/>
+        <!-- dip name="Starting Coin" bits="1" ids="1,2"/ -->
+        <dip name="Joystick Mode" bits="1" ids="Normal,Special"/>
+        <dip name="Coins" bits="2,4" ids="1/1,1/2,1/3,1/4,2/1,3/1,4/1,Free Play"/>
+        <dip name="Hit Score" bits="5" ids="Off,On"/>
+        <dip name="Sound Effect" bits="6" ids="Off,On"/>
+        <dip name="Music" bits="7" ids="Off,On"/>
+        <!-- dip name="Coin 2" bits="5,7" ids="1/1,1/2,1/3,1/4,2/1,3/1,4/1,Free Play"/ -->
+        <dip name="Start Rank" bits="8,9" ids="Normal,Easy,Hard,Very Hard"/>
+        <dip name="Timer Rank" bits="10,11" ids="Normal,Low,High,Highest"/>
+        <dip name="Player Counts" bits="12,13" ids="3,4,2,1"/>
+        <dip name="Extra Player" bits="14,15" ids="Every 1500k,Every 1000k,Every 2000k,None"/>
+        <!-- SYS-DSW -->
+        <dip name="Screen Flip" bits="16" ids="Off,On"/>
+        <dip name="Demo Sound" bits="17" ids="On,Off"/>
+        <dip name="Stage Edit" bits="18" ids="Off,On"/>
+        <dip name="Continue Play" bits="19" ids="Yes,No"/>
+        <dip name="Invincible" bits="20" ids="Off,On"/>
+        <dip name="Guest Players" bits="21" ids="Off,On"/>
+        <dip name="Player Select" bits="22" ids="Off,On"/>
+        <dip name="Special Course" bits="23" ids="Off,On"/>
+    </switches>
+    <buttons names="Shot,Bomb,Formation,Start,Coin,Pause" default="Y,X,B,R,L,Start" count="3"/>
+</misterromdescription>

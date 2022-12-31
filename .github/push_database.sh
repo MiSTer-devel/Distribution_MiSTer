@@ -4,7 +4,7 @@
 set -euo pipefail
 
 echo "Fetch unshallow"
-git fetch --unshallow origin
+git fetch --unshallow origin || true
 
 git stash
 CUR_BRANCH=$(git rev-parse --abbrev-ref HEAD)

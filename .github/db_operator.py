@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-# Copyright (c) 2022 José Manuel Barroso Galindo <theypsilon@gmail.com>
+# Copyright (c) 2022-2023 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
+import subprocess
+import sys
 import time
 from typing import Any, Dict, Generator, Iterator, List, Optional, Set, Tuple
 from pathlib import Path
@@ -10,7 +12,6 @@ import re
 import os
 import json
 import hashlib
-import subprocess
 import shlex
 import tempfile
 from argparse import ArgumentParser
@@ -294,6 +295,19 @@ class Tags:
         
             if parent in ['gamma', 'filters', 'shadow_masks']:
                 self._append(result, self._use_term('filters_video'))
+                
+        elif parent in ['wallpapers']:
+            try:
+                ar = image_aspect_ratio(path)
+                if abs(ar - 1.77) < 0.1:
+                    self._append(result, self._use_term('ar16:9'))
+                elif abs(ar - 1.33) < 0.1:
+                    self._append(result, self._use_term('ar4:3'))
+
+            except Exception as e:
+                print('wallpaper image not opened: ' + str(path))
+                print(e)
+            self._append(result, self._use_term(stem))
 
         return result
 
@@ -420,6 +434,15 @@ class Tags:
             if self._dict[self._clean_term(entry)] in self._used:
                 result.append(entry)
         return sorted(result)
+
+def image_aspect_ratio(path: Path) -> float:
+    try:
+        from PIL import Image
+    except ImportError as _e:
+        subprocess.run([sys.executable, '-m', 'pip', 'install', 'Pillow'], stderr=subprocess.STDOUT, check=True)
+        from PIL import Image
+    img = Image.open(str(path))
+    return float(img.width) / float(img.height)
 
 class DatabaseBuilder:
     main_binaries = ['MiSTer', 'menu.rbf']

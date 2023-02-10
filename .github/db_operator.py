@@ -55,8 +55,10 @@ def build_database(source_dir: str):
     set_source_dir(source_dir)
 
     finder = Finder('.')
-    finder.ignore_folder('./.git')
-    finder.ignore_folder('./.github')
+    finder.ignore('./.git')
+    finder.ignore('./.github')
+    for ignore_entry in vars.finder_ignore.split():
+        finder.ignore(ignore_entry)
     all_files = finder.find_all()
 
     tags = Tags(try_read_json(vars.download_metadata_json))
@@ -107,29 +109,31 @@ class BuildVars:
     linux_github_repository: str = os.getenv('LINUX_GITHUB_REPOSITORY', '').strip()
     zips_config: str = os.getenv('ZIPS_CONFIG', '').strip()
     download_metadata_json: str = os.getenv('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json').strip()
+    finder_ignore: str = os.getenv('FINDER_IGNORE', '').strip()
 
 class Finder:
     def __init__(self, dir: str):
         self._dir = dir
-        self._not_in_directory: List[str] = []
+        self._not_in_ignore: List[str] = []
 
     @property
     def dir(self) -> str:
         return self._dir
 
-    def ignore_folder(self, folder: str) -> None:
-        directory = str(Path(folder))
-        print('Ignored folder: %s' % directory)
-        self._not_in_directory.append(directory)
+    def ignore(self, entry_path: str) -> None:
+        ignored_entry = str(Path(entry_path))
+        print('Ignored: %s' % ignored_entry)
+        self._not_in_ignore.append(ignored_entry)
 
     def find_all(self) -> List[Path]:
         return sorted(self._scan(self._dir), key=lambda file: str(file).lower())
 
     def _scan(self, directory: str) -> Generator[Path, None, None]:
         for entry in os.scandir(directory):
+            if str(Path(entry.path)) in self._not_in_ignore:
+                continue
             if entry.is_dir(follow_symlinks=False):
-                if str(Path(entry.path)) not in self._not_in_directory:
-                    yield from self._scan(entry.path)
+                yield from self._scan(entry.path)
             else:
                 yield Path(entry.path)
 

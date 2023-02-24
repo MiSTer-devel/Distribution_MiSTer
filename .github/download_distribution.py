@@ -718,7 +718,8 @@ def is_valid_uri(x: str) -> bool:
 # network utilities
 
 def fetch_text(url: str) -> str:
-    return run_stdout(f'curl --fail --location --silent {url}')
+    cache_bust = int(time.time_ns() / 1000)
+    return run_stdout(f'curl -H "Cache-Control: no-cache, no-store" -H "Pragma: no-cache" --fail --location --silent {url}?_={cache_bust}')
 
 def download_repository(path: str, url: str, branch: str) -> None:
     if Path(path).exists():
@@ -729,8 +730,9 @@ def download_repository(path: str, url: str, branch: str) -> None:
     run(f'git -c protocol.version=2 clone -q --no-tags --no-recurse-submodules --depth=1 {minus_b} {url} {path}')
 
 def download_file(url: str, target: str) -> None:
+    cache_bust = int(time.time_ns() / 1000)
     Path(target).parent.mkdir(parents=True, exist_ok=True)
-    run(f'curl --show-error --fail --location -o "{target}" "{url}"')
+    run(f'curl -H "Cache-Control: no-cache, no-store" -H "Pragma: no-cache" --show-error --fail --location -o "{target}" "{url}?_={cache_bust}"')
 
 # execution utilities
 

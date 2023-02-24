@@ -199,6 +199,7 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend(["user-content-linux-binary", "https://github.com/MiSTer-devel/PDFViewer_MiSTer"])
     result.extend(["user-content-empty-folder", "games/TGFX16-CD"])
     result.extend(["user-content-gamecontrollerdb", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
+    result.extend(["user-content-rootfile", "https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt"])
     return result
 
 ContentClassification = Dict[str, str]
@@ -212,6 +213,7 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
         elif url == "user-content-scripts": current_category = url
         elif url == "user-content-empty-folder": current_category = url
         elif url == "user-content-gamecontrollerdb": current_category = url
+        elif url == "user-content-rootfile": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
         elif url == "user-content-mra-alternatives-under-releases": current_category = url
@@ -527,10 +529,15 @@ def install_gamecontrollerdb(url: str, target_dir: str):
     print(f"SDL Game Controller DB: {url}")
     download_file(url, f'{target_dir}/linux/gamecontrollerdb/{Path(url).name}')
 
+def install_rootfile(url: str, target_dir: str):
+    print(f"Root file: {url}")
+    download_file(url, f'{target_dir}/{Path(url).name}')
+
 extra_content_early_installers = {
     'user-content-scripts': install_script,
     'user-content-empty-folder': install_empty_folder,
     'user-content-gamecontrollerdb': install_gamecontrollerdb,
+    'user-content-rootfile': install_rootfile,
 }
 
 # mister domain helpers

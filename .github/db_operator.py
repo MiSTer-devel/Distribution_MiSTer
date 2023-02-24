@@ -263,6 +263,9 @@ class Tags:
         if stem in ['menu', 'mister']:
             self._append(result, self._use_term('essential'))
 
+        if stem == 'yc' and suffix == '.txt':
+            self._append(result, self._use_term('yctxt'))
+
         if parent in ['games', 'docs']:
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))

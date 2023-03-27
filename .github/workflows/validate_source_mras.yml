@@ -1,0 +1,40 @@
+name: Validate Source MRAs
+
+on:
+  schedule:
+  - cron:  "0 */4 * * *"
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      BASE_FILES_URL: https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/%s/
+      DB_ID: distribution_mister
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: develop
+
+    - name: Install apt-get utilities
+      run: sudo apt-get install sharutils
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+
+    - name: Set Git User
+      run: |
+        git config --global user.email "theypsilon@gmail.com"
+        git config --global user.name "The CI/CD Bot"
+
+    - name: Download Distribution
+      run: ./.github/download_distribution.py .
+
+    - name: Validate Build without ignoring Broken MRAs
+      run: ./.github/db_operator.py build .

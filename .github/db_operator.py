@@ -61,7 +61,7 @@ def build_database(source_dir: str):
         finder.ignore(ignore_entry)
     all_files = finder.find_all()
 
-    tags = Tags(try_read_json(vars.download_metadata_json))
+    tags = Tags(try_read_json(vars.download_metadata_json), vars.broken_mras_ignore)
     tags.init_aliases(initial_filter_aliases)
 
     builder = DatabaseBuilder(tags)
@@ -110,6 +110,7 @@ class BuildVars:
     zips_config: str = os.getenv('ZIPS_CONFIG', '').strip()
     download_metadata_json: str = os.getenv('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json').strip()
     finder_ignore: str = os.getenv('FINDER_IGNORE', '').strip()
+    broken_mras_ignore: bool = os.getenv('BROKEN_MRAS_IGNORE', 'false').strip().lower() == 'true'
 
 class Finder:
     def __init__(self, dir: str):
@@ -162,8 +163,9 @@ initial_filter_aliases = [
 class Tags:
     filter_part_regex = re.compile("[-_a-z0-9.]$", )
 
-    def __init__(self, metadata_props: Optional[Dict[str, Any]]) -> None:
+    def __init__(self, metadata_props: Optional[Dict[str, Any]], broken_mras_ignore: bool) -> None:
         self._metadata = Metadata(metadata_props if metadata_props is not None else Metadata.new_props())
+        self._broken_mras_ignore = broken_mras_ignore
         self._dict: Dict[str, int] = {}
         self._alternatives: Dict[str, Set[str]] = {}
         self._index: int = 0
@@ -221,22 +223,26 @@ class Tags:
 
         if suffix == '.mra':
             self._append(result, self._use_term('mra'))
-            rbf, zips = read_mra_fields(path)
+            rbf, zips, broken_error = read_mra_fields(path)
 
-            if rbf is not None:
-                self._append(result, self._use_arcade_term(rbf))
-            
-            if self._contains_hbmame_rom(zips):
-                self._append(result, self._use_term('hbmame'))
+            if broken_error is None:
+                if rbf is not None:
+                    self._append(result, self._use_arcade_term(rbf))
+                
+                if self._contains_hbmame_rom(zips):
+                    self._append(result, self._use_term('hbmame'))
 
-            if len(path.parts) > 1 and path.parts[1].lower() == '_alternatives':
-                self._append(result, self._use_term('alternatives'))
+                if len(path.parts) > 1 and path.parts[1].lower() == '_alternatives':
+                    self._append(result, self._use_term('alternatives'))
 
-                if rbf is not None and len(path.parts) > 2:
-                    alternative_subfolder = path.parts[2].lower()[1:]
-                    if alternative_subfolder not in self._alternatives:
-                        self._alternatives[alternative_subfolder] = set()
-                    self._alternatives[alternative_subfolder].add(rbf)
+                    if rbf is not None and len(path.parts) > 2:
+                        alternative_subfolder = path.parts[2].lower()[1:]
+                        if alternative_subfolder not in self._alternatives:
+                            self._alternatives[alternative_subfolder] = set()
+                        self._alternatives[alternative_subfolder].add(rbf)
+            else:
+                if not self._broken_mras_ignore:
+                    raise broken_error
 
         elif suffix == '.rbf':
             nodates = stem[0:-9]
@@ -801,29 +807,33 @@ def new_file_description(name: str) -> Dict[str, Any]:
 
 # MiSTer XMLs
 
-def read_mra_fields(mra_path: Path) -> Tuple[Optional[str], List[str]]:
+def read_mra_fields(mra_path: Path) -> Tuple[Optional[str], List[str], Optional[ET.ParseError]]:
+    try:
+        rbf, zips = _read_mra_fields_impl(mra_path)
+        return rbf, zips, None
+    except ET.ParseError as e:
+        print('ERROR: Defect XML for mra file: ' + str(mra_path))
+        return None, [], e
+
+def _read_mra_fields_impl(mra_path: Path) -> Tuple[Optional[str], List[str]]:
     rbf = None
     zips: Set[str] = set()
 
-    try:
-        context = et_iterparse(str(mra_path), events=("start",))
-        for _, elem in context:
-            elem_tag = elem.tag.lower()
-            if elem_tag == 'rbf':
-                if rbf is not None:
-                    print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mra_path),rbf,elem.text))
-                    continue
-                if elem.text is None:
-                    continue
-                rbf = elem.text.strip().lower()
-            elif elem_tag == 'rom':
-                attributes = {k.strip().lower(): v for k, v in elem.attrib.items()}
-                if 'zip' in attributes and attributes['zip'] is not None:
-                    zips |= {z.strip().lower() for z in attributes['zip'].strip().lower().split('|')}
-    except ET.ParseError as e:
-        print('ERROR: Defect XML for mra file: ' + str(mra_path))
-        raise e
-   
+    context = et_iterparse(str(mra_path), events=("start",))
+    for _, elem in context:
+        elem_tag = elem.tag.lower()
+        if elem_tag == 'rbf':
+            if rbf is not None:
+                print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mra_path),rbf,elem.text))
+                continue
+            if elem.text is None:
+                continue
+            rbf = elem.text.strip().lower()
+        elif elem_tag == 'rom':
+            attributes = {k.strip().lower(): v for k, v in elem.attrib.items()}
+            if 'zip' in attributes and attributes['zip'] is not None:
+                zips |= {z.strip().lower() for z in attributes['zip'].strip().lower().split('|')}
+
     return rbf, list(zips)
 
 def read_mgl_fields(mgl_path: Path) -> Tuple[Optional[str], Optional[str]]:

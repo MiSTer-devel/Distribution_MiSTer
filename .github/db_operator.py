@@ -312,16 +312,14 @@ class Tags:
                 self._append(result, self._use_term('filters_video'))
                 
         elif parent in ['wallpapers']:
-            try:
-                ar = image_aspect_ratio(path)
-                if abs(ar - 1.77) < 0.1:
-                    self._append(result, self._use_term('ar16:9'))
-                elif abs(ar - 1.33) < 0.1:
-                    self._append(result, self._use_term('ar4:3'))
+            ar = read_image_aspect_ratio(path)
+            if ar is None:
+                pass
+            elif abs(ar - 1.77) < 0.1:
+                self._append(result, self._use_term('ar16:9'))
+            elif abs(ar - 1.33) < 0.1:
+                self._append(result, self._use_term('ar4:3'))
 
-            except Exception as e:
-                print('wallpaper image not opened: ' + str(path))
-                print(e)
             self._append(result, self._use_term(stem))
 
         return result
@@ -449,15 +447,6 @@ class Tags:
             if self._dict[self._clean_term(entry)] in self._used:
                 result.append(entry)
         return sorted(result)
-
-def image_aspect_ratio(path: Path) -> float:
-    try:
-        from PIL import Image
-    except ImportError as _e:
-        subprocess.run([sys.executable, '-m', 'pip', 'install', 'Pillow'], stderr=subprocess.STDOUT, check=True)
-        from PIL import Image
-    img = Image.open(str(path))
-    return float(img.width) / float(img.height)
 
 class DatabaseBuilder:
     main_binaries = ['MiSTer', 'menu.rbf']
@@ -869,6 +858,25 @@ def _read_mgl_fields_impl(mgl_path: Path) -> Tuple[Optional[str], Optional[str]]
             setname = elem.text.strip().lower()
 
     return rbf, setname
+
+# Read other files
+
+def read_image_aspect_ratio(path: Path) -> Optional[float]:
+    try:
+        _ensure_image_library()
+        from PIL import Image
+        img = Image.open(str(path))
+        return float(img.width) / float(img.height)
+    except Exception as e:
+        print('wallpaper image not opened: ' + str(path))
+        print(e)
+        return None
+
+def _ensure_image_library() -> None:
+    try:
+        from PIL import Image
+    except ImportError as _e:
+        subprocess.run([sys.executable, '-m', 'pip', 'install', 'Pillow'], stderr=subprocess.STDOUT, check=True)
 
 # MiSTer network utilities
 

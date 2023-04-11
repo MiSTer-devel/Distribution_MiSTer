@@ -200,7 +200,10 @@ def is_valid_url(url: str) -> bool:
         return False
 
 def is_valid_path(path: str) -> bool:
-    return bool(re.match(r'^[\w\-/]{3,}$', path))
+    try:
+        return Path(path).is_relative() and len(str) >= 3
+    except Exception:
+        return False
 
 def is_valid_size(size: str) -> bool:
     return size.isdigit() and int(size) > 0

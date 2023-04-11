@@ -202,7 +202,7 @@ def is_valid_url(url: str) -> bool:
 def is_valid_path(path: str) -> bool:
     try:
         p = Path(path)
-        if not p.is_relative() or len(path) < 3:
+        if p.is_absolute() or len(path) < 3:
             return False
 
         for part in p.parts:
@@ -210,7 +210,8 @@ def is_valid_path(path: str) -> bool:
                 return False
 
         return True
-    except Exception:
+    except Exception as e:
+        print(e)
         return False
 
 def is_valid_size(size: str) -> bool:

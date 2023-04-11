@@ -201,7 +201,15 @@ def is_valid_url(url: str) -> bool:
 
 def is_valid_path(path: str) -> bool:
     try:
-        return Path(path).is_relative() and len(path) >= 3
+        p = Path(path)
+        if not p.is_relative() or len(path) < 3:
+            return False
+
+        for part in p.parts:
+            if part in ['..', '.']:
+                return False
+
+        return True
     except Exception:
         return False
 

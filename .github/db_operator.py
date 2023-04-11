@@ -150,7 +150,7 @@ class ExternalFilesReader:
     def __init__(self, strpath: str):
         self._strpath = strpath
         
-    def read_external_files(self) -> List[Tuple[Path, Dict[str, Any]]:
+    def read_external_files(self) -> List[Tuple[Path, Dict[str, Any]]]:
         if self._strpath == '':
             return []
         

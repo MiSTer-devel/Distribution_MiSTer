@@ -265,7 +265,7 @@ class Tags:
             rbf, _, broken_error = read_mgl_fields(path)
             if broken_error is None and rbf is not None:
                 self._append(result, self._use_term(Path(rbf).name.lower()))
-            elif broken_error is not None and not self._broken_mras_ignore
+            elif broken_error is not None and not self._broken_mras_ignore:
                 raise broken_error
 
         if stem in ['menu', 'mister']:

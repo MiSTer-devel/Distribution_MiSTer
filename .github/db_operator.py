@@ -155,10 +155,10 @@ class ExternalFilesReader:
             return []
         
         data = self._read_csv_data()
-        if data is None:
+        if data is None or len(data) == 0:
             return []
         
-        print('Parsing ' + self._strpath + ' to extract external files.)
+        print(f"Parsing CSV '{self._strpath}' to extract external files.")
         result = []
         for row in data:
             if len(row) < 4:

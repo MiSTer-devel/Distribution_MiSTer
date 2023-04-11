@@ -178,7 +178,7 @@ class ExternalFilesReader:
                 print(f"Invalid MD5 hash in this row: {md5hash}, skipping it.", row)
                 continue
 
-            result.append((path, {"url": url, "size": int(size), "hash": md5hash}))
+            result.append((Path(path), {"url": url, "size": int(size), "hash": md5hash}))
 
         return result
     

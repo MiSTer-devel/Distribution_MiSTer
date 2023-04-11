@@ -201,7 +201,7 @@ def is_valid_url(url: str) -> bool:
 
 def is_valid_path(path: str) -> bool:
     try:
-        return Path(path).is_relative() and len(str) >= 3
+        return Path(path).is_relative() and len(path) >= 3
     except Exception:
         return False
 

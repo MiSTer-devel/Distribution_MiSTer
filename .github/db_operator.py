@@ -59,18 +59,18 @@ def build_database(source_dir: str):
     finder.ignore('./.github')
     for ignore_entry in vars.finder_ignore.split():
         finder.ignore(ignore_entry)
-    all_files = finder.find_all()
+    internal_files = finder.find_all()
     external_files = ExternalFilesReader(vars.external_files).read_external_files()
 
     tags = Tags(try_read_json(vars.download_metadata_json), vars.broken_mras_ignore)
     tags.init_aliases(initial_filter_aliases)
 
     builder = DatabaseBuilder(tags)
-    for file in all_files:
+    for file in internal_files:
         builder.add_file(file)
     for file, description in external_files:
         builder.add_external_file(file, description)
-    for file in all_files:
+    for file in internal_files:
         builder.add_parent_folders(file)
     for file, _ in external_files:
         builder.add_parent_folders(file)
@@ -144,7 +144,7 @@ class Finder:
             else:
                 yield Path(entry.path)
 
-def ExternalFilesReader:
+class ExternalFilesReader:
     def __init__(self, strpath: str):
         self._strpath = strpath
         

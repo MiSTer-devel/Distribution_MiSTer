@@ -60,6 +60,7 @@ def build_database(source_dir: str):
     for ignore_entry in vars.finder_ignore.split():
         finder.ignore(ignore_entry)
     all_files = finder.find_all()
+    external_files = ExternalFilesReader(vars.external_files).read_external_files()
 
     tags = Tags(try_read_json(vars.download_metadata_json), vars.broken_mras_ignore)
     tags.init_aliases(initial_filter_aliases)
@@ -67,7 +68,11 @@ def build_database(source_dir: str):
     builder = DatabaseBuilder(tags)
     for file in all_files:
         builder.add_file(file)
+    for file, description in external_files:
+        builder.add_external_file(file, description)
     for file in all_files:
+        builder.add_parent_folders(file)
+    for file, _ in external_files:
         builder.add_parent_folders(file)
 
     db = builder.build(db_id=vars.db_id)
@@ -111,6 +116,7 @@ class BuildVars:
     download_metadata_json: str = os.getenv('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json').strip()
     finder_ignore: str = os.getenv('FINDER_IGNORE', '').strip()
     broken_mras_ignore: bool = os.getenv('BROKEN_MRAS_IGNORE', 'false').strip().lower() == 'true'
+    external_files: str = os.getenv("EXTERNAL_FILES", '').strip()
 
 class Finder:
     def __init__(self, dir: str):
@@ -137,6 +143,13 @@ class Finder:
                 yield from self._scan(entry.path)
             else:
                 yield Path(entry.path)
+
+def ExternalFilesReader:
+    def __init__(self, strpath: str):
+        self._strpath = strpath
+        
+    def read_external_files(self) -> List[Tuple[Path, Dict[str, Any]]:
+        return []
 
 initial_filter_aliases = [
     # Consoles
@@ -457,6 +470,9 @@ class DatabaseBuilder:
         self._tags = tags
 
     def add_file(self, file: Path) -> None:
+        self.add_external_file(file, new_file_description(str(file)))
+
+    def add_external_file(self, file: Path, description: Dict[str, Any]) -> None:
         strfile = str(file)
 
         if file.name in ['.delme', '.DS_Store'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:
@@ -465,7 +481,7 @@ class DatabaseBuilder:
         if strfile.startswith('games') or strfile.startswith('docs'):
             strfile = f'|{strfile}'
 
-        self._files[strfile] = {**new_file_description(str(file)), "tags": self._tags.get_tags_for_file(file)}
+        self._files[strfile] = {**description, "tags": self._tags.get_tags_for_file(file)}
 
         if file.name.lower() in ['boot.rom', 'boot1.rom', 'boot0.rom'] and not strfile.startswith('|games/AO486/'):
             self._files[strfile]['overwrite'] = False

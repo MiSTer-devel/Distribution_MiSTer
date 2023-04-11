@@ -262,9 +262,11 @@ class Tags:
             self._append(result, self._use_term('mgl'))
             self._append(result, self._use_term('cores'))
             self._append(result, self._use_term(stem))
-            rbf, _ = read_mgl_fields(path)
-            if rbf is not None:
+            rbf, _, broken_error = read_mgl_fields(path)
+            if broken_error is None and rbf is not None:
                 self._append(result, self._use_term(Path(rbf).name.lower()))
+            elif broken_error is not None and not self._broken_mras_ignore
+                raise broken_error
 
         if stem in ['menu', 'mister']:
             self._append(result, self._use_term('essential'))
@@ -836,31 +838,35 @@ def _read_mra_fields_impl(mra_path: Path) -> Tuple[Optional[str], List[str]]:
 
     return rbf, list(zips)
 
-def read_mgl_fields(mgl_path: Path) -> Tuple[Optional[str], Optional[str]]:
+def read_mgl_fields(mgl_path: Path) -> Tuple[Optional[str], Optional[str], Optional[ET.ParseError]]:
+    try:
+        rbf, setname = _read_mgl_fields_impl(mgl_path)
+        return rbf, setname, None
+    except ET.ParseError as e:
+        print('ERROR: Defect XML for mgl file: ' + str(mgl_path))
+        return None, None, e
+
+def _read_mgl_fields_impl(mgl_path: Path) -> Tuple[Optional[str], Optional[str]]:
     rbf = None
     setname = None
 
-    try:
-        context = et_iterparse(str(mgl_path), events=("start",))
-        for _, elem in context:
-            elem_tag = elem.tag.lower()
-            if elem_tag == 'rbf':
-                if rbf is not None:
-                    print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mgl_path),rbf,elem.text))
-                    continue
-                if elem.text is None:
-                    continue
-                rbf = elem.text.strip().lower()
-            elif setname == 'rom':
-                if setname is not None:
-                    print('WARNING! Duplicated setname tag on file %s, first value %s, later value %s' % (str(mgl_path),setname,elem.text))
-                    continue
-                if elem.text is None:
-                    continue
-                setname = elem.text.strip().lower()
-    except ET.ParseError as e:
-        print('ERROR: Defect XML for mgl file: ' + str(mgl_path))
-        raise e
+    context = et_iterparse(str(mgl_path), events=("start",))
+    for _, elem in context:
+        elem_tag = elem.tag.lower()
+        if elem_tag == 'rbf':
+            if rbf is not None:
+                print('WARNING! Duplicated rbf tag on file %s, first value %s, later value %s' % (str(mgl_path),rbf,elem.text))
+                continue
+            if elem.text is None:
+                continue
+            rbf = elem.text.strip().lower()
+        elif setname == 'rom':
+            if setname is not None:
+                print('WARNING! Duplicated setname tag on file %s, first value %s, later value %s' % (str(mgl_path),setname,elem.text))
+                continue
+            if elem.text is None:
+                continue
+            setname = elem.text.strip().lower()
 
     return rbf, setname
 

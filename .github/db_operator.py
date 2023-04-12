@@ -183,7 +183,7 @@ class ExternalFilesReader:
 
             filter_terms = self._extract_filter_terms(row)
 
-            for field_name, field_value in self._extract_extra_fields(row)
+            for field_name, field_value in self._extract_extra_fields(row):
                 description[field_name] = field_value
 
             result.append((Path(path), description, filter_terms))

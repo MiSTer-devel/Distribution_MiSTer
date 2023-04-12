@@ -165,9 +165,6 @@ class ExternalFilesReader:
                 print('Not enough columns in this row, skipping it.', row)
                 continue
             path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip()
-            filter_terms = []
-            if len(row) >= 5:
-                filter_terms = row[4].strip().split(' ')
 
             if not is_valid_path(path):
                 print(f"Invalid path in this row: {path}, skipping it.", row)
@@ -182,10 +179,56 @@ class ExternalFilesReader:
                 print(f"Invalid MD5 hash in this row: {md5hash}, skipping it.", row)
                 continue
 
-            result.append((Path(path), {"url": url, "size": int(size), "hash": md5hash}, filter_terms))
+            description = {"url": url, "size": int(size), "hash": md5hash}
+
+            filter_terms = self._extract_filter_terms(row)
+
+            for field_name, field_value in self._extract_extra_fields(row)
+                description[field_name] = field_value
+
+            result.append((Path(path), description, filter_terms))
 
         return result
-    
+
+    @staticmethod
+    def _extract_filter_terms(row: List[str]) -> List[str]:
+        filter_terms = []
+        if len(row) >= 5:
+            filter_terms = row[4].strip().split()
+
+        return filter_terms
+
+    @staticmethod
+    def _extract_extra_fields(row: List[str]) -> List[Tuple[str, Any]]:
+        if len(row) < 6:
+            return []
+
+        result = []
+        for extra_field in row[5].strip().split():
+            if not is_valid_field_tuple(extra_field):
+                print(f"Invalid field tuple: {extra_field}. in row:", row)
+                continue
+            
+            field_parts = extra_field.split(':')
+            field_name = field_parts[0].lower()
+            field_value = field_parts[1]
+
+            actual_value = None
+
+            if field_name in ['overwrite', 'reboot']:
+                actual_value = parse_boolean(field_value)
+            else:
+                print(f"Invalid field name: {field_name}. in row:", row)
+                continue
+
+            if actual_value is None:
+                print(f"Invalid field value: {field_value}, for field name: {field_name}, in row:", row)
+                continue
+
+            result.append((field_name, actual_value))
+
+        return result
+
     def _read_csv_data(self) -> Optional[List[List[str]]]:
         try:
             with open(self._strpath, newline='') as csvfile:
@@ -223,6 +266,19 @@ def is_valid_size(size: str) -> bool:
 
 def is_valid_md5hash(md5hash: str) -> bool:
     return bool(re.match(r'^[a-fA-F0-9]{32}$', md5hash))
+
+def is_valid_field_tuple(s):
+    pattern = r'^\w+:\w+$'
+    return bool(re.match(pattern, s))
+
+def parse_boolean(s):
+    s_lower = s.lower()
+    if s_lower in ('true', 'yes', 'y', '1'):
+        return True
+    elif s_lower in ('false', 'no', 'n', '0'):
+        return False
+    else:
+        return None
 
 initial_filter_aliases = [
     # Consoles

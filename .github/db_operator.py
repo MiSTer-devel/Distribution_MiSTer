@@ -70,11 +70,11 @@ def build_database(source_dir: str):
     builder = DatabaseBuilder(tags)
     for file in internal_files:
         builder.add_file(file)
-    for file, description in external_files:
-        builder.add_external_file(file, description)
+    for file, description, filter_terms in external_files:
+        builder.add_external_file(file, description, filter_terms)
     for file in internal_files:
         builder.add_parent_folders(file)
-    for file, _ in external_files:
+    for file, _d, _f in external_files:
         builder.add_parent_folders(file)
 
     db = builder.build(db_id=vars.db_id)
@@ -150,7 +150,7 @@ class ExternalFilesReader:
     def __init__(self, strpath: str):
         self._strpath = strpath
         
-    def read_external_files(self) -> List[Tuple[Path, Dict[str, Any]]]:
+    def read_external_files(self) -> List[Tuple[Path, Dict[str, Any], List[str]]]:
         if self._strpath == '':
             return []
         
@@ -165,6 +165,10 @@ class ExternalFilesReader:
                 print('Not enough columns in this row, skipping it.', row)
                 continue
             path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip()
+            filter_terms = []
+            if len(row) >= 5:
+                filter_terms = row[4].strip().split(' ')
+
             if not is_valid_path(path):
                 print(f"Invalid path in this row: {path}, skipping it.", row)
                 continue
@@ -178,7 +182,7 @@ class ExternalFilesReader:
                 print(f"Invalid MD5 hash in this row: {md5hash}, skipping it.", row)
                 continue
 
-            result.append((Path(path), {"url": url, "size": int(size), "hash": md5hash}))
+            result.append((Path(path), {"url": url, "size": int(size), "hash": md5hash}, filter_terms))
 
         return result
     
@@ -539,9 +543,9 @@ class DatabaseBuilder:
         self._tags = tags
 
     def add_file(self, file: Path) -> None:
-        self.add_external_file(file, new_file_description(str(file)))
+        self.add_external_file(file, new_file_description(str(file)), [])
 
-    def add_external_file(self, file: Path, description: Dict[str, Any]) -> None:
+    def add_external_file(self, file: Path, description: Dict[str, Any], filter_terms: List[str]) -> None:
         strfile = str(file)
 
         if file.name in ['.delme', '.DS_Store'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:
@@ -550,7 +554,11 @@ class DatabaseBuilder:
         if strfile.startswith('games') or strfile.startswith('docs'):
             strfile = f'|{strfile}'
 
-        self._files[strfile] = {**description, "tags": self._tags.get_tags_for_file(file)}
+        tags = self._tags.get_tags_for_file(file)
+        for term in filter_terms:
+            tags.append(self._tags._use_term(term))
+
+        self._files[strfile] = {**description, "tags": tags}
 
         if file.name.lower() in ['boot.rom', 'boot1.rom', 'boot0.rom'] and not strfile.startswith('|games/AO486/'):
             self._files[strfile]['overwrite'] = False

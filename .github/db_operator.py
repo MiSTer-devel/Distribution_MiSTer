@@ -111,6 +111,7 @@ class BuildVars:
     github_token: str = os.getenv("GITHUB_TOKEN", '').strip()
     db_id: str = os.getenv("DB_ID", '').strip()
     db_url: str = os.getenv('DB_URL', '').strip()
+    test_db_url: str = os.getenv('TEST_DB_URL', '').strip()
     db_json_name: str = os.getenv('DB_JSON_NAME', 'dbresult.json').strip()
     base_files_url: str = os.getenv('BASE_FILES_URL', '').strip()
     linux_github_repository: str = os.getenv('LINUX_GITHUB_REPOSITORY', '').strip()
@@ -694,14 +695,17 @@ class DatabasePersistence:
         self._vars = vars
 
     def needs_save(self) -> bool:
-        if self._vars.db_url == '':
-            print('Missing "DB_URL", can not check previous db!')
+        test_db_url = self._vars.test_db_url
+        if test_db_url == '':
+            test_db_url = self._vars.db_url
+        if test_db_url == '':
+            print('Missing "DB_URL" and "TEST_DB_URL", can not check previous db!')
             return True
 
         try:
-            previous_db = get_url_db(self._vars.db_url)
+            previous_db = get_url_db(test_db_url)
         except ReturnCodeException as e:
-            print('ReturnCodeException at get_url_db ' + self._vars.db_url)
+            print('ReturnCodeException at get_url_db ' + test_db_url)
             print(e)
             return True
 

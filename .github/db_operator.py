@@ -1036,7 +1036,7 @@ def _ensure_image_library() -> None:
 def download_db(url: str) -> Dict[str, Any]:
     with tempfile.NamedTemporaryFile() as tf:
         download_file(url, tf.name)
-        return unzip_json(tf.name)
+        return load_json(tf.name) if is_json(url) else unzip_json(tf.name)
 
 def get_url_db(url: str) -> Dict[str, Any]:
     print("Downloading db from " + url)

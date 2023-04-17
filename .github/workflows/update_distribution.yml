@@ -38,19 +38,16 @@ jobs:
         git config --global user.email "theypsilon@gmail.com"
         git config --global user.name "The CI/CD Bot"
 
-    - name: Download Distribution
+    - name: Assert develop files amount to be less than 1000
+      run: set -exo pipefail && (( $(find . -type f | wc -l) < 1000 ))
+
+    - name: Download Distribution files
       run: ./.github/download_distribution.py .
 
-    - name: Validate Distribution
-      run: |
-        FILES=$(find . -type f | wc -l)
-        echo "FILES: ${FILES}"
-        if (( ${FILES} < 13000 )) ; then
-          echo "Not enough files!"
-          exit 1
-        fi
+    - name: Assert Distribution files amount to be over 13000
+      run: set -exo pipefail && (( $(find . -type f | wc -l) > 13000 ))
 
-    - name: Commit Distribution
+    - name: Commit Distribution files
       run: ./.github/commit_distribution.sh
 
     - name: Build Database

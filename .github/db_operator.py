@@ -155,41 +155,45 @@ class ExternalFilesReader:
         if self._strpath == '':
             return []
         
-        data = self._read_csv_data()
-        if data is None or len(data) == 0:
-            return []
-        
-        print(f"Parsing CSV '{self._strpath}' to extract external files.")
         result = []
-        for row in data:
-            if len(row) < 4:
-                print('Not enough columns in this row, skipping it.', row)
-                continue
-            path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip()
-
-            if not is_valid_path(path):
-                print(f"Invalid path in this row: {path}, skipping it.", row)
-                continue
-            if not is_valid_url(url):
-                print(f"Invalid URL in this row: {url}, skipping it.", row)
-                continue
-            if not is_valid_size(size):
-                print(f"Invalid size in this row: {size}, skipping it.", row)
-                continue
-            if not is_valid_md5hash(md5hash):
-                print(f"Invalid MD5 hash in this row: {md5hash}, skipping it.", row)
+        for strpath in self._strpath.split():
+            data = self._read_csv_data(strpath)
+            if data is None or len(data) == 0:
                 continue
 
-            description = {"url": url, "size": int(size), "hash": md5hash}
-
-            filter_terms = self._extract_filter_terms(row)
-
-            for field_name, field_value in self._extract_extra_fields(row):
-                description[field_name] = field_value
-
-            result.append((Path(path), description, filter_terms))
+            print(f"Parsing CSV '{strpath}' to extract external files.")
+            for row in data:
+                self._parse_data_row(row, result)
 
         return result
+        
+    def _parse_data_row(self, row, result: List[Tuple[Path, Dict[str, Any], List[str]]]) -> None:
+        if len(row) < 4:
+            print('Not enough columns in this row, skipping it.', row)
+            return
+        path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip()
+
+        if not is_valid_path(path):
+            print(f"Invalid path in this row: {path}, skipping it.", row)
+            return
+        if not is_valid_url(url):
+            print(f"Invalid URL in this row: {url}, skipping it.", row)
+            return
+        if not is_valid_size(size):
+            print(f"Invalid size in this row: {size}, skipping it.", row)
+            return
+        if not is_valid_md5hash(md5hash):
+            print(f"Invalid MD5 hash in this row: {md5hash}, skipping it.", row)
+            return
+
+        description = {"url": url, "size": int(size), "hash": md5hash}
+
+        filter_terms = self._extract_filter_terms(row)
+
+        for field_name, field_value in self._extract_extra_fields(row):
+            description[field_name] = field_value
+
+        result.append((Path(path), description, filter_terms))
 
     @staticmethod
     def _extract_filter_terms(row: List[str]) -> List[str]:
@@ -230,13 +234,14 @@ class ExternalFilesReader:
 
         return result
 
-    def _read_csv_data(self) -> Optional[List[List[str]]]:
+    @staticmethod
+    def _read_csv_data(strpath) -> Optional[List[List[str]]]:
         try:
-            with open(self._strpath, newline='') as csvfile:
+            with open(strpath, newline='') as csvfile:
                 csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
                 return [row for row in csv_reader][1:]
         except Exception as e:
-            print('csv file not opened: ' + self._strpath)
+            print('csv file not opened: ' + strpath)
             print(e)
             return None
 

@@ -651,7 +651,7 @@ def list_fonts(path: str) -> List[str]:
 def download_mister_devel_repository(input_url: str, delme: str, category: str) -> str:
     name = get_repository_name(input_url)
     branch = get_branch(input_url)
-    relative_path = get_relative_path(input_url)
+    relative_path = get_repository_relative_path(input_url)
 
     path = f'{delme}/{name}'
 
@@ -663,7 +663,7 @@ def download_mister_devel_repository(input_url: str, delme: str, category: str) 
 
     cleanup = "/tree/" + branch
     if len(relative_path) > 0:
-        path = path + '_' + relative_path.replace('/', '_')
+        path = path + repository_relative_path_to_fs_path(relative_path)
         cleanup = cleanup + '/' + relative_path
 
     git_url = f'{input_url.replace(cleanup, "")}.git'
@@ -683,12 +683,15 @@ def get_branch(url: str) -> str:
         return later_part
     return later_part[:pos]
 
-def get_relative_path(url: str) -> str:
+def get_repository_relative_path(url: str) -> str:
     parts = urlsplit(url)
     segments = parts.path.strip('/').split('/')
     if len(segments) > 4 and segments[2] == "tree":
         return '/'.join(segments[4:])
     return ""
+
+def repository_relative_path_to_fs_path(path: str) -> str:
+    return '_' + path.replace('/', '_')
 
 filter_term_char_regex = re.compile("[-_a-z0-9.]$", )
 def to_filter_term(name: str):

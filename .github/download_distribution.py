@@ -544,7 +544,11 @@ extra_content_early_installers = {
 # mister domain helpers
 
 def get_releases_dir(path: str, url: str) -> str:
-    return f'{path}/releases'
+    relative_path = get_repository_relative_path(input_url)
+    if relative_path == '':
+        return f'{path}/releases'
+    else:
+        return f'{path}/{relative_path}/releases'
 
 def mra_files(folder: str) -> List[str]:
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mra']

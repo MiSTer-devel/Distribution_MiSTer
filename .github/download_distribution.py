@@ -493,7 +493,7 @@ def install_mra_alternatives_under_releases(path: str, target_dir: str, category
         return
 
     for folder in alternative_folders:
-        copy_folder(f'{{get_releases_dir(path, url)}/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
+        copy_folder(f'{get_releases_dir(path, url)}/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
 
 def install_fonts(path: str, target_dir: str, category: str, url: str):
     print(f'Installing Fonts {url}')

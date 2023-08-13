@@ -669,6 +669,7 @@ def download_mister_devel_repository(input_url: str, delme: str, category: str) 
 
     git_url = f'{input_url.replace(cleanup, "")}.git'
     download_repository(path, git_url, branch)
+    print('path: ' + path)
     return path
 
 def get_repository_name(url: str) -> str:

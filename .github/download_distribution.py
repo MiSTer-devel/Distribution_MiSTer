@@ -667,7 +667,11 @@ def get_branch(url: str) -> str:
     pos = url.find('/tree/')
     if pos == -1:
         return ""
-    return url[pos + len('/tree/'):]
+    later_part = url[pos + len('/tree/'):]
+    pos = later_part.find('/')
+    if pos == -1:
+        return later_part
+    return later_part[:pos]
 
 filter_term_char_regex = re.compile("[-_a-z0-9.]$", )
 def to_filter_term(name: str):

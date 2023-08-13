@@ -300,7 +300,7 @@ def process_core(core: CoreProps, delme: str, target: str, metadata_props: Metad
 
     path = download_mister_devel_repository(url, delme, category)
 
-    if not Path(f'{path}/releases').exists():
+    if not Path(get_releases_dir(path, url)).exists():
         print(f'Warning! Ignored {category}: {url}')
         return
 
@@ -343,13 +343,14 @@ def install_arcade_core(path: str, target_dir: str, core: CoreProps, metadata: M
     touch_folder(f'{target_dir}/games/hbmame')
     touch_folder(f'{target_dir}/games/mame')
 
-    releases_dir = f'{path}/releases'
+    url = core["url"]
+    releases_dir = get_releases_dir(path, url)
     arcade_installed = False
 
     for bin in try_filter_list(uniq_files_with_stripped_date(releases_dir), 'Arcade-'):
         latest_release = get_latest_release(releases_dir, bin)
         if not is_rbf(latest_release):
-            print(f'{core["url"]}: {latest_release} is NOT a RBF file')
+            print(f'{url}: {latest_release} is NOT a RBF file')
             continue
 
         if is_arcade_core(bin):
@@ -369,7 +370,7 @@ def install_other_core(path: str, target_dir: str, core: CoreProps, metadata: Me
 def install_utility_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=False)
 
 def impl_install_generic_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata, touch_games_folder: bool):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, core['url'])
 
     binaries: List[str] = []
     for bin in try_filter_list(uniq_files_with_stripped_date(releases_dir), core["home"]):
@@ -437,7 +438,7 @@ core_installers = {
 # extra content installers
 
 def install_main_binary(path: str, target_dir: str, category: str, url: str):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, url)
 
     if not Path(releases_dir).exists():
         print(f'Warning! Ignored {category}: {url}')
@@ -452,7 +453,7 @@ def install_main_binary(path: str, target_dir: str, category: str, url: str):
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/{remove_date(latest_release)}')
 
 def install_linux_binary(path: str, target_dir: str, category: str, url: str):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, url)
 
     if not Path(releases_dir).exists():
         print(f'Warning! Ignored {category}: {url}')
@@ -467,7 +468,7 @@ def install_linux_binary(path: str, target_dir: str, category: str, url: str):
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/linux/{remove_date(latest_release)}')
 
 def install_zip_release(path: str, target_dir: str, category: str, url: str):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, url)
 
     if not Path(releases_dir).exists():
         print(f'Warning! Ignored {category}: {url}')
@@ -486,13 +487,13 @@ def install_mra_alternatives(path: str, target_dir: str, category: str, url: str
 
 def install_mra_alternatives_under_releases(path: str, target_dir: str, category: str, url: str):
     print(f'Installing MRA Alternatives under /releases {url}')
-    alternative_folders = [*list_folders(f'{path}/releases/_alternatives')]
+    alternative_folders = [*list_folders(f'{get_releases_dir(path, url)}/_alternatives')]
     if len(alternative_folders) == 0:
         print('WARNING! _alternatives folder is empty.')
         return
 
     for folder in alternative_folders:
-        copy_folder(f'{path}/releases/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
+        copy_folder(f'{{get_releases_dir(path, url)}/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
 
 def install_fonts(path: str, target_dir: str, category: str, url: str):
     print(f'Installing Fonts {url}')
@@ -541,6 +542,9 @@ extra_content_early_installers = {
 }
 
 # mister domain helpers
+
+def get_releases_dir(path: str, url: str) -> str:
+    return f'{path}/releases'
 
 def mra_files(folder: str) -> List[str]:
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mra']

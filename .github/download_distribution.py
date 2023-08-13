@@ -544,7 +544,7 @@ extra_content_early_installers = {
 # mister domain helpers
 
 def get_releases_dir(path: str, url: str) -> str:
-    relative_path = get_repository_relative_path(input_url)
+    relative_path = get_repository_relative_path(url)
     if relative_path == '':
         return f'{path}/releases'
     else:
@@ -663,18 +663,15 @@ def download_mister_devel_repository(input_url: str, delme: str, category: str) 
         path = path + category
 
     if len(branch) > 0:
-        print('branch: ' + branch)
         path = path + branch
 
     cleanup = "/tree/" + branch
     if len(relative_path) > 0:
-        print('relative_path: ' + relative_path)
         path = path + repository_relative_path_to_fs_path(relative_path)
         cleanup = cleanup + '/' + relative_path
 
     git_url = f'{input_url.replace(cleanup, "")}.git'
     download_repository(path, git_url, branch)
-    print('path: ' + path)
     return path
 
 def get_repository_name(url: str) -> str:

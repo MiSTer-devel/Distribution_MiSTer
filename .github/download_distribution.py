@@ -7,7 +7,7 @@ import time
 import subprocess
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional, Set, Tuple
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlsplit
 import re
 import shutil
 import shlex
@@ -647,16 +647,22 @@ def list_fonts(path: str) -> List[str]:
 def download_mister_devel_repository(input_url: str, delme: str, category: str) -> str:
     name = get_repository_name(input_url)
     branch = get_branch(input_url)
+    relative_path = get_relative_path(input_url)
 
     path = f'{delme}/{name}'
 
     if category[0] == '_':
         path = path + category
-    
+
     if len(branch) > 0:
         path = path + branch
 
-    git_url = f'{input_url.replace("/tree/" + branch, "")}.git'
+    cleanup = "/tree/" + branch
+    if len(relative_path) > 0:
+        path = path + '_' + relative_path.replace('/', '_')
+        cleanup = cleanup + '/' + relative_path
+
+    git_url = f'{input_url.replace(cleanup, "")}.git'
     download_repository(path, git_url, branch)
     return path
 
@@ -672,6 +678,13 @@ def get_branch(url: str) -> str:
     if pos == -1:
         return later_part
     return later_part[:pos]
+
+def extract_relative_path(url: str) -> str:
+    parts = urlsplit(url)
+    segments = parts.path.strip('/').split('/')
+    if len(segments) > 4 and segments[2] == "tree":
+        return '/'.join(segments[4:])
+    return ""
 
 filter_term_char_regex = re.compile("[-_a-z0-9.]$", )
 def to_filter_term(name: str):

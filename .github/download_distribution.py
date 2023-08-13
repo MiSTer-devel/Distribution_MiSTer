@@ -679,7 +679,7 @@ def get_branch(url: str) -> str:
         return later_part
     return later_part[:pos]
 
-def extract_relative_path(url: str) -> str:
+def get_relative_path(url: str) -> str:
     parts = urlsplit(url)
     segments = parts.path.strip('/').split('/')
     if len(segments) > 4 and segments[2] == "tree":

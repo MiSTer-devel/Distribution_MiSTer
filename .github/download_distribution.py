@@ -660,6 +660,7 @@ def download_mister_devel_repository(input_url: str, delme: str, category: str) 
 
     if len(branch) > 0:
         print('branch: ' + branch)
+        path = path + branch
 
     cleanup = "/tree/" + branch
     if len(relative_path) > 0:

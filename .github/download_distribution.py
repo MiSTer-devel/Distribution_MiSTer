@@ -659,10 +659,11 @@ def download_mister_devel_repository(input_url: str, delme: str, category: str) 
         path = path + category
 
     if len(branch) > 0:
-        path = path + branch
+        print('branch: ' + branch)
 
     cleanup = "/tree/" + branch
     if len(relative_path) > 0:
+        print('relative_path: ' + relative_path)
         path = path + repository_relative_path_to_fs_path(relative_path)
         cleanup = cleanup + '/' + relative_path
 

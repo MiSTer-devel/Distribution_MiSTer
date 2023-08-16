@@ -419,6 +419,9 @@ class Tags:
         if stem in ['menu', 'mister']:
             self._append(result, self._use_term('essential'))
 
+        if stem == 'mister':
+            self._append(result, self._use_term('misterfirmware'))
+
         if stem == 'yc' and suffix == '.txt':
             self._append(result, self._use_term('yctxt'))
 

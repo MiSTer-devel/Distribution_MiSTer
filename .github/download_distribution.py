@@ -758,7 +758,7 @@ def download_repository(path: str, url: str, branch: str) -> None:
     try:
         run(f'git -c protocol.version=2 clone -q --no-tags --no-recurse-submodules --depth=1 {minus_b} {url} {path}')
     except ReturnCodeException:
-        run(f'git clone -q {minus_b} {url} {path}')
+        run(f'git clone {minus_b} {url} {path}')
 
 def download_file(url: str, target: str) -> None:
     cache_bust = int(time.time_ns() / 1000)

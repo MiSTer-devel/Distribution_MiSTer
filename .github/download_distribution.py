@@ -789,6 +789,7 @@ def download_file(url: str, target: str) -> None:
 # execution utilities
 
 def run(command: str, cwd: Optional[str] = None) -> None:
+    print(command)
     _run(command, cwd, stderr=subprocess.STDOUT, stdout=None)
 
 def run_stdout(command: str, cwd: Optional[str] = None) -> str:

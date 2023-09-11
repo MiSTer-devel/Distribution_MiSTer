@@ -755,31 +755,7 @@ def download_repository(path: str, url: str, branch: str) -> None:
     os.makedirs(path)
 
     minus_b = '' if len(branch) == 0 else f'-b {branch}'
-    try:
-        run(f'git -c protocol.version=2 clone -q --no-tags --no-recurse-submodules --depth=1 {minus_b} {url} {path}')
-    except ReturnCodeException as e:
-        organization, repo_name = get_org_and_repo_from_url(url)
-        if organization is None or repo_name is None:
-            raise e
-        final_branch='main' if len(branch) == 0 else branch
-        if repo_name == 'Arcade-Raizing_MiSTer':
-            final_branch = 'develop'
-        #final_branch=run_stdout(f"gh api repos/{organization}/{repo_name} -q '.default_branch'") if len(branch) == 0 else branch
-        try:
-            run(f'curl -L "https://github.com/{organization}/{repo_name}/archive/refs/heads/{final_branch}.zip" -o /tmp/repo.zip')
-        except ReturnCodeException:
-            run(f'curl -L "https://github.com/{organization}/{repo_name}/archive/refs/heads/master.zip" -o /tmp/repo.zip')
-        run(f'unzip /tmp/repo.zip -d {path}')
-
-def get_org_and_repo_from_url(url: str) -> Tuple[Optional[str], Optional[str]]:
-    pattern = r"https?://github\.com/([^/]+)/([^/]+)"
-    match = re.search(pattern, url)
-    if match:
-        org, repo = match.groups()
-        repo = repo.replace(".git", "")
-        return org, repo
-    else:
-        return None, None
+    run(f'git -c protocol.version=2 clone -q --no-tags --no-recurse-submodules --depth=1 {minus_b} {url} {path}')
 
 def download_file(url: str, target: str) -> None:
     cache_bust = int(time.time_ns() / 1000)

@@ -771,8 +771,6 @@ def download_repository(path: str, url: str, branch: str) -> None:
             run(f'curl -L "https://github.com/{organization}/{repo_name}/archive/refs/heads/master.zip" -o /tmp/repo.zip')
         run(f'unzip /tmp/repo.zip -d {path}')
 
-        run(f'unzip /tmp/repo.zip -d {path}')
-
 def get_org_and_repo_from_url(url: str) -> Tuple[Optional[str], Optional[str]]:
     pattern = r"https?://github\.com/([^/]+)/([^/]+)"
     match = re.search(pattern, url)

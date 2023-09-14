@@ -171,7 +171,7 @@ class ExternalFilesReader:
         if len(row) < 4:
             print('Not enough columns in this row, skipping it.', row)
             return
-        path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip()
+        path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip().lower()
 
         if not is_valid_path(path):
             print(f"Invalid path in this row: {path}, skipping it.", row)

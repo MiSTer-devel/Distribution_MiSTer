@@ -188,18 +188,19 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend(["https://github.com/MiSTer-devel/Filters_MiSTer"])
     result.extend(["https://github.com/MiSTer-devel/ShadowMasks_MiSTer"])
     result.extend(["https://github.com/MiSTer-devel/Presets_MiSTer"])
-    result.extend(["user-content-scripts"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_off.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"])
     result.extend(["user-content-linux-binary", "https://github.com/MiSTer-devel/PDFViewer_MiSTer"])
     result.extend(["user-content-empty-folder", "games/TGFX16-CD"])
-    result.extend(["user-content-gamecontrollerdb", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
-    result.extend(["user-content-file", "/|https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt"])
+    result.extend(["user-content-file"])
+    result.extend(["/|https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt"])
+    result.extend(["/linux/gamecontrollerdb/|https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
+    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"])
+    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"])
+    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_on.sh"])
+    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_off.sh"])
+    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"])
+    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"])
+    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"])
+
     return result
 
 ContentClassification = Dict[str, str]
@@ -210,10 +211,7 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
     for url in extra_content_urls:
         if url == "user-content-linux-binary": current_category = url
         elif url == "user-content-zip-release": current_category = url
-        elif url == "user-content-scripts": current_category = url
         elif url == "user-content-empty-folder": current_category = url
-        elif url == "user-content-gamecontrollerdb": current_category = url
-        elif url == "user-content-rootfile": current_category = url
         elif url == "user-content-file": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
@@ -520,20 +518,8 @@ extra_content_late_installers = {
     "user-content-mra-alternatives-under-releases": install_mra_alternatives_under_releases,
 }
 
-def install_script(url: str, target_dir: str):
-    print('Script: ' + url)
-    download_file(url, f'{target_dir}/Scripts/{Path(url).name}')
-
 def install_empty_folder(url: str, target_dir: str):
     touch_folder(f'{target_dir}/{url}')
-
-def install_gamecontrollerdb(url: str, target_dir: str):
-    print(f"SDL Game Controller DB: {url}")
-    download_file(url, f'{target_dir}/linux/gamecontrollerdb/{Path(url).name}')
-
-def install_rootfile(url: str, target_dir: str):
-    print(f"Root file: {url}")
-    download_file(url, f'{target_dir}/{Path(url).name}')
 
 def install_file(path_and_url: str, target_dir: str):
     parts = path_and_url.split('|')
@@ -543,13 +529,11 @@ def install_file(path_and_url: str, target_dir: str):
     if path[-1] == '/':
         path += Path(url).name
     print(f"File {path}: {url}")
+    Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
     download_file(url, f'{target_dir}/{path}')
 
 extra_content_early_installers = {
-    'user-content-scripts': install_script,
     'user-content-empty-folder': install_empty_folder,
-    'user-content-gamecontrollerdb': install_gamecontrollerdb,
-    'user-content-rootfile': install_rootfile,
     'user-content-file': install_file
 }
 

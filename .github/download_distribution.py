@@ -28,19 +28,19 @@ def main() -> None:
     extra_content_categories = classify_extra_content(extra_content_urls)
 
     print(f'Cores {len(cores)}:')
-    print(json.dumps(cores))
+    print(cores)
     print()
 
     validate_cores(cores)
 
     print(f'Extra Content URLs {len(extra_content_urls)}:')
-    print(json.dumps(extra_content_urls))
+    print(extra_content_urls)
     print()
 
     validate_extra_content_urls(extra_content_urls)
 
     print('Extra Content Categories:')
-    print(json.dumps(extra_content_categories))
+    print(extra_content_categories)
     print()
 
     process_all(extra_content_categories, cores, read_target_dir())

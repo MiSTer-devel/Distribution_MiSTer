@@ -199,7 +199,7 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend(["user-content-linux-binary", "https://github.com/MiSTer-devel/PDFViewer_MiSTer"])
     result.extend(["user-content-empty-folder", "games/TGFX16-CD"])
     result.extend(["user-content-gamecontrollerdb", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
-    result.extend(["user-content-rootfile", "https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt"])
+    result.extend(["user-content-file", "/|https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt"])
     return result
 
 ContentClassification = Dict[str, str]
@@ -214,6 +214,7 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
         elif url == "user-content-empty-folder": current_category = url
         elif url == "user-content-gamecontrollerdb": current_category = url
         elif url == "user-content-rootfile": current_category = url
+        elif url == "user-content-file": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
         elif url == "user-content-mra-alternatives-under-releases": current_category = url
@@ -534,11 +535,22 @@ def install_rootfile(url: str, target_dir: str):
     print(f"Root file: {url}")
     download_file(url, f'{target_dir}/{Path(url).name}')
 
+def install_file(path_and_url: str, target_dir: str):
+    parts = path_and_url.split('|')
+    if len(parts) != 2:
+        raise ValueError("Wrong path_and_url value: " + path_and_url)
+    path, url = parts[0], parts[1]
+    if path[-1] == '/':
+        path += Path(url).name
+    print(f"File {path}: {url}")
+    download_file(url, f'{target_dir}/{path}')
+
 extra_content_early_installers = {
     'user-content-scripts': install_script,
     'user-content-empty-folder': install_empty_folder,
     'user-content-gamecontrollerdb': install_gamecontrollerdb,
     'user-content-rootfile': install_rootfile,
+    'user-content-file': install_file
 }
 
 # mister domain helpers

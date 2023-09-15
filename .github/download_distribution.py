@@ -521,7 +521,7 @@ extra_content_late_installers = {
 def install_empty_folder(url: str, target_dir: str):
     touch_folder(f'{target_dir}/{url}')
 
-def install_file(path_and_url: str, target_dir: str):
+def install_file(path_and_url: Tuple[str, str], target_dir: str):
     if len(path_and_url) != 2:
         raise ValueError("Wrong path_and_url value: " + str(path_and_url))
     path, url = path_and_url

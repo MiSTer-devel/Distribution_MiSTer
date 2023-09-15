@@ -191,15 +191,15 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend(["user-content-linux-binary", "https://github.com/MiSTer-devel/PDFViewer_MiSTer"])
     result.extend(["user-content-empty-folder", "games/TGFX16-CD"])
     result.extend(["user-content-file"])
-    result.extend(["/|https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt"])
-    result.extend(["/linux/gamecontrollerdb/|https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
-    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"])
-    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"])
-    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_on.sh"])
-    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_off.sh"])
-    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"])
-    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"])
-    result.extend(["/Scripts/|https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"])
+    result.extend([("/", "https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt")])
+    result.extend([("/linux/gamecontrollerdb/", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_off.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh")])
 
     return result
 
@@ -522,10 +522,9 @@ def install_empty_folder(url: str, target_dir: str):
     touch_folder(f'{target_dir}/{url}')
 
 def install_file(path_and_url: str, target_dir: str):
-    parts = path_and_url.split('|')
-    if len(parts) != 2:
-        raise ValueError("Wrong path_and_url value: " + path_and_url)
-    path, url = parts[0], parts[1]
+    if len(path_and_url) != 2:
+        raise ValueError("Wrong path_and_url value: " + str(path_and_url))
+    path, url = path_and_url
     if path[-1] == '/':
         path += Path(url).name
     print(f"File {path}: {url}")

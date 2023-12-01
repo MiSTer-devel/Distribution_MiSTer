@@ -168,10 +168,20 @@ class ExternalFilesReader:
         return result
         
     def _parse_data_row(self, row, result: List[Tuple[Path, Dict[str, Any], List[str]]]) -> None:
-        if len(row) < 4:
+        if len(row) < 2:
             print('Not enough columns in this row, skipping it.', row)
             return
-        path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip().lower()
+        if len(row) == 2:
+            print('Hash and size columns are missing.', row)
+            path, url, size, md5hash  = row[0].strip(), row[1].strip(), '', ''
+        elif len(row) == 3:
+            print('Hash column is missing.', row)
+            path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), ''
+        else:
+            path, url, size, md5hash  = row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip().lower()
+
+        if size == '' or md5hash == '':
+            size, md5hash = self._read_size_and_md5hash_from_real_file(url, size, md5hash)
 
         if not is_valid_path(path):
             print(f"Invalid path in this row: {path}, skipping it.", row)
@@ -194,6 +204,16 @@ class ExternalFilesReader:
             description[field_name] = field_value
 
         result.append((Path(path), description, filter_terms))
+
+    def _read_size_and_md5hash_from_real_file(self, url: str, size: str, md5hash: str) -> Tuple[str, str]:
+        with tempfile.NamedTemporaryFile() as tmp_file:
+            download_file(url, tmp_file.name)
+            new_size, new_md5hash = file_size(tmp_file.name), file_hash(tmp_file.name)
+            if size != '' and size != new_size:
+                print(f'Real size {new_size} is different than anotated size {size}')
+            if md5hash != '' and md5hash != new_md5hash:
+                print(f'Real MD5 Hash {new_md5hash} is different than anotated MD5 Hash {md5hash}')
+            return new_size, new_md5hash
 
     @staticmethod
     def _extract_filter_terms(row: List[str]) -> List[str]:

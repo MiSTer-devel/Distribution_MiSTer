@@ -208,7 +208,7 @@ class ExternalFilesReader:
     def _read_size_and_md5hash_from_real_file(self, url: str, size: str, md5hash: str) -> Tuple[str, str]:
         with tempfile.NamedTemporaryFile() as tmp_file:
             download_file(url, tmp_file.name)
-            new_size, new_md5hash = file_size(tmp_file.name), file_hash(tmp_file.name)
+            new_size, new_md5hash = str(file_size(tmp_file.name)), file_hash(tmp_file.name)
             if size != '' and size != new_size:
                 print(f'Real size {new_size} is different than anotated size {size}')
             if md5hash != '' and md5hash != new_md5hash:

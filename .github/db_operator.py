@@ -1160,8 +1160,7 @@ def reformat_elements(indexes: Dict[int, str], collection: List[Dict[str, Any]])
     for dict in collection:
         if 'tags' in dict:
             dict['tags'] = sorted([indexes[t] for t in dict.get('tags', [])])
-        if 'url' in dict:
-            dict['url'] = ''
+
 # filesystem utilities
 
 def et_iterparse(xml: str, events: Tuple[str]) -> Iterator[Tuple[str, Any]]:

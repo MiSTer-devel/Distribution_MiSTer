@@ -15,6 +15,7 @@ import json
 import zipfile
 import xml.etree.ElementTree as ET
 import sys
+import tempfile
 
 amount_of_cores_validation_limit = 200
 amount_of_extra_content_urls_validation_limit = 20
@@ -200,6 +201,8 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh")])
     result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh")])
     result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh")])
+    result.extend(["user-content-unzip"])
+    result.extend([("/games/Vectrex/Overlays", "https://raw.githubusercontent.com/MiSTer-devel/Vectrex_MiSTer/master/overlays/overlays.zip")])
 
     return result
 
@@ -213,6 +216,7 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
         elif url == "user-content-zip-release": current_category = url
         elif url == "user-content-empty-folder": current_category = url
         elif url == "user-content-file": current_category = url
+        elif url == "user-content-unzip": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
         elif url == "user-content-mra-alternatives-under-releases": current_category = url
@@ -531,9 +535,22 @@ def install_file(path_and_url: Tuple[str, str], target_dir: str):
     Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
     download_file(url, f'{target_dir}/{path}')
 
+def install_unzip(path_and_url: Tuple[str, str], targetdir: str):
+    if len(path_and_url) != 2:
+        raise ValueError("Wrong path_and_url value: " + str(path_and_url))
+    path, url = path_and_url
+    if path[-1] == '/':
+        path += Path(url).name
+    print(f"Unzip {path}: {url}")
+    Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(delete=True) as temp_file:
+        download_file(url, temp_file.name)
+        unzip(temp_file.name, f'{target_dir}/{path}')
+
 extra_content_early_installers = {
     'user-content-empty-folder': install_empty_folder,
-    'user-content-file': install_file
+    'user-content-file': install_file,
+    'user-content-unzip': install_unzip 
 }
 
 # mister domain helpers

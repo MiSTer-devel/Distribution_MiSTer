@@ -535,7 +535,7 @@ def install_file(path_and_url: Tuple[str, str], target_dir: str):
     Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
     download_file(url, f'{target_dir}/{path}')
 
-def install_unzip(path_and_url: Tuple[str, str], targetdir: str):
+def install_unzip(path_and_url: Tuple[str, str], target_dir: str):
     if len(path_and_url) != 2:
         raise ValueError("Wrong path_and_url value: " + str(path_and_url))
     path, url = path_and_url

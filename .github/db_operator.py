@@ -427,10 +427,10 @@ class Tags:
                 self._append(result, self._use_term('handheld2p'))
 
             if nodates == 'genesis':
-                self._append(result, self._use_term('genesiscore'))
+                self._append(result, self._use_term('genesis-core'))
     
             if nodates == 'megadrive':
-                self._append(result, self._use_term('megadrivecore'))
+                self._append(result, self._use_term('megadrive-core'))
     
         elif suffix == '.mgl':
             self._append(result, self._use_term('mgl'))

@@ -446,6 +446,12 @@ class Tags:
             self._append(result, self._use_term('downloaderlatest'))
             self._append(result, self._use_term('downloader'))
 
+        if stem == 'genesis':
+            self._append(result, self._use_term('genesiscore'))
+
+        if stem == 'megadrive':
+            self._append(result, self._use_term('megadrivecore'))
+        
         if stem == 'yc' and suffix == '.txt':
             self._append(result, self._use_term('yctxt'))
 

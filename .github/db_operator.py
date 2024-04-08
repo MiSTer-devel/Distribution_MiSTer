@@ -426,6 +426,12 @@ class Tags:
             if nodates in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
 
+            if nodates == 'genesis':
+                self._append(result, self._use_term('genesiscore'))
+    
+            if nodates == 'megadrive':
+                self._append(result, self._use_term('megadrivecore'))
+    
         elif suffix == '.mgl':
             self._append(result, self._use_term('mgl'))
             self._append(result, self._use_term('cores'))
@@ -445,12 +451,6 @@ class Tags:
         if stem == 'downloader_latest':
             self._append(result, self._use_term('downloaderlatest'))
             self._append(result, self._use_term('downloader'))
-
-        if stem == 'genesis':
-            self._append(result, self._use_term('genesiscore'))
-
-        if stem == 'megadrive':
-            self._append(result, self._use_term('megadrivecore'))
         
         if stem == 'yc' and suffix == '.txt':
             self._append(result, self._use_term('yctxt'))

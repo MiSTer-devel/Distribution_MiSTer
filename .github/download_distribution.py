@@ -584,10 +584,13 @@ def uniq_files_with_stripped_date(folder: str) -> List[str]:
 
         no_date = remove_date(f)
         lower_no_date = no_date.lower()
-        if lower_no_date == f.lower() or lower_no_date in seen:
+        if lower_no_date == f.lower():
             continue
+        if lower_no_date in seen:
+            result = [r for r in result if r.lower() != lower_no_date]
+        else:
+            seen.add(lower_no_date)
 
-        seen.add(lower_no_date)
         result.append(no_date)
     return result
 

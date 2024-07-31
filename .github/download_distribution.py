@@ -573,7 +573,7 @@ def is_rbf(path: str) -> bool:
 
 def get_latest_release(folder: str, bin: str) -> str:
     files = [without_folder(folder, f) for f in list_files(folder, recursive=False)]
-    releases = sorted([f for f in files if bin in f and remove_date(f) != f])
+    releases = sorted([f for f in files if bin.lower() in f.lower() and remove_date(f).lower() != f.lower()])
     return releases[-1]
 
 def uniq_files_with_stripped_date(folder: str) -> List[str]:
@@ -584,16 +584,10 @@ def uniq_files_with_stripped_date(folder: str) -> List[str]:
 
         no_date = remove_date(f)
         lower_no_date = no_date.lower()
-        if lower_no_date == f.lower():
+        if lower_no_date == f.lower() or lower_no_date in seen:
             continue
-        if lower_no_date in seen:
-            if no_date not in result:
-                result = [r for r in result if r.lower() != lower_no_date]
-                result.append(no_date)
-        else:
-            seen.add(lower_no_date)
-            result.append(no_date)
 
+        seen.add(lower_no_date)
         result.append(no_date)
     return result
 

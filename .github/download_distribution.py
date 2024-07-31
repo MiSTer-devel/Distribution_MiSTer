@@ -578,13 +578,16 @@ def get_latest_release(folder: str, bin: str) -> str:
 
 def uniq_files_with_stripped_date(folder: str) -> List[str]:
     result: List[str] = []
+    seen: Set[str] = set()
     for f in list_files(folder, recursive=False):
         f = without_folder(folder, str(Path(f).with_suffix('')))
 
         no_date = remove_date(f)
-        if no_date == f or no_date in result:
+        lower_no_date = no_date.lower()
+        if lower_no_date == f.lower() or lower_no_date in seen:
             continue
 
+        seen.add(lower_no_date)
         result.append(no_date)
     return result
 

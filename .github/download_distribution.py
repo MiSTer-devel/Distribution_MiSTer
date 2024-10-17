@@ -7,7 +7,7 @@ import time
 import subprocess
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional, Set, Tuple
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlsplit
 import re
 import shutil
 import shlex
@@ -15,6 +15,7 @@ import json
 import zipfile
 import xml.etree.ElementTree as ET
 import sys
+import tempfile
 
 amount_of_cores_validation_limit = 200
 amount_of_extra_content_urls_validation_limit = 20
@@ -28,19 +29,19 @@ def main() -> None:
     extra_content_categories = classify_extra_content(extra_content_urls)
 
     print(f'Cores {len(cores)}:')
-    print(json.dumps(cores))
+    print(cores)
     print()
 
     validate_cores(cores)
 
     print(f'Extra Content URLs {len(extra_content_urls)}:')
-    print(json.dumps(extra_content_urls))
+    print(extra_content_urls)
     print()
 
     validate_extra_content_urls(extra_content_urls)
 
     print('Extra Content Categories:')
-    print(json.dumps(extra_content_categories))
+    print(extra_content_categories)
     print()
 
     process_all(extra_content_categories, cores, read_target_dir())
@@ -188,27 +189,32 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend(["https://github.com/MiSTer-devel/Filters_MiSTer"])
     result.extend(["https://github.com/MiSTer-devel/ShadowMasks_MiSTer"])
     result.extend(["https://github.com/MiSTer-devel/Presets_MiSTer"])
-    result.extend(["user-content-scripts"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_off.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/security_fixes.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ssh_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ssh_off.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ftp_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ftp_off.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_off.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/firewall_on.sh"])
-    result.extend(["https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/firewall_off.sh"])
     result.extend(["user-content-linux-binary", "https://github.com/MiSTer-devel/PDFViewer_MiSTer"])
     result.extend(["user-content-empty-folder", "games/TGFX16-CD"])
-    result.extend(["user-content-gamecontrollerdb", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt"])
-    result.extend(["user-content-rootfile", "https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt"])
+    result.extend(["user-content-file"])
+    result.extend([("/", "https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt")])
+    result.extend([("/linux/gamecontrollerdb/", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt")])
+    result.extend([("/games/N64/", "https://raw.githubusercontent.com/MiSTer-devel/N64_ROM_Database/main/N64-database.txt")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ini_settings.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/fast_USB_polling_off.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/other_authors/wifi.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/security_fixes.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ssh_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ssh_off.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ftp_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/ftp_off.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/samba_off.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/firewall_on.sh")])
+    result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/firewall_off.sh")])
+    result.extend([("/Scripts/.config/downloader/downloader_latest.zip", "https://github.com/MiSTer-devel/Downloader_MiSTer/releases/download/latest/dont_download.zip")])
+    result.extend(["user-content-unzip"])
+    result.extend([("/games/VECTREX/Overlays/", "https://raw.githubusercontent.com/MiSTer-devel/Vectrex_MiSTer/master/overlays/overlays.zip")])
+
     return result
 
 ContentClassification = Dict[str, str]
@@ -219,10 +225,9 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
     for url in extra_content_urls:
         if url == "user-content-linux-binary": current_category = url
         elif url == "user-content-zip-release": current_category = url
-        elif url == "user-content-scripts": current_category = url
         elif url == "user-content-empty-folder": current_category = url
-        elif url == "user-content-gamecontrollerdb": current_category = url
-        elif url == "user-content-rootfile": current_category = url
+        elif url == "user-content-file": current_category = url
+        elif url == "user-content-unzip": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
         elif url == "user-content-mra-alternatives-under-releases": current_category = url
@@ -309,7 +314,7 @@ def process_core(core: CoreProps, delme: str, target: str, metadata_props: Metad
 
     path = download_mister_devel_repository(url, delme, category)
 
-    if not Path(f'{path}/releases').exists():
+    if not Path(get_releases_dir(path, url)).exists():
         print(f'Warning! Ignored {category}: {url}')
         return
 
@@ -352,13 +357,14 @@ def install_arcade_core(path: str, target_dir: str, core: CoreProps, metadata: M
     touch_folder(f'{target_dir}/games/hbmame')
     touch_folder(f'{target_dir}/games/mame')
 
-    releases_dir = f'{path}/releases'
+    url = core["url"]
+    releases_dir = get_releases_dir(path, url)
     arcade_installed = False
 
     for bin in try_filter_list(uniq_files_with_stripped_date(releases_dir), 'Arcade-'):
         latest_release = get_latest_release(releases_dir, bin)
         if not is_rbf(latest_release):
-            print(f'{core["url"]}: {latest_release} is NOT a RBF file')
+            print(f'{url}: {latest_release} is NOT a RBF file')
             continue
 
         if is_arcade_core(bin):
@@ -378,7 +384,7 @@ def install_other_core(path: str, target_dir: str, core: CoreProps, metadata: Me
 def install_utility_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=False)
 
 def impl_install_generic_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata, touch_games_folder: bool):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, core['url'])
 
     binaries: List[str] = []
     for bin in try_filter_list(uniq_files_with_stripped_date(releases_dir), core["home"]):
@@ -446,7 +452,7 @@ core_installers = {
 # extra content installers
 
 def install_main_binary(path: str, target_dir: str, category: str, url: str):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, url)
 
     if not Path(releases_dir).exists():
         print(f'Warning! Ignored {category}: {url}')
@@ -461,7 +467,7 @@ def install_main_binary(path: str, target_dir: str, category: str, url: str):
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/{remove_date(latest_release)}')
 
 def install_linux_binary(path: str, target_dir: str, category: str, url: str):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, url)
 
     if not Path(releases_dir).exists():
         print(f'Warning! Ignored {category}: {url}')
@@ -476,7 +482,7 @@ def install_linux_binary(path: str, target_dir: str, category: str, url: str):
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/linux/{remove_date(latest_release)}')
 
 def install_zip_release(path: str, target_dir: str, category: str, url: str):
-    releases_dir = f'{path}/releases'
+    releases_dir = get_releases_dir(path, url)
 
     if not Path(releases_dir).exists():
         print(f'Warning! Ignored {category}: {url}')
@@ -495,13 +501,13 @@ def install_mra_alternatives(path: str, target_dir: str, category: str, url: str
 
 def install_mra_alternatives_under_releases(path: str, target_dir: str, category: str, url: str):
     print(f'Installing MRA Alternatives under /releases {url}')
-    alternative_folders = [*list_folders(f'{path}/releases/_alternatives')]
+    alternative_folders = [*list_folders(f'{get_releases_dir(path, url)}/_alternatives')]
     if len(alternative_folders) == 0:
         print('WARNING! _alternatives folder is empty.')
         return
 
     for folder in alternative_folders:
-        copy_folder(f'{path}/releases/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
+        copy_folder(f'{get_releases_dir(path, url)}/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
 
 def install_fonts(path: str, target_dir: str, category: str, url: str):
     print(f'Installing Fonts {url}')
@@ -527,29 +533,43 @@ extra_content_late_installers = {
     "user-content-mra-alternatives-under-releases": install_mra_alternatives_under_releases,
 }
 
-def install_script(url: str, target_dir: str):
-    print('Script: ' + url)
-    download_file(url, f'{target_dir}/Scripts/{Path(url).name}')
-
 def install_empty_folder(url: str, target_dir: str):
     touch_folder(f'{target_dir}/{url}')
 
-def install_gamecontrollerdb(url: str, target_dir: str):
-    print(f"SDL Game Controller DB: {url}")
-    download_file(url, f'{target_dir}/linux/gamecontrollerdb/{Path(url).name}')
+def install_file(path_and_url: Tuple[str, str], target_dir: str):
+    if len(path_and_url) != 2:
+        raise ValueError("Wrong path_and_url value: " + str(path_and_url))
+    path, url = path_and_url
+    if path[-1] == '/':
+        path += Path(url).name
+    print(f"File {path}: {url}")
+    Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
+    download_file(url, f'{target_dir}/{path}')
 
-def install_rootfile(url: str, target_dir: str):
-    print(f"Root file: {url}")
-    download_file(url, f'{target_dir}/{Path(url).name}')
+def install_unzip(path_and_url: Tuple[str, str], target_dir: str):
+    if len(path_and_url) != 2:
+        raise ValueError("Wrong path_and_url value: " + str(path_and_url))
+    path, url = path_and_url
+    print(f"Unzip {path}: {url}")
+    Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(delete=True) as temp_file:
+        download_file(url, temp_file.name)
+        unzip(temp_file.name, f'{target_dir}/{path}')
 
 extra_content_early_installers = {
-    'user-content-scripts': install_script,
     'user-content-empty-folder': install_empty_folder,
-    'user-content-gamecontrollerdb': install_gamecontrollerdb,
-    'user-content-rootfile': install_rootfile,
+    'user-content-file': install_file,
+    'user-content-unzip': install_unzip 
 }
 
 # mister domain helpers
+
+def get_releases_dir(path: str, url: str) -> str:
+    relative_path = get_repository_relative_path(url)
+    if relative_path == '':
+        return f'{path}/releases'
+    else:
+        return f'{path}/{relative_path}/releases'
 
 def mra_files(folder: str) -> List[str]:
     return [without_folder(folder, f) for f in list_files(folder, recursive=False) if Path(f).suffix.lower() == '.mra']
@@ -562,18 +582,21 @@ def is_rbf(path: str) -> bool:
 
 def get_latest_release(folder: str, bin: str) -> str:
     files = [without_folder(folder, f) for f in list_files(folder, recursive=False)]
-    releases = sorted([f for f in files if bin in f and remove_date(f) != f])
+    releases = sorted([f for f in files if bin.lower() in f.lower() and remove_date(f).lower() != f.lower()])
     return releases[-1]
 
 def uniq_files_with_stripped_date(folder: str) -> List[str]:
     result: List[str] = []
+    seen: Set[str] = set()
     for f in list_files(folder, recursive=False):
         f = without_folder(folder, str(Path(f).with_suffix('')))
 
         no_date = remove_date(f)
-        if no_date == f or no_date in result:
+        lower_no_date = no_date.lower()
+        if lower_no_date == f.lower() or lower_no_date in seen:
             continue
 
+        seen.add(lower_no_date)
         result.append(no_date)
     return result
 
@@ -656,16 +679,22 @@ def list_fonts(path: str) -> List[str]:
 def download_mister_devel_repository(input_url: str, delme: str, category: str) -> str:
     name = get_repository_name(input_url)
     branch = get_branch(input_url)
+    relative_path = get_repository_relative_path(input_url)
 
     path = f'{delme}/{name}'
 
     if category[0] == '_':
         path = path + category
-    
+
     if len(branch) > 0:
         path = path + branch
 
-    git_url = f'{input_url.replace("/tree/" + branch, "")}.git'
+    cleanup = "/tree/" + branch
+    if len(relative_path) > 0:
+        path = path + repository_relative_path_to_fs_path(relative_path)
+        cleanup = cleanup + '/' + relative_path
+
+    git_url = f'{input_url.replace(cleanup, "")}.git'
     download_repository(path, git_url, branch)
     return path
 
@@ -676,7 +705,21 @@ def get_branch(url: str) -> str:
     pos = url.find('/tree/')
     if pos == -1:
         return ""
-    return url[pos + len('/tree/'):]
+    later_part = url[pos + len('/tree/'):]
+    pos = later_part.find('/')
+    if pos == -1:
+        return later_part
+    return later_part[:pos]
+
+def get_repository_relative_path(url: str) -> str:
+    parts = urlsplit(url)
+    segments = parts.path.strip('/').split('/')
+    if len(segments) > 4 and segments[2] == "tree":
+        return '/'.join(segments[4:])
+    return ""
+
+def repository_relative_path_to_fs_path(path: str) -> str:
+    return '_' + path.replace('/', '_')
 
 filter_term_char_regex = re.compile("[-_a-z0-9.]$", )
 def to_filter_term(name: str):

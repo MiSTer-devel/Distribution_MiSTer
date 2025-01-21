@@ -191,6 +191,7 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend(["https://github.com/MiSTer-devel/Presets_MiSTer"])
     result.extend(["user-content-linux-binary", "https://github.com/MiSTer-devel/PDFViewer_MiSTer"])
     result.extend(["user-content-empty-folder", "games/TGFX16-CD"])
+    result.extend(["user-content-empty-folder", "games/NeoGeo-CD"])
     result.extend(["user-content-file"])
     result.extend([("/", "https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt")])
     result.extend([("/linux/gamecontrollerdb/", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt")])

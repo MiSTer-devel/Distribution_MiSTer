@@ -630,6 +630,7 @@ class Tags:
         return sorted(result)
 
 class DatabaseBuilder:
+    firmware = 'MiSTer'
     main_binaries = ['MiSTer', 'menu.rbf']
 
     def __init__(self, tags: Tags):
@@ -663,6 +664,10 @@ class DatabaseBuilder:
 
         if strfile in self.main_binaries:
             self._files[strfile]['reboot'] = True
+        
+        if strfile == self.firmware:
+            self._files[strfile]['backup'] = '.MiSTer.old'
+            self._files[strfile]['tmp'] = 'MiSTer.new'
 
     def add_parent_folders(self, file: Path) -> None:
         for folder in file.parents:

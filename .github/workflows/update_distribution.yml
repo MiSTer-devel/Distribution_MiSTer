@@ -10,7 +10,7 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       BASE_FILES_URL: https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/%s/

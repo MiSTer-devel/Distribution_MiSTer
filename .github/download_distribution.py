@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2022 José Manuel Barroso Galindo <theypsilon@gmail.com>
+# Copyright (c) 2022-2025 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
 from multiprocessing.pool import ThreadPool
 import os

@@ -57,9 +57,9 @@ jobs:
       id: db_exists
       run: if [ -f "${DB_JSON_NAME}" ] ; then echo "new_db=true" >> "${GITHUB_OUTPUT}" ; fi
 
-#    - name: Test Database
-#      if: steps.db_exists.outputs.new_db == 'true' 
-#      run: ./.github/test_database.sh
+    - name: Test Database
+      if: steps.db_exists.outputs.new_db == 'true' 
+      run: ./.github/test_database.sh
 
     - name: Push Database
       if: steps.db_exists.outputs.new_db == 'true' 

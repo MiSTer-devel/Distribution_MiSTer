@@ -26,9 +26,6 @@ jobs:
       with:
         ref: develop
 
-    - name: Install apt-get utilities
-      run: sudo apt-get install sharutils
-
     - uses: actions/setup-python@v4
       with:
         python-version: '3.9'

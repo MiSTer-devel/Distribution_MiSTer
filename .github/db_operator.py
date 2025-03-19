@@ -375,8 +375,6 @@ class Tags:
 
     def _impl_tags_for_file(self, path: Path) -> List[int]:
         parent = path.parts[0].lower()
-        if parent[0] == '|':
-            parent = parent[1:]
         if parent[0] == '_':
             parent = parent[1:]
 
@@ -520,8 +518,6 @@ class Tags:
             return []
 
         parent = path.parts[0].lower()
-        if parent[0] == '|':
-            parent = parent[1:]
         if parent[0] == '_':
             parent = parent[1:]
         result = [self._use_term(parent)]
@@ -648,7 +644,7 @@ class DatabaseBuilder:
             return
         
         if strfile.startswith('games') or strfile.startswith('docs'):
-            strfile = f'|{strfile}'
+            description['path'] = 'pext'
 
         tags = self._tags.get_tags_for_file(file)
         for term in filter_terms:
@@ -656,7 +652,7 @@ class DatabaseBuilder:
 
         self._files[strfile] = {**description, "tags": tags}
 
-        if file.name.lower() in ['boot.rom', 'boot1.rom', 'boot0.rom'] and not strfile.startswith('|games/AO486/'):
+        if file.name.lower() in ['boot.rom', 'boot1.rom', 'boot0.rom'] and not strfile.startswith('games/AO486/'):
             self._files[strfile]['overwrite'] = False
 
         if strfile in self.main_binaries or strfile.startswith('linux/'):
@@ -672,12 +668,11 @@ class DatabaseBuilder:
     def add_parent_folders(self, file: Path) -> None:
         for folder in file.parents:
             strfolder = str(folder)
-
-            if strfolder.startswith('games') or strfolder.startswith('docs'):
-                strfolder = f'|{strfolder}'
             if strfolder in self._folders or strfolder in ['.', '']:
                 continue
             self._folders[strfolder] = {"tags": self._tags.get_tags_for_folder(folder)}
+            if strfolder.startswith('games') or strfolder.startswith('docs'):
+                self._folders[strfolder]['path'] = 'pext'
 
     def build(self, db_id: str) -> Dict[str, Any]:
         return {
@@ -789,28 +784,19 @@ class ZipsBuilder:
     def _multi_process(self, zip_id: str, zip_description: Dict[str, Any]) -> None:
         self._intermediate[zip_id] = {'files': {}, 'folders': {}}
         for source in zip_description['sources']:
-            if source.startswith('games/') or source.startswith('docs/'):
-                source = f'|{source}'
-
             self._move_elements(zip_id, source, 'files')
             self._move_elements(zip_id, source, 'folders')
 
-        path = zip_description['path']
-        if path[0] == '|':
-            path = path[1:]
-
         self._add_zip(zip_id,
             contents=zip_description['sources'],
-            description=self._description(", ".join(zip_description["sources"]), path),
+            description=self._description(", ".join(zip_description["sources"]), zip_description['path']),
             parent=zip_description['path'] + '/',
             mode='multi'
         )
     
     def _simple_process(self, zip_id: str, source: str, zip_description: Dict[str, Any]) -> None:
         self._intermediate[zip_id] = {'files': {}, 'folders': {}}
-        if source.startswith('games/') or source.startswith('docs/'):
-            source = f'|{source}'
-        
+
         self._move_elements(zip_id, source, 'files')
         self._move_elements(zip_id, source, 'folders')
 
@@ -823,13 +809,9 @@ class ZipsBuilder:
 
         parent = str(source2.parent) + '/'
 
-        path = parent
-        if path[0] == '|':
-            path = path[1:]
-
         self._add_zip(zip_id,
             contents=[source2.name],
-            description=self._description(source2.name, path),
+            description=self._description(source2.name, parent),
             parent=parent,
             source=zip_description['source']
         )
@@ -839,12 +821,9 @@ class ZipsBuilder:
         return f'Unpacking {unpacking_str} at {parent}' if parent not in ['./', '.'] else f'Unpacking {unpacking_str} at the root'
 
     def _subfolders_process(self, zip_id: str, source: str, zip_description: Dict[str, Any]) -> None:
-        if source.startswith('games/') or source.startswith('docs/'):
-            source = f'|{source}'
-
         subfolder_len = len(Path(source).parts)
         subfolders: Set[str] = set()
-        
+
         self._fill_subfolders(subfolders, subfolder_len, source, 'files')
         self._fill_subfolders(subfolders, subfolder_len, source, 'folders')
 
@@ -875,10 +854,6 @@ class ZipsBuilder:
                 subfolders.add(subfolder)
 
     def _add_zip(self, zip_id: str, contents: List[str], description: str, parent: str, mode: Optional[str] = None, source: Optional[str] = None) -> None:
-        path = parent
-        if path.startswith('games') or path.startswith('docs'):
-            path = f'|{path}'
-
         raw_files_size = 0
         for file_desc in self._intermediate[zip_id]['files'].values():
             raw_files_size += file_desc['size']
@@ -888,14 +863,16 @@ class ZipsBuilder:
             'contents': contents,
             'description': description,
             'kind': 'extract_all_contents',
-            'path': path,
             'raw_files_size': raw_files_size,
             'summary_file_content': {
                 'folders': self._intermediate[zip_id]['folders'],
                 'files': self._intermediate[zip_id]['files'],
             },
-            'target_folder_path': path,
+            'target_folder_path': parent,
         }
+
+        if parent.startswith('games') or parent.startswith('docs'):
+            result['path'] = 'pext'
 
         if mode is not None:
             result['mode'] = mode
@@ -949,7 +926,7 @@ def save_zips(zips: Dict[str, Any], base_files_url: str) -> None:
 
         summary_file_zip = save_summary_file_zip(zip_id, summary_file_content)
         zip_description['summary_file'] = {**new_file_description(summary_file_zip), 'url': f'{base_zips_url}{summary_file_zip}'}
-        contents_file_zip = save_contents_file_zip(zip_id, summary_file_content, zip_description['path'])
+        contents_file_zip = save_contents_file_zip(zip_id, summary_file_content, zip_description.get('target_folder_path', None))
         zip_description['contents_file'] = {**new_file_description(contents_file_zip), 'url': f'{base_zips_url}{contents_file_zip}'}
 
 def save_summary_file_zip(zip_id: str, summary_file_content: Dict[str, Any]) -> str:
@@ -958,15 +935,13 @@ def save_summary_file_zip(zip_id: str, summary_file_content: Dict[str, Any]) -> 
         zipf.writestr(f'{zip_id}_summary.json', json.dumps(summary_file_content, sort_keys=True))
     return summary_file_zip
 
-def save_contents_file_zip(zip_id: str, summary_file_content: Dict[str, Any], zip_path: str) -> str:
+def save_contents_file_zip(zip_id: str, summary_file_content: Dict[str, Any], zip_path: Optional[str]) -> str:
     contents_file_zip = f'{zip_id}.zip'
     with ZipFile(contents_file_zip, 'w', compression=ZIP_DEFLATED, compresslevel=1) as zipf:
         for file in summary_file_content['files']:
             source = file
-            if source[0] == '|':
-                source = source[1:]
             target = file
-            if target.find(zip_path) == 0:
+            if zip_path is not None and target.find(zip_path) == 0:
                 target = target[len(zip_path):]
             zipf.write(source, target)
     return contents_file_zip

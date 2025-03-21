@@ -20,7 +20,11 @@ echo "db_url = ${DB_URL}" >> downloader.ini
 echo "downloader.ini :"
 cat downloader.ini
 echo
-cp "${DOWNLOADER}" downloader
+if [ -f "${DOWNLOADER}" ] ; then
+  cp "${DOWNLOADER}" downloader
+else
+  curl --show-error --fail --location -o "downloader" "https://github.com/MiSTer-devel/Downloader_MiSTer/releases/download/latest/dont_download.zip"
+fi
 chmod +x downloader
 
 echo

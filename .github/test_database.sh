@@ -23,6 +23,7 @@ echo
 if [ -f "${DOWNLOADER}" ] ; then
   cp "${DOWNLOADER}" downloader
 else
+  # This allows this script to be used as a dependency. It's playing that role for other builds already, so please keep it in place.
   curl --show-error --fail --location -o "downloader" "https://github.com/MiSTer-devel/Downloader_MiSTer/releases/download/latest/dont_download.zip"
 fi
 chmod +x downloader

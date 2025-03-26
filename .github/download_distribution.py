@@ -542,8 +542,8 @@ def install_file(path_and_url: Tuple[str, str], target_dir: str):
     download_file(url, f'{target_dir}/{path}')
 
 def install_file_valid_hash(path_url_alg_hashurl: Tuple[str, str, str, str], target_dir: str):
-    if len(path_and_url) != 4:
-        raise ValueError("Wrong path_url_alg_hashurl value: " + str(path_and_url))
+    if len(path_url_alg_hashurl) != 4:
+        raise ValueError("Wrong path_url_alg_hashurl value: " + str(path_url_alg_hashurl))
     path, url, alg, hashurl = path_url_alg_hashurl
     if path[-1] == '/':
         path += Path(url).name

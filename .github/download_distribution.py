@@ -204,6 +204,8 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/rtc.sh")])
     result.extend([("/Scripts/", "https://raw.githubusercontent.com/MiSTer-devel/Scripts_MiSTer/master/timezone.sh")])
     result.extend([("/Scripts/.config/downloader/downloader_latest.zip", "https://github.com/MiSTer-devel/Downloader_MiSTer/releases/download/latest/dont_download.zip")])
+    result.extend(['user-content-file-valid-hash'])
+    result.extend([("/Scripts/.config/downloader/cacert.pm", "https://curl.se/ca/cacert.pem", "sha256sum", "https://curl.se/ca/cacert.pem.sha256")])
     result.extend(["user-content-unzip"])
     result.extend([("/games/VECTREX/Overlays/", "https://raw.githubusercontent.com/MiSTer-devel/Vectrex_MiSTer/master/overlays/overlays.zip")])
 
@@ -219,6 +221,7 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
         elif url == "user-content-zip-release": current_category = url
         elif url == "user-content-empty-folder": current_category = url
         elif url == "user-content-file": current_category = url
+        elif url == "user-content-file-valid-hash": current_category = url
         elif url == "user-content-unzip": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
@@ -538,6 +541,24 @@ def install_file(path_and_url: Tuple[str, str], target_dir: str):
     Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
     download_file(url, f'{target_dir}/{path}')
 
+def install_file_valid_hash(path_url_alg_hashurl: Tuple[str, str, str, str], target_dir: str):
+    if len(path_and_url) != 4:
+        raise ValueError("Wrong path_url_alg_hashurl value: " + str(path_and_url))
+    path, url, alg, hashurl = path_url_alg_hashurl
+    if path[-1] == '/':
+        path += Path(url).name
+    print(f"File {path}: {url} | {alg}: {hashurl}")
+    Path(f'{target_dir}/{path}').parent.mkdir(parents=True, exist_ok=True)
+    download_file(url, f'{target_dir}/{path}')
+    download_file(hashurl, '/tmp/temp_hash_file')
+    hashsum = subprocess.run([alg, f'{target_dir}/{path}'], check=True, capture_output=True, text=True).stdout.strip().split()[0]
+    with open('/tmp/temp_hash_file', 'r') as f:
+        expected_hashsum = f.read().strip().split()[0]
+
+    if hashsum != expected_hashsum:
+        print(f'hash missmatch: {hashsum} != {expected_hashsum}')
+        exit(1)
+
 def install_unzip(path_and_url: Tuple[str, str], target_dir: str):
     if len(path_and_url) != 2:
         raise ValueError("Wrong path_and_url value: " + str(path_and_url))
@@ -551,6 +572,7 @@ def install_unzip(path_and_url: Tuple[str, str], target_dir: str):
 extra_content_early_installers = {
     'user-content-empty-folder': install_empty_folder,
     'user-content-file': install_file,
+    'user-content-file-valid-hash': install_file_valid_hash,
     'user-content-unzip': install_unzip 
 }
 

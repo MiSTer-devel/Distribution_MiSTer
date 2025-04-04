@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # Copyright (c) 2022-2025 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
+from itertools import chain
 import subprocess
 import sys
 import time
-from typing import Any, Dict, Generator, Iterator, List, Optional, Set, Tuple
+from typing import Any, Dict, Generator, Iterator, List, Optional, Set, Tuple, TypedDict
 from pathlib import Path
 import xml.etree.ElementTree as ET
 import io
@@ -19,6 +20,7 @@ from urllib.parse import urlparse
 from argparse import ArgumentParser
 from zipfile import ZipFile, ZIP_DEFLATED
 from dataclasses import dataclass
+
 
 def main() -> None:
     start = time.time()
@@ -306,6 +308,28 @@ def parse_boolean(s):
     else:
         return None
 
+class MadGameFields(TypedDict):
+    alternative: bool
+    bootleg: bool
+    category: List[str]
+    file: str
+    flip: bool
+    homebrew: bool
+    manufacturer: List[str]
+    move_inputs: List[str]
+    name: str
+    num_buttons: int
+    platform: List[str]
+    players: str
+    region: str
+    resolution: str
+    rotation: int
+    series: List[str]
+    year: int
+
+def load_mad_db() -> dict[str, MadGameFields]:
+    return download_db('https://raw.githubusercontent.com/MiSTer-devel/ArcadeDatabase_MiSTer/refs/heads/db/mad_db.json.zip')
+
 initial_filter_aliases = [
     # Consoles
     ['nes', 'famicom', 'nintendo'],
@@ -319,6 +343,11 @@ initial_filter_aliases = [
     ['gbc', 'gameboycolor'],
     ['sgb', 'supergameboy'],
     ['gba', 'gameboyadvance'],
+
+    # Arcade Database
+    ['screen_rotation_horizontal', 'screen_no_tate'],
+    ['screen_rotation_vertical_cw', 'screen_tate_cw'],
+    ['screen_rotation_vertical_ccw', 'screen_tate_ccw'],
 
     # General
     ['console-cores', 'console'],
@@ -340,6 +369,7 @@ class Tags:
         self._report_set: Set[str] = set()
         self._used: Set[int] = set()
         self._init: bool = False
+        self._mad_db: Optional[dict[str, MadGameFields]] = None
 
     def init_aliases(self, aliases: List[List[str]]) -> None:
         if self._init:
@@ -391,12 +421,17 @@ class Tags:
 
         if suffix == '.mra':
             self._append(result, self._use_term('mra'))
-            rbf, zips, broken_error = read_mra_fields(path)
+            rbf, setname, zips, broken_error = read_mra_fields(path)
 
             if broken_error is None:
                 if rbf is not None:
                     self._append(result, self._use_arcade_term(rbf))
-                
+
+                if setname is not None:
+                    mad_terms = [self._use_term(term) for term in self._mad_terms(setname)]
+                    for term in mad_terms:
+                        self._append(result, term)
+
                 if self._contains_hbmame_rom(zips):
                     self._append(result, self._use_term('hbmame'))
 
@@ -447,10 +482,6 @@ class Tags:
 
         if stem == 'mister':
             self._append(result, self._use_term('misterfirmware'))
-
-        if stem == 'downloader_latest':
-            self._append(result, self._use_term('downloaderlatest'))
-            self._append(result, self._use_term('downloader'))
         
         if stem == 'yc' and suffix == '.txt':
             self._append(result, self._use_term('yctxt'))
@@ -503,6 +534,19 @@ class Tags:
 
             self._append(result, self._use_term(stem))
 
+        elif parent == 'scripts':
+            first_level = Path(path.parts[1]).stem.lower()
+            if first_level == 'update':
+                self._append(result, self._use_term('downloader'))
+            elif 'fast_usb_polling' in first_level:
+                self._append(result, self._use_term('fast_usb_polling'))
+            elif first_level != '.config':
+                self._append(result, self._use_term(first_level))
+            if len(path.parts) > 2:
+                second_level = path.parts[2].lower()
+                self._append(result, self._use_term(second_level))
+                self._append(result, self._use_term(stem))
+
         return result
 
     def _contains_hbmame_rom(self, zips: List[str]) -> bool:
@@ -550,8 +594,9 @@ class Tags:
             if category is not None:
                 self._append(result, self._use_term(category))
 
-        self._append(result, self._use_term(first_level))
-            
+        if first_level != '.config':
+            self._append(result, self._use_term(first_level))
+
         if len(path.parts) == 2:
             return result
                 
@@ -628,6 +673,78 @@ class Tags:
             if self._dict[self._clean_term(entry)] in self._used:
                 result.append(entry)
         return sorted(result)
+
+    def _mad_terms(self, setname: str) -> List[str]:
+        if self._mad_db is None:
+            self._mad_db = load_mad_db()
+        game = self._mad_db.get(setname, None)
+        if game is None:
+            return []
+
+        terms = []
+
+        if game.get('bootleg', False) or game.get('homebrew', False): terms.append('unlicensed_games')
+
+        rotation = game.get('rotation', 0)
+        flip = game.get('flip', False)
+        if rotation == 90 or (rotation == 270 and flip):
+            terms.append('screen_rotation_vertical_cw')
+        elif rotation == 270 or (rotation == 90 and flip):
+            terms.append('screen_rotation_vertical_ccw')
+        else:
+            terms.append('screen_rotation_horizontal')
+
+        num_buttons = game.get('num_buttons', 0)
+        if num_buttons == 1:
+            terms.append('controls_1_button')
+        elif num_buttons == 2:
+            terms.append('controls_2_buttons')
+        elif num_buttons == 3:
+            terms.append('controls_3_buttons')
+        elif num_buttons == 4:
+            terms.append('controls_4_buttons')
+        elif num_buttons == 5:
+            terms.append('controls_5_buttons')
+        elif num_buttons == 6:
+            terms.append('controls_6_buttons')
+
+        if 'simultaneous' in game.get('players', '').lower():
+            if '2' in game['players']:
+                terms.append('controls_2_players')
+            elif '3' in game['players']:
+                terms.append('controls_3_players')
+            elif '4' in game['players']:
+                terms.append('controls_4_players')
+
+        move_inputs = game.get('move_inputs', [])
+        for control in chain(game.get('special_controls', []), move_inputs):
+            control = control.lower()
+            if 'paddle' in control:
+                terms.append('controls_paddle')
+            if 'dial' in control:
+                terms.append('controls_dial')
+            if 'spinner' in control:
+                terms.append('controls_spinner')
+            if 'trackball' in control:
+                terms.append('controls_trackball')
+
+        for mv_input in move_inputs:
+            mv_input = mv_input.lower()
+            if '2-way' in mv_input:
+                terms.append('controls_move_2-way')
+            elif '4-way' in mv_input:
+                terms.append('controls_move_4-way')
+            elif '8-way' in mv_input:
+                terms.append('controls_move_8-way')
+
+        resolution = game.get('resolution', '').lower()
+        if '15khz' in resolution:
+            terms.append('screen_horizontal_scan_rate_15khz')
+        elif '31khz' in resolution:
+            terms.append('screen_horizontal_scan_rate_31khz')
+
+        return terms
+
 
 class DatabaseBuilder:
     firmware = 'MiSTer'
@@ -994,16 +1111,17 @@ def new_file_description(name: str) -> Dict[str, Any]:
 
 # MiSTer XMLs
 
-def read_mra_fields(mra_path: Path) -> Tuple[Optional[str], List[str], Optional[ET.ParseError]]:
+def read_mra_fields(mra_path: Path) -> Tuple[Optional[str], Optional[str], List[str], Optional[ET.ParseError]]:
     try:
-        rbf, zips = _read_mra_fields_impl(mra_path)
-        return rbf, zips, None
+        rbf, setname, zips = _read_mra_fields_impl(mra_path)
+        return rbf, setname, zips, None
     except ET.ParseError as e:
         print('ERROR: Defect XML for mra file: ' + str(mra_path))
-        return None, [], e
+        return None, None, [], e
 
 def _read_mra_fields_impl(mra_path: Path) -> Tuple[Optional[str], List[str]]:
     rbf = None
+    setname = None
     zips: Set[str] = set()
 
     context = et_iterparse(str(mra_path), events=("start",))
@@ -1016,12 +1134,19 @@ def _read_mra_fields_impl(mra_path: Path) -> Tuple[Optional[str], List[str]]:
             if elem.text is None:
                 continue
             rbf = elem.text.strip().lower()
+        elif elem_tag == 'setname':
+            if setname is not None:
+                print('WARNING! Duplicated setname tag on file %s, first value %s, later value %s' % (str(mra_path),setname,elem.text))
+                continue
+            if elem.text is None:
+                continue
+            setname = elem.text.strip().lower()
         elif elem_tag == 'rom':
             attributes = {k.strip().lower(): v for k, v in elem.attrib.items()}
             if 'zip' in attributes and attributes['zip'] is not None:
                 zips |= {z.strip().lower() for z in attributes['zip'].strip().lower().split('|')}
 
-    return rbf, list(zips)
+    return rbf, setname,list(zips)
 
 def read_mgl_fields(mgl_path: Path) -> Tuple[Optional[str], Optional[str], Optional[ET.ParseError]]:
     try:

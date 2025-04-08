@@ -59,6 +59,9 @@ The following tags are calculated with the information contained in the [MiSTer 
 - `controls_move_2-way`: All arcade games with 2-way directional movement (left-right or up-down).
 - `controls_move_4-way`: All arcade games with 4-way directional movement.
 - `controls_move_8-way`: All arcade games with 8-way omnidirectional movement.
+- `controls_2_players`: All arcade games that support up to two simultaneous players.
+- `controls_3_players`: All arcade games that support up to three simultaneous players.
+- `controls_4_players`: All arcade games that support up to four simultaneous players.
 - `screen_rotation_horizontal` / `screen_no_tate`: All arcade games designed for horizontal screens.
 - `screen_rotation_vertical_cw` / `screen_tate_cw`: All arcade games designed for clock-wise vertical screens.  Including counter clock-wise with a flip option.
 - `screen_rotation_vertical_ccw` / `screen_tate_ccw`: All arcade games designed for counter clock-wise vertical screens. Including clock-wise with a flip option.

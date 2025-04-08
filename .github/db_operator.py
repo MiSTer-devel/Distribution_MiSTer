@@ -713,8 +713,11 @@ class Tags:
                 terms.append('controls_2_players')
             elif '3' in game['players']:
                 terms.append('controls_3_players')
+                terms.append('controls_2_players')
             elif '4' in game['players']:
                 terms.append('controls_4_players')
+                terms.append('controls_3_players')
+                terms.append('controls_2_players')
 
         move_inputs = game.get('move_inputs', [])
         for control in chain(game.get('special_controls', []), move_inputs):

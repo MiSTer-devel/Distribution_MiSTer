@@ -10,7 +10,7 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       BASE_FILES_URL: https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/%s/
@@ -25,9 +25,6 @@ jobs:
     - uses: actions/checkout@v3
       with:
         ref: develop
-
-    - name: Install apt-get utilities
-      run: sudo apt-get install sharutils
 
     - uses: actions/setup-python@v4
       with:

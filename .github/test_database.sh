@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Copyright (c) 2022 José Manuel Barroso Galindo <theypsilon@gmail.com>
+# Copyright (c) 2022-2025 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
 set -euo pipefail
 
 DB_URL="$(pwd)/${DB_JSON_NAME}"
+DOWNLOADER="$(pwd)/Scripts/.config/downloader/downloader_latest.zip"
 
 cd "$(mktemp -d)"
 echo "[mister]" > downloader.ini
@@ -19,14 +20,20 @@ echo "db_url = ${DB_URL}" >> downloader.ini
 echo "downloader.ini :"
 cat downloader.ini
 echo
-curl --show-error --fail --location -o "downloader.sh" "https://raw.githubusercontent.com/MiSTer-devel/Downloader_MiSTer/main/downloader.sh"
-chmod +x downloader.sh
+if [ -f "${DOWNLOADER}" ] ; then
+  cp "${DOWNLOADER}" downloader
+else
+  # This allows this script to be used as a dependency. It's playing that role for other builds already, so please keep it in place.
+  curl --show-error --fail --location -o "downloader" "https://github.com/MiSTer-devel/Downloader_MiSTer/releases/download/latest/dont_download.zip"
+fi
+chmod +x downloader
 
 echo
 echo "Running downloader"
 export DEBUG=true
 export CURL_SSL=""
-./downloader.sh
+export DOWNLOADER_INI_PATH="$(pwd)/downloader.ini"
+./downloader
 
 echo
 echo "The test went well."

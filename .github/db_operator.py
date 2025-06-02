@@ -221,7 +221,7 @@ class ExternalFilesReader:
     def _extract_filter_terms(row: List[str]) -> List[str]:
         filter_terms = []
         if len(row) >= 5:
-            filter_terms = row[4].strip().split()
+            filter_terms = row[4].strip().lower().split()
 
         return filter_terms
 

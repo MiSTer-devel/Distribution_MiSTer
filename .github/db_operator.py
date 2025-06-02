@@ -634,7 +634,10 @@ class Tags:
         result = ''.join(filter(lambda chr: self.filter_part_regex.match(chr), term.replace(' ', '')))
         if result not in self._report_set:
             self._report_set.add(result)
-        return result.replace('-', '').replace('_', '')
+        result = result.replace('-', '').replace('_', '')
+        if not result:
+            print('WARNING! Cleaned term is empty.', term, result)
+        return result
 
     def _use_from_dict(self, term: str) -> int:
         if term == 'menu.rbf':

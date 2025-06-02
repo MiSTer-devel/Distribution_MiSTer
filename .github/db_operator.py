@@ -772,6 +772,9 @@ class DatabaseBuilder:
 
         tags = self._tags.get_tags_for_file(file)
         for term in filter_terms:
+            if not term:
+                print('WARNING! Empty term found in filter_terms', filter_terms)
+                continue
             tags.append(self._tags._use_term(term))
 
         self._files[strfile] = {**description, "tags": tags}

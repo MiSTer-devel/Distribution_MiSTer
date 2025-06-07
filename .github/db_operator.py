@@ -69,14 +69,17 @@ def build_database(source_dir: str):
     tags = Tags(try_read_json(vars.download_metadata_json), vars.broken_mras_ignore)
     tags.init_aliases(initial_filter_aliases)
 
+    all_files = [
+        (f, new_file_description(str(f)), []) for f in internal_files
+    ] + external_files
+    # We want to place the .rbf files at the end, so that they can receive
+    # the mad terms from the related .mra's
+    all_files.sort(key=lambda t: t[0][-4:].lower() == '.rbf')
+
     builder = DatabaseBuilder(tags)
-    for file in internal_files:
-        builder.add_file(file)
-    for file, description, filter_terms in external_files:
-        builder.add_external_file(file, description, filter_terms)
-    for file in internal_files:
-        builder.add_parent_folders(file)
-    for file, _d, _f in external_files:
+    for file, description, filter_terms in all_files:
+        builder.add_file(file, description, filter_terms)
+    for file, _d, _f in all_files:
         builder.add_parent_folders(file)
 
     db = builder.build(db_id=vars.db_id)
@@ -365,6 +368,7 @@ class Tags:
         self._broken_mras_ignore = broken_mras_ignore
         self._dict: Dict[str, int] = {}
         self._alternatives: Dict[str, Set[str]] = {}
+        self._mad_terms_by_rbf: Dict[str, Set[str]] = {}
         self._index: int = 0
         self._report_set: Set[str] = set()
         self._used: Set[int] = set()
@@ -431,6 +435,10 @@ class Tags:
                     mad_terms = [self._use_term(term) for term in self._mad_terms(setname)]
                     for term in mad_terms:
                         self._append(result, term)
+                    if rbf is not None:
+                        if rbf not in self._mad_terms_by_rbf:
+                            self._mad_terms_by_rbf[rbf] = set()
+                        self._mad_terms_by_rbf[rbf].update(mad_terms)
 
                 if self._contains_hbmame_rom(zips):
                     self._append(result, self._use_term('hbmame'))
@@ -448,8 +456,10 @@ class Tags:
                     raise broken_error
 
         elif suffix == '.rbf':
-            nodates = stem[0:-9]
-            if not nodates:
+            datepart = stem[-9:]
+            if len(datepart) == 9 and datepart[0] == '_' and datepart[1:].isdigit():
+                nodates = stem[0:-9]
+            else:
                 nodates = stem
 
             self._append(result, self._use_term('cores'))
@@ -467,6 +477,10 @@ class Tags:
             if nodates == 'megadrive':
                 self._append(result, self._use_term('megadrive-core'))
     
+            if nodates in self._mad_terms_by_rbf:
+                for term in self._mad_terms_by_rbf[nodates]:
+                    self._append(result, term)
+
         elif suffix == '.mgl':
             self._append(result, self._use_term('mgl'))
             self._append(result, self._use_term('cores'))
@@ -761,10 +775,7 @@ class DatabaseBuilder:
         self._folders: Dict[str, Any] = {}
         self._tags = tags
 
-    def add_file(self, file: Path) -> None:
-        self.add_external_file(file, new_file_description(str(file)), [])
-
-    def add_external_file(self, file: Path, description: Dict[str, Any], filter_terms: List[str]) -> None:
+    def add_file(self, file: Path, description: Dict[str, Any], filter_terms: List[str]) -> None:
         strfile = str(file)
 
         if file.name in ['.delme', '.DS_Store'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:

@@ -74,7 +74,7 @@ def build_database(source_dir: str):
     ] + external_files
     # We want to place the .rbf files at the end, so that they can receive
     # the mad terms from the related .mra's
-    all_files.sort(key=lambda t: t[0][-4:].lower() == '.rbf')
+    all_files.sort(key=lambda t: t[0].suffix.lower() == '.rbf')
 
     builder = DatabaseBuilder(tags)
     for file, description, filter_terms in all_files:

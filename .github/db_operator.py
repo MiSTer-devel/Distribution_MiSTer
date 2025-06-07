@@ -704,10 +704,11 @@ class Tags:
 
         rotation = game.get('rotation', 0)
         flip = game.get('flip', False)
-        if rotation == 90 or (rotation == 270 and flip):
-            terms.append('screen_rotation_vertical_cw')
-        elif rotation == 270 or (rotation == 90 and flip):
-            terms.append('screen_rotation_vertical_ccw')
+        if rotation == 90 or rotation == 270:
+            if rotation == 90 or flip:
+                terms.append('screen_rotation_vertical_cw')
+            if rotation == 270 or flip:
+                terms.append('screen_rotation_vertical_ccw')
         else:
             terms.append('screen_rotation_horizontal')
 

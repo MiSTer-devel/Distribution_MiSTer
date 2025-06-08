@@ -478,8 +478,9 @@ class Tags:
                 self._append(result, self._use_term('megadrive-core'))
     
             if nodates in self._mad_terms_by_rbf:
-                for term in self._mad_terms_by_rbf[nodates]:
-                    self._append(result, term)
+                self._append(result, self._use_term('arcade-cores-without-mras'))
+                #for term in self._mad_terms_by_rbf[nodates]:
+                #    self._append(result, term)
 
         elif suffix == '.mgl':
             self._append(result, self._use_term('mgl'))

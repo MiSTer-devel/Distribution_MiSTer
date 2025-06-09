@@ -437,6 +437,8 @@ class Tags:
                     mad_terms = [self._use_term(term) for term in self._mad_terms(setname)]
                     for term in mad_terms:
                         self._append(result, term)
+                else:
+                    self._append(result, self._use_term('no-setname-mra'))
 
                 if self._contains_hbmame_rom(zips):
                     self._append(result, self._use_term('alternatives'))

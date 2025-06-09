@@ -695,7 +695,7 @@ class Tags:
             self._mad_db = load_mad_db()
         game = self._mad_db.get(setname, None)
         if game is None:
-            return []
+            return ['no_mad_db_entry']
 
         terms = []
 

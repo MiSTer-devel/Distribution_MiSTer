@@ -22,15 +22,15 @@ ALL_TAGS_GO_HERE
 
 ##### Some relevant tag descriptions:
 
-- `arcade-cores` / `arcade`: All arcade cores and MRA files.
+- `arcade-cores` / `arcade`: All arcade cores and related files (MRA files).
 - `computer-cores` / `computer`: All computer cores and related folders.
 - `console-cores` / `console`: All console cores and related folders.
 - `other-cores` / `other`: All cores from the top folder Other with their related folders.
 - `service-cores` / `utility`: All utility cores and related folders.
 - `cores`: All cores (RBF files).
 - `mra`: All MRA files & folders.
-- `alternatives`: All MRA Alternatives
-- `hbmame`: All files & folders linked to the HBMame collection.
+- `arcade-rbfs-only`: All arcade cores (RBF files) without related files.
+- `alternatives`: All MRA Alternatives & MRAs linked to the HBMame collection.
 - `handheld2p`: All 2 Player versions for Handheld cores.
 - `filters_video`: All video filters (`gamma` & `filters` & `shadow_masks`).
 - `all_filters`: All video & audio filters (`filters_video` & `filters_audio`).
@@ -63,9 +63,10 @@ The following tags are calculated with the information contained in the [MiSTer 
 - `controls_3_players`: All arcade games that support up to three simultaneous players.
 - `controls_4_players`: All arcade games that support up to four simultaneous players.
 - `screen_rotation_horizontal` / `screen_no_tate`: All arcade games designed for horizontal screens.
-- `screen_rotation_vertical_cw` / `screen_tate_cw`: All arcade games designed for clock-wise vertical screens.
-- `screen_rotation_vertical_ccw` / `screen_tate_ccw`: All arcade games designed for counter clock-wise vertical screens.
-- `screen_rotation_vertical_flip` / `screen_tate_flip`: All arcade games designed for vertical screens that include a flip option. There is overlap with the 2 previous tags.
+- `screen_rotation_vertical_cw` / `screen_tate_cw`: All arcade games designed for clock-wise vertical screens. Including counter clock-wise with a flip option.
+- `screen_rotation_vertical_ccw` / `screen_tate_ccw`: All arcade games designed for counter clock-wise vertical screens. Including clock-wise with a flip option.
+- `screen_rotation_vertical_cw_no_flip` / `screen_tate_cw_no_flip`: All arcade games designed for clock-wise vertical screens without a flip option.
+- `screen_rotation_vertical_ccw_no_flip` / `screen_tate_ccw_no_flip`: All arcade games designed for counter clock-wise vertical screens without a flip option.
 - `screen_horizontal_scan_rate_15khz`: All arcade games only supported by 15kHz CRT screens.
 - `screen_horizontal_scan_rate_31khz`: All arcade games only supported by 31kHz CRT screens.
 

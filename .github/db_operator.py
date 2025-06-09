@@ -351,7 +351,9 @@ initial_filter_aliases = [
     ['screen_rotation_horizontal', 'screen_no_tate'],
     ['screen_rotation_vertical_cw', 'screen_tate_cw'],
     ['screen_rotation_vertical_ccw', 'screen_tate_ccw'],
-    ['screen_rotation_vertical_flip', 'screen_tate_flip'],
+    ['screen_rotation_vertical_cw_no_flip', 'screen_tate_cw_no_flip'],
+    ['screen_rotation_vertical_ccw_no_flip', 'screen_tate_ccw_no_flip'],
+    ['screen_rotation_flip', 'screen_tate_flip'],
 
     # General
     ['console-cores', 'console'],
@@ -437,7 +439,7 @@ class Tags:
                         self._append(result, term)
 
                 if self._contains_hbmame_rom(zips):
-                    self._append(result, self._use_term('hbmame'))
+                    self._append(result, self._use_term('alternatives'))
 
                 if len(path.parts) > 1 and path.parts[1].lower() == '_alternatives':
                     self._append(result, self._use_term('alternatives'))
@@ -474,7 +476,7 @@ class Tags:
                 self._append(result, self._use_term('megadrive-core'))
     
             if parent == 'arcade':
-                self._append(result, self._use_term('arcade-cores-without-mras'))
+                self._append(result, self._use_term('arcade-rbfs-only'))
 
         elif suffix == '.mgl':
             self._append(result, self._use_term('mgl'))
@@ -699,16 +701,18 @@ class Tags:
 
         rotation = game.get('rotation', 0)
         flip = game.get('flip', False)
+        if flip:
+            terms.append('screen_rotation_flip')
         if rotation == 90 or rotation == 270:
             if flip:
                 terms.append('screen_rotation_vertical_ccw')
                 terms.append('screen_rotation_vertical_cw')
             elif rotation == 90:
-                terms.append('screen_rotation_vertical_cw_no_flip')
                 terms.append('screen_rotation_vertical_cw')
+                terms.append('screen_rotation_vertical_cw_no_flip')
             elif rotation == 270:
-                terms.append('screen_rotation_vertical_ccw_no_flip')
                 terms.append('screen_rotation_vertical_ccw')
+                terms.append('screen_rotation_vertical_ccw_no_flip')
         else:
             terms.append('screen_rotation_horizontal')
 

@@ -63,8 +63,9 @@ The following tags are calculated with the information contained in the [MiSTer 
 - `controls_3_players`: All arcade games that support up to three simultaneous players.
 - `controls_4_players`: All arcade games that support up to four simultaneous players.
 - `screen_rotation_horizontal` / `screen_no_tate`: All arcade games designed for horizontal screens.
-- `screen_rotation_vertical_cw` / `screen_tate_cw`: All arcade games designed for clock-wise vertical screens.  Including counter clock-wise with a flip option.
-- `screen_rotation_vertical_ccw` / `screen_tate_ccw`: All arcade games designed for counter clock-wise vertical screens. Including clock-wise with a flip option.
+- `screen_rotation_vertical_cw` / `screen_tate_cw`: All arcade games designed for clock-wise vertical screens.
+- `screen_rotation_vertical_ccw` / `screen_tate_ccw`: All arcade games designed for counter clock-wise vertical screens.
+- `screen_rotation_vertical_flip` / `screen_tate_flip`: All arcade games designed for vertical screens that include a flip option. There is overlap with the 2 previous tags.
 - `screen_horizontal_scan_rate_15khz`: All arcade games only supported by 15kHz CRT screens.
 - `screen_horizontal_scan_rate_31khz`: All arcade games only supported by 31kHz CRT screens.
 

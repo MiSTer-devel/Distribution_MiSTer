@@ -41,8 +41,8 @@ jobs:
     - name: Download Distribution files
       run: ./.github/download_distribution.py .
 
-    - name: Assert Distribution files amount to be over 13000
-      run: set -exo pipefail && (( $(find . -type f | wc -l) > 13000 ))
+    - name: Assert Distribution files amount to be over 18700
+      run: set -exo pipefail && (( $(find . -type f | wc -l) > 18700 ))
 
     - name: Commit Distribution files
       run: ./.github/commit_distribution.sh

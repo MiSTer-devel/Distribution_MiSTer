@@ -372,8 +372,9 @@ def install_arcade_core(path: str, target_dir: str, core: CoreProps, metadata: M
         print('BINARY: ' + bin)
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/_Arcade/cores/{latest_release.replace("Arcade-", "")}')
 
-    for mra in mra_files(releases_dir):
-        copy_file(f'{releases_dir}/{mra}', f'{target_dir}/_Arcade/{mra}')
+    for mra_dir in (releases_dir, os.path.join(releases_dir, 'mras')):
+        for mra in mra_files(mra_dir):
+            copy_file(f'{mra_dir}/{mra}', f'{target_dir}/_Arcade/{mra}')
 
 def install_console_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
 def install_computer_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
@@ -745,16 +746,20 @@ def to_filter_term(name: str):
 # file system utilities
 
 def list_files(directory: str, recursive: bool) -> Generator[str, None, None]:
-    for f in os.scandir(directory):
-        if f.is_dir() and recursive:
-            yield from list_files(f.path, recursive)
-        elif f.is_file():
-            yield f.path
+    try:
+        for f in os.scandir(directory):
+            if f.is_dir() and recursive:
+                yield from list_files(f.path, recursive)
+            elif f.is_file():
+                yield f.path
+    except FileNotFoundError: pass
 
 def list_folders(directory: str) -> Generator[str, None, None]:
-    for f in os.scandir(directory):
-        if f.is_dir():
-            yield (f.path.replace(directory + '/', '').replace(directory, ''))
+    try:
+        for f in os.scandir(directory):
+            if f.is_dir():
+                yield (f.path.replace(directory + '/', '').replace(directory, ''))
+    except FileNotFoundError: pass
 
 def copy_file(source: str, target: str) -> None:
     Path(target).parent.mkdir(parents=True, exist_ok=True)

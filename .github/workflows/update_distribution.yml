@@ -41,8 +41,17 @@ jobs:
     - name: Download Distribution files
       run: ./.github/download_distribution.py .
 
-    - name: Assert Distribution files amount to be over 18700
-      run: set -exo pipefail && (( $(find . -type f | wc -l) > 18700 ))
+    - name: Assertions on Distribution files
+      run: |
+        set -exo pipefail
+        (( $(find . -type f | wc -l) > 15000 )) && echo "More than 15000 total files"
+        (( $(find . -type f -ipath "*.mra" | wc -l) > 1000 )) && echo "More than 1000 total MRAs"
+        (( $(find . -type f ! -ipath "./_Arcade/_alternatives/*" -ipath "*.mra" | wc -l) > 450 )) && echo "More than 450 MRAs excluding alternatives"
+        (( $(find . -type f -ipath "*.rbf" | wc -l) > 200 )) && echo "More than 200 total cores"
+        (( $(find . -type f ! -ipath "./_Arcade/cores/*" -ipath "*.rbf" | wc -l) > 100 )) && echo "Mora than 100 cores excluding arcades"
+        (( $(find . -type f -ipath "./Cheats/*" | wc -l) > 10000 )) && echo "More than 10000 cheats"
+        (( $(find . -type f ! -ipath "./Cheats/*" ! -ipath "*.rbf" ! -ipath "*.mra" | wc -l) > 2000 )) && echo "More than 2000 non-(cores, mras, cheats)"
+      shell: bash
 
     - name: Commit Distribution files
       run: ./.github/commit_distribution.sh

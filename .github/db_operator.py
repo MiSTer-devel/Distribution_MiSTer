@@ -68,10 +68,10 @@ def build_database(source_dir: str):
 
     if os.environ.get('OMIT_DUAL_SDRAM_CORES', 'true') == 'true' or os.environ.get('GITHUB_REPOSITORY', '').lower() == 'mister-devel/distribution_mister':
         print('Checking on Dual SDRAM cores...')
-        dualsdram_cores = {f for f in internal_files if f.lower().endswith('.rbf') and ('_dualsdram' in f.lower() or '_ds' in f.lower())}
+        dualsdram_cores = {f.name for f in internal_files if f.name.lower().endswith('.rbf') and ('_dualsdram_' in f.name.lower() or '_ds_' in f.name.lower())}
         if len(dualsdram_cores) > 0:
             print(f'Omitting {len(dualsdram_cores)} Dual SDRAM cores:', dualsdram_cores)
-            internal_files = [f for f in internal_files if f not in dualsdram_cores]
+            internal_files = [f for f in internal_files if f.name not in dualsdram_cores]
 
     tags = Tags(try_read_json(vars.download_metadata_json), vars.broken_mras_ignore)
     tags.init_aliases(initial_filter_aliases)

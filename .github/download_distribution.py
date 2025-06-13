@@ -372,7 +372,7 @@ def install_arcade_core(path: str, target_dir: str, core: CoreProps, metadata: M
         print('BINARY: ' + bin)
         copy_file(f'{releases_dir}/{latest_release}', f'{target_dir}/_Arcade/cores/{latest_release.replace("Arcade-", "")}')
 
-    for mra_dir in (releases_dir, os.path.join(releases_dir, 'mras')):
+    for mra_dir in (releases_dir, os.path.join(releases_dir, 'mra')):
         for mra in mra_files(mra_dir):
             copy_file(f'{mra_dir}/{mra}', f'{target_dir}/_Arcade/{mra}')
 

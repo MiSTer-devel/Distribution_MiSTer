@@ -148,7 +148,7 @@ class Finder:
         self._not_in_ignore.append(ignored_entry)
 
     def find_all(self) -> List[Path]:
-        return sorted(list_files(self._dir, true, self._not_in_ignore), key=lambda file: str(file).lower())
+        return sorted(list_files(self._dir, True, self._not_in_ignore), key=lambda file: str(file).lower())
 
 def list_files(directory: str, recursive: bool, not_in_ignore: list[str]) -> Generator[Path, None, None]:
     try:

@@ -66,6 +66,13 @@ def build_database(source_dir: str):
     internal_files = finder.find_all()
     external_files = ExternalFilesReader(vars.external_files).read_external_files()
 
+    if os.environ.get('OMIT_SDRAM_CORES', 'true') == 'true' or os.environ.get('GITHUB_REPOSITORY', '').lower() == 'mister-devel/distribution_mister':
+        print('Checking on SDRAM cores...')
+        dualsdram_cores = {f for f in internal_files if f.lower().endswith('.rbf') and ('_dualsdram' in f.lower() or '_ds' in f.lower())}
+        if len(dualsdram_cores) > 0:
+            print(f'Omitting {len(dualsdram_cores)} SDRAM cores:', dualsdram_cores)
+            internal_files = [f for f in internal_files if f not in dualsdram_cores]
+
     tags = Tags(try_read_json(vars.download_metadata_json), vars.broken_mras_ignore)
     tags.init_aliases(initial_filter_aliases)
 
@@ -787,7 +794,7 @@ class DatabaseBuilder:
 
         if file.name in ['.delme', '.DS_Store'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:
             return
-        
+
         if strfile.startswith('games') or strfile.startswith('docs'):
             strfile = f'|{strfile}'
 

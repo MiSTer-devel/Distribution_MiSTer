@@ -148,16 +148,18 @@ class Finder:
         self._not_in_ignore.append(ignored_entry)
 
     def find_all(self) -> List[Path]:
-        return sorted(self._scan(self._dir), key=lambda file: str(file).lower())
+        return sorted(list_files(self._dir, true, self._not_in_ignore), key=lambda file: str(file).lower())
 
-    def _scan(self, directory: str) -> Generator[Path, None, None]:
+def list_files(directory: str, recursive: bool, not_in_ignore: list[str]) -> Generator[Path, None, None]:
+    try:
         for entry in os.scandir(directory):
-            if str(Path(entry.path)) in self._not_in_ignore:
+            if str(Path(entry.path)) in not_in_ignore:
                 continue
-            if entry.is_dir(follow_symlinks=False):
-                yield from self._scan(entry.path)
-            else:
+            if entry.is_dir(follow_symlinks=False) and recursive:
+                yield from list_files(entry.path, recursive, not_in_ignore)
+            elif entry.is_file():
                 yield Path(entry.path)
+    except FileNotFoundError: pass
 
 class ExternalFilesReader:
     def __init__(self, strpath: str):
@@ -447,7 +449,7 @@ class Tags:
                 else:
                     self._append(result, self._use_term('no-setname-mra'))
 
-                if self._contains_hbmame_rom(zips):
+                if contains_hbmame_rom(zips):
                     self._append(result, self._use_term('alternatives'))
 
                 if len(path.parts) > 1 and path.parts[1].lower() == '_alternatives':
@@ -463,11 +465,10 @@ class Tags:
                     raise broken_error
 
         elif suffix == '.rbf':
-            datepart = stem[-9:]
-            if len(datepart) == 9 and datepart[0] == '_' and datepart[1:].isdigit():
-                nodates = stem[0:-9]
-            else:
-                nodates = stem
+            nodates, datepart = split_on_date(stem)
+
+            if has_dualsdram_variant(path, nodates, datepart):
+                self._append(result, self._use_term('single-sdram-variant'))
 
             self._append(result, self._use_term('cores'))
             if parent == 'arcade' or nodates.startswith('arcade-'):
@@ -568,13 +569,6 @@ class Tags:
                 self._append(result, self._use_term(stem))
 
         return result
-
-    def _contains_hbmame_rom(self, zips: List[str]) -> bool:
-        for z in zips:
-            if 'hbmame' in z.lower():
-                return True
-
-        return False
 
     def get_tags_for_folder(self, path: Path) -> List[int]:
         return sorted(self._impl_tags_for_folder(path))
@@ -1213,6 +1207,42 @@ def _read_mgl_fields_impl(mgl_path: Path) -> Tuple[Optional[str], Optional[str]]
             setname = elem.text.strip().lower()
 
     return rbf, setname
+
+# Other checks
+
+def split_on_date(stem: str) -> tuple[str, str]:
+    datepart = stem[-9:]
+    if len(datepart) == 9 and datepart[0] == '_' and datepart[1:].isdigit():
+        return stem[0:-9], datepart
+    else:
+        return stem, ''
+
+def contains_hbmame_rom(zips: List[str]) -> bool:
+    for z in zips:
+        if 'hbmame' in z.lower():
+            return True
+    return False
+
+def has_dualsdram_variant(path: Path, nodates: str, datepart: str) -> bool:
+    pos = str(path).lower().find(nodates)
+    if pos == -1:
+        print(f'WARNING! Could not find "{nodates}" in path: ', str(path))
+        return False
+
+    fq_folder = str(path)[:pos]
+    fq_nodates = str(path)[pos:pos+len(nodates)]
+
+    for same_folder_file in list_files(fq_folder, False, []):
+        if same_folder_file == path or not same_folder_file.name.startswith(fq_nodates):
+            continue
+
+        sff_nodates, _ = split_on_date(same_folder_file.stem)
+        for ds_part in ('_DS', '_DualSDRAM'):
+            if sff_nodates == (fq_nodates + ds_part):
+                print('Found Dual SDRAM variant: ', same_folder_file)
+                return True
+
+    return False
 
 # Read other files
 

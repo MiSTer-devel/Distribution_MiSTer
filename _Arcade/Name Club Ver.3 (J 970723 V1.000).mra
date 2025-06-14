@@ -1,0 +1,49 @@
+<misterromdescription>
+	<rbf>ST-V</rbf>
+	<setname>nclubv3</setname>
+	<buttons names="Button 1,Button 2,Button 3,Button 4,-,-,Start,Coin,Service,Test" default="A,B,X,Y,Start,Select,R,L" />
+	<rom index="1" md5="" zip="nclubv3.zip" address="0x32000000">
+		<interleave output="64">
+			<part crc="9122a9e9" name="nclubv3.nv" map="12345678" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" zip="stvbios.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="f688ae60" name="epr-23603.ic8" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="3" md5="" zip="nclubv3.zip" address="0x34000000">
+		<part repeat="0x200000">00</part>
+		<interleave output="64">
+			<part crc="b4008ed0" name="ic22" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="4e894850" name="ic24" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="5b6b023f" name="ic26" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="b7beab03" name="ic28" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="a9f81069" name="ic30" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="02708d66" name="ic32" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="c79d0537" name="ic34" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="0c9df896" name="ic36" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="bd922829" name="ic23" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="f77f9e24" name="ic25" map="12345678" />
+		</interleave>
+	</rom>
+	<nvram index="4" size="65664" />
+</misterromdescription>

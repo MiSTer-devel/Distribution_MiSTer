@@ -1,0 +1,34 @@
+<misterromdescription>
+	<rbf>ST-V</rbf>
+	<setname>pclub2v3</setname>
+	<buttons names="Button 1,Button 2,Button 3,Button 4,-,-,Start,Coin,Service,Test" default="A,B,X,Y,Start,Select,R,L" />
+	<rom index="1" md5="" zip="pclub2v3.zip|pclub2.zip" address="0x32000000">
+		<interleave output="64">
+			<part crc="a8a2d30c" name="pclub2v3.nv" map="12345678" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" zip="stvbios.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="d1be2adf" name="epr-17952a.ic8" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="3" md5="" zip="pclub2v3.zip|pclub2.zip" address="0x34000000">
+		<part repeat="0x200000">00</part>
+		<interleave output="64">
+			<part crc="f88347aa" name="ic22" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="b5871198" name="ic24" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="d97034ed" name="ic26" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="f1421506" name="ic28" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="8d89877e" name="ic30" map="12345678" />
+		</interleave>
+	</rom>
+	<nvram index="4" size="65664" />
+</misterromdescription>

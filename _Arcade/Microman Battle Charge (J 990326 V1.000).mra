@@ -1,0 +1,44 @@
+<misterromdescription>
+	<rbf>ST-V</rbf>
+	<setname>micrombc</setname>
+	<buttons names="Button 1,Button 2,Button 3,Button 4,Button 5,-,Start,Coin,Service,Test" default="A,B,X,Y,L,Start,Select" />
+	<rom index="1" md5="" zip="micrombc.zip" address="0x32000000">
+		<interleave output="64">
+			<part crc="6e89815f" name="micrombc.nv" map="12345678" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" zip="stvbios.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="f688ae60" name="epr-23603.ic8" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="3" md5="" zip="micrombc.zip" address="0x34000000">
+		<part repeat="0x200000">00</part>
+		<interleave output="64">
+			<part crc="8385bc45" name="ic22" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="84ecb42f" name="ic24" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="869bc19c" name="ic26" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="0c3db354" name="ic28" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="03b9eacf" name="ic30" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="62c10626" name="ic32" map="12345678" />
+		</interleave>
+		<part repeat="0x200000">00</part>
+		<interleave output="64">
+			<part crc="8d89877e" name="ic34" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="8d89877e" name="ic36" map="12345678" />
+		</interleave>
+	</rom>
+	<nvram index="4" size="65664" />
+</misterromdescription>

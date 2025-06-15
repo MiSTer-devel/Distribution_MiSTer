@@ -1,0 +1,31 @@
+<misterromdescription>
+	<rbf>ST-V</rbf>
+	<setname>critcrsh</setname>
+	<buttons names="Button 1,-,-,-,-,-,Start,Coin,Service,Test" default="A,Start,Select,R,L" />
+	<rom index="1" md5="" zip="critcrsh.zip" address="0x32000000">
+		<interleave output="64">
+			<part crc="3da9860e" name="critcrsh.nv" map="12345678" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" zip="stvbios.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="f7722da3" name="epr-17954a.ic8" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="3" md5="" zip="critcrsh.zip" address="0x34000000">
+		<interleave output="64">
+			<part crc="9a6658e2" name="epr-18821.ic13" map="01030507" />
+		</interleave>
+		<interleave output="64">
+			<part crc="9a6658e2" name="epr-18821.ic13" map="01030507" />
+		</interleave>
+		<part repeat="0x1a00000">00</part>
+		<interleave output="64">
+			<part crc="b388616f" name="mpr-18789.ic8" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="feae5867" name="mpr-18788.ic9" map="12345678" />
+		</interleave>
+	</rom>
+	<nvram index="4" size="65664" />
+</misterromdescription>

@@ -1,0 +1,43 @@
+<misterromdescription>
+	<rbf>ST-V</rbf>
+	<setname>vmahjong</setname>
+	<buttons names="Button 1,Button 2,Button 3,Button 4,Button 5,Button 6,Start,Coin,Service,Test" default="A,B,X,Y,L,R,Start,Select" />
+	<rom index="1" md5="" zip="vmahjong.zip" address="0x32000000">
+		<interleave output="64">
+			<part crc="4e6487f4" name="vmahjong.nv" map="12345678" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" zip="stvbios.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="f688ae60" name="epr-23603.ic8" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="3" md5="" zip="vmahjong.zip" address="0x34000000">
+		<part repeat="0x200000">00</part>
+		<interleave output="64">
+			<part crc="c98de7e5" name="mpr19620.7" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="c62896da" name="mpr19615.2" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="f62207c7" name="mpr19616.3" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="ab667e19" name="mpr19617.4" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="9782ceee" name="mpr19618.5" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="0b76866c" name="mpr19619.6" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="b83b3f03" name="mpr19614.1" map="12345678" />
+		</interleave>
+		<interleave output="64">
+			<part crc="f92616b3" name="mpr19621.8" map="12345678" />
+		</interleave>
+	</rom>
+	<nvram index="4" size="65664" />
+</misterromdescription>

@@ -780,14 +780,22 @@ class DatabaseBuilder:
 
     def __init__(self, tags: Tags):
         self._files: Dict[str, Any] = {}
+        self._lowerfiles: Set[str] = set()
         self._folders: Dict[str, Any] = {}
         self._tags = tags
 
     def add_file(self, file: Path, description: Dict[str, Any], filter_terms: List[str]) -> None:
         strfile = str(file)
-
+        lowerstrfile = strfile.lower()
+        
         if file.name in ['.delme', '.DS_Store'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:
             return
+
+        if lowerstrfile in self._lowerfiles:
+            print(f"ERROR! File {strfile} would clase in a case insensitive system, so it's ignored!")
+            return
+
+        self._lowerfiles.add(lowerstrfile)
 
         if strfile.startswith('games') or strfile.startswith('docs'):
             strfile = f'|{strfile}'

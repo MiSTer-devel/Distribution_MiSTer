@@ -16,6 +16,8 @@ import zipfile
 import xml.etree.ElementTree as ET
 import sys
 import tempfile
+import base64
+from datetime import datetime
 
 amount_of_cores_validation_limit = 200
 amount_of_extra_content_urls_validation_limit = 20
@@ -192,6 +194,7 @@ def fetch_extra_content_urls() -> List[str]:
     result.extend(["user-content-linux-binary", "https://github.com/MiSTer-devel/PDFViewer_MiSTer"])
     result.extend(["user-content-empty-folder", "games/TGFX16-CD"])
     result.extend(["user-content-empty-folder", "games/NeoGeo-CD"])
+    result.extend(["user-content-mister-ini-example", ("MiSTer_example.ini", "https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/refs/heads/main/MiSTer_example.ini")])
     result.extend(["user-content-file"])
     result.extend([("/", "https://raw.githubusercontent.com/MiSTer-devel/Main_MiSTer/master/yc.txt")])
     result.extend([("/linux/gamecontrollerdb/", "https://raw.githubusercontent.com/MiSTer-devel/Gamecontrollerdb_MiSTer/main/gamecontrollerdb.txt")])
@@ -222,6 +225,7 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
         if url == "user-content-linux-binary": current_category = url
         elif url == "user-content-zip-release": current_category = url
         elif url == "user-content-empty-folder": current_category = url
+        elif url == "user-content-mister-ini-example": current_category = url
         elif url == "user-content-file": current_category = url
         elif url == "user-content-file-valid-hash": current_category = url
         elif url == "user-content-unzip": current_category = url
@@ -531,8 +535,20 @@ extra_content_late_installers = {
     "user-content-mra-alternatives-under-releases": install_mra_alternatives_under_releases,
 }
 
-def install_empty_folder(url: str, target_dir: str):
-    touch_folder(f'{target_dir}/{url}')
+def install_empty_folder(folder_path: str, target_dir: str):
+    touch_folder(f'{target_dir}/{folder_path}')
+
+def install_mister_ini_example(path_and_url: tuple[str, str], target_dir: str):
+    file_path, backup_url = path_and_url
+    target_file = f'{target_dir}/{file_path}'
+    try:
+        fetch_mister_ini_from_main_mister(target_file)
+    except Exception as e:
+        print(f'ERROR: Could not install {file_path} from Main_MiSTer: {e}. Falling back to {backup_url}.', flush=True)
+        try:
+            download_file(backup_url, target_file)
+        except Exception as e:
+            print(f'ERROR: Could not install {file_path} from backup url {backup_url}: {e}.')
 
 def install_file(path_and_url: Tuple[str, str], target_dir: str):
     if len(path_and_url) != 2:
@@ -574,6 +590,7 @@ def install_unzip(path_and_url: Tuple[str, str], target_dir: str):
 
 extra_content_early_installers = {
     'user-content-empty-folder': install_empty_folder,
+    'user-content-mister-ini-example': install_mister_ini_example,
     'user-content-file': install_file,
     'user-content-file-valid-hash': install_file_valid_hash,
     'user-content-unzip': install_unzip 
@@ -743,6 +760,15 @@ def to_filter_term(name: str):
     result = ''.join(filter(lambda chr: filter_term_char_regex.match(chr), name.lower().replace(' ', '')))
     return result.replace('-', '').replace('_', '')
 
+def parse_release_date(binary_name, name_root) -> Optional[datetime]:
+    try:
+        date_str = binary_name.replace(name_root, '')
+        if len(date_str) == 8 and date_str.isdigit():
+            return datetime(int(date_str[0:4]), int(date_str[4:6]), int(date_str[6:8]))
+    except (ValueError, IndexError):
+        pass
+    return None
+
 # file system utilities
 
 def list_files(directory: str, recursive: bool) -> Generator[str, None, None]:
@@ -807,7 +833,79 @@ def download_file(url: str, target: str) -> None:
     Path(target).parent.mkdir(parents=True, exist_ok=True)
     run(f'curl -H "Cache-Control: no-cache, no-store" -H "Pragma: no-cache" --show-error --fail --location -o "{target}" "{url}?_={cache_bust}"')
 
+# fetch mister ini from main mister
+
+def main_mister_releases() -> list[str]: return json.loads(gh('api repos/MiSTer-devel/Main_MiSTer/contents/releases --jq .'))
+def main_mister_latest_commit(file_path) -> dict[str, str]: return json.loads(gh(f'api repos/MiSTer-devel/Main_MiSTer/commits?path={file_path}&per_page=1'
+                                                   f' --jq ".[0] | {{sha: .sha, date: .commit.committer.date}}"'))
+
+def fetch_main_mister_file_from_commit(commit_sha, file_path) -> str:
+    output = gh(f'api repos/MiSTer-devel/Main_MiSTer/contents/{file_path}?ref={commit_sha} --jq .content')
+
+    try:
+        clean_b64 = output.replace('\n', '').replace('\r', '').replace(' ', '').strip()
+        return base64.b64decode(clean_b64).decode('utf-8')
+    except Exception as e:
+        raise Exception(f"Error decoding {file_path}: {e}")
+
+def validate_mister_ini(content):
+    if not content.strip().startswith('[MiSTer]'):
+        raise Exception("Fetched file does not start with [MiSTer] section")
+    if len(content) < 100:
+        raise Exception(f"File too small ({len(content)} bytes) - likely corrupted")
+
+def fetch_mister_ini_from_main_mister(file_path: str):
+    print("Fetching files from Main_MiSTer/releases/")
+    files = main_mister_releases()
+
+    mister_binaries = [f for f in files if f['name'].startswith('MiSTer_') and f['type'] == 'file']
+    if not mister_binaries:
+        raise Exception("No MiSTer_* binaries found")
+
+    print(f"Found {len(mister_binaries)} MiSTer_* binaries")
+
+    binaries_with_dates = [(b, d) for b in mister_binaries if (d := parse_release_date(b['name'], 'MiSTer_'))]
+    if not binaries_with_dates:
+        raise Exception("Could not parse dates from any binaries")
+
+    binaries_with_dates.sort(key=lambda x: x[1], reverse=True)
+    latest_binary_info, latest_date = binaries_with_dates[0]
+    latest_binary = latest_binary_info['name']
+
+    print(f"Latest binary by filename date: {latest_binary} ({latest_date.strftime('%Y-%m-%d')})")
+    print(f"\nFetching commit info for {latest_binary}...")
+
+    commit_info = main_mister_latest_commit(latest_binary_info['path'])
+    commit_sha = commit_info['sha']
+    commit_date = datetime.fromisoformat(commit_info['date'].replace('Z', '+00:00'))
+
+    print(f"\n{'='*60}")
+    print(f"Latest Binary: {latest_binary}")
+    print(f"Commit Hash:   {commit_sha}")
+    print(f"Commit Date:   {commit_date.strftime('%Y-%m-%d %H:%M:%S UTC')}")
+    print(f"{'='*60}\n")
+
+    print(f"Fetching MiSTer.ini from commit {commit_sha[:7]}...")
+    ini_content = fetch_main_mister_file_from_commit(commit_sha, 'MiSTer.ini')
+    validate_mister_ini(ini_content)
+
+    output_path = Path(file_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(ini_content)
+
+    print(f"✓ MiSTer.ini saved to {output_path}")
+    print(f"  File size: {len(ini_content)} bytes")
+    print(f"  Lines: {len(ini_content.splitlines())}")
+
 # execution utilities
+
+def gh(args: str) -> str:
+    try:
+        output = subprocess.run(['gh'] + shlex.split(args), capture_output=True, text=True, check=True).stdout.strip()
+        if not output: raise Exception(f"Empty output from gh {args}")
+        return output
+    except subprocess.CalledProcessError as e:
+        raise Exception(f"GitHub CLI command failed: {e.stderr if e.stderr else str(e)}")
 
 def run(command: str, cwd: Optional[str] = None) -> None:
     _run(command, cwd, stderr=subprocess.STDOUT, stdout=None)

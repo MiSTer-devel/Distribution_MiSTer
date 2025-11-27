@@ -849,8 +849,8 @@ def fetch_main_mister_file_from_commit(commit_sha, file_path) -> str:
         raise Exception(f"Error decoding {file_path}: {e}")
 
 def validate_mister_ini(content):
-    if not content.strip().startswith('[MiSTer]'):
-        raise Exception("Fetched file does not start with [MiSTer] section")
+    if '[mister]' not in content.lower():
+        raise Exception("Fetched file does not contain [MiSTer] section")
     if len(content) < 100:
         raise Exception(f"File too small ({len(content)} bytes) - likely corrupted")
 

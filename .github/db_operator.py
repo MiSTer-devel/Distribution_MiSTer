@@ -507,6 +507,9 @@ class Tags:
         if stem == 'yc' and suffix == '.txt':
             self._append(result, self._use_term('yctxt'))
 
+        if stem == 'mister_example' and suffix == '.ini':
+            self._append(result, self._use_term('mister_example-ini'))
+
         if parent in ['games', 'docs']:
             first_level = path.parts[1].lower()
             self._append(result, self._use_term(first_level))

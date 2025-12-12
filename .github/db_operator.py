@@ -812,6 +812,11 @@ class DatabaseBuilder:
 
         self._files[strfile] = {**description, "tags": tags}
 
+        if file.suffix.lower() == '.rbf':
+            core_name, datepart = split_on_date(file.stem.lower())
+            if datepart != '':
+                self._files[strfile]['tangle'] = [f'{core_name}_core']
+
         if file.name.lower() in ['boot.rom', 'boot1.rom', 'boot0.rom'] and not strfile.startswith('|games/AO486/'):
             self._files[strfile]['overwrite'] = False
 

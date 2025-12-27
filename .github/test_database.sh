@@ -30,6 +30,7 @@ chmod +x downloader
 
 echo
 echo "Running downloader"
+export SKIP_FREE_SPACE_CHECKS=true
 export DEBUG=true
 export CURL_SSL=""
 export DOWNLOADER_INI_PATH="$(pwd)/downloader.ini"

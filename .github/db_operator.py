@@ -372,6 +372,10 @@ initial_filter_aliases = [
     ['service-cores', 'utility'],
 ]
 
+console_cd_folders = ['tgfx16-cd', 'megacd', 'cd-i', 'psx', 'saturn', 'neogeo-cd']
+console_cd_cores = ['turbografx16', 'megacd', 'cdi', 'psx', 'saturn', 'neogeo']
+console_cd_tag = 'console-cd'
+
 class Tags:
     filter_part_regex = re.compile("[-_a-z0-9.]$", )
 
@@ -484,6 +488,9 @@ class Tags:
     
             if nodates == 'megadrive':
                 self._append(result, self._use_term('megadrive-core'))
+
+            if nodates in console_cd_cores:
+                self._append(result, self._use_term(console_cd_tag))
     
             if parent == 'arcade':
                 self._append(result, self._use_term('arcade-rbfs-only'))
@@ -613,6 +620,9 @@ class Tags:
 
         if first_level != '.config':
             self._append(result, self._use_term(first_level))
+
+        if first_level in console_cd_folders:
+                self._append(result, self._use_term(console_cd_tag))
 
         if len(path.parts) == 2:
             return result

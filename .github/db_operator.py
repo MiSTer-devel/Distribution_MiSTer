@@ -801,7 +801,7 @@ class DatabaseBuilder:
         strfile = str(file)
         lowerstrfile = strfile.lower()
         
-        if file.name in ['.delme', '.DS_Store'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes']:
+        if file.name in ['.delme', '.DS_Store'] or strfile in ['README.md', 'LICENSE', 'latest_linux.txt', '.gitattributes', '.gitignore']:
             return
 
         if lowerstrfile in self._lowerfiles:

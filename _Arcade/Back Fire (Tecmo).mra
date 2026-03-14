@@ -1,0 +1,79 @@
+<misterromdescription>
+	<name>Back Fire (Tecmo)</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform>Tecmo</platform>
+	<series></series>
+	<year>1988</year>
+	<manufacturer>Tecmo</manufacturer>
+	<category>Shooter - Horizontal</category>
+
+	<setname>backfirt</setname>
+	<parent>backfirt</parent>
+	<mameversion>0286</mameversion>
+	<rbf>Tecmo</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,Start,R,Select,L" names="Fire 1,Fire 2,-,1P Start,2P Start,Coin,Pause"></buttons>
+
+	<switches default="40,40">
+		<dip bits="0,1" ids="1c/1cr,1c/2cr,1c/3cr,1c/6cr" name="Coin A"></dip>
+		<dip bits="2,3" ids="1c/1cr,2c/1cr,1c/2cr,1c/3cr" name="Coin B" values="0,4,8,12"></dip>
+		<dip bits="6" ids="Cocktail,Upright" name="Cabinet"></dip>
+		<dip bits="8,9,10" ids="50K 200K 500K,100K 300K 800K,50K 200K,100K 300K,50K,100K,200K,None" name="Bonus Life"></dip>
+		<dip bits="11,12,13" ids="0,1,2,3,4,5,6,7" name="Difficulty"></dip>
+		<dip bits="14" ids="Yes,No" name="Continue"></dip>
+		<dip bits="15" ids="No,Yes" name="Invulnerability"></dip>
+	</switches>
+
+	<rom index="1">
+		<part>1</part>
+	</rom>
+	<rom index="0" zip="backfirt.zip">
+		<!-- main cpu (active program, 48KB) -->
+		<part crc="0ab3bd4d" length="0xc000" name="4.5s"></part>
+		<!-- banked program rom (64KB) -->
+		<part crc="150b6949" name="5.6s"></part>
+		<!-- sound cpu -->
+		<part crc="eb932b62" name="3.5j"></part>
+		<!-- char -->
+		<part crc="08ce729f" name="2.3j"></part>
+		<!-- sprite -->
+		<part crc="c8c25e45" name="6.2c"></part>
+		<part crc="25fb6a57" name="7.2d"></part>
+		<part crc="6bccac4e" name="8.2e"></part>
+		<part crc="566a99b8" name="9.2h"></part>
+		<!-- fg -->
+		<part crc="8c7138bb" name="10.1p"></part>
+		<part crc="6c03c476" name="11.2p"></part>
+		<part crc="0bc84b4b" name="12.3p"></part>
+		<part crc="ec149ec3" name="13.4p"></part>
+		<!-- bg -->
+		<part crc="409df64b" name="14.1s"></part>
+		<part crc="6e4052c9" name="15.2s"></part>
+		<part crc="2b6cc20e" name="16.3s"></part>
+		<part crc="afea5323" name="17.4s"></part>
+		<!-- pcm -->
+		<part crc="7d25ad01" name="1.6b"></part>
+	</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+
+	<nvram></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20260215000000</mratimestamp>
+</misterromdescription>

@@ -155,12 +155,13 @@ def fetch_cores() -> List[CoreProps]:
             name = matches.group(1).strip()
             url = matches.group(2).strip()
             home = columns[2].strip()
+            comments = columns[3].strip() if len(columns) > 3 else ''
             if 'MiSTer-devel/Menu_MiSTer' in url:
                 print('Ignoring menu core on cores list parsing.')
             elif category is None:
                 raise ValueError('ERROR! Missing category!')
             else:
-                result.append({'name': name, 'url': url, 'home': home, 'category': category})
+                result.append({'name': name, 'url': url, 'home': home, 'comments': comments, 'category': category})
 
         elif reading_arcade_list:
             if 'arcade_list_end' in line:
@@ -429,7 +430,7 @@ def impl_install_generic_core(path: str, target_dir: str, core: CoreProps, metad
 
             if is_doc(file):
                 copy_file(f"{releases_dir}/{file}", f'{target_dir}/docs/{folder}/{file}')
-            else:
+            elif core.get('comments', '').lower() != 'ignore-extra-releases-files':
                 copy_file(f"{releases_dir}/{file}", f'{target_dir}/games/{folder}/{file}')
 
         if touch_games_folder:

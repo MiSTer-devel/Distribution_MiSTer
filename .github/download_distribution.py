@@ -155,7 +155,7 @@ def fetch_cores() -> List[CoreProps]:
             name = matches.group(1).strip()
             url = matches.group(2).strip()
             home = columns[2].strip()
-            comments = columns[3].strip() if len(columns) > 3 else ''
+            comments = columns[4].strip() if len(columns) > 4 else ''
             if 'MiSTer-devel/Menu_MiSTer' in url:
                 print('Ignoring menu core on cores list parsing.')
             elif category is None:

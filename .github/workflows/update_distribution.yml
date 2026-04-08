@@ -2,7 +2,7 @@ name: Update Distribution
 
 on:
   schedule:
-  - cron:  "*/5 * * * *"
+  - cron:  "*/20 * * * *"
   push:
     branches:
       - develop

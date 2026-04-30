@@ -1,0 +1,60 @@
+<misterromdescription>
+  <name>Hotdog Storm (Korea)</name>
+  <mameversion>0226</mameversion>
+  <setname>hotdogst</setname>
+  <year>1996</year>
+  <manufacturer>Marble (Ace International license)</manufacturer>
+  <category>Shooter</category>
+  <rotation>vertical (cw)</rotation>
+  <region>Korea</region>
+  <rbf>cave</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="hotdogst.zip" md5="none" address="0x30000000">
+    <!-- prog ROM -->
+    <interleave output="16">
+      <part name="mp3.u29" crc="1f4e5479" map="01" />
+      <part name="mp4.u28" crc="6f1c3c4b" map="10" />
+    </interleave>
+
+    <!-- EEPROM -->
+    <part name="eeprom-hotdogst.u14" crc="12b4f934" />
+
+    <!-- sound ROM -->
+    <part name="mp2.u19" crc="ff979ebe" />
+
+    <!-- PCM ROM -->
+    <part name="mp1.u65" crc="4868be1b" />
+
+    <!-- layer 0 -->
+    <part name="mp7.u56" crc="87c21c50" />
+
+    <!-- layer 1 -->
+    <part name="mp6.u61" crc="4dafb288" />
+
+    <!-- layer 2 -->
+    <part name="mp5.u64" crc="9b26458c" />
+
+    <!-- sprites -->
+    <part name="mp9.u55" crc="258d49ec" />
+    <part name="mp8.u54" crc="bdb4d7b8" />
+
+    <!-- invert screen in EEPROM -->
+    <patch offset="0x00100000">f3 fc</patch>
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>07</part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="128" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0180 00f0 0008 0018 0014 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Normal/Powerful Shot,Bomber,Full-Auto,-,Start,Coin,Pause" default="A,B,X,R,L,Start" />
+</misterromdescription>

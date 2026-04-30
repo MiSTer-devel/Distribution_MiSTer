@@ -1,0 +1,50 @@
+<misterromdescription>
+    <name>Kram</name>
+    <setname>kram</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1982</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>horizontal</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <buttons names="Walls,Bustout,Coin,Start 1P,Start 2P,Pause,Test,-(unused)" default="A,B,Select,Start,R,L,X,Y"/>
+
+    <rom index="0" zip="kram.zip" md5="none">
+        <!-- Data CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="ks14-1" crc="fe69ac79"/>
+        <part name="ks15"   crc="4b2c175e"/>
+        <part name="ks16"   crc="9500a05d"/>
+        <part name="ks17"   crc="c752a3a1"/>
+        <part name="ks18"   crc="79158b03"/>
+        <part name="ks19-1" crc="759ea6ce"/>
+
+        <!-- Video CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="ks5"    crc="1c472080"/>
+        <part name="ks6"    crc="b8926622"/>
+        <part name="ks7"    crc="c98a7485"/>
+        <part name="ks8"    crc="1127c4e4"/>
+        <part name="ks9"    crc="d3bc8b5e"/>
+        <part name="ks10"   crc="e0426444"/>
+
+        <!-- Audio CPU: 2KB at $F800 -->
+        <part repeat="0x2800">00</part>
+        <part name="ks27"   crc="c46530c8"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x03 (KRAM) -->
+    <rom index="1">
+        <part>03</part>
+    </rom>
+
+    <!-- ROM index 2: MCU EPROM (MC68705P3) -->
+    <rom index="2" zip="kram.zip" md5="none">
+        <part name="ks101.dat" crc="e53d97b7"/>
+    </rom>
+
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

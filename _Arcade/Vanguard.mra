@@ -1,0 +1,78 @@
+<misterromdescription>
+    <n>Vanguard</n>
+    <setname>vanguard</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1981</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="00" base="16">
+    </switches>
+
+    <buttons names="Fire Left,Fire Right,Fire Up,Fire Down,Start 1P,Start 2P,Coin,Pause" default="A,B,X,Y,Start,Select,R,L"/>
+
+    <rom index="0" zip="vanguard.zip" md5="none">
+
+        <!-- maincpu: 64KB at offset $00000 -->
+        <!-- $0000-$3FFF: padding (16KB) -->
+        <part repeat="0x4000">00</part>
+
+        <!-- $4000: ic07 (4KB) -->
+        <part name="sk4_ic07.bin"/>
+
+        <!-- $5000: ic08 (4KB) -->
+        <part name="sk4_ic08.bin"/>
+
+        <!-- $6000: ic09 (4KB) -->
+        <part name="sk4_ic09.bin"/>
+
+        <!-- $7000: ic10 (4KB) -->
+        <part name="sk4_ic10.bin"/>
+
+        <!-- $8000: ic13 (4KB) -->
+        <part name="sk4_ic13.bin"/>
+
+        <!-- $9000: ic14 (4KB) -->
+        <part name="sk4_ic14.bin"/>
+
+        <!-- $A000: ic15 (4KB) -->
+        <part name="sk4_ic15.bin"/>
+
+        <!-- $B000: ic16 (4KB) -->
+        <part name="sk4_ic16.bin"/>
+
+        <!-- $C000-$EFFF: padding (12KB) -->
+        <part repeat="0x3000">00</part>
+
+        <!-- $F000: ic13 again (mirror for reset/interrupt vectors) -->
+        <part name="sk4_ic13.bin"/>
+
+        <!-- gfx1: 4KB at offset $10000 (Vanguard is small GFX) -->
+        <!-- plane 0: ic50 (2KB) padded to 4KB -->
+        <part name="sk5_ic50.bin"/>
+        <part repeat="0x0800">00</part>
+        <!-- plane 1: ic51 (2KB) padded to 4KB -->
+        <part name="sk5_ic51.bin"/>
+        <part repeat="0x0800">00</part>
+
+        <!-- proms: 64 bytes at offset $12000 -->
+        <part name="sk5_ic7.bin"/>
+        <part name="sk5_ic6.bin"/>
+
+        <!-- sound ROMs: at offset $12040 -->
+        <part name="sk4_ic51.bin"/>
+        <part name="sk4_ic52.bin"/>
+
+    </rom>
+
+    <!-- ROM index 1: game_id = 2 (GID_VANGUARD) -->
+    <rom index="1">
+        <part>02</part>
+    </rom>
+
+</misterromdescription>

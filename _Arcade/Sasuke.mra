@@ -1,0 +1,71 @@
+<misterromdescription>
+    <name>Sasuke vs. Commander</name>
+    <setname>sasuke</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1980</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>2-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <rom index="0" zip="sasuke.zip" md5="none">
+
+        <!-- maincpu: 64KB at offset $00000 -->
+        <!-- $0000-$3FFF: padding (16KB) -->
+        <part repeat="0x4000">00</part>
+
+        <!-- $4000: sc1 (2KB) -->
+        <part name="sc1"/>
+        <!-- $4800: sc2 (2KB) -->
+        <part name="sc2"/>
+        <!-- $5000: sc3 (2KB) -->
+        <part name="sc3"/>
+        <!-- $5800: sc4 (2KB) -->
+        <part name="sc4"/>
+        <!-- $6000: sc5 (2KB) -->
+        <part name="sc5"/>
+        <!-- $6800: sc6 (2KB) -->
+        <part name="sc6"/>
+        <!-- $7000: sc7 (2KB) -->
+        <part name="sc7"/>
+        <!-- $7800: sc8 (2KB) -->
+        <part name="sc8"/>
+
+        <!-- $8000: sc9 (2KB) -->
+        <part name="sc9"/>
+        <!-- $8800: sc10 (2KB) -->
+        <part name="sc10"/>
+
+        <!-- $9000-$EFFF: padding -->
+        <part repeat="0x6000">00</part>
+
+        <!-- $F800: sc8 mirror for reset/interrupt vectors -->
+        <part name="sc8"/>
+
+        <!-- gfx1: 4KB at offset $10000 -->
+        <!-- plane 0: mcs_c (2KB) padded to 4KB -->
+        <part name="mcs_c"/>
+        <part repeat="0x0800">00</part>
+        <!-- plane 1: mcs_d (2KB) padded to 4KB -->
+        <part name="mcs_d"/>
+        <part repeat="0x0800">00</part>
+
+        <!-- proms: 32 bytes at offset $12000 (only one PROM for sasuke) -->
+        <part name="sasuke.clr"/>
+        <!-- pad to 64 bytes -->
+        <part repeat="0x0020">00</part>
+
+        <!-- sound ROMs at offset $12040 -->
+        <part name="sc11"/>
+
+    </rom>
+
+    <!-- ROM index 1: game_id = 0 (GID_SASUKE) -->
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+</misterromdescription>

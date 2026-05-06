@@ -1,0 +1,57 @@
+<misterromdescription>
+    <name>Qix (set 1)</name>
+    <setname>qix</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1981</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <buttons names="Draw Fast,Draw Slow,Coin,Start 1P,Start 2P,Pause,Test,-(unused)" default="A,B,Select,Start,R,L,X,Y"/>
+
+    <!--
+        ROM LOADING ORDER (ioctl_addr):
+        $00000-$05FFF : maincpu  (24KB slots, ROMs at $C000-$FFFF = slots 2-7)
+        $06000-$0BFFF : videocpu (24KB slots, ROMs at $C800-$FFFF = slots 2-6)
+        $0C000-$0EFFF : audiocpu (12KB, ROM at $F800 = pad $2800 + $0800)
+    -->
+
+    <rom index="0" zip="qix.zip" md5="none">
+        <!-- Data CPU: 8x 2KB at $C000-$FFFF -->
+        <part repeat="0x2000">00</part>
+        <part name="qq12_rev2.u12" crc="aad35508"/>
+        <part name="qq13_rev2.u13" crc="46c13504"/>
+        <part name="qq14_rev2.u14" crc="5115e896"/>
+        <part name="qq15_rev2.u15" crc="ccd52a1b"/>
+        <part name="qq16_rev2.u16" crc="cd1c36ee"/>
+        <part name="qq17_rev2.u17" crc="1acb682d"/>
+        <part name="qq18_rev2.u18" crc="de77728b"/>
+        <part name="qq19_rev2.u19" crc="c0994776"/>
+
+        <!-- Video CPU: 7x 2KB at $C800-$FFFF -->
+        <part repeat="0x2800">00</part>
+        <part name="qq4_rev2.u4"   crc="5b906a09"/>
+        <part name="qq5_rev2.u5"   crc="254a3587"/>
+        <part name="qq6_rev2.u6"   crc="ace30389"/>
+        <part name="qq7_rev2.u7"   crc="8ebcfa7c"/>
+        <part name="qq8_rev2.u8"   crc="b8a3c8f9"/>
+        <part name="qq9_rev2.u9"   crc="26cbcd55"/>
+        <part name="qq10_rev2.u10" crc="568be942"/>
+
+        <!-- Audio CPU: 2KB at $F800 -->
+        <part repeat="0x2800">00</part>
+        <part name="qq27.u27" crc="f3782bd0"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x00 (QIX) -->
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

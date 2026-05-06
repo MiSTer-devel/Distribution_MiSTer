@@ -1,0 +1,51 @@
+<misterromdescription>
+    <name>Complex X</name>
+    <setname>complexx</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1983</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <buttons names="-(unused),-(unused),Coin,Start 1P,Jump,Pause,Test,Start 2P" default="A,B,Select,Start,R,L,X,Y"/>
+
+    <!--
+        audiocpu: cx26 at $E000 (4KB), cx27 at $F000 (4KB) = 8KB total
+        pad $1000 for $D000-$DFFF, then 2x 4KB ROMs
+    -->
+
+    <rom index="0" zip="complexx.zip" md5="none">
+        <!-- Data CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="cx14.bin" crc="f123a0de"/>
+        <part name="cx15.bin" crc="0fcb966f"/>
+        <part name="cx16.bin" crc="aa11e0e3"/>
+        <part name="cx17.bin" crc="f610856e"/>
+        <part name="cx18.bin" crc="8f8c3984"/>
+        <part name="cx19.bin" crc="13af3ba8"/>
+
+        <!-- Video CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="cx5.bin"  crc="62a2b87b"/>
+        <part name="cx6.bin"  crc="dfa7c088"/>
+        <part name="cx7.bin"  crc="c8bd6759"/>
+        <part name="cx8.bin"  crc="14a57221"/>
+        <part name="cx9.bin"  crc="fc2d4a9f"/>
+        <part name="cx10.bin" crc="96e0c1ad"/>
+
+        <!-- Audio CPU: 2x 4KB at $E000-$FFFF -->
+        <part repeat="0x1000">00</part>
+        <part name="cx26.bin" crc="f4f19c9b"/>
+        <part name="cx27.bin" crc="7e177328"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x01 (COMPLEX X) -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

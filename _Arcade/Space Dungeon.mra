@@ -1,0 +1,58 @@
+<misterromdescription>
+    <name>Space Dungeon</name>
+    <setname>sdungeon</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1981</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <buttons names="-(unused),-(unused),Coin,Start 1P,Jump,Pause,Test,Start 2P" default="A,B,Select,Start,R,L,X,Y"/>
+
+    <!--
+        maincpu: $A000-$FFFF (6x 4KB = 24KB, fills all 6 slots)
+        videocpu: $A000-$FFFF (6x 4KB = 24KB, fills all 6 slots)
+        audiocpu: sd26 at $F000 (2KB), sd27 at $F800 (2KB) = 4KB total
+                  pad $2000 for $D000-$EFFF, then 2x 2KB ROMs
+    -->
+
+    <rom index="0" zip="sdungeon.zip" md5="none">
+        <!-- Data CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="sd14.u14" crc="7024b55a"/>
+        <part name="sd15.u15" crc="a3ac9040"/>
+        <part name="sd16.u16" crc="cc20b580"/>
+        <part name="sd17.u17" crc="4663e4b8"/>
+        <part name="sd18.u18" crc="7ef1ffc0"/>
+        <part name="sd19.u19" crc="7b20b7ac"/>
+
+        <!-- Video CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="sd05.u5"  crc="0b2bf48e"/>
+        <part name="sd06.u6"  crc="f86db512"/>
+        <part name="sd07.u7"  crc="7b796831"/>
+        <part name="sd08.u8"  crc="5fbe7068"/>
+        <part name="sd09.u9"  crc="89bc51ea"/>
+        <part name="sd10.u10" crc="754de734"/>
+
+        <!-- Audio CPU: 2x 2KB at $F000-$FFFF -->
+        <part repeat="0x2000">00</part>
+        <part name="sd26.u26" crc="3df8630d"/>
+        <part name="sd27.u27" crc="0386f351"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x02 (SPACE DUNGEON) -->
+    <rom index="1">
+        <part>02</part>
+    </rom>
+
+    <!-- ROM index 2: MCU EPROM (MC68705P3) -->
+    <rom index="2" zip="sdungeon.zip" md5="none">
+        <part name="sd101" crc="e255af9a"/>
+    </rom>
+
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

@@ -1,0 +1,82 @@
+<misterromdescription>
+	<name>Zoo Keeper (set 1)</name>
+	<setname>zookeep</setname>
+	<rbf>Qix</rbf>
+	<mameversion>0272</mameversion>
+	<year>1982</year>
+	<manufacturer>Taito America Corporation</manufacturer>
+	<players>2</players>
+	<joystick>4-Way</joystick>
+	<mameversion>0.272</mameversion>
+        <rotation>horizontal</rotation>
+        <region>World</region>
+	<category>Arcade</category>
+
+        <buttons names="Jump,-(unused),Coin,Start 1P,Start 2P,Pause,Test,-(unused)" default="A,B,Select,Start,R,L,X,Y"/>
+
+        <!-- Game ID: 04 = Zoo Keeper (latched in Arcade-Qix.sv from ioctl_index 1) -->
+        <rom index="1">
+	    <part>04</part>
+        </rom>
+
+	<!--
+	========================================================================
+	ROM payload layout (must match Qix.sv ioctl gates after Phase 3):
+
+	  ioctl_index = 0  (concatenated ROM, 76KB total):
+	    $00000-$07FFF : data CPU  32KB  (CPU $8000-$FFFF)
+	    $08000-$0FFFF : video CPU 32KB  (8KB bank0 + 16KB fixed + 8KB bank1)
+	    $10000-$12FFF : audio CPU 12KB  (CPU $D000-$FFFF)
+
+	  ioctl_index = 1  : single byte game_id = 0x04 (Zoo Keeper)
+	  ioctl_index = 2  : MC68705P3 MCU EPROM, 2KB
+
+	Source: MAME qix.cpp, ROM_START(zookeep)
+	========================================================================
+	-->
+
+	<rom index="0" zip="zookeep.zip" md5="none">
+
+		<!-- Data CPU - 32KB at CPU $8000-$FFFF (ioctl $00000-$07FFF) -->
+		<part name="za12.u12" crc="4e40d8dc"/>   <!-- CPU $8000 -->
+		<part name="za13.u13" crc="eebd5248"/>   <!-- CPU $9000 -->
+		<part name="za14.u14" crc="fab43297"/>   <!-- CPU $A000 -->
+		<part name="za15.u15" crc="ef8cd67c"/>   <!-- CPU $B000 -->
+		<part name="za16.u16" crc="ccfc15bc"/>   <!-- CPU $C000 -->
+		<part name="za17.u17" crc="358013f4"/>   <!-- CPU $D000 -->
+		<part name="za18.u18" crc="37886afe"/>   <!-- CPU $E000 -->
+		<part name="za19.u19" crc="bbfb30d9"/>   <!-- CPU $F000 -->
+
+		<!-- Video CPU - bank 0 of $A000-$BFFF (8KB) -->
+		<part name="za5.u5"   crc="dc0c3cbd"/>   <!-- BRAM $0000, CPU $A000 (bank 0) -->
+		<part name="za6.u6"   crc="27c787dd"/>   <!-- BRAM $1000, CPU $B000 (bank 0) -->
+
+		<!-- Video CPU - fixed $C000-$FFFF (16KB) -->
+		<part name="za7.u7"   crc="1479f480"/>   <!-- BRAM $2000, CPU $C000 -->
+		<part name="za8.u8"   crc="4c96cdb2"/>   <!-- BRAM $3000, CPU $D000 -->
+		<part name="za9.u9"   crc="a4f7d9e0"/>   <!-- BRAM $4000, CPU $E000 -->
+		<part name="za10.u10" crc="05df1a5a"/>   <!-- BRAM $5000, CPU $F000 -->
+
+		<!-- Video CPU - bank 1 of $A000-$BFFF (8KB) -->
+		<part name="za3.u3"   crc="cc4d0aee"/>   <!-- BRAM $6000, CPU $A000 (bank 1) -->
+		<part name="za4.u4"   crc="ec3b10b1"/>   <!-- BRAM $7000, CPU $B000 (bank 1) -->
+
+		<!-- Audio CPU - 12KB at CPU $D000-$FFFF (ioctl $10000-$12FFF) -->
+		<part name="za25.u25" crc="779b8558"/>   <!-- CPU $D000 -->
+		<part name="za26.u26" crc="60a810ce"/>   <!-- CPU $E000 -->
+		<part name="za27.u27" crc="99ed424e"/>   <!-- CPU $F000 -->
+
+	</rom>
+
+	<!-- MC68705P3 MCU EPROM (coin/MCU board, 2KB) -->
+	<rom index="2" zip="zookeep.zip" md5="none">
+		<part name="za_coin.bin" crc="364d3557"/>
+	</rom>
+
+	<!--
+	Zoo Keeper has a single action button (Jump). PIA0 PA layout:
+	  bit 7: unused      bit 6: BUTTON1 (Jump)   bit 5: START2     bit 4: START1
+	  bit 3: LEFT        bit 2: DOWN              bit 1: RIGHT      bit 0: UP
+	-->
+
+</misterromdescription>

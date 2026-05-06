@@ -1,0 +1,51 @@
+<misterromdescription>
+    <name>Qix II (Tournament)</name>
+    <setname>qix2</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1981</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <buttons names="Draw Fast,Draw Slow,Coin,Start 1P,Start 2P,Pause,Test,-(unused)" default="A,B,Select,Start,R,L,X,Y"/>
+
+    <rom index="0" zip="qix.zip|qix2.zip" md5="none">
+        <!-- Data CPU: 8x 2KB at $C000-$FFFF -->
+        <part repeat="0x2000">00</part>
+        <part name="u12.rmb" crc="484280fd"/>
+        <part name="u13.rmb" crc="3d089fcb"/>
+        <part name="u14.rmb" crc="362123a9"/>
+        <part name="u15.rmb" crc="60f3913d"/>
+        <part name="u16.rmb" crc="cc139e34"/>
+        <part name="u17.rmb" crc="cf31dc49"/>
+        <part name="u18.rmb" crc="1f91ed7a"/>
+        <part name="u19.rmb" crc="68e8d5a6"/>
+
+        <!-- Video CPU: 8x 2KB at $C000-$FFFF -->
+        <part repeat="0x2000">00</part>
+        <part name="u3.rmb"  crc="19cebaca"/>
+        <part name="u4.rmb"  crc="6cfb4185"/>
+        <part name="u5.rmb"  crc="948f53f3"/>
+        <part name="u6.rmb"  crc="8630120e"/>
+        <part name="u7.rmb"  crc="bad037c9"/>
+        <part name="u8.rmb"  crc="3159bc00"/>
+        <part name="u9.rmb"  crc="e80e9b1d"/>
+        <part name="u10.rmb" crc="9a55d360"/>
+
+        <!-- Audio CPU: 2KB at $F800 -->
+        <part repeat="0x2800">00</part>
+        <part name="u27" crc="f3782bd0"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x00 (QIX) -->
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

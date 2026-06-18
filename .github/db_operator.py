@@ -1061,26 +1061,14 @@ class ZipsBuilder:
         return {
             'v': 1,
             'files': {
-                path: self._file_summary_entry(zip_id, target_folder, path, description)
+                path: {**description, 'arc_id': zip_id, 'arc_at': self._archive_path(path, target_folder)}
                 for path, description in self._intermediate[zip_id]['files'].items()
             },
             'folders': {
-                path: self._folder_summary_entry(zip_id, description)
+                path: {**description, 'arc_id': zip_id}
                 for path, description in self._intermediate[zip_id]['folders'].items()
             },
         }
-
-    def _file_summary_entry(self, zip_id: str, target_folder: str, path: str, description: Dict[str, Any]) -> Dict[str, Any]:
-        result = {**description, 'arc_id': zip_id, 'arc_at': self._archive_path(path, target_folder)}
-        result.pop('zip_id', None)
-        result.pop('zip_path', None)
-        return result
-
-    @staticmethod
-    def _folder_summary_entry(zip_id: str, description: Dict[str, Any]) -> Dict[str, Any]:
-        result = {**description, 'arc_id': zip_id}
-        result.pop('zip_id', None)
-        return result
 
     @staticmethod
     def _archive_path(path: str, target_folder: str) -> str:

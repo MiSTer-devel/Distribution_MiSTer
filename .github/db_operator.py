@@ -1033,9 +1033,9 @@ class ZipsBuilder:
 
     def _add_zip(self, zip_id: str, description: str, parent: str) -> None:
         raw_files_size = 0
-        for path, file_description in self._intermediate[zip_id]['files'].items():
-            raw_files_size += file_description['size']
-            file_description['arc_at'] = path[len(parent):] if path.startswith(parent) else path
+        for path, file_desc in self._intermediate[zip_id]['files'].items():
+            raw_files_size += file_desc['size']
+            file_desc['arc_at'] = path[len(parent):] if path.startswith(parent) else path
 
         result = {
             'format': 'zip',

@@ -96,7 +96,7 @@ def build_database(source_dir: str):
     transformer.apply_linux_update()
     transformer.apply_zips()
 
-    persistence = DatabasePersistence(db, vars, transformer.archive_summaries)
+    persistence = DatabasePersistence(db, vars)
     if persistence.needs_save():
         print()
         print('Changes detected. Proceeding to save new db...')
@@ -109,9 +109,7 @@ def build_database(source_dir: str):
         print('No changes detected.')
 
 def compare_databases(left_path: str, right_path: str) -> None:
-    left_db = get_url_db(left_path)
-    right_db = get_url_db(right_path)
-    are_same = mut_diff_db(left_db, right_db, get_archive_summaries(left_db), get_archive_summaries(right_db))
+    are_same = mut_diff_db(get_url_db(left_path), get_url_db(right_path))
     print()
     if are_same:
         print('No changes.')
@@ -869,7 +867,6 @@ class DatabaseTransformer:
     def __init__(self, db: Dict[str, Any], vars: BuildVars):
         self._db = db
         self._vars = vars
-        self.archive_summaries: Dict[str, Any] = {}
     
     def apply_urls(self) -> None:
         if self._vars.base_files_url == '':
@@ -908,15 +905,12 @@ class DatabaseTransformer:
         for zip_id, zip_description in config.items():
             builder.add_zip(zip_id, zip_description)
 
-        archive_build = builder.build()
-        self._db['archives'] = archive_build.archives
-        self.archive_summaries = archive_build.summaries
+        self._db['archives'] = builder.build()
 
 class DatabasePersistence:
-    def __init__(self, db: Dict[str, Any], vars: BuildVars, archive_summaries: Optional[Dict[str, Any]] = None):
+    def __init__(self, db: Dict[str, Any], vars: BuildVars):
         self._db = db
         self._vars = vars
-        self._archive_summaries = archive_summaries or {}
 
     def needs_save(self) -> bool:
         test_db_url = self._vars.test_db_url
@@ -933,13 +927,7 @@ class DatabasePersistence:
             print(e)
             return True
 
-        previous_archive_summaries = get_archive_summaries(previous_db)
-        are_same = mut_diff_db(
-            previous_db,
-            json.loads(json.dumps(self._db)),
-            previous_archive_summaries,
-            json.loads(json.dumps(self._archive_summaries)),
-        )
+        are_same = mut_diff_db(previous_db, json.loads(json.dumps(self._db)))
         return not are_same
 
     def save(self):
@@ -948,21 +936,15 @@ class DatabasePersistence:
             if self._vars.base_files_url == '':
                 raise ValueError('Variable "BASE_FILES_URL" missing!')
 
-            save_archives(self._db['archives'], self._archive_summaries, self._vars.base_files_url)
+            save_archives(self._db['archives'], self._vars.base_files_url)
 
         with open(self._vars.db_json_name, 'w') as f:
             json.dump(self._db, f, indent=4 if easy_debug else None, sort_keys=True)
-
-@dataclass
-class ArchivesBuildResult:
-    archives: Dict[str, Any]
-    summaries: Dict[str, Any]
 
 class ZipsBuilder:
     def __init__(self, db: Dict[str, Any]):
         self._db = db
         self._archives: Dict[str, Any] = {}
-        self._archive_summaries: Dict[str, Any] = {}
         self._intermediate: Dict[str, Any] = {}
 
     def add_zip(self, zip_id: str, zip_description: Dict[str, Any]) -> None:
@@ -976,8 +958,8 @@ class ZipsBuilder:
         else:
             raise ValueError(f'Unknown mode: {mode}')
 
-    def build(self) -> ArchivesBuildResult:
-        return ArchivesBuildResult(self._archives, self._archive_summaries)
+    def build(self) -> Dict[str, Any]:
+        return self._archives
 
     def _multi_process(self, zip_id: str, zip_description: Dict[str, Any]) -> None:
         self._intermediate[zip_id] = {'files': {}, 'folders': {}}
@@ -1056,6 +1038,7 @@ class ZipsBuilder:
             'extract': 'all',
             'base_files_url': self._db['base_files_url'],
             'description': description,
+            'summary_file_content': self._build_summary_file_content(zip_id, parent),
             'target_folder': parent,
         }
 
@@ -1063,7 +1046,6 @@ class ZipsBuilder:
             result['path'] = 'pext'
 
         self._archives[zip_id] = result
-        self._archive_summaries[zip_id] = self._build_summary_file_content(zip_id, parent)
 
     @staticmethod
     def _folder_path(path: str) -> str:
@@ -1144,13 +1126,12 @@ class Metadata:
 
 # MiSTer save functions
 
-def save_archives(archives: Dict[str, Any], archive_summaries: Dict[str, Any], base_files_url: str) -> None:
+def save_archives(archives: Dict[str, Any], base_files_url: str) -> None:
     base_zips_url = base_files_url % '<ZIPS_BRANCH_BASE_URL>'
     for archive_id, archive_description in archives.items():
-        if archive_id not in archive_summaries:
-            raise ValueError(f'Missing generated summary for archive "{archive_id}"')
+        summary_file_content = archive_description['summary_file_content']
+        del archive_description['summary_file_content']
 
-        summary_file_content = archive_summaries[archive_id]
         summary_file_zip = save_summary_file_zip(archive_id, summary_file_content)
         archive_description['summary_file'] = {**new_file_description(summary_file_zip), 'url': f'{base_zips_url}{summary_file_zip}'}
         archive_file_zip = save_archive_file_zip(archive_id, summary_file_content)
@@ -1362,22 +1343,18 @@ def get_url_db(url: str) -> Dict[str, Any]:
             print('ReturnCodeException at get_summary_file_content ' + summary_url)
             print(e)
 
-    return db
-
-def get_archive_summaries(db: Dict[str, Any]) -> Dict[str, Any]:
-    archive_summaries: Dict[str, Any] = {}
-    for archive_id, archive in db.get('archives', {}).items():
+    for archive in db.get('archives', {}).values():
         if 'summary_file' in archive:
             summary_url = archive['summary_file']['url']
             try:
-                archive_summaries[archive_id] = get_summary_file_content(summary_url)
+                archive['summary_file_content'] = get_summary_file_content(summary_url)
             except ReturnCodeException as e:
                 print('ReturnCodeException at get_summary_file_content ' + summary_url)
                 print(e)
         elif 'summary_inline' in archive:
-            archive_summaries[archive_id] = json.loads(json.dumps(archive['summary_inline']))
+            archive['summary_file_content'] = json.loads(json.dumps(archive['summary_inline']))
 
-    return archive_summaries
+    return db
 
 def get_summary_file_content(url: str) -> Dict[str, Any]:
     summary = download_db(url)
@@ -1408,31 +1385,17 @@ def get_linux_latest_release_url(linux_github_repository: str, github_token: str
 
 # db diff tooling
 
-def mut_diff_db(
-    left_db: Dict[str, Any],
-    right_db: Dict[str, Any],
-    left_archive_summaries: Optional[Dict[str, Any]] = None,
-    right_archive_summaries: Optional[Dict[str, Any]] = None,
-) -> bool:
-    left_indexes = tag_indexes(left_db)
-    right_indexes = tag_indexes(right_db)
-    left_archive_summaries = left_archive_summaries or {}
-    right_archive_summaries = right_archive_summaries or {}
-
+def mut_diff_db(left_db: Dict[str, Any], right_db: Dict[str, Any]) -> bool:
     reformat_db_for_comparison(left_db)
     reformat_db_for_comparison(right_db)
-    reformat_archive_summaries_for_comparison(left_indexes, left_archive_summaries)
-    reformat_archive_summaries_for_comparison(right_indexes, right_archive_summaries)
 
-    left_comparison = {'database': left_db, 'archive_summaries': left_archive_summaries}
-    right_comparison = {'database': right_db, 'archive_summaries': right_archive_summaries}
-    left_str = json.dumps(left_comparison, sort_keys=True)
-    right_str = json.dumps(right_comparison, sort_keys=True)
+    left_str = json.dumps(left_db, sort_keys=True)
+    right_str = json.dumps(right_db, sort_keys=True)
 
     with tempfile.NamedTemporaryFile() as temp_left, tempfile.NamedTemporaryFile() as temp_right:
         with open(temp_left.name, 'w') as ndf, open(temp_right.name, 'w') as odf:
-            print(json.dumps(left_comparison, sort_keys=True, indent=True), file=ndf)
-            print(json.dumps(right_comparison, sort_keys=True, indent=True), file=odf)
+            print(json.dumps(left_db, sort_keys=True, indent=True), file=ndf)
+            print(json.dumps(right_db, sort_keys=True, indent=True), file=odf)
         try:
             run(f'git diff --no-index --exit-code {temp_left.name} {temp_right.name}')
         except ReturnCodeException as _:
@@ -1446,11 +1409,6 @@ def tag_indexes(db: Dict[str, Any]) -> Dict[int, str]:
     if isinstance(tag_dictionary, dict):
         return {tag_dictionary[word]: word for word in sorted(tag_dictionary)}
     return {index: word for index, word in enumerate(tag_dictionary)}
-
-def reformat_archive_summaries_for_comparison(indexes: Dict[int, str], archive_summaries: Dict[str, Any]) -> None:
-    for summary in archive_summaries.values():
-        reformat_elements(indexes, summary.get('files', {}).values())
-        reformat_elements(indexes, summary.get('folders', {}).values())
 
 def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
     db['base_files_url'] = ''
@@ -1479,6 +1437,9 @@ def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
         archive_description['archive_file'] = {}
         archive_description['summary_file'] = {}
 
+        if 'summary_file_content' in archive_description:
+            reformat_elements(indexes, archive_description['summary_file_content']['files'].values())
+            reformat_elements(indexes, archive_description['summary_file_content']['folders'].values())
         if 'summary_inline' in archive_description:
             reformat_elements(indexes, archive_description['summary_inline']['files'].values())
             reformat_elements(indexes, archive_description['summary_inline']['folders'].values())

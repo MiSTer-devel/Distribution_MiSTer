@@ -1280,24 +1280,19 @@ def get_url_db(url: str) -> Dict[str, Any]:
     except Exception as _:
         db = download_db(url)
 
-    for zip in db.get('zips', {}).values():
-        summary_url = zip['summary_file']['url']
-        try:
-            zip['summary_file_content'] = get_summary_file_content(summary_url)
-        except ReturnCodeException as e:
-            print('ReturnCodeException at get_summary_file_content ' + summary_url)
-            print(e)
+    if 'archives' not in db:
+        return db
 
-    for archive in db.get('archives', {}).values():
-        if 'summary_file' in archive:
-            summary_url = archive['summary_file']['url']
+    for archive_description in db['archives'].values():
+        if 'summary_file' in archive_description:
+            summary_url = archive_description['summary_file']['url']
             try:
-                archive['summary_file_content'] = get_summary_file_content(summary_url)
+                archive_description['summary_file_content'] = get_summary_file_content(summary_url)
             except ReturnCodeException as e:
                 print('ReturnCodeException at get_summary_file_content ' + summary_url)
                 print(e)
-        elif 'summary_inline' in archive:
-            archive['summary_file_content'] = json.loads(json.dumps(archive['summary_inline']))
+        elif 'summary_inline' in archive_description:
+            archive_description['summary_file_content'] = json.loads(json.dumps(archive_description['summary_inline']))
 
     return db
 
@@ -1361,15 +1356,6 @@ def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
 
     reformat_elements(indexes, db['files'].values())
     reformat_elements(indexes, db['folders'].values())
-
-    for zip_description in db.get('zips', {}).values():
-        zip_description['base_files_url'] = ''
-        zip_description['contents_file'] = {}
-        zip_description['summary_file'] = {}
-
-        if 'summary_file_content' in zip_description:
-            reformat_elements(indexes, zip_description['summary_file_content']['files'].values())
-            reformat_elements(indexes, zip_description['summary_file_content']['folders'].values())
 
     for archive_description in db.get('archives', {}).values():
         archive_description['base_files_url'] = ''

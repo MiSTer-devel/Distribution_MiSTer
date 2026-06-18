@@ -985,8 +985,7 @@ class ZipsBuilder:
             outer = str(outer)
             if outer == '.' or outer == '':
                 continue
-            self._intermediate[zip_id]['folders'][outer] = {**self._db['folders'][outer]}
-            self._intermediate[zip_id]['folders'][outer]['arc_id'] = zip_id
+            self._intermediate[zip_id]['folders'][outer] = {**self._db['folders'][outer], 'arc_id': zip_id}
 
         parent = str(source2.parent) + '/'
 
@@ -1017,14 +1016,14 @@ class ZipsBuilder:
 
     def _move_elements(self, zip_id: str, source: str, key: str) -> None:
         for element in list(self._db[key]):
-            if self._is_inside_source(element, source):
+            if element.startswith(source):
                 self._intermediate[zip_id][key][element] = self._db[key][element]
                 self._intermediate[zip_id][key][element]['arc_id'] = zip_id
                 del self._db[key][element]
 
     def _fill_subfolders(self, subfolders: Set[str], subfolder_len: int, source: str, key: str) -> None:
         for element in list(self._db[key]):
-            if self._is_inside_source(element, source):
+            if element.startswith(source):
                 parts = Path(element).parts
                 if len(parts) == subfolder_len:
                     continue
@@ -1056,10 +1055,6 @@ class ZipsBuilder:
             result['path'] = 'pext'
 
         self._archives[zip_id] = result
-
-    @staticmethod
-    def _is_inside_source(element: str, source: str) -> bool:
-        return element == source or element.startswith(source.rstrip('/') + '/')
 
     def _enough_files_for_subfolder(self, composed_source: str) -> bool:
         qty = 0

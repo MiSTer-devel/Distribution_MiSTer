@@ -96,7 +96,7 @@ def build_database(source_dir: str):
     transformer.apply_linux_update()
     transformer.apply_zips()
 
-    persistence = DatabasePersistence(db, vars)
+    persistence = DatabasePersistence(db, vars, transformer.archive_summaries)
     if persistence.needs_save():
         print()
         print('Changes detected. Proceeding to save new db...')
@@ -109,7 +109,9 @@ def build_database(source_dir: str):
         print('No changes detected.')
 
 def compare_databases(left_path: str, right_path: str) -> None:
-    are_same = mut_diff_db(get_url_db(left_path), get_url_db(right_path))
+    left_db = get_url_db(left_path)
+    right_db = get_url_db(right_path)
+    are_same = mut_diff_db(left_db, right_db, get_archive_summaries(left_db), get_archive_summaries(right_db))
     print()
     if are_same:
         print('No changes.')
@@ -375,6 +377,10 @@ initial_filter_aliases = [
 console_cd_folders = ['tgfx16-cd', 'megacd', 'cd-i', 'psx', 'saturn', 'neogeo-cd']
 console_cd_cores = ['turbografx16', 'megacd', 'cdi', 'psx', 'saturn', 'neogeo']
 console_cd_tag = 'console-cd'
+
+def is_pext_path(path: str) -> bool:
+    return path == 'games' or path.startswith('games/') or path == 'docs' or path.startswith('docs/')
+
 
 class Tags:
     filter_part_regex = re.compile("[-_a-z0-9.]$", )
@@ -810,9 +816,6 @@ class DatabaseBuilder:
 
         self._lowerfiles.add(lowerstrfile)
 
-        if strfile.startswith('games') or strfile.startswith('docs'):
-            strfile = f'|{strfile}'
-
         tags = self._tags.get_tags_for_file(file)
         for term in filter_terms:
             if not term:
@@ -821,13 +824,15 @@ class DatabaseBuilder:
             tags.append(self._tags._use_term(term))
 
         self._files[strfile] = {**description, "tags": tags}
+        if is_pext_path(strfile):
+            self._files[strfile]['path'] = 'pext'
 
         if file.suffix.lower() == '.rbf':
             core_name, datepart = split_on_date(file.stem.lower())
             if datepart != '':
                 self._files[strfile]['tangle'] = [f'{core_name}_core']
 
-        if file.name.lower() in ['boot.rom', 'boot1.rom', 'boot0.rom'] and not strfile.startswith('|games/AO486/'):
+        if file.name.lower() in ['boot.rom', 'boot1.rom', 'boot0.rom'] and not strfile.startswith('games/AO486/'):
             self._files[strfile]['overwrite'] = False
 
         if strfile in self.main_binaries or strfile.startswith('linux/'):
@@ -844,14 +849,15 @@ class DatabaseBuilder:
         for folder in file.parents:
             strfolder = str(folder)
 
-            if strfolder.startswith('games') or strfolder.startswith('docs'):
-                strfolder = f'|{strfolder}'
             if strfolder in self._folders or strfolder in ['.', '']:
                 continue
             self._folders[strfolder] = {"tags": self._tags.get_tags_for_folder(folder)}
+            if is_pext_path(strfolder):
+                self._folders[strfolder]['path'] = 'pext'
 
     def build(self, db_id: str) -> Dict[str, Any]:
         return {
+            "v": 1,
             "db_id": db_id,
             "files": self._files,
             "folders": self._folders,
@@ -863,6 +869,7 @@ class DatabaseTransformer:
     def __init__(self, db: Dict[str, Any], vars: BuildVars):
         self._db = db
         self._vars = vars
+        self.archive_summaries: Dict[str, Any] = {}
     
     def apply_urls(self) -> None:
         if self._vars.base_files_url == '':
@@ -901,12 +908,15 @@ class DatabaseTransformer:
         for zip_id, zip_description in config.items():
             builder.add_zip(zip_id, zip_description)
 
-        self._db['zips'] = builder.build()
+        archive_build = builder.build()
+        self._db['archives'] = archive_build.archives
+        self.archive_summaries = archive_build.summaries
 
 class DatabasePersistence:
-    def __init__(self, db: Dict[str, Any], vars: BuildVars):
+    def __init__(self, db: Dict[str, Any], vars: BuildVars, archive_summaries: Optional[Dict[str, Any]] = None):
         self._db = db
         self._vars = vars
+        self._archive_summaries = archive_summaries or {}
 
     def needs_save(self) -> bool:
         test_db_url = self._vars.test_db_url
@@ -923,24 +933,36 @@ class DatabasePersistence:
             print(e)
             return True
 
-        are_same = mut_diff_db(previous_db, json.loads(json.dumps(self._db)))
+        previous_archive_summaries = get_archive_summaries(previous_db)
+        are_same = mut_diff_db(
+            previous_db,
+            json.loads(json.dumps(self._db)),
+            previous_archive_summaries,
+            json.loads(json.dumps(self._archive_summaries)),
+        )
         return not are_same
 
     def save(self):
         easy_debug = self._vars.db_json_name == 'dbresult.json'
-        if 'zips' in self._db:
+        if 'archives' in self._db:
             if self._vars.base_files_url == '':
                 raise ValueError('Variable "BASE_FILES_URL" missing!')
 
-            save_zips(self._db['zips'], self._vars.base_files_url)
+            save_archives(self._db['archives'], self._archive_summaries, self._vars.base_files_url)
 
         with open(self._vars.db_json_name, 'w') as f:
             json.dump(self._db, f, indent=4 if easy_debug else None, sort_keys=True)
 
+@dataclass
+class ArchivesBuildResult:
+    archives: Dict[str, Any]
+    summaries: Dict[str, Any]
+
 class ZipsBuilder:
     def __init__(self, db: Dict[str, Any]):
         self._db = db
-        self._zips: Dict[str, Any] = {}
+        self._archives: Dict[str, Any] = {}
+        self._archive_summaries: Dict[str, Any] = {}
         self._intermediate: Dict[str, Any] = {}
 
     def add_zip(self, zip_id: str, zip_description: Dict[str, Any]) -> None:
@@ -954,33 +976,25 @@ class ZipsBuilder:
         else:
             raise ValueError(f'Unknown mode: {mode}')
 
-    def build(self) -> Dict[str, Any]:
-        return self._zips
+    def build(self) -> ArchivesBuildResult:
+        return ArchivesBuildResult(self._archives, self._archive_summaries)
 
     def _multi_process(self, zip_id: str, zip_description: Dict[str, Any]) -> None:
         self._intermediate[zip_id] = {'files': {}, 'folders': {}}
         for source in zip_description['sources']:
-            if source.startswith('games/') or source.startswith('docs/'):
-                source = f'|{source}'
-
             self._move_elements(zip_id, source, 'files')
             self._move_elements(zip_id, source, 'folders')
 
         path = zip_description['path']
-        if path[0] == '|':
-            path = path[1:]
 
         self._add_zip(zip_id,
-            contents=zip_description['sources'],
             description=self._description(", ".join(zip_description["sources"]), path),
-            parent=zip_description['path'] + '/',
+            parent=self._folder_path(path),
             mode='multi'
         )
     
     def _simple_process(self, zip_id: str, source: str, zip_description: Dict[str, Any]) -> None:
         self._intermediate[zip_id] = {'files': {}, 'folders': {}}
-        if source.startswith('games/') or source.startswith('docs/'):
-            source = f'|{source}'
         
         self._move_elements(zip_id, source, 'files')
         self._move_elements(zip_id, source, 'folders')
@@ -990,17 +1004,12 @@ class ZipsBuilder:
             outer = str(outer)
             if outer == '.' or outer == '':
                 continue
-            self._intermediate[zip_id]['folders'][outer] = {**self._db['folders'][outer], 'zip_id': zip_id}
+            self._intermediate[zip_id]['folders'][outer] = {**self._db['folders'][outer]}
 
-        parent = str(source2.parent) + '/'
-
-        path = parent
-        if path[0] == '|':
-            path = path[1:]
+        parent = self._folder_path(str(source2.parent))
 
         self._add_zip(zip_id,
-            contents=[source2.name],
-            description=self._description(source2.name, path),
+            description=self._description(source2.name, parent),
             parent=parent,
             source=zip_description['source']
         )
@@ -1010,9 +1019,6 @@ class ZipsBuilder:
         return f'Unpacking {unpacking_str} at {parent}' if parent not in ['./', '.'] else f'Unpacking {unpacking_str} at the root'
 
     def _subfolders_process(self, zip_id: str, source: str, zip_description: Dict[str, Any]) -> None:
-        if source.startswith('games/') or source.startswith('docs/'):
-            source = f'|{source}'
-
         subfolder_len = len(Path(source).parts)
         subfolders: Set[str] = set()
         
@@ -1030,14 +1036,13 @@ class ZipsBuilder:
 
     def _move_elements(self, zip_id: str, source: str, key: str) -> None:
         for element in list(self._db[key]):
-            if element.startswith(source):
-                self._intermediate[zip_id][key][element] = self._db[key][element]
-                self._intermediate[zip_id][key][element]['zip_id'] = zip_id
+            if self._is_inside_source(element, source):
+                self._intermediate[zip_id][key][element] = {**self._db[key][element]}
                 del self._db[key][element]
 
     def _fill_subfolders(self, subfolders: Set[str], subfolder_len: int, source: str, key: str) -> None:
         for element in list(self._db[key]):
-            if element.startswith(source):
+            if self._is_inside_source(element, source):
                 parts = Path(element).parts
                 if len(parts) == subfolder_len:
                     continue
@@ -1045,36 +1050,63 @@ class ZipsBuilder:
                 subfolder = Path(element).parts[subfolder_len]
                 subfolders.add(subfolder)
 
-    def _add_zip(self, zip_id: str, contents: List[str], description: str, parent: str, mode: Optional[str] = None, source: Optional[str] = None) -> None:
-        path = parent
-        if path.startswith('games') or path.startswith('docs'):
-            path = f'|{path}'
-
-        raw_files_size = 0
-        for file_desc in self._intermediate[zip_id]['files'].values():
-            raw_files_size += file_desc['size']
-
+    def _add_zip(self, zip_id: str, description: str, parent: str, mode: Optional[str] = None, source: Optional[str] = None) -> None:
         result = {
+            'format': 'zip',
+            'extract': 'all',
             'base_files_url': self._db['base_files_url'],
-            'contents': contents,
             'description': description,
-            'kind': 'extract_all_contents',
-            'path': path,
-            'raw_files_size': raw_files_size,
-            'summary_file_content': {
-                'folders': self._intermediate[zip_id]['folders'],
-                'files': self._intermediate[zip_id]['files'],
-            },
-            'target_folder_path': path,
+            'target_folder': parent,
         }
 
-        if mode is not None:
-            result['mode'] = mode
+        if is_pext_path(parent.rstrip('/')):
+            result['path'] = 'pext'
 
-        if source is not None:
-            result['source'] = source
+        self._archives[zip_id] = result
+        self._archive_summaries[zip_id] = self._build_summary_file_content(zip_id, parent)
 
-        self._zips[zip_id] = result
+    @staticmethod
+    def _folder_path(path: str) -> str:
+        if path in ['.', './', '']:
+            return './'
+        return path if path.endswith('/') else f'{path}/'
+
+    @staticmethod
+    def _is_inside_source(element: str, source: str) -> bool:
+        return element == source or element.startswith(source.rstrip('/') + '/')
+
+    def _build_summary_file_content(self, zip_id: str, target_folder: str) -> Dict[str, Any]:
+        return {
+            'v': 1,
+            'files': {
+                path: self._file_summary_entry(zip_id, target_folder, path, description)
+                for path, description in self._intermediate[zip_id]['files'].items()
+            },
+            'folders': {
+                path: self._folder_summary_entry(zip_id, description)
+                for path, description in self._intermediate[zip_id]['folders'].items()
+            },
+        }
+
+    def _file_summary_entry(self, zip_id: str, target_folder: str, path: str, description: Dict[str, Any]) -> Dict[str, Any]:
+        result = {**description, 'arc_id': zip_id, 'arc_at': self._archive_path(path, target_folder)}
+        result.pop('zip_id', None)
+        result.pop('zip_path', None)
+        return result
+
+    @staticmethod
+    def _folder_summary_entry(zip_id: str, description: Dict[str, Any]) -> Dict[str, Any]:
+        result = {**description, 'arc_id': zip_id}
+        result.pop('zip_id', None)
+        return result
+
+    @staticmethod
+    def _archive_path(path: str, target_folder: str) -> str:
+        if target_folder in ['.', './', '']:
+            return path
+        if not target_folder.endswith('/'):
+            target_folder += '/'
+        return path[len(target_folder):] if path.startswith(target_folder) else path
 
     def _enough_files_for_subfolder(self, composed_source: str) -> bool:
         qty = 0
@@ -1112,6 +1144,18 @@ class Metadata:
 
 # MiSTer save functions
 
+def save_archives(archives: Dict[str, Any], archive_summaries: Dict[str, Any], base_files_url: str) -> None:
+    base_zips_url = base_files_url % '<ZIPS_BRANCH_BASE_URL>'
+    for archive_id, archive_description in archives.items():
+        if archive_id not in archive_summaries:
+            raise ValueError(f'Missing generated summary for archive "{archive_id}"')
+
+        summary_file_content = archive_summaries[archive_id]
+        summary_file_zip = save_summary_file_zip(archive_id, summary_file_content)
+        archive_description['summary_file'] = {**new_file_description(summary_file_zip), 'url': f'{base_zips_url}{summary_file_zip}'}
+        archive_file_zip = save_archive_file_zip(archive_id, summary_file_content)
+        archive_description['archive_file'] = {**new_file_description(archive_file_zip), 'url': f'{base_zips_url}{archive_file_zip}'}
+
 def save_zips(zips: Dict[str, Any], base_files_url: str) -> None:
     base_zips_url = base_files_url % '<ZIPS_BRANCH_BASE_URL>'
     for zip_id, zip_description in zips.items():
@@ -1128,6 +1172,13 @@ def save_summary_file_zip(zip_id: str, summary_file_content: Dict[str, Any]) -> 
     with ZipFile(summary_file_zip, 'w', compression=ZIP_DEFLATED, compresslevel=1) as zipf:
         zipf.writestr(f'{zip_id}_summary.json', json.dumps(summary_file_content, sort_keys=True))
     return summary_file_zip
+
+def save_archive_file_zip(archive_id: str, summary_file_content: Dict[str, Any]) -> str:
+    archive_file_zip = f'{archive_id}.zip'
+    with ZipFile(archive_file_zip, 'w', compression=ZIP_DEFLATED, compresslevel=1) as zipf:
+        for file, file_description in summary_file_content['files'].items():
+            zipf.write(file, file_description['arc_at'])
+    return archive_file_zip
 
 def save_contents_file_zip(zip_id: str, summary_file_content: Dict[str, Any], zip_path: str) -> str:
     contents_file_zip = f'{zip_id}.zip'
@@ -1303,10 +1354,7 @@ def get_url_db(url: str) -> Dict[str, Any]:
     except Exception as _:
         db = download_db(url)
 
-    if 'zips' not in db:
-        return db
-    
-    for zip in db['zips'].values():
+    for zip in db.get('zips', {}).values():
         summary_url = zip['summary_file']['url']
         try:
             zip['summary_file_content'] = get_summary_file_content(summary_url)
@@ -1316,9 +1364,26 @@ def get_url_db(url: str) -> Dict[str, Any]:
 
     return db
 
+def get_archive_summaries(db: Dict[str, Any]) -> Dict[str, Any]:
+    archive_summaries: Dict[str, Any] = {}
+    for archive_id, archive in db.get('archives', {}).items():
+        if 'summary_file' in archive:
+            summary_url = archive['summary_file']['url']
+            try:
+                archive_summaries[archive_id] = get_summary_file_content(summary_url)
+            except ReturnCodeException as e:
+                print('ReturnCodeException at get_summary_file_content ' + summary_url)
+                print(e)
+        elif 'summary_inline' in archive:
+            archive_summaries[archive_id] = json.loads(json.dumps(archive['summary_inline']))
+
+    return archive_summaries
+
 def get_summary_file_content(url: str) -> Dict[str, Any]:
     summary = download_db(url)
     content: Dict[str, Any] = {'files': {}, 'folders': {}}
+    if 'v' in summary:
+        content['v'] = summary['v']
     for file_name, file_description in summary['files'].items():
         content['files'][file_name] = file_description
 
@@ -1343,17 +1408,31 @@ def get_linux_latest_release_url(linux_github_repository: str, github_token: str
 
 # db diff tooling
 
-def mut_diff_db(left_db: Dict[str, Any], right_db: Dict[str, Any]) -> bool:
+def mut_diff_db(
+    left_db: Dict[str, Any],
+    right_db: Dict[str, Any],
+    left_archive_summaries: Optional[Dict[str, Any]] = None,
+    right_archive_summaries: Optional[Dict[str, Any]] = None,
+) -> bool:
+    left_indexes = tag_indexes(left_db)
+    right_indexes = tag_indexes(right_db)
+    left_archive_summaries = left_archive_summaries or {}
+    right_archive_summaries = right_archive_summaries or {}
+
     reformat_db_for_comparison(left_db)
     reformat_db_for_comparison(right_db)
+    reformat_archive_summaries_for_comparison(left_indexes, left_archive_summaries)
+    reformat_archive_summaries_for_comparison(right_indexes, right_archive_summaries)
 
-    left_str = json.dumps(left_db, sort_keys=True)
-    right_str = json.dumps(right_db, sort_keys=True)
+    left_comparison = {'database': left_db, 'archive_summaries': left_archive_summaries}
+    right_comparison = {'database': right_db, 'archive_summaries': right_archive_summaries}
+    left_str = json.dumps(left_comparison, sort_keys=True)
+    right_str = json.dumps(right_comparison, sort_keys=True)
 
     with tempfile.NamedTemporaryFile() as temp_left, tempfile.NamedTemporaryFile() as temp_right:
         with open(temp_left.name, 'w') as ndf, open(temp_right.name, 'w') as odf:
-            print(json.dumps(left_db, sort_keys=True, indent=True), file=ndf)
-            print(json.dumps(right_db, sort_keys=True, indent=True), file=odf)
+            print(json.dumps(left_comparison, sort_keys=True, indent=True), file=ndf)
+            print(json.dumps(right_comparison, sort_keys=True, indent=True), file=odf)
         try:
             run(f'git diff --no-index --exit-code {temp_left.name} {temp_right.name}')
         except ReturnCodeException as _:
@@ -1361,6 +1440,17 @@ def mut_diff_db(left_db: Dict[str, Any], right_db: Dict[str, Any]) -> bool:
             pass
 
     return left_str == right_str
+
+def tag_indexes(db: Dict[str, Any]) -> Dict[int, str]:
+    tag_dictionary = db.get('tag_dictionary', {})
+    if isinstance(tag_dictionary, dict):
+        return {tag_dictionary[word]: word for word in sorted(tag_dictionary)}
+    return {index: word for index, word in enumerate(tag_dictionary)}
+
+def reformat_archive_summaries_for_comparison(indexes: Dict[int, str], archive_summaries: Dict[str, Any]) -> None:
+    for summary in archive_summaries.values():
+        reformat_elements(indexes, summary.get('files', {}).values())
+        reformat_elements(indexes, summary.get('folders', {}).values())
 
 def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
     db['base_files_url'] = ''
@@ -1370,7 +1460,7 @@ def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
     db['db_url'] = db.get('db_url', '')
     db['default_options'] = db.get('default_options', {})
 
-    indexes: Dict[int, str] = {db['tag_dictionary'][word]: word for word in sorted(db.get('tag_dictionary', {}))}
+    indexes = tag_indexes(db)
 
     reformat_elements(indexes, db['files'].values())
     reformat_elements(indexes, db['folders'].values())
@@ -1384,7 +1474,17 @@ def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
             reformat_elements(indexes, zip_description['summary_file_content']['files'].values())
             reformat_elements(indexes, zip_description['summary_file_content']['folders'].values())
 
-    db['tag_dictionary'] = sorted(db.get('tag_dictionary', {}).keys())
+    for archive_description in db.get('archives', {}).values():
+        archive_description['base_files_url'] = ''
+        archive_description['archive_file'] = {}
+        archive_description['summary_file'] = {}
+
+        if 'summary_inline' in archive_description:
+            reformat_elements(indexes, archive_description['summary_inline']['files'].values())
+            reformat_elements(indexes, archive_description['summary_inline']['folders'].values())
+
+    tag_dictionary = db.get('tag_dictionary', {})
+    db['tag_dictionary'] = sorted(tag_dictionary.keys()) if isinstance(tag_dictionary, dict) else sorted(tag_dictionary)
 
 def reformat_elements(indexes: Dict[int, str], collection: List[Dict[str, Any]]) -> None:
     for dict in collection:

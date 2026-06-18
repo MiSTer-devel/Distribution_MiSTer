@@ -1380,12 +1380,6 @@ def mut_diff_db(left_db: Dict[str, Any], right_db: Dict[str, Any]) -> bool:
 
     return left_str == right_str
 
-def tag_indexes(db: Dict[str, Any]) -> Dict[int, str]:
-    tag_dictionary = db.get('tag_dictionary', {})
-    if isinstance(tag_dictionary, dict):
-        return {tag_dictionary[word]: word for word in sorted(tag_dictionary)}
-    return {index: word for index, word in enumerate(tag_dictionary)}
-
 def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
     db['base_files_url'] = ''
     db['latest_zip_url'] = ''
@@ -1394,7 +1388,7 @@ def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
     db['db_url'] = db.get('db_url', '')
     db['default_options'] = db.get('default_options', {})
 
-    indexes = tag_indexes(db)
+    indexes: Dict[int, str] = {db['tag_dictionary'][word]: word for word in sorted(db.get('tag_dictionary', {}))}
 
     reformat_elements(indexes, db['files'].values())
     reformat_elements(indexes, db['folders'].values())
@@ -1420,8 +1414,7 @@ def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
             reformat_elements(indexes, archive_description['summary_inline']['files'].values())
             reformat_elements(indexes, archive_description['summary_inline']['folders'].values())
 
-    tag_dictionary = db.get('tag_dictionary', {})
-    db['tag_dictionary'] = sorted(tag_dictionary.keys()) if isinstance(tag_dictionary, dict) else sorted(tag_dictionary)
+    db['tag_dictionary'] = sorted(db.get('tag_dictionary', {}).keys())
 
 def reformat_elements(indexes: Dict[int, str], collection: List[Dict[str, Any]]) -> None:
     for dict in collection:

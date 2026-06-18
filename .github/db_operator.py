@@ -377,6 +377,7 @@ console_cd_cores = ['turbografx16', 'megacd', 'cdi', 'psx', 'saturn', 'neogeo']
 console_cd_tag = 'console-cd'
 
 def is_pext_path(path: str) -> bool:
+    path = path.rstrip('/')
     return path == 'games' or path.startswith('games/') or path == 'docs' or path.startswith('docs/')
 
 
@@ -1051,7 +1052,7 @@ class ZipsBuilder:
             'target_folder': parent,
         }
 
-        if is_pext_path(parent.rstrip('/')):
+        if is_pext_path(parent):
             result['path'] = 'pext'
 
         self._archives[zip_id] = result

@@ -971,8 +971,7 @@ class ZipsBuilder:
 
         self._add_zip(zip_id,
             description=self._description(", ".join(zip_description["sources"]), path),
-            parent=self._folder_path(path),
-            mode='multi'
+            parent=path + '/'
         )
     
     def _simple_process(self, zip_id: str, source: str, zip_description: Dict[str, Any]) -> None:
@@ -988,12 +987,11 @@ class ZipsBuilder:
                 continue
             self._intermediate[zip_id]['folders'][outer] = {**self._db['folders'][outer]}
 
-        parent = self._folder_path(str(source2.parent))
+        parent = str(source2.parent) + '/'
 
         self._add_zip(zip_id,
             description=self._description(source2.name, parent),
-            parent=parent,
-            source=zip_description['source']
+            parent=parent
         )
 
     @staticmethod
@@ -1032,13 +1030,23 @@ class ZipsBuilder:
                 subfolder = Path(element).parts[subfolder_len]
                 subfolders.add(subfolder)
 
-    def _add_zip(self, zip_id: str, description: str, parent: str, mode: Optional[str] = None, source: Optional[str] = None) -> None:
+    def _add_zip(self, zip_id: str, description: str, parent: str) -> None:
         result = {
             'format': 'zip',
             'extract': 'all',
             'base_files_url': self._db['base_files_url'],
             'description': description,
-            'summary_file_content': self._build_summary_file_content(zip_id, parent),
+            'summary_file_content': {
+                'v': 1,
+                'files': {
+                    path: {**description, 'arc_id': zip_id, 'arc_at': path[len(parent):] if path.startswith(parent) else path}
+                    for path, description in self._intermediate[zip_id]['files'].items()
+                },
+                'folders': {
+                    path: {**description, 'arc_id': zip_id}
+                    for path, description in self._intermediate[zip_id]['folders'].items()
+                },
+            },
             'target_folder': parent,
         }
 
@@ -1048,35 +1056,8 @@ class ZipsBuilder:
         self._archives[zip_id] = result
 
     @staticmethod
-    def _folder_path(path: str) -> str:
-        if path in ['.', './', '']:
-            return './'
-        return path if path.endswith('/') else f'{path}/'
-
-    @staticmethod
     def _is_inside_source(element: str, source: str) -> bool:
         return element == source or element.startswith(source.rstrip('/') + '/')
-
-    def _build_summary_file_content(self, zip_id: str, target_folder: str) -> Dict[str, Any]:
-        return {
-            'v': 1,
-            'files': {
-                path: {**description, 'arc_id': zip_id, 'arc_at': self._archive_path(path, target_folder)}
-                for path, description in self._intermediate[zip_id]['files'].items()
-            },
-            'folders': {
-                path: {**description, 'arc_id': zip_id}
-                for path, description in self._intermediate[zip_id]['folders'].items()
-            },
-        }
-
-    @staticmethod
-    def _archive_path(path: str, target_folder: str) -> str:
-        if target_folder in ['.', './', '']:
-            return path
-        if not target_folder.endswith('/'):
-            target_folder += '/'
-        return path[len(target_folder):] if path.startswith(target_folder) else path
 
     def _enough_files_for_subfolder(self, composed_source: str) -> bool:
         qty = 0

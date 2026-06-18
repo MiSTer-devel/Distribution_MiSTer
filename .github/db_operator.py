@@ -1137,17 +1137,6 @@ def save_archives(archives: Dict[str, Any], base_files_url: str) -> None:
         archive_file_zip = save_archive_file_zip(archive_id, summary_file_content)
         archive_description['archive_file'] = {**new_file_description(archive_file_zip), 'url': f'{base_zips_url}{archive_file_zip}'}
 
-def save_zips(zips: Dict[str, Any], base_files_url: str) -> None:
-    base_zips_url = base_files_url % '<ZIPS_BRANCH_BASE_URL>'
-    for zip_id, zip_description in zips.items():
-        summary_file_content = zip_description['summary_file_content']
-        del zip_description['summary_file_content']
-
-        summary_file_zip = save_summary_file_zip(zip_id, summary_file_content)
-        zip_description['summary_file'] = {**new_file_description(summary_file_zip), 'url': f'{base_zips_url}{summary_file_zip}'}
-        contents_file_zip = save_contents_file_zip(zip_id, summary_file_content, zip_description['path'])
-        zip_description['contents_file'] = {**new_file_description(contents_file_zip), 'url': f'{base_zips_url}{contents_file_zip}'}
-
 def save_summary_file_zip(zip_id: str, summary_file_content: Dict[str, Any]) -> str:
     summary_file_zip = f'{zip_id}_summary.json.zip'
     with ZipFile(summary_file_zip, 'w', compression=ZIP_DEFLATED, compresslevel=1) as zipf:
@@ -1160,19 +1149,6 @@ def save_archive_file_zip(archive_id: str, summary_file_content: Dict[str, Any])
         for file, file_description in summary_file_content['files'].items():
             zipf.write(file, file_description['arc_at'])
     return archive_file_zip
-
-def save_contents_file_zip(zip_id: str, summary_file_content: Dict[str, Any], zip_path: str) -> str:
-    contents_file_zip = f'{zip_id}.zip'
-    with ZipFile(contents_file_zip, 'w', compression=ZIP_DEFLATED, compresslevel=1) as zipf:
-        for file in summary_file_content['files']:
-            source = file
-            if source[0] == '|':
-                source = source[1:]
-            target = file
-            if target.find(zip_path) == 0:
-                target = target[len(zip_path):]
-            zipf.write(source, target)
-    return contents_file_zip
 
 def save_report_terms_in_readme(terms: List[str]) -> None:
     try:

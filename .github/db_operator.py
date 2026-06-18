@@ -1284,15 +1284,12 @@ def get_url_db(url: str) -> Dict[str, Any]:
         return db
 
     for archive_description in db['archives'].values():
-        if 'summary_file' in archive_description:
-            summary_url = archive_description['summary_file']['url']
-            try:
-                archive_description['summary_file_content'] = get_summary_file_content(summary_url)
-            except ReturnCodeException as e:
-                print('ReturnCodeException at get_summary_file_content ' + summary_url)
-                print(e)
-        elif 'summary_inline' in archive_description:
-            archive_description['summary_file_content'] = json.loads(json.dumps(archive_description['summary_inline']))
+        summary_url = archive_description['summary_file']['url']
+        try:
+            archive_description['summary_file_content'] = get_summary_file_content(summary_url)
+        except ReturnCodeException as e:
+            print('ReturnCodeException at get_summary_file_content ' + summary_url)
+            print(e)
 
     return db
 
@@ -1365,9 +1362,6 @@ def reformat_db_for_comparison(db: Dict[str, Any]) -> None:
         if 'summary_file_content' in archive_description:
             reformat_elements(indexes, archive_description['summary_file_content']['files'].values())
             reformat_elements(indexes, archive_description['summary_file_content']['folders'].values())
-        if 'summary_inline' in archive_description:
-            reformat_elements(indexes, archive_description['summary_inline']['files'].values())
-            reformat_elements(indexes, archive_description['summary_inline']['folders'].values())
 
     db['tag_dictionary'] = sorted(db.get('tag_dictionary', {}).keys())
 

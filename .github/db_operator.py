@@ -986,6 +986,7 @@ class ZipsBuilder:
             if outer == '.' or outer == '':
                 continue
             self._intermediate[zip_id]['folders'][outer] = {**self._db['folders'][outer]}
+            self._intermediate[zip_id]['folders'][outer]['arc_id'] = zip_id
 
         parent = str(source2.parent) + '/'
 
@@ -1017,7 +1018,8 @@ class ZipsBuilder:
     def _move_elements(self, zip_id: str, source: str, key: str) -> None:
         for element in list(self._db[key]):
             if self._is_inside_source(element, source):
-                self._intermediate[zip_id][key][element] = {**self._db[key][element], 'arc_id': zip_id}
+                self._intermediate[zip_id][key][element] = self._db[key][element]
+                self._intermediate[zip_id][key][element]['arc_id'] = zip_id
                 del self._db[key][element]
 
     def _fill_subfolders(self, subfolders: Set[str], subfolder_len: int, source: str, key: str) -> None:
@@ -1031,7 +1033,9 @@ class ZipsBuilder:
                 subfolders.add(subfolder)
 
     def _add_zip(self, zip_id: str, description: str, parent: str) -> None:
+        raw_files_size = 0
         for path, file_description in self._intermediate[zip_id]['files'].items():
+            raw_files_size += file_description['size']
             file_description['arc_at'] = path[len(parent):] if path.startswith(parent) else path
 
         result = {
@@ -1039,6 +1043,7 @@ class ZipsBuilder:
             'extract': 'all',
             'base_files_url': self._db['base_files_url'],
             'description': description,
+            'raw_files_size': raw_files_size,
             'summary_file_content': {
                 'v': 1,
                 'folders': self._intermediate[zip_id]['folders'],

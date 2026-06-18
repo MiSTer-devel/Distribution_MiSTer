@@ -1017,7 +1017,7 @@ class ZipsBuilder:
     def _move_elements(self, zip_id: str, source: str, key: str) -> None:
         for element in list(self._db[key]):
             if self._is_inside_source(element, source):
-                self._intermediate[zip_id][key][element] = {**self._db[key][element]}
+                self._intermediate[zip_id][key][element] = {**self._db[key][element], 'arc_id': zip_id}
                 del self._db[key][element]
 
     def _fill_subfolders(self, subfolders: Set[str], subfolder_len: int, source: str, key: str) -> None:
@@ -1031,6 +1031,9 @@ class ZipsBuilder:
                 subfolders.add(subfolder)
 
     def _add_zip(self, zip_id: str, description: str, parent: str) -> None:
+        for path, file_description in self._intermediate[zip_id]['files'].items():
+            file_description['arc_at'] = path[len(parent):] if path.startswith(parent) else path
+
         result = {
             'format': 'zip',
             'extract': 'all',
@@ -1038,14 +1041,8 @@ class ZipsBuilder:
             'description': description,
             'summary_file_content': {
                 'v': 1,
-                'files': {
-                    path: {**description, 'arc_id': zip_id, 'arc_at': path[len(parent):] if path.startswith(parent) else path}
-                    for path, description in self._intermediate[zip_id]['files'].items()
-                },
-                'folders': {
-                    path: {**description, 'arc_id': zip_id}
-                    for path, description in self._intermediate[zip_id]['folders'].items()
-                },
+                'folders': self._intermediate[zip_id]['folders'],
+                'files': self._intermediate[zip_id]['files'],
             },
             'target_folder': parent,
         }

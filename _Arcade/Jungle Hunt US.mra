@@ -1,0 +1,71 @@
+<misterromdescription>
+	<n>Jungle Hunt (US)</n>
+	<mameversion>0245</mameversion>
+	<setname>jungleh</setname>
+	<parent>junglek</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1982</year>
+	<manufacturer>Taito America Corporation</manufacturer>
+	<category>Platform</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>horizontal (180)</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Jump,-,Coin A,Start 1P,Coin B,Start 2P,Service,Pause"
+	         default="A,Select,Start,X,Y,L,R"/>
+	<switches default="00,3F,00,FF,00,00,00,00">
+		<dip bits="8,9" name="Finish Bonus" ids="Timerx3,Timerx2,Timerx1,None"/>
+		<dip bits="11,12" name="Lives" ids="6,5,4,3"/>
+		<dip bits="14" name="Flip Screen" ids="Off,On"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="13" name="Service Mode" ids="On,Off"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="24,25" name="Bonus Life" ids="30000,20000,10000,None"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Infinite Lives" ids="Yes,No"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="junglek.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="6bf118d8" name="kn41a"/>
+		<part crc="bade53af" name="kn42.bin"/>
+		<part crc="a20e5a48" name="kn43.bin"/>
+		<part crc="44c770d3" name="kn44.bin"/>
+		<part crc="f60a3d06" name="kn45.bin"/>
+		<part crc="ac89c155" name="kn46a"/>
+		<part crc="5c3199e0" name="kn47.bin"/>
+		<part crc="ef80e931" name="kn48a"/>
+		<!-- Main CPU - Pass 2 (base + banked) [0x8000/0x8000] -->
+		<part crc="6bf118d8" name="kn41a"/>
+		<part crc="bade53af" name="kn42.bin"/>
+		<part crc="a20e5a48" name="kn43.bin"/>
+		<part crc="44c770d3" name="kn44.bin"/>
+		<part crc="f60a3d06" name="kn45.bin"/>
+		<part crc="ac89c155" name="kn46a"/>
+		<!-- Padding bank gap: 0x1000 -->
+		<part repeat="0x1000"> 00 </part>
+		<part crc="1a9c0a26" name="kn60.bin"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="b139e792" name="kn49a"/>
+		<part crc="1046019f" name="kn50a"/>
+		<part crc="da50c8a4" name="kn51a"/>
+		<part crc="0444f06c" name="kn52a"/>
+		<part crc="6a17803e" name="kn53a"/>
+		<part crc="d41428c7" name="kn54a"/>
+		<part crc="70aef58f" name="kn55.bin"/>
+		<part crc="679c1101" name="kn56a"/>
+		<!-- Audio CPU ROMs [0x3000/0x4000] -->
+		<part crc="62f6763a" name="kn57-1.bin"/>
+		<part crc="9ef46c7f" name="kn58-1.bin"/>
+		<part crc="cee485fc" name="kn59-1.bin"/>
+		<!-- Padding audio: 0x1000 -->
+		<part repeat="0x1000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+	</rom>
+	<rom index="1">
+		<part>0</part>
+	</rom>
+</misterromdescription>

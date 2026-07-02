@@ -1,0 +1,77 @@
+<misterromdescription>
+    <n>Funky Fish</n>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Funky Fish</series>
+    <year>1981</year>
+    <manufacturer>Sun Electronics</manufacturer>
+    <category>Platform</category>
+
+    <setname>fnkyfish</setname>
+    <parent>fnkyfish</parent>
+    <mameversion>0270</mameversion>
+    <rbf>Kangaroo</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (cw)</rotation>
+    <flip>no</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>2</num_buttons>
+    <buttons names="Not Used,Bubbles / Tongue,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="00">
+        <dip bits="0"     name="Lives" ids="3,5"/>
+        <dip bits="1"     name="Cabinet" ids="Cocktail,Upright"/>
+        <dip bits="2"     name="Flip Screen" ids="Off,On"/>
+        <dip bits="3"     name="Unknown" ids="On, Off"/>
+        <dip bits="4"     name="Unknown" ids="On, Off"/>
+        <dip bits="5"     name="Unknown" ids="On, Off"/>
+        <dip bits="6"     name="Unknown" ids="On, Off"/>
+        <dip bits="7"     name="Unknown" ids="On, Off"/>
+    </switches>
+
+    <!-- Index 0: Main CPU ROMs (16KB — only 4 ROMs vs Kangaroo's 6) -->
+    <rom index="0" md5="none" zip="fnkyfish.zip">
+        <part crc="af728803" name="tvg_64.0"/>
+        <part crc="71959e6b" name="tvg_65.1"/>
+        <part crc="5ccf68d4" name="tvg_66.2"/>
+        <part crc="938ff36f" name="tvg_67.3"/>
+	<part repeat="0x2000">FF</part>
+    </rom>
+
+    <!-- Index 1: Sound CPU ROM (4KB) -->
+    <rom index="1" md5="none" zip="fnkyfish.zip">
+        <part crc="d36bb2be" name="tvg_68.8"/>
+    </rom>
+
+    <!-- Index 2: Blitter GFX ROMs (16KB) -->
+    <rom index="2" md5="none" zip="fnkyfish.zip">
+        <part crc="cd532d0b" name="tvg_69.v0"/>
+        <part crc="a59c9713" name="tvg_71.v2"/>
+        <part crc="fd308ef1" name="tvg_70.v1"/>
+        <part crc="6ae9b584" name="tvg_72.v3"/>
+    </rom>
+
+	<rom index="3" md5="none">
+		<part>
+		02 FA F0 80 00 FF 00 02 00 02 00 01 11 11 00 00
+		00 00 E0 30 00 09 00 00
+		</part>
+	</rom>
+	<rom index="4"></rom>
+	<nvram index="4" size="9"></nvram>
+
+    <!-- Index 5: game-select mod byte. 01 = Funky Fish. Kangaroo MRAs omit this → core reads mod=0. -->
+    <rom index="5"><part>01</part></rom>
+
+    <remark>Same hardware as Kangaroo bootleg — no MCU</remark>
+    <mratimestamp>20260412000000</mratimestamp>
+</misterromdescription>

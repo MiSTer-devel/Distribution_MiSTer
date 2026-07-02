@@ -1,0 +1,91 @@
+<misterromdescription>
+	<name>The Gladiator (ver. 104)</name>
+	<setname>theglad104</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|theglad104.zip|theglad.zip">
+		<!-- SYSTEM INFO (game id = 20) -->
+		<part>14 00</part>
+
+		<!-- BIOS PROG / TILE / MUSIC -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG (68k, plaintext) -->
+		<part>03 00080000 00100000</part>
+		<part name="v100.u6" crc="bcf3b172"/>
+
+		<!-- CART TILE -->
+		<part>04 00800000 00180000</part>
+		<part name="igs_t04601w64m.u33" crc="e5dab371"/>
+
+		<!-- CART MUSIC (ICS @0x400000) -->
+		<part>05 00800000 00400000</part>
+		<part name="igs_w04601b64m.u1" crc="5f15ddb3"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 01800000 00000000</part>
+		<part name="igs_a04601w64m.u2" crc="d9b2e004"/>
+		<part name="igs_a04602w64m.u4" crc="14f22308"/>
+		<part name="igs_a04603w64m.u6" crc="8f621e17"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 00c00000 00000000</part>
+		<part name="igs_b04601w64m.u11" crc="ee72bccf"/>
+		<part name="igs_b04602w32m.u12" crc="7dba9c38"/>
+
+		<!-- IGS027A INTERNAL ARM ROM: synthesized 0x188 execute-only area
+		     (NO_DUMP on hardware; reconstructed as MAME does) followed by the
+		     real dumped internal-ROM body at 0x188.  Total 0x4000. -->
+		<part>09 00004000 00000000</part>
+		<part>
+			0A 00 00 EA FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA 00 F0 9F E5
+			10 00 00 08 10 00 00 08 FE FF FF EA FE FF FF EA
+			D2 00 A0 E3 00 F0 21 E1 01 40 A0 E3 06 4B 84 E2
+			FA 0C A0 E3 04 D8 80 E0 D1 00 A0 E3 00 F0 21 E1
+			F6 0C A0 E3 04 D8 80 E0 D7 00 A0 E3 00 F0 21 E1
+			FF 0C A0 E3 04 D8 80 E0 DB 00 A0 E3 00 F0 21 E1
+			40 41 C4 E1 FE 0C A0 E3 04 D8 80 E0 D3 00 A0 E3
+			00 F0 21 E1 01 4A A0 E3 01 0B A0 E3 04 D8 80 E0
+			0F 5A A0 E3 08 00 A0 E3 05 88 80 E0 10 00 A0 E3
+			00 00 C8 E5 05 78 A0 E1 01 6A A0 E3 12 00 A0 E3
+			02 0A 80 E2 06 68 80 E0 00 60 87 E5 D3 00 A0 E3
+			00 F0 21 E1 01 40 A0 E3 06 4B 84 E2 F2 0C A0 E3
+			04 D8 80 E0 13 00 A0 E3 00 F0 21 E1 28 00 00 EA
+			FE FF FF EA FE FF FF EA 04 E0 2D E5 D3 00 A0 E3
+			00 F0 21 E1 04 E0 9D E4 1E FF 2F E1 04 E0 2D E5
+			13 00 A0 E3 00 F0 21 E1 04 E0 9D E4 1E FF 2F E1
+			D1 00 A0 E3 00 F0 21 E1 B8 D0 9F E5 D3 00 A0 E3
+			00 F0 21 E1 B0 D0 9F E5 B8 10 9F E5 00 00 A0 E3
+			00 00 81 E5 02 F3 A0 E3 FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA FE FF FF EA
+			1E FF 2F E1 FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA 5C 10 9F E5
+		</part>
+		<part name="theglad_igs027a_v100_overseas.bin" crc="02fe6f52"/>
+
+		<!-- IGS027A EXTERNAL ARM ROM (encrypted; decrypted at load) -->
+		<part>0a 00200000 00000000</part>
+		<part name="v104_u26.u26" crc="81b5df6d"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

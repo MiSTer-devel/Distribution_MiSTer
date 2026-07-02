@@ -1,0 +1,76 @@
+<misterromdescription>
+  <name>Oni - The Ninja Master (Japan)</name>
+  <mameversion>0275</mameversion>
+  <setname>nmaster</setname>
+  <year>1995</year>
+  <manufacturer>Banpresto / Pandorabox</manufacturer>
+  <category>Fighting</category>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <rotation>horizontal</rotation>
+  <region>Japan</region>
+  <rbf>CaveBanpresto</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="nmaster.zip|metmqstr.zip" md5="none" address="0x30000000">
+    <!-- prog ROMs, packed sequentially for the core's Metamoqester mapper -->
+    <interleave output="16">
+      <part name="bp947a_n.u25" crc="748cc514" map="12" />
+    </interleave>
+    <interleave output="16">
+      <part name="bp947a.u28" crc="8c55decf" map="12" />
+    </interleave>
+    <interleave output="16">
+      <part name="bp947a.u29" crc="cf0f3f3b" map="12" />
+    </interleave>
+
+<!-- erased 93C46 EEPROM seed -->
+<part>
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+</part>
+
+<!-- sound program ROM -->
+<part name="bp947a.u20" crc="a4a36170" />
+
+<!-- sprites -->
+<part name="bp947a.u49" crc="09749531" />
+<part name="bp947a.u50" crc="19cea8b2" />
+<part name="bp947a.u51" crc="c19bed67" />
+<part name="bp947a.u52" crc="70c64875" />
+
+<!-- layer 0 -->
+<part name="bp947a.u48" crc="04ff6a3d" />
+
+<!-- layer 1 -->
+<part name="bp947a.u47" crc="0de42827" />
+
+<!-- layer 2 -->
+<part name="bp947a.u46" crc="0f9c906e" />
+
+<!-- PCM ROMs -->
+<part name="bp947a.u42" crc="2ce8ff2a" />
+<part name="bp947a.u37" crc="c3077c8f" />
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>04</part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="128" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0180 00f0 0002 000C 0014 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Button 1,Button 2,Button 3,Button 4,Start,Coin,Pause" default="Y,X,B,A,R,L,Start" />
+</misterromdescription>

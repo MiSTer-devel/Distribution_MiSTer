@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Flying Ball (cflyball) — NO DONGLE (decocass_nodong_state)
+
+  Per MAME decocass.cpp:
+  - Driver entry:  GAME(1985, cflyball, decocass, decocass, cflyball,
+                        decocass_nodong_state, ...)   (line 2194)
+  - ROM_START:     decocass.cpp:2024-2031
+  - BIOS:          DECOCASS_BIOS_B_ROMS (USA, BIOS B)
+  - Cassette:      cflyball.cas (64 KB) CRC cb40d043
+  - No dongle data at all (decocass.cpp:2027 — "no dongle data")
+
+  Why this MRA exists:
+  - Diagnostic target for boot-stall debugging. Same BIOS / audio BIOS / MCU
+    ROM / PROMs as Lock'n'Chase and Burgertime, but bypasses the entire
+    dongle path. If cflyball boots to DECO logo but the dongled cores
+    don't, the bug is dongle-side. If cflyball ALSO fails to boot, the
+    bug is in the BIOS/CPU/IRQ/memory-map layer, independent of dongles.
+
+  Dongle config (matches rtl/dongle/dongle_mux.v case statement):
+  - dongle_type = 0x06   (nodong path → cpu_din_low4 = mcu_status_low[3:0])
+  - game_id     = 0x23   (cflyball driver index — Flying Ball)
+                         Note: nodong path ignores game_id, so any value works.
+  - swap_mode   = 0x00   (unused for nodong)
+
+  Region map matches rom_loader.v (rtl/rom/rom_loader.v):
+    $00000-$00FFF  Main 6502 BIOS  (4 KB)
+    $01000-$017FF  Audio 6502 BIOS (2 KB)
+    $01800-$01BFF  MCU ROM         (1 KB)
+    $01C00-$01CFF  BIOS PROMs      (96 B + 160 B pad)
+    $01D00-$02CFF  Dongle PROM     (4 KB; ALL ZEROS for nodong)
+    $02D00-$02DFF  Spare
+    $02E00-$02EFF  Metadata (dongle_type / game_id / swap_mode)
+    $02F00-$02FFF  Reserved
+    $03000-       Cassette image (cflyball.cas, 64 KB)
+-->
+<misterromdescription>
+    <name>Flying Ball (DECO)</name>
+    <setname>cflyball</setname>
+    <rbf>DECOCassette</rbf>
+    <year>1985</year>
+    <manufacturer>Data East</manufacturer>
+    <category>Action</category>
+
+    <rom index="0" zip="decocass.zip|cflyball.zip" md5="none">
+        <!-- $00000-$00FFF: Main 6502 BIOS (4 KB) — BIOS B (USA) -->
+        <part name="v0b-.7e" crc="23d929b7"/>
+
+        <!-- $01000-$017FF: Audio 6502 BIOS (2 KB) -->
+        <part name="v1-.5a" crc="b66b2c2a"/>
+
+        <!-- $01800-$01BFF: MCU ROM (1 KB) -->
+        <part name="cassmcu.1c" crc="a6df18fd"/>
+
+        <!-- $01C00-$01CFF: BIOS PROMs (3 x 32 B = 96 B + 160 B pad) -->
+        <part name="v2.3m"  crc="238fdb40"/>
+        <part name="v4.10d" crc="3b5836b4"/>
+        <part name="v3.3j"  crc="51eef657"/>
+        <part repeat="0xA0">00</part>
+
+        <!-- $01D00-$02CFF: Dongle PROM region (4 KB; NO DONGLE — all zeros) -->
+        <part repeat="0x1000">00</part>
+
+        <!-- $02D00-$02DFF: Spare -->
+        <part repeat="0x100">00</part>
+
+        <!-- $02E00-$02EFF: Metadata (dongle_type=06 nodong, game_id=23, swap_mode=00) -->
+        <part>06 23 00</part>
+        <part repeat="0xFD">00</part>
+
+        <!-- $02F00-$02FFF: Reserved -->
+        <part repeat="0x100">00</part>
+
+        <!-- $03000-: Cassette image (64 KB) -->
+        <part name="cflyball.cas" crc="cb40d043"/>
+    </rom>
+
+    <!-- DIP switches per MAME cflyball: PORT_INCLUDE(decocass) for DSW1 (unchanged),
+         PORT_MODIFY DSW2 (Lives/Bonus/Push Backs). sw[2]=DSW1 (bits 16-23), sw[3]=DSW2 (24-31).
+         Defaults == MAME power-on: DSW1=0x3F, DSW2=0xFF.
+         BOOT-CRITICAL bit is DSW1 "Type of Tape" (bits 20,21, base decocass, "Used by the bios"):
+         MUST be "MD (Small)"(=3,0x30) or the BIOS ($F347) skips MCU priming -> CASSETTE ERROR 59.
+         The DSW2 fields below are gameplay options and do NOT affect the boot/handshake path. -->
+
+    <buttons names="Button1,Button2,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+    <!-- DIPs from MAME decocass.cpp (input port cflyball); Country Code bits="21,23" (inclusive range). DSW1/DSW2 byte-swapped so RTL feeds .dsw2 from sw[2], .dsw1 from sw[3]. -->
+    <switches default="00,00,FF,3F">
+        <dip bits="16" name="Lives" ids="5,3"/>
+        <dip bits="17,18" name="Bonus Life" ids="None,70000,50000,20000"/>
+        <dip bits="19" name="Push Backs" ids="3,2"/>
+        <dip bits="21,23" name="Country Code" ids="inv,inv,F,E,D,C,B,A"/>
+        <dip bits="24,25" name="Coin A" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="26,27" name="Coin B" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="28,29" name="Type of Tape" ids="MT Big,inv,inv,MD Small"/>
+        <dip bits="30" name="Cabinet" ids="Upright,Cocktail"/>
+    </switches>
+</misterromdescription>

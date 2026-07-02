@@ -1,0 +1,50 @@
+<misterromdescription>
+    <name>The Electric Yo-Yo</name>
+    <setname>elecyoyo</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1982</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <buttons names="Not Used,Not Used,Test Advance,Not Used,Coin,Start 1P,Start 2P,Pause"  default="A,B,X,Y,Select,Start,R,L"/>
+
+    <rom index="0" zip="elecyoyo.zip" md5="none">
+        <!-- Data CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="yy14"   crc="0d2edcb9"/>
+        <part name="yy15"   crc="a91f01e3"/>
+        <part name="yy16-1" crc="2710f360"/>
+        <part name="yy17"   crc="25fd489d"/>
+        <part name="yy18"   crc="0b6661c0"/>
+        <part name="yy19-1" crc="95b8b244"/>
+
+        <!-- Video CPU: 6x 4KB at $A000-$FFFF -->
+        <part name="yy5"    crc="3793fec5"/>
+        <part name="yy6"    crc="2e8b1265"/>
+        <part name="yy7"    crc="20f93411"/>
+        <part name="yy8"    crc="926f90c8"/>
+        <part name="yy9"    crc="2f999480"/>
+        <part name="yy10"   crc="b31d20e2"/>
+
+        <!-- Audio CPU: 2KB at $F800 -->
+        <part repeat="0x2800">00</part>
+        <part name="yy27"   crc="5a2aa0f3"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x06 (ELECTRIC YO-YO) -->
+    <rom index="1">
+        <part>06</part>
+    </rom>
+
+    <!-- ROM index 2: MCU EPROM (MC68705P3) -->
+    <rom index="2" zip="elecyoyo.zip" md5="none">
+        <part name="yy101" crc="3cf13038"/>
+    </rom>
+
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

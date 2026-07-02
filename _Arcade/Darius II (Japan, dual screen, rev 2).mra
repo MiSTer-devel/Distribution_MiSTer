@@ -1,0 +1,100 @@
+<misterromdescription>
+  <name>Darius II (Japan, dual screen, rev 2)</name>
+  <setname>darius2d</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Darius2WarriorBlade</rbf>
+  <year>1989</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Shooter</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <!--
+    Darius II 2-screen variant — MAME darius2d set.
+    Runs on the warriorb.cpp hardware: single 68000 (no sub-CPU),
+    2 TC0100SCN tile chips, TC0220IOC, YM2610.
+  -->
+
+  <switches default="FF,FF">
+    <!-- DSWA (bits 0-7) — MAME darius2d input, coinage JAPAN_OLD -->
+    <dip bits="0"     ids="On,Off"                     name="Difficulty Enhancement"/>
+    <dip bits="1"     ids="Fast,Normal"                name="Auto Fire"/>
+    <dip bits="2"     ids="On,Off"                     name="Service Mode"/>
+    <dip bits="3"     ids="Off,On"                     name="Demo Sounds"/>
+    <dip bits="4,5"   ids="2C/3C,2C/1C,1C/2C,1C/1C"    name="Coin A"/>
+    <dip bits="6,7"   ids="2C/3C,2C/1C,1C/2C,1C/1C"    name="Coin B"/>
+    <!-- DSWB (bits 8-15) -->
+    <dip bits="8,9"   ids="Hardest,Hard,Easy,Medium"   name="Difficulty"/>
+    <dip bits="10,11" ids="every 1000k,every 900k,every 800k,every 700k" name="Bonus Life"/>
+    <dip bits="12,13" ids="6,5,4,3"                    name="Lives"/>
+    <dip bits="14"    ids="On,Off"                     name="Invulnerability (Cheat)"/>
+    <dip bits="15"    ids="No,Yes"                     name="Allow Continue"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <rom index="0" zip="darius2.zip" md5="None">
+
+    <!-- ==================== Main CPU 68000 (1MB region) ====================
+         MAME darius2d_main_map: 0x000000-0x0FFFFF ROM
+         Program code 0x00000-0x7FFFF (4 × 128KB interleaved bytes)
+         Data ROM      0x80000-0xFFFFF (single 512KB ROM_LOAD16_WORD_SWAP)
+         MAME ROM_LOAD16_BYTE: even offset = HIGH byte (map="10"), odd = LOW (map="01") -->
+    <interleave output="16">
+      <part name="darius2d/c07_20-2.74" crc="a0f345b8" map="10"/>
+      <part name="darius2d/c07_19-2.73" crc="925412c6" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="darius2d/c07_21-2.76" crc="bdd60e37" map="10"/>
+      <part name="darius2d/c07_18-2.71" crc="23fcd89b" map="01"/>
+    </interleave>
+
+    <!-- Data ROM 512KB (ROM_LOAD16_WORD_SWAP) -->
+    <interleave output="16">
+      <part name="darius2d/c07-09.75" crc="cc69c2ce" map="21"/>
+    </interleave>
+
+    <!-- ==================== Audio Z80 (128KB) ==================== -->
+    <part name="darius2d/c07_17.69" crc="ae16c905"/>
+
+    <!-- ==================== Sprite ROMs (2MB) ====================
+         ROM_LOAD64_WORD: 4 ROMs × 512KB interleaved per 64-bit word.
+         Each ROM contributes a 16-bit word at offset 0/2/4/6 (mod 8). -->
+    <interleave output="64">
+      <part name="darius2d/c07-05.24" crc="fb6d0550" map="00000021"/>
+      <part name="darius2d/c07-06.27" crc="5eebbcd6" map="00002100"/>
+      <part name="darius2d/c07-07.26" crc="fd9f9e74" map="00210000"/>
+      <part name="darius2d/c07-08.25" crc="a07dc846" map="21000000"/>
+    </interleave>
+
+    <!-- ==================== Tile SCN ROM #1 (1MB) ==================== -->
+    <interleave output="16">
+      <part name="c07-03.12" crc="189bafce" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-04.11" crc="50421e81" map="12"/>
+    </interleave>
+
+    <!-- ==================== Tile SCN ROM #2 (1MB — identical content) ==================== -->
+    <interleave output="16">
+      <part name="c07-03.12" crc="189bafce" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-04.11" crc="50421e81" map="12"/>
+    </interleave>
+
+    <!-- ==================== YM2610 ADPCM-A (1MB) ==================== -->
+    <part name="c07-10.95" crc="4bbe0ed9"/>
+    <part name="c07-11.96" crc="3c815699"/>
+
+    <!-- ==================== YM2610 ADPCM-B / Delta-T (512KB) ==================== -->
+    <part name="c07-12.107" crc="e0b71258"/>
+
+  </rom>
+</misterromdescription>

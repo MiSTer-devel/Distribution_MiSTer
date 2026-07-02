@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Burger Time (cbtime) — Type 3 Dongle (PAL), version 7-B-0
+
+  MAME ROM references (verified from decocass.cpp):
+  - Main BIOS:   v0b-.7e         (4 KB)   CRC 23d929b7  @ 0xf000
+  - Audio BIOS:  v1-.5a          (2 KB)   CRC b66b2c2a  @ 0xf800
+  - MCU:         cassmcu.1c      (1 KB)   CRC a6df18fd
+  - PROMs:       v2.3m + v4.10d + v3.3j  (32 B each, 96 B total)
+  - Dongle:      dp-126_b.dgl    (4 KB)   CRC 25bec0f0  ← full 4 KB now loaded
+  - Cassette:    dt-126_7b.cas   (32 KB)  CRC 56d7dc58
+
+  Dongle config:
+  - dongle_type = 0x03 (Type 3 / PAL)
+  - game_id     = 0x00 (unused for Type 3)
+  - swap_mode   = 0x01 (TYPE3_SWAP_12 — swap bits 1↔2; from decocass_m.cpp:1590)
+
+  Region map (matches rom_loader.v):
+    $00000-$00FFF main BIOS (4 KB)
+    $01000-$017FF audio BIOS (2 KB)
+    $01800-$01BFF MCU ROM (1 KB)
+    $01C00-$01CFF palette PROMs (256 B)
+    $01D00-$02CFF dongle PROM region (UNUSED — dongle now loads via ioctl index 1 -> SDRAM; zero-filled)
+    $02D00-$02DFF spare (256 B)
+    $02E00-$02EFF metadata (256 B)   <-- dongle_type/game_id/swap_mode still here (index 0)
+    $02F00-$02FFF reserved (256 B)
+    $03000+       cassette
+  index 1: Type-3 dongle PROM (dp-126_b.dgl, 4 KB) -> SDRAM (read by all dongle types via dprom_addr)
+-->
+<misterromdescription>
+    <name>Burger Time</name>
+    <setname>cbtime</setname>
+    <rbf>DECOCassette</rbf>
+    <year>1982</year>
+    <manufacturer>Data East</manufacturer>
+    <category>Platformer</category>
+
+    <rom index="0" zip="decocass.zip|cbtime.zip" md5="none">
+        <!-- $00000-$00FFF: Main 6502 BIOS -->
+        <part name="v0b-.7e" crc="23d929b7"/>
+
+        <!-- $01000-$017FF: Audio 6502 BIOS -->
+        <part name="v1-.5a" crc="b66b2c2a"/>
+
+        <!-- $01800-$01BFF: MCU ROM -->
+        <part name="cassmcu.1c" crc="a6df18fd"/>
+
+        <!-- $01C00-$01CFF: BIOS PROMs (96 B + 160 B pad) -->
+        <part name="v2.3m"  crc="238fdb40"/>
+        <part name="v4.10d" crc="3b5836b4"/>
+        <part name="v3.3j"  crc="51eef657"/>
+        <part repeat="0xA0">00</part>
+
+        <!-- $01D00-$02CFF: legacy 4 KB dongle PROM region (UNUSED — dongle moved to ioctl index 1 -> SDRAM; zeros) -->
+        <part repeat="0x1000">00</part>
+
+        <!-- $02D00-$02DFF: Spare -->
+        <part repeat="0x100">00</part>
+
+        <!-- $02E00-$02EFF: Metadata (Type 3, game_id=1A = DECO release 26, swap_mode=01 = TYPE3_SWAP_12) -->
+        <part>03 1A 01</part>
+        <part repeat="0xFD">00</part>
+
+        <!-- $02F00-$02FFF: Reserved -->
+        <part repeat="0x100">00</part>
+
+        <!-- $03000-: Cassette image -->
+        <part name="dt-126_7b.cas" crc="56d7dc58"/>
+    </rom>
+
+    <!-- DONGLE-NEW-SPACE-2026-06-11: Type-3 dongle PROM on its OWN ioctl index = 1. The wrapper reads ALL
+         dongle types from SDRAM via dongle_ld = (ioctl_index==1) (Arcade-DECOCassette.sv:1035,1084); the legacy
+         $01D00 index-0 BRAM path is gone (L1008). Stream is 0-based, so dongle offset = ioctl_addr. -->
+    <rom index="1" zip="decocass.zip|cbtime.zip" md5="none">
+        <part name="dp-126_b.dgl" crc="25bec0f0"/>
+    </rom>
+
+    <!-- DIP format matched to the proven Kyugo MRA: NO base attr, bits-first. BIT31-FIX-2026-06-29: DSW1/DSW2
+         byte order swapped vs hardware (RTL feeds .dsw2(sw[2]), .dsw1(sw[3])); Country Code on bits 21-23, default A. -->
+    <switches default="00,00,FF,3F">
+        <!-- DSW2 (cbtime) -> switch byte 2 = bits 16-23 -->
+        <dip bits="16"       name="Lives"               ids="5,3"/>
+        <dip bits="17,18"    name="Bonus Life"          ids="50000,40000,30000,20000"/>
+        <dip bits="19"       name="Enemies"             ids="6,4"/>
+        <dip bits="20"       name="End of Level Pepper" ids="Yes,No"/>
+        <dip bits="21,23"    name="Country Code"        ids="inv,inv,F,E,D,C,B,A"/>
+        <!-- DSW1 (base decocass) -> switch byte 3 = bits 24-31 (bit 31 = VBLANK, not a DIP) -->
+        <dip bits="24,25"    name="Coin A"              ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="26,27"    name="Coin B"              ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="28,29"    name="Type of Tape"        ids="MT Big,inv,inv,MD Small"/>
+        <dip bits="30"       name="Cabinet"             ids="Upright,Cocktail"/>
+    </switches>
+
+    <buttons names="Button1,Button2,Coin,Start" default="A,B,Select,Start"/>
+</misterromdescription>

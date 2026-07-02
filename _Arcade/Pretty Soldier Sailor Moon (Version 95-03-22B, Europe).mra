@@ -1,0 +1,75 @@
+<misterromdescription>
+  <name>Pretty Soldier Sailor Moon (Version 95/03/22B, Europe)</name>
+  <mameversion>0275</mameversion>
+  <setname>sailormn</setname>
+  <year>1995</year>
+  <manufacturer>Gazelle (Banpresto license)</manufacturer>
+  <category>Beat 'em up</category>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <rotation>horizontal</rotation>
+  <region>Europe</region>
+  <rbf>CaveBanpresto</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="sailormn.zip" md5="none" address="0x30000000">
+    <!-- prog ROMs -->
+    <interleave output="16">
+      <part name="bpsm945a.u45" crc="898c9515" map="12" />
+    </interleave>
+    <interleave output="16">
+      <part name="bpsm.u46" crc="32084e80" map="12" />
+    </interleave>
+
+    <!-- EEPROM -->
+    <part name="sailormn_europe.nv" crc="59a7dc50" />
+
+    <!-- sound program ROM -->
+    <part name="bpsm945a.u9" crc="438de548" />
+
+    <!-- sprites -->
+    <part name="bpsm.u76" crc="a243a5ba" />
+    <part name="bpsm.u77" crc="5179a4ac" />
+
+    <!-- layer 0 -->
+    <part name="bpsm.u53" crc="b9b15f83" />
+
+    <!-- layer 1 -->
+    <part name="bpsm.u54" crc="8f00679d" />
+
+    <!-- layer 2 low 4bpp planes -->
+    <part name="bpsm.u57" crc="86be7b63" />
+    <part name="bpsm.u58" crc="e0bba83b" />
+    <part name="bpsm.u62" crc="a1e3bfac" />
+    <part name="bpsm.u61" crc="6a014b52" />
+    <part name="bpsm.u60" crc="992468c0" />
+
+    <!-- layer 2 packed high 2bpp planes -->
+    <part name="bpsm.u65" crc="f60fb7b5" />
+    <part name="bpsm.u64" crc="6559d31c" />
+    <part name="bpsm.u63" crc="d57a56b4" />
+    <part name="bpsm.u63" crc="d57a56b4" />
+
+    <!-- PCM ROMs -->
+    <part name="bpsm.u48" crc="498e4ed1" />
+    <part name="bpsm.u47" crc="0f2901b9" />
+    <part name="bpsm.u47" crc="0f2901b9" />
+    <part name="bpsm.u47" crc="0f2901b9" />
+    <part name="bpsm.u47" crc="0f2901b9" />
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>03</part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="128" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0140 00f0 0020 0008 001A 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Attack,Jump,Special,-,Start,Coin,Pause" default="A,B,X,R,L,Start" />
+</misterromdescription>

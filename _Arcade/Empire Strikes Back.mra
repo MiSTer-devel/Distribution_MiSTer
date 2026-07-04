@@ -1,0 +1,110 @@
+<misterromdescription>
+	<name>Empire Strikes Back</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform>Atari Vector</platform>
+	<series>Star Wars</series>
+	<year>1985</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Shooter</category>
+
+	<setname>esb</setname>
+	<parent>starwars</parent>
+	<mameversion>0228</mameversion>
+	<rbf>StarWars</rbf>
+	<about>Atari, 1985.  Sister hardware to Star Wars 1983.  Same AVG state
+	       PROM (136021-105.1l, CRC 82fc3eb2), same mathbox PROM interface,
+	       same audio chain — plus a slapstic chip (137412-101) for copy
+	       protection on the $8000-$9FFF page.  Snowspeeder + AT-AT walkers
+	       on Hoth, Asteroid field, Death Star trench.</about>
+
+	<resolution>31kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>1</players>
+	<joystick>Analog</joystick>
+	<special_controls>yoke</special_controls>
+	<num_buttons>7</num_buttons>
+	<buttons default="A,B,Start,R,L,Y,Z" names="Fire L,Shield L,Aux Coin,Coin L,Coin R,Fire R,Shield R"></buttons>
+
+	<!-- mod=1 selects ESB in Arcade-StarWars.sv -->
+	<rom index="1">
+		<part>1</part>
+	</rom>
+
+	<!-- ROM stream (rom index=0).  Layout chosen to keep the AVG state
+	     PROM and mathbox PROMs at the same dn_addr offsets as Star Wars
+	     (0x11000-0x110FF and 0x11100-0x120FF respectively).  That way
+	     avg.vhd's prom_dn_cs and starwars.sv's dn_mb_cs work unchanged
+	     for both mods.
+
+	     Actual dn_addr layout produced by this file order:
+	       0x00000-0x0FFFF  main ROM           (4 x 16KB = 64KB)
+	       0x10000-0x10FFF  pad
+	       0x11000-0x110FF  AVG state PROM     (256B, SAME as SW)
+	       0x11100-0x120FF  mathbox PROMs      (4 x 1KB = 4KB, SAME slot as SW)
+	       0x12100-0x13FFF  pad
+	       0x14000-0x1BFFF  slapstic ROM       (32KB, ESB-only)
+	       0x1C000-0x1CFFF  vector ROM         (4KB)
+	       0x1D000-0x1DFFF  pad
+	       0x1E000-0x25FFF  audio ROMs         (2 x 16KB = 32KB)
+	     Total stream size: ~152 KB.  Requires dn_addr width >= 18 bits
+	     (already supported - starwars.sv routes dn_addr as 25 bits). -->
+	<rom index="0" md5="none" type="merged|nonmerged" zip="esb.zip">
+		<!-- Main CPU ROMs (4 x 16KB = 64KB) at 0x00000-0x0FFFF.
+		     CPU sees default bank2 view: file low halves map to
+		     $6000-$7FFF, $A000-$BFFF, $C000-$DFFF, $E000-$FFFF. -->
+		<part crc="ef1e3ae5" name="136031.101"></part>
+		<part crc="62ce5c12" name="136031.102"></part>
+		<part crc="27b0889b" name="136031.203"></part>
+		<part crc="fd5c725e" name="136031.104"></part>
+
+		<!-- 4 KB pad to land AVG PROM at the SW-shared offset 0x11000. -->
+		<part repeat="4096">00</part>
+
+		<!-- AVG state PROM (256B, IDENTICAL to SW per MAME ROM_START(esb)
+		     line 517: same CRC 82fc3eb2). -->
+		<part crc="82fc3eb2" name="136021-105.1l"></part>
+
+		<!-- Mathbox PROMs (4 x 1KB = 4KB) at 0x11100-0x120FF, SAME slot
+		     as SW.  Different content from SW but same interface; the
+		     existing dn_mb_cs decoder loads them with no changes. -->
+		<part crc="b8d0f69d" name="136031.110"></part>
+		<part crc="6a2a4d98" name="136031.109"></part>
+		<part crc="6a76138f" name="136031.108"></part>
+		<part crc="afbf6e01" name="136031.107"></part>
+
+		<!-- ~8 KB pad to align slapstic ROM at clean offset 0x14000. -->
+		<part repeat="7936">00</part>
+
+		<!-- Slapstic ROMs (2 x 16KB = 32KB) at 0x14000-0x1BFFF.
+		     Slapstic chip type 101 (137412-101).  4 banks of 8KB each
+		     accessible at CPU $8000-$9FFF after the state machine
+		     commits a bank switch.  Bank N comes from this ROM at
+		     offset N*0x2000 (0..0x7FFF). -->
+		<part crc="ea9e4dce" name="136031.105"></part>
+		<part crc="76d07f59" name="136031.106"></part>
+
+		<!-- Vector ROM (4KB) at 0x1C000-0x1CFFF. -->
+		<part crc="b1f9bd12" name="136031.111"></part>
+
+		<!-- 4 KB pad to align audio ROMs at 0x1E000. -->
+		<part repeat="4096">00</part>
+
+		<!-- Audio CPU ROMs (2 x 16KB = 32KB) at 0x1E000-0x25FFF.
+		     Audio CPU sees them at $4000-$5FFF (low half of .113),
+		     $6000-$7FFF (low half of .112), plus their high halves
+		     mirrored at $C000-$DFFF / $E000-$FFFF. -->
+		<part crc="24ae3815" name="136031.113"></part>
+		<part crc="ca72d341" name="136031.112"></part>
+	</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="256"></nvram>
+</misterromdescription>

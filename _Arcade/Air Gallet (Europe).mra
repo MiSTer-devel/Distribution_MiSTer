@@ -1,0 +1,60 @@
+<misterromdescription>
+  <name>Air Gallet (Europe)</name>
+  <mameversion>0275</mameversion>
+  <setname>agallet</setname>
+  <year>1996</year>
+  <manufacturer>Gazelle (Banpresto license)</manufacturer>
+  <category>Vertical Shooter</category>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <rotation>vertical (ccw)</rotation>
+  <region>Europe</region>
+  <rbf>CaveBanpresto</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="agallet.zip" md5="none" address="0x30000000">
+    <!-- prog ROM -->
+    <interleave output="16">
+      <part name="bp962a.u45" crc="24815046" map="12" />
+    </interleave>
+
+    <!-- EEPROM -->
+    <part name="agallet_europe.nv" crc="ec38bf65" />
+
+    <!-- sound program ROM -->
+    <part name="bp962a.u9" crc="06caddbe" />
+
+    <!-- sprites -->
+    <part name="bp962a.u76" crc="858da439" />
+    <part name="bp962a.u77" crc="ea2ba35e" />
+
+    <!-- layer 0 -->
+    <part name="bp962a.u53" crc="fcd9a107" />
+
+    <!-- layer 1 -->
+    <part name="bp962a.u54" crc="0cfa3409" />
+
+    <!-- layer 2 -->
+    <part name="bp962a.u57" crc="6d608957" />
+    <part name="bp962a.u65" crc="135fcf9a" />
+
+    <!-- PCM ROMs -->
+    <part name="bp962a.u48" crc="ae00a1ce" />
+    <part name="bp962a.u47" crc="6d4e9737" />
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>02</part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="128" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0141 00f0 0020 0008 001A 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Shot,Bomb,-,-,Start,Coin,Pause" default="A,B,X,R,L,Start" />
+</misterromdescription>

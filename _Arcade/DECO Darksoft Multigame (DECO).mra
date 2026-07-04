@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DECO Cassette Multigame — Darksoft (decodark, v17)   *** FIRST-PASS MRA — verify ROM CRCs ***
+
+  Per MAME decocass.cpp:
+  - GAME(2022, decodark, decocass, ... decocass_darksoft_state ...)   (line 2203)
+  - TAPELESS: games come from a 1 MB dongle ROM via the $E5xx Darksoft protocol
+    (decocass_darksoft_r/_w, decocass_m.cpp:1157-1187), NOT a cassette.
+  - darksoft.7e = the multigame's replacement MAIN BIOS (socket @7E, normally v0b-.7e).
+  - Base hardware (audio BIOS / MCU / PROMs) = the shared decocass BIOS.
+
+  Core support added this session:
+  - dongle_darksoft.v : 20-bit counter; read $E500=+1 / $E501=+0x100; write=set address.
+  - dongle_mux.v      : Darksoft = dongle_type 7.
+  - rom_loader.v      : the dongle ROM loads on its OWN ioctl index = 1; Stage-1 keeps the
+                        first 256 KB (BRAM). Full 1 MB (all games) needs SDRAM = Stage 2.
+
+  Region map (index 0) matches rtl/rom/rom_loader.v:
+    $00000-$00FFF  Main 6502 BIOS  = darksoft.7e   (4 KB)
+    $01000-$017FF  Audio 6502 BIOS = v1-.5a        (2 KB)
+    $01800-$01BFF  MCU ROM         = cassmcu.1c    (1 KB)
+    $01C00-$01CFF  BIOS PROMs      (3 x 32 B + 160 B pad)
+    $01D00-$02CFF  legacy 4 KB dongle PROM region (UNUSED by Darksoft; zeros)
+    $02D00-$02DFF  Spare
+    $02E00-$02EFF  Metadata: dongle_type=07 (Darksoft), game_id=00, swap_mode=00
+    $02F00-$02FFF  Reserved
+    (NO cassette — tapeless)
+  index 1:  the 1 MB Darksoft dongle ROM (only the first 256 KB is used in Stage 1).
+
+  TO VERIFY (add CRCs / confirm):
+   - darksoft.7e CRC + that it really is the @7E main BIOS (inferred from socket name + MAME).
+   - dongle ROM filename/CRC (using the v17 set: 20221213_v17_dongl_27c800.bin).
+   - that the MENU lives in the first 256 KB (if it doesn't boot, the menu is higher -> needs SDRAM).
+-->
+<misterromdescription>
+    <name>DECO Multigame (Darksoft v17)</name>
+    <setname>decodark</setname>
+    <rbf>DECOCassette</rbf>
+    <year>2022</year>
+    <manufacturer>bootleg (Darksoft)</manufacturer>
+    <category>Multigame</category>
+
+    <rom index="0" zip="decocass.zip|decodark.zip" md5="none">
+        <!-- $00000-$00FFF: Main 6502 BIOS = Darksoft replacement BIOS @7E (4 KB) -->
+        <part name="darksoft.7e"/>
+
+        <!-- $01000-$017FF: Audio 6502 BIOS (2 KB) -->
+        <part name="v1-.5a" crc="b66b2c2a"/>
+
+        <!-- $01800-$01BFF: MCU ROM (1 KB) -->
+        <!-- MCU-BLANK-TEST-2026-06-10: cassmcu.1c BLANKED to 1 KB of $00 (= 8041 NOPs forever = inert), matching
+             MAME decodark which does NOT load the MCU. Tests whether our running cassmcu interferes with the pure-
+             dongle load. RESTORE = re-enable the <part name> line below, delete the zero-fill. -->
+        <!-- <part name="cassmcu.1c" crc="a6df18fd"/> -->
+        <part repeat="0x400">00</part>
+
+        <!-- $01C00-$01CFF: BIOS PROMs (3 x 32 B = 96 B + 160 B pad) -->
+        <part name="v2.3m"  crc="238fdb40"/>
+        <part name="v4.10d" crc="3b5836b4"/>
+        <part name="v3.3j"  crc="51eef657"/>
+        <part repeat="0xA0">00</part>
+
+        <!-- $01D00-$02CFF: legacy 4 KB dongle PROM region (unused by Darksoft; zeros) -->
+        <part repeat="0x1000">00</part>
+
+        <!-- $02D00-$02DFF: Spare -->
+        <part repeat="0x100">00</part>
+
+        <!-- $02E00-$02EFF: Metadata — dongle_type=07 (Darksoft), game_id=00, swap_mode=00 -->
+        <part>07 00 00</part>
+        <part repeat="0xFD">00</part>
+
+        <!-- $02F00-$02FFF: Reserved -->
+        <part repeat="0x100">00</part>
+    </rom>
+
+    <!-- DONGLE-INDEX1-REVERT-2026-06-10: the 1 MB Darksoft dongle ROM on its OWN ioctl index = 1.
+         Wrapper streams it to SDRAM via dongle_ld = (ioctl_index==1); SDRAM offset = ioctl_addr (0-based). -->
+    <rom index="1" zip="decocass.zip|decodark.zip" md5="none">
+        <part name="20221213_v17_dongl_27c800.bin"/>
+    </rom>
+
+    <!-- DIPs from MAME decocass.cpp (input port decocass / multigame base); Country Code bits="21,23" (inclusive range). DSW1/DSW2 byte-swapped so RTL feeds .dsw2 from sw[2], .dsw1 from sw[3]. -->
+    <switches default="00,00,FF,3F">
+        <dip bits="21,23" name="Country Code" ids="inv,inv,F,E,D,C,B,A"/>
+        <dip bits="24,25" name="Coin A" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="26,27" name="Coin B" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="28,29" name="Type of Tape" ids="MT Big,inv,inv,MD Small"/>
+        <dip bits="30" name="Cabinet" ids="Upright,Cocktail"/>
+    </switches>
+
+    <buttons names="Button1,Button2,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+</misterromdescription>

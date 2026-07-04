@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Flash Boy (cfboy0a1) — Type 1 dongle.  Auto-generated from MAME decocass.cpp / decocass_m.cpp.
+  Shared BIOS (decocass.zip): dsp-3_p0-{a/b}.m9 + dsp-3_p1-.l9 (split a0/b0 BIOS) | rms-3_p2-.c9 (old audio) | cassmcu.1c | dsp-3_p3-.e5/rms-3_p4-.f6/dsp-3_p5-.m4 (old PROMs).
+  Cassette: dt-1120-a-1.cas (c6746dc0)   Dongle: dp-1120-a.rom (1bc9fccb)
+  Metadata $02E00 = 01 0C 00  (dongle_type=0x01, game_id=0x0C = DECO release #12)
+-->
+<misterromdescription>
+    <name>Flash Boy</name>
+    <setname>cfboy0a1</setname>
+    <rbf>DECOCassette</rbf>
+    <year>1981</year>
+    <manufacturer>Data East</manufacturer>
+    <category>Action</category>
+
+    <rom index="0" zip="decocass.zip|cfboy0a1.zip" md5="none">
+        <!-- $00000-$00FFF Main 6502 BIOS -->
+        <part name="dsp-3_p0-a.m9" crc="2541e34b"/>
+        <part name="dsp-3_p1-.l9" crc="3bfff5f3"/>
+        <!-- $01000-$013FF pad: a0/b0 old-boardset audio is 1KB @ 0xFC00, not 2KB @ 0xF800 -->
+        <part repeat="0x400">00</part>
+        <!-- $01400-$017FF OLD audio 6502 BIOS (rms-3_p2-.c9, 1KB @ 0xFC00) -- OLD-AUDIO-PROM-FIX-2026-06-29 -->
+        <part name="rms-3_p2-.c9" crc="6c4a891f"/>
+        <!-- $01800-$01BFF MCU ROM -->
+        <part name="cassmcu.1c" crc="a6df18fd"/>
+        <!-- $01C00-$01CFF OLD a0/b0 BIOS PROMs (96 B + 160 B pad) -- OLD-AUDIO-PROM-FIX-2026-06-29 -->
+        <part name="dsp-3_p3-.e5" crc="539a5a64"/>
+        <part name="rms-3_p4-.f6" crc="9014c0fd"/>
+        <part name="dsp-3_p5-.m4" crc="e52089a0"/>
+        <part repeat="0xA0">00</part>
+        <!-- $01D00-$02CFF legacy 4 KB dongle region (UNUSED; dongle on index 1) -->
+        <part repeat="0x1000">00</part>
+        <!-- $02D00-$02DFF Spare -->
+        <part repeat="0x100">00</part>
+        <!-- $02E00-$02EFF Metadata: dongle_type / game_id / swap_mode -->
+        <part>01 0C 00</part>
+        <part repeat="0xFD">00</part>
+        <!-- $02F00-$02FFF Reserved -->
+        <part repeat="0x100">00</part>
+        <!-- $03000- Cassette image -->
+        <part name="dt-1120-a-1.cas" crc="c6746dc0"/>
+    </rom>
+
+    <!-- Dongle PROM on ioctl index 1 -> SDRAM (read by all dongle types via dprom_addr). -->
+    <rom index="1" zip="decocass.zip|cfboy0a1.zip" md5="none">
+        <part name="dp-1120-a.rom" crc="1bc9fccb"/>
+    </rom>
+
+    <buttons names="Button1,Button2,Coin,Start" default="A,B,Select,Start"/>
+    <!-- DIPs from MAME decocass.cpp (input port cfboy0a1); Country Code bits="21,23" (inclusive range). DSW1/DSW2 byte-swapped so RTL feeds .dsw2 from sw[2], .dsw1 from sw[3]. -->
+    <switches default="00,00,FF,3F">
+        <dip bits="16" name="Deco Kids" ids="5,3"/>
+        <dip bits="17,18" name="Bonus Points" ids="None,15000,10000,5000"/>
+        <dip bits="19" name="Alien Missiles" ids="Difficult,Easy"/>
+        <dip bits="20" name="Alien Craft" ids="Difficult,Easy"/>
+        <dip bits="21,23" name="Country Code" ids="inv,inv,F,E,D,C,B,A"/>
+        <dip bits="24,25" name="Coin A" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="26,27" name="Coin B" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="28,29" name="Type of Tape" ids="MT Big,inv,inv,MD Small"/>
+        <dip bits="30" name="Cabinet" ids="Upright,Cocktail"/>
+    </switches>
+</misterromdescription>

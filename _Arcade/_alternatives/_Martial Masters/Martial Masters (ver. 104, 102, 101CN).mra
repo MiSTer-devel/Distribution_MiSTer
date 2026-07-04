@@ -1,0 +1,65 @@
+<misterromdescription>
+	<name>Martial Masters (ver. 104, 102, 101CN)</name>
+	<setname>martmast104c</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|martmast.zip|martmast104c.zip">
+		<!-- SYSTEM INFO (game = GAME_MARTMAST = 16) -->
+		<part>10 00</part>
+
+		<!-- BIOS PROG / TILE / MUSIC -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG (ROM_LOAD16_WORD_SWAP, plaintext) -->
+		<part>03 00400000 00100000</part>
+		<part name="v104_32m.u9" crc="cfd9dff4"/>
+
+		<!-- CART TILE -->
+		<part>04 00800000 00180000</part>
+		<part name="pgm_t1000.u3" crc="bbf879b5"/>
+
+		<!-- CART MUSIC (m1000 @0x400000 + m1001 @0xc00000, contiguous) -->
+		<part>05 00c00000 00400000</part>
+		<part name="pgm_m1000.u5" crc="ed407ae8"/>
+		<part name="pgm_m1001.u7" crc="662d2d48"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 02400000 00000000</part>
+		<part name="pgm_a1000.u3" crc="43577ac8"/>
+		<part name="pgm_a1001.u4" crc="fe7a476f"/>
+		<part name="pgm_a1002.u6" crc="62e33d38"/>
+		<part name="pgm_a1003.u8" crc="b2c4945a"/>
+		<part name="pgm_a1004.u10" crc="9fd3f5fd"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 01000000 00000000</part>
+		<part name="pgm_b1000.u9" crc="c5961f6f"/>
+		<part name="pgm_b1001.u11" crc="0b7e1c06"/>
+
+		<!-- IGS027A INTERNAL ARM ROM -->
+		<part>09 00004000 00000000</part>
+		<part name="martial_masters_v101_cn.asic" crc="b3e25b7d"/>
+
+		<!-- IGS027A EXTERNAL ARM ROM (encrypted; RTL-decrypted) -->
+		<part>0a 00200000 00000000</part>
+		<part name="v102_16m.u10" crc="18b745e6"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

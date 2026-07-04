@@ -1,0 +1,136 @@
+<!--          FPGA arcade hardware by Jotego
+
+              This core is available for hardware compatible with MiST and MiSTer
+              Other FPGA systems may be supported by the time you read this.
+              This work is not mantained by the MiSTer project. Please contact the
+              core author for issues and updates.
+
+              (c) Jose Tejada, 2026. Please support this research
+              Patreon: https://patreon.com/jotego
+
+              The author does not endorse or participate in illegal distribution
+              of copyrighted material. This work can be used with compatible
+              software. This software can be homebrew projects or legally
+              obtained memory dumps of compatible games.
+
+              This file license is GNU GPLv2.
+              You can read the whole license file in
+              https://opensource.org/licenses/gpl-2.0.php
+
+-->
+
+<misterromdescription>
+    <about author="jotego" webpage="https://patreon.com/jotego" twitter="@topapate" source="https://jotego/jtcores"/>
+    <rotation>horizontal</rotation>
+    <name>Caveman Ninja (World ver 4)</name>
+    <setname>cninja</setname>
+    <mameversion>0276</mameversion>
+    <year>1991</year>
+    <manufacturer>Data East Corporation</manufacturer>
+    <players>2</players>
+    <rbf>Deco16</rbf>
+    <joystick>8</joystick>
+    <region>World</region>
+    <rom index="0" zip="cninja.zip" md5="None">
+        <!-- Caveman Ninja Hardware family header (decoded in jtcninja_game.v).
+        byte 0 = game_id  (0=cninja/joemac, 1=cbuster, 2=darkseal/gatedoom)
+        byte 1 = gfx char-region end   (BA3 word offset >> 16, i.e. 64kB-word units)
+        byte 2 = gfx tiles1-region end
+        byte 3 = gfx tiles2-region end
+        byte 4 bit0 = tiles2 has ROM_CONTINUE (1MB cninja) vs single ROM (darkseal)
+        These let the gfx download remap use each game's real region sizes, so a
+        smaller region's trailing blob padding can't fold onto and overwrite the
+        real data. Bytes 5..15 reserved. See doc/HW_FAMILY.md. -->
+        <part>
+            00 01 05 0D 01 00 00 00
+            00 00 00 00 00 00 00 00
+        </part>
+        <!-- sprites1 - starts at 0x0 - length 0x200000 (21 bits) -->
+        <interleave output="32">
+            <part name="mag-05.12y" crc="56a53254" map="0021" length="0x80000"/>
+            <part name="mag-03.9y" crc="2220eb9f" map="2100" length="0x80000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mag-06.12z" crc="82d44749" map="0021" length="0x80000"/>
+            <part name="mag-04.9z" crc="144b94cc" map="2100" length="0x80000"/>
+        </interleave>
+        <!-- GFX3_START -->
+        <!-- JTFRAME_BA1_START -->
+        <!-- sprites1hi - starts at 0x200000 -->
+        <!-- tiles2 - starts at 0x200000 - length 0x100000 (20 bits) -->
+        <interleave output="32">
+            <part name="mag-00.1y" crc="a8f05d33" map="0021" length="0x40000"/>
+            <part name="mag-00.1y" crc="a8f05d33" map="2100" length="0x40000" offset="0x40000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mag-01.1z" crc="5b399eed" map="0021" length="0x40000"/>
+            <part name="mag-01.1z" crc="5b399eed" map="2100" length="0x40000" offset="0x40000"/>
+        </interleave>
+        <!-- JTFRAME_BA2_START -->
+        <!-- maincpu - starts at 0x300000 - length 0xD0000 (20 bits) -->
+        <interleave output="16">
+            <part name="gn-05-2.3k" crc="0f4360ef" map="01"/>
+            <part name="gn-02-3.1k" crc="39aea12a" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="gn-04-2.3j" crc="c98fcb62" map="01"/>
+            <part name="gn-01-2.1j" crc="f740ef7e" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="gn-03.1k" crc="1e28e697" map="01"/>
+            <part name="gn-00.1h" crc="0b110b16" map="10"/>
+        </interleave>
+        <part repeat="0x10000"> FF</part>
+        <!-- PCM_START -->
+        <!-- oki1 - starts at 0x3D0000 - length 0x40000 (18 bits) -->
+        <part name="gl-06.13j" crc="d92e519d"/>
+        <part repeat="0x20000"> FF</part>
+        <!-- PCM2_START -->
+        <!-- oki2 - starts at 0x410000 - length 0x80000 (19 bits) -->
+        <part name="mag-07.13f" crc="08eb5264"/>
+        <!-- GFX3_BA2_START -->
+        <!-- tiles2b - starts at 0x490000 - length 0x100000 (20 bits) -->
+        <interleave output="32">
+            <part name="mag-00.1y" crc="a8f05d33" map="0021" length="0x40000"/>
+            <part name="mag-00.1y" crc="a8f05d33" map="2100" length="0x40000" offset="0x40000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mag-01.1z" crc="5b399eed" map="0021" length="0x40000"/>
+            <part name="mag-01.1z" crc="5b399eed" map="2100" length="0x40000" offset="0x40000"/>
+        </interleave>
+        <!-- GFX1_START -->
+        <!-- JTFRAME_BA3_START -->
+        <!-- chars - starts at 0x590000 - length 0x20000 (17 bits) -->
+        <interleave output="32">
+            <part name="gl-08.6y" crc="33a2b400" map="0010" length="0x8000"/>
+            <part name="gl-09.6z" crc="5a2d4752" map="0001" length="0x8000"/>
+            <part name="gl-08.6y" crc="33a2b400" map="1000" length="0x8000" offset="0x8000"/>
+            <part name="gl-09.6z" crc="5a2d4752" map="0100" length="0x8000" offset="0x8000"/>
+        </interleave>
+        <!-- GFX2_START -->
+        <!-- tiles1 - starts at 0x5B0000 - length 0x80000 (19 bits) -->
+        <interleave output="32">
+            <part name="mag-02.4z" crc="de89c69a" map="0021" length="0x40000"/>
+            <part name="mag-02.4z" crc="de89c69a" map="2100" length="0x40000" offset="0x40000"/>
+        </interleave>
+        <!-- JTFRAME_PROM_START -->
+        <!-- audiocpu:snd - starts at 0x630000 -->
+        <!-- audiocpu - starts at 0x630000 - length 0x10000 (16 bits) -->
+        <part name="gl-07.13k" crc="ca8bef96"/>
+        <!-- Total 0x640000 bytes - 6400 kBytes -->
+    </rom>
+    <rom index="1">
+        <part>00 FF</part>
+    </rom>
+    <switches page_id="1" page_name="Switches" base="16" default="ff,7f">
+        <DSW/>
+        <dip name="Coin A" bits="0,2" ids="3/1,2/1,1/6,1/5,1/4,1/3,1/2,1/1"/>
+        <dip name="Coin B" bits="3,5" ids="3/1,2/1,1/6,1/5,1/4,1/3,1/2,1/1"/>
+        <dip name="Flip Screen" bits="6" ids="On,Off"/>
+        <dip name="Lives" bits="8,9" ids="2,1,4,3"/>
+        <dip name="Difficulty" bits="10,11" ids="Hardest,Hard,Easy,Normal"/>
+        <dip name="Restore Life Meter" bits="12" ids="On,Off"/>
+        <dip name="Demo Sounds" bits="15" ids="On,Off"/>
+    </switches>
+    <buttons names="Attack,Jump,-,Start,Coin,Core credits" default="A,B,Start,Select,-" count="2"/>
+</misterromdescription>

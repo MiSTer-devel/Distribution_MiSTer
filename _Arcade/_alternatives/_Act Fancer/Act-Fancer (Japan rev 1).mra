@@ -1,0 +1,76 @@
+<misterromdescription>
+  <name>Act-Fancer Cybernetick Hyper Weapon (Japan rev 1)</name>
+  <setname>actfancrj</setname>
+  <mameversion>0264</mameversion>
+  <rbf>ActFancer</rbf>
+  <year>1989</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Platformer</category>
+  <region>Japan</region>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <dip bits="0,1"   ids="3C/1C,2C/1C,1C/2C,1C/1C" name="Coin A"/>
+    <dip bits="2,3"   ids="3C/1C,2C/1C,1C/2C,1C/1C" name="Coin B"/>
+    <dip bits="5"     ids="Off,On"            name="Demo Sounds"/>
+    <dip bits="6"     ids="On,Off"            name="Flip Screen"/>
+    <dip bits="7"     ids="Upright,Cocktail"  name="Cabinet"/>
+    <dip bits="8,9"   ids="100 (Cheat),5,4,3" name="Lives"/>
+    <dip bits="10,11" ids="Hardest,Easy,Hard,Normal" name="Difficulty"/>
+    <dip bits="13"    ids="None,800000"       name="Bonus Life"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <rom index="0" zip="actfancr.zip" md5="None">
+    <!-- H6280 main CPU 192KB @ 0x000000 (Japan: fd08-1/fd09-1 in subfolder actfancrj/ + "10" da rev1) -->
+    <part name="actfancrj/fd08-1.bin" crc="69004b60"/>
+    <part name="actfancrj/fd09-1.bin" crc="a455ae3e"/>
+    <part name="actfancr1/10"         crc="cabad137"/>
+
+    <!-- M6502 sound CPU 64KB @ 0x030000 (pad 32KB di FF, poi 32KB ROM) -->
+    <part repeat="0x8000">FF</part>
+    <part name="17-1"       crc="289ad106"/>
+
+    <!-- ===== Chars 8x8 4bpp 128KB @ 0x040000 ===== -->
+    <interleave output="32">
+      <part name="15" crc="a1baf21e" offset="0x00000" length="0x8000" map="0001"/>
+      <part name="16" crc="22e64730" offset="0x00000" length="0x8000" map="0010"/>
+      <part name="15" crc="a1baf21e" offset="0x08000" length="0x8000" map="0100"/>
+      <part name="16" crc="22e64730" offset="0x08000" length="0x8000" map="1000"/>
+    </interleave>
+
+    <!-- ===== Sprites 16x16 4bpp 384KB @ 0x060000 ===== -->
+    <interleave output="32">
+      <part name="00" crc="d50a9550" map="0001"/>
+      <part name="01" crc="34935e93" map="0001"/>
+      <part name="04" crc="bcf41795" map="0010"/>
+      <part name="05" crc="d38b94aa" map="0010"/>
+      <part name="02" crc="b1db0efc" map="0100"/>
+      <part name="03" crc="f313e04f" map="0100"/>
+      <part name="06" crc="8cb6dd87" map="1000"/>
+      <part name="07" crc="dd345def" map="1000"/>
+    </interleave>
+
+    <!-- ===== Tiles 16x16 4bpp 256KB @ 0x0C0000 ===== -->
+    <interleave output="32">
+      <part name="13" crc="c30c37dc" map="0001"/>
+      <part name="11" crc="1f006d9f" map="0010"/>
+      <part name="14" crc="d6457420" map="0100"/>
+      <part name="12" crc="08787b7a" map="1000"/>
+    </interleave>
+
+    <!-- OKI M6295 ADPCM 256KB @ 0x100000 -->
+    <part name="18"         crc="5c55b242"/>
+  </rom>
+  <rom index="2"></rom>
+
+  <mratimestamp>20260522000000</mratimestamp>
+</misterromdescription>

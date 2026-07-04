@@ -1,0 +1,84 @@
+<misterromdescription>
+	<n>Planet Probe</n>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1985</year>
+	<manufacturer>Crux/Kyugo?</manufacturer>
+	<category>Shooter</category>
+
+	<setname>pprobe</setname>
+	<parent>vastar</parent>
+	<mameversion>0220</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>4-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="FF,FF">
+		<!-- DSW1 (AY port A) — Coinage -->
+		<dip bits="0,3"  name="Credits A" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<dip bits="4,7"  name="Credits B" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<!-- DSW2 (AY port B) -->
+		<dip bits="8,9"   name="Lives" ids="6,5,4,3"/>
+		<dip bits="10,11" name="Bonus Life" ids="20k/60k,40k/120k,20k/every 60k,40k/every 120k"/>
+		<dip bits="12"    name="Unknown" ids="Off,On"/>
+		<dip bits="13,14" name="Difficulty" ids="Hardest,Hard,Normal,Easy"/>
+		<dip bits="15"    name="Cabinet" ids="Upright,Cocktail"/>
+	</switches>
+
+	<!-- Index 0: All CPU + GFX ROMs -->
+	<rom index="0" md5="none" zip="vastar.zip|pprobe.zip">
+		<!-- Main CPU ROMs 8x 4KB = 32KB (0x00000-0x07FFF) -->
+		<part crc="a88592aa" name="pb2.bin"/>
+		<part crc="e4e20f74" name="pb3.bin"/>
+		<part crc="4e40e3fe" name="pb4.bin"/>
+		<part crc="b26ff0fd" name="pb5.bin"/>
+		<!-- Sub CPU ROMs 2x 4KB = 8KB (0x08000-0x09FFF) -->
+		<part crc="cd624df9" name="pb1.bin"/>
+		<!-- FG tiles 8KB (0x0A000-0x0BFFF) -->
+		<part crc="82294dd6" name="pb9.bin"/>
+		<!-- Sprites 2x 8KB = 16KB (0x0C000-0x0FFFF) -->
+		<part crc="8d809e45" name="pb8.bin"/>
+		<part crc="895f9dd3" name="pb10.bin"/>
+		<!-- BG tiles 0 8KB (0x10000-0x11FFF) -->
+		<part crc="ff309239" name="pb6.bin"/>
+		<!-- BG tiles 1 8KB (0x12000-0x13FFF) -->
+		<part crc="439978f7" name="pb7.bin"/>
+		<!-- Color PROMs 3x 256B (0x14000-0x142FF) -->
+		<part crc="dfb6b97c" name="n82s129.3"/>
+		<part crc="3cc696a2" name="n82s129.1"/>
+		<part crc="64fea033" name="dm74s287.2"/>
+		<!-- Unknown PROM 256B (0x14300-0x143FF) -->
+		<part crc="b5297a3b" name="mmi6301-1.bin"/>
+	</rom>
+	<rom index="1">
+	    <part>
+		01
+		</part>
+	</rom>
+	<rom index="2"></rom>
+	<rom index="3" md5="none">
+		<part>
+		00 00 FF FF 00 FF 00 02 00 02 00 01 11 11 00 00
+		00 00 F3 80 00 45 00 15
+		</part>
+	</rom>
+	<rom index="4"></rom>
+	<nvram index="4" size="69"></nvram>
+
+	<remark>F380-F3C4</remark>
+	<mratimestamp>20260224000000</mratimestamp>
+</misterromdescription>

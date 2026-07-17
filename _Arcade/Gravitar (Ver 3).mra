@@ -1,0 +1,74 @@
+<misterromdescription>
+	<name>Gravitar</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Ver 3</version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1982</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Lander</category>
+
+	<setname>gravitar</setname>
+	<parent>gravitar</parent>
+	<mameversion>0218</mameversion>
+	<rbf>blackwidow</rbf>
+	<about></about>
+
+	<resolution>31kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>1</players>
+	<joystick>2-way horizontal</joystick>
+	<special_controls></special_controls>
+	<num_buttons>3</num_buttons>
+	<buttons default="A,B,Y,Start,Select,R,L" names="Fire,Thrust,-,Shield,Start 1P,Start 2P,Coin,Pause,Aux Coin"></buttons>
+
+	<switches default="04,00,00">
+		<dip bits="8,9" ids="1 Coin 1 Credit,2 Coins 1 Credit,Free Play,1 Coin 2 Credits" name="Coinage"></dip>
+		<dip bits="10,11" ids="1,4,5,6" name="Coin Right"></dip>
+		<dip bits="12" ids="1,2" name="Coin Left"></dip>
+		<dip bits="13,15" ids="None,1 each 2,1 each 4,2 each 4,1 each 5,1 each 3,None,None" name="Bonus Coins"></dip>
+		<dip bits="2,3" ids="3,4,5,6" name="Lives"></dip>
+		<dip bits="4" ids="Easy,Hard" name="Difficulty"></dip>
+		<dip bits="6,7" ids="10000,20000,30000,None" name="Bonus Life"></dip>
+		<dip bits="16" ids="Off,On" name="Service"></dip>
+		<dip bits="17" ids="Off,On" name="Diagnostic Step"></dip>
+		<dip bits="18,20" ids="1 VDDIS,2 HALT,3 Long Vector,4 Jump+Long,5 Short Vector,6 JSRL/RTSL,Blank 6,Blank 7" name="Vector Test"></dip>
+		</switches>
+
+	<rom index="1">
+		<part>1</part>
+		</rom>
+	<rom index="0" md5="8bce967739e6f1b333ca884da206c52d" type="merged|nonmerged" zip="gravitar.zip">
+		<part crc="a2a55013" name="136010-301.d1"></part>
+		<part crc="d3700b3c" name="136010-302.ef1"></part>
+		<part crc="8e12e3e0" name="136010-303.h1"></part>
+		<part crc="467ad5da" name="136010-304.j1"></part>
+		<part crc="840603af" name="136010-305.kl1"></part>
+		<part crc="3f3805ad" name="136010-306.m1"></part>
+		<part crc="debcb243" name="136010-210.l7"></part>
+		<part crc="debcb243" name="136010-210.l7"></part>
+		<part crc="4135629a" name="136010-207.mn7"></part>
+		<part crc="358f25d9" name="136010-208.np7"></part>
+		<part crc="4ac78df4" name="136010-309.r7"></part>
+		<part crc="5903af03" name="136002-125.n4"></part>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3" md5="none">
+		<part>
+		00 00 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 04 1E 00 30 50 05
+		</part>
+	</rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="48"></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
+</misterromdescription>

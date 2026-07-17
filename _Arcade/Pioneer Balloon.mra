@@ -1,0 +1,54 @@
+<misterromdescription>
+    <name>Pioneer Balloon</name>
+    <setname>pballoon</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1982</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>8-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <rom index="0" zip="pballoon.zip" md5="none">
+        <!-- maincpu: 64KB at offset $00000 -->
+        <!-- $0000-$2FFF: padding (12KB) -->
+        <part repeat="0x3000">00</part>
+        <part crc="dfe2ae05" name="sk7_ic12.bin"/>
+        <part crc="736e67df" name="sk7_ic07.bin"/>
+        <part crc="7a2032b2" name="sk7_ic08.bin"/>
+        <part crc="2d63cf3a" name="sk7_ic09.bin"/>
+        <part crc="7b88cbd4" name="sk7_ic10.bin"/>
+        <part crc="6a8817a5" name="sk7_ic14.bin"/>
+        <part crc="1f78d814" name="sk7_ic15.bin"/>
+        <!-- $A000-$EFFF: padding (20KB) -->
+        <part repeat="0x5000">00</part>
+        <!-- $F000: ic14 again (mirror for reset/interrupt vectors) -->
+        <part crc="6a8817a5" name="sk7_ic14.bin"/>
+
+        <!-- gfx1: 8KB at offset $10000 -->
+        <!-- plane 0: ic50 (4KB) -->
+        <part crc="560df07f" name="sk8_ic50.bin"/>
+        <!-- plane 1: ic51 (4KB) -->
+        <part crc="d415de51" name="sk8_ic51.bin"/>
+
+        <!-- proms: 64 bytes at offset $12000 -->
+        <!-- FG colors: ic7 (32 bytes) -->
+        <part crc="ef6c82a0" name="sk8_ic7.bin"/>
+        <!-- BG colors: ic6 (32 bytes) -->
+        <part crc="eabc6a00" name="sk8_ic6.bin"/>
+
+        <!-- sound ROMs: 6KB at offset $12040 -->
+        <part crc="0345f8b7" name="sk7_ic51.bin"/>
+        <part crc="5d6d68ea" name="sk7_ic52.bin"/>
+        <part crc="a4c505cd" name="sk7_ic53.bin"/>
+
+    </rom>
+
+    <!-- ROM index 1: game_id = 4 (GID_PBALLOON) -->
+    <rom index="1">
+        <part>04</part>
+    </rom>
+
+</misterromdescription>

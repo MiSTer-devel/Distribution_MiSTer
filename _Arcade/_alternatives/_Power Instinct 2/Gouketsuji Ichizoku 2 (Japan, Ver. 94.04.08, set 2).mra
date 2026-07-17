@@ -1,0 +1,85 @@
+<misterromdescription>
+  <name>Gouketsuji Ichizoku 2 (Japan, Ver. 94.04.08, set 2)</name>
+  <mameversion>0275</mameversion>
+  <setname>pwrinst2ja</setname>
+  <year>1994</year>
+  <manufacturer>Atlus</manufacturer>
+  <category>Fighting</category>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <rotation>horizontal</rotation>
+  <region>Japan</region>
+  <rbf>cave</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="pwrinst2ja.zip|pwrinst2.zip" md5="none" address="0x30000000">
+    <!-- prog ROMs -->
+    <interleave output="16">
+      <part name="g02_u45-j.u45" crc="0dc8a37b" map="01" />
+      <part name="g02_u44-j.u44" crc="42b35ec5" map="10" />
+    </interleave>
+    <interleave output="16">
+      <part name="g02_u43-j.u43" crc="c94c596b" map="01" />
+      <part name="g02_u42-j.u42" crc="4f4c8270" map="10" />
+    </interleave>
+
+    <!-- erased 93C46 EEPROM seed -->
+    <part>
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+    </part>
+
+    <!-- sound program ROM -->
+    <part name="g02_u3-j.u3" crc="eead01f1" />
+
+    <!-- OKI 0 samples -->
+    <part name="g02.u53" crc="c4bdd9e0" />
+    <part name="g02.u54" crc="1357d50e" />
+
+    <!-- OKI 1 samples -->
+    <part name="g02.u55" crc="2d102898" />
+    <part name="g02.u56" crc="9ff50dda" />
+
+    <!-- layer 0 -->
+    <part name="g02.u78" crc="1eca63d2" />
+
+    <!-- layer 1 -->
+    <part name="g02.u81" crc="8a3ff685" />
+
+    <!-- layer 2, packed for the future fourth-layer pass -->
+    <part name="g02.u89" crc="373e1f73" />
+
+    <!-- layer 3 text, temporarily routed as the third visible layer -->
+    <part name="g02_u82-j.u82" crc="3be86fe1" />
+
+    <!-- sprites -->
+    <part name="g02.u61" crc="91e30398" />
+    <part name="g02.u62" crc="d9455dd7" />
+    <part name="g02.u63" crc="4d20560b" />
+    <part name="g02.u64" crc="b17b9b6e" />
+    <part name="g02.u65" crc="08541878" />
+    <part name="g02.u66" crc="becf2a36" />
+    <part name="g02.u67" crc="52fe2b8b" />
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>07</part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="128" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0140 00f0 0020 0008 001A 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Button 1,Button 2,Button 3,Button 4,Start,Coin,Pause" default="Y,X,B,A,R,L,Start" />
+</misterromdescription>

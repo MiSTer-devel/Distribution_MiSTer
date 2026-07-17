@@ -1,0 +1,98 @@
+<misterromdescription>
+  <name>Boogie Wings (Euro v1.5, 92.12.07)</name>
+  <setname>boogwing</setname>
+  <mameversion>0264</mameversion>
+  <rbf>BoogieWings</rbf>
+  <year>1992</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <!--
+    STESSA STRUTTURA di BoogieWings_dec_jt.mra (reference funzionante), ma con
+    le ROM ORIGINALI CRIPTATE (boogwing.zip). I wrapper RTL (de102 + deco56)
+    decrittano in download -> in SDRAM finisce cio' che il _dec_jt produce.
+  -->
+
+  <switches base="0" default="FF,7F">
+    <dip name="Coin A"        bits="0,2"  ids="3C/1C,2C/1C,1C/6C,1C/5C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+    <dip name="Coin B"        bits="3,5"  ids="3C/1C,2C/1C,1C/6C,1C/5C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+    <dip name="Flip Screen"   bits="6"    ids="On,Off"/>
+    <dip name="Continue Coin" bits="7"    ids="2 Start/1 Continue,Normal Coin Credit"/>
+    <dip name="Lives"         bits="8,9"  ids="4,1,3,2"/>
+    <dip name="Difficulty"    bits="10,11" ids="Hardest,Hard,Easy,Normal"/>
+    <dip name="Coin Slots"    bits="12"   ids="Individual,Common"/>
+    <dip name="Stage Reset"   bits="13"   ids="Beginning of Stage,Point of Termination"/>
+    <dip name="SW2:7"         bits="14"   ids="On,Off"/>
+    <dip name="Demo Sounds"   bits="15"   ids="On,Off"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <rom index="0" zip="boogwing.zip" md5="None">
+    <!-- main op_view (1 MB, kn_* criptato) — interleave kn_00/kn_02 + kn_01/kn_03 -->
+    <interleave output="16">
+      <part name="kn_00-2.2b" map="10"/>
+      <part name="kn_02-2.2e" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="kn_01-2.4b" map="10"/>
+      <part name="kn_03-2.4e" map="01"/>
+    </interleave>
+
+    <!-- audiocpu (64 KB raw) -->
+    <part name="km06.18p"/>
+
+    <!-- tiles1 (128 KB, km05/km04 criptato) -->
+    <interleave output="16">
+      <part name="km05.9e" map="01"/>
+      <part name="km04.8e" map="10"/>
+    </interleave>
+
+    <!-- tiles2 (3 MB: mbd-01 + mbd-00 + mbd-02 espanso)
+         MAGHEGGIO da build_decrypted_rom.py riga 231: tiles2_hi_region[2i+1]=mbd02[i]
+         -> byte di mbd-02 nei byte DISPARI (LOW), byte pari = 0. Verificato sul
+         commit tiles2_full.bin @0x200000: word = 00xx (HIGH=0, LOW=mbd02[i]).
+         In MRA: interleave con UN solo part map="01" -> word[i] = {0x00, mbd-02[i]}. -->
+    <part name="mbd-00.8b"/>
+    <part name="mbd-01.9b"/>
+    <interleave output="16">
+      <part name="mbd-02.10e" map="01"/>
+    </interleave>
+
+    <!-- tiles3 #1 (2 MB, mbd-03/04) -> ba0 (FG0) -->
+    <part name="mbd-03.13b"/>
+    <part name="mbd-04.14b"/>
+    <!-- tiles3 #2 (duplicato) -> ba1 (FG1) -->
+    <part name="mbd-03.13b"/>
+    <part name="mbd-04.14b"/>
+
+    <!-- sprites (8 MB raw) -->
+    <part name="mbd-06.17b"/>
+    <part name="mbd-05.16b"/>
+    <part name="mbd-08.19b"/>
+    <part name="mbd-07.18b"/>
+
+    <!-- oki1 / oki2 (512 KB raw) -->
+    <part name="mbd-10.17p"/>
+    <part name="mbd-09.16p"/>
+
+    <!-- main data_view (1 MB, kn_* criptato, 2a copia) -->
+    <interleave output="16">
+      <part name="kn_00-2.2b" map="10"/>
+      <part name="kn_02-2.2e" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="kn_01-2.4b" map="10"/>
+      <part name="kn_03-2.4e" map="01"/>
+    </interleave>
+  </rom>
+
+</misterromdescription>

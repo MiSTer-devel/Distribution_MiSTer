@@ -1,0 +1,93 @@
+<misterromdescription>
+    <name>Nibbler (rev 9)</name>
+    <setname>nibbler</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1982</year>
+    <manufacturer>Rock-Ola</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <switches default="00" base="16">
+        <dip name="Lives" bits="0,1" ids="3,4,5,6"/>
+        <dip name="Difficulty" bits="2" ids="Easy,Hard"/>
+        <dip name="Cabinet" bits="3" ids="Upright,Cocktail"/>
+        <dip name="Service Mode" bits="4" ids="Off,On"/>
+        <dip name="Free Play" bits="5" ids="Off,On"/>
+        <dip name="Coinage" bits="6,7" ids="1C/1C,2C/1C,2C/1C 4C/3,1C/1C 2C/3"/>
+    </switches>
+
+    <buttons names="Unused1,Unused2,Unused3,Unused4,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <!-- ROM index 0: game data -->
+    <rom index="0" zip="nibbler.zip" md5="none">
+        <!-- maincpu: 64KB at offset $00000 -->
+        <!-- $0000-$2FFF: padding (12KB) -->
+        <part repeat="0x3000">00</part>
+        <part crc="6dfa1be5" name="g-0960-52.ic12"/>
+        <part crc="808e1a03" name="g-0960-48.ic7"/>
+        <part crc="1571d4a2" name="g-0960-49.ic8"/>
+        <part crc="a599df10" name="g-0960-50.ic9"/>
+        <part crc="a6b5abe5" name="g-0960-51.ic10"/>
+        <part crc="9f537185" name="g-0960-53.ic14"/>
+        <part crc="7205fb8d" name="g-0960-54.ic15"/>
+        <part crc="4bb39815" name="g-0960-55.ic16"/>
+        <part crc="ed680f19" name="g-0960-56.ic17"/>
+        <!-- $C000-$EFFF: padding (12KB) -->
+        <part repeat="0x3000">00</part>
+        <!-- $F000: ic14 again (mirror for reset/interrupt vectors) -->
+        <part crc="9f537185" name="g-0960-53.ic14"/>
+        <!-- gfx1: 8KB at offset $10000 -->
+        <!-- plane 0: ic50 (4KB) -->
+        <part crc="01d4d0c2" name="g-0960-57.ic50"/>
+        <!-- plane 1: ic51 (4KB) -->
+        <part crc="feff7faf" name="g-0960-58.ic51"/>
+
+        <!-- proms: 64 bytes at offset $12000 -->
+        <!-- FG colors: ic7 (32 bytes) -->
+        <part crc="a5709ff3" name="g-0708-05.ic7"/>
+        <!-- BG colors: ic6 (32 bytes) -->
+        <part crc="dacd592d" name="g-0708-04.ic6"/>
+
+        <!-- sound ROMs: 6KB at offset $12040 -->
+        <!-- $0000-$07FF: empty (ROMREGION_ERASEFF, no ic51 sound rom for nibbler) -->
+        <part repeat="0x0800">FF</part>
+        <!-- $0800: ic52 (2KB) -->
+        <part crc="87d67dee" name="g-0959-44.ic52"/>
+        <!-- $1000: ic53 (2KB) -->
+        <part crc="33189917" name="g-0959-45.ic53"/>
+
+    </rom>
+
+    <!-- ROM index 1: game_id = 5 (GID_NIBBLER) -->
+    <rom index="1">
+        <part>05</part>
+    </rom>
+
+    <!-- ROM index 3: Hiscore.dat configuration -->
+    <!--   Header (16 bytes):                                                       -->
+    <!--     01 FF FF FF   START_WAIT  = 0x01FFFFFF  (~0.7s @ 45MHz initial wait)   -->
+    <!--     00 FF         CHECK_WAIT  = 0x00FF                                     -->
+    <!--     00 02         CHECK_HOLD  = 0x0002                                     -->
+    <!--     00 02         WRITE_HOLD  = 0x0002                                     -->
+    <!--     00 01         WRITE_REPEATCOUNT = 0x0001                               -->
+    <!--     00 FF         WRITE_REPEATWAIT  = 0x00FF                               -->
+    <!--     00            ACCESS_PAUSEPAD   = 0x00                                 -->
+    <!--     00            CHANGEMASK        = 0x00                                 -->
+    <!--                                                                            -->
+    <!--   Entry 1 (8 bytes): scores+initials combined ($5993-$59D8, 70 bytes)      -->
+    <!--     ADDR=$5993, LEN=$46, START=$00, END=$14                                -->
+    <rom index="3">
+        <part>
+            01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+            00 00 59 93 46 00 14 00
+        </part>
+    </rom>
+
+    <nvram index="4" size="70"/>
+
+
+</misterromdescription>

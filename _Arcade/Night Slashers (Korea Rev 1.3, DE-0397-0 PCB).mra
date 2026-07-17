@@ -1,0 +1,74 @@
+<misterromdescription>
+  <name>Night Slashers (Korea Rev 1.3, DE-0397-0 PCB)</name>
+  <setname>nslasher</setname>
+  <mameversion>0264</mameversion>
+  <rbf>NightSlashers</rbf>
+  <year>1993</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>3</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,X,Start" names="Attack,Jump,Special,-,-,-,Start,Coin,Pause"/>
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="nslasher.zip" md5="None">
+    <!-- 2026-07-09 decrypt runtime RIATTIVATO (prima luce col bypass provata):
+         ROM STOCK mainprg.1f/2f + interleave map= (VALIDATO sul ferro 2026-07-10:
+         DIFF=0 vs main_phys_enc.bin offline + boot identico). Niente enc.zip.
+         Ordine byte fisico verificato: dword s*=0x92C6 = E8 99 33 EE. -->
+    <interleave output="32">
+      <part name="mainprg.1f" map="0021"/>
+      <part name="mainprg.2f" map="2100"/>
+    </interleave>
+    <!-- audio @0x100000 (64KB) -> is_audio_dl AUDIO_DL_LO=0x100000 -->
+    <!--  @ 0x100000 -->
+    <part name="sndprg.17l"/>
+    <!-- tiles1 text_lo @0x110000 = mbh-00[0:0x10000] (deco56 no-reorder) -->
+    <!--  @ 0x110000 -->
+    <part name="mbh-00.8c" offset="0x0" length="0x10000"/>
+    <!-- tiles1 text_hi @0x120000 = mbh-00[0x80000:0x90000] -->
+    <!--  @ 0x120000 -->
+    <part name="mbh-00.8c" offset="0x80000" length="0x10000"/>
+    <!-- tiles1 BG1 @0x130000 = mbh-00 full (deco56+reorder, bridge ba3) -->
+    <!--  @ 0x130000 -->
+    <part name="mbh-00.8c"/>
+    <!-- pad 0x100000 @ 0x330000 -->
+    <part repeat="0x100000"> 00 </part>
+    <!-- tiles2 FG0 @0x430000 = mbh-01 (deco74_fg0 T_BASE 0x430000, ba0) -->
+    <!--  @ 0x430000 -->
+    <part name="mbh-01.9c"/>
+    <!-- tiles2 FG1 @0x630000 = mbh-01 (deco74_fg1 T_BASE 0x630000, ba1, dup) -->
+    <!--  @ 0x630000 -->
+    <part name="mbh-01.9c"/>
+    <!-- sprites1 chip0 5bpp — 2026-07-09 ordine 02-first RIPRISTINATO per
+         verdetto A SCHERMO dell'utente (04-first = regressione: nessuna
+         permutazione OSD dava risultati; con 02-first esisteva la combo
+         "quasi giusta"). Fa fede lo schermo, non i modelli offline. -->
+    <!-- @ 0x830000 -->
+    <part name="mbh-02.14c"/>
+    <!-- @ 0xA30000 -->
+    <part name="mbh-04.16c"/>
+    <!-- @ 0xC30000 -->
+    <part name="mbh-03.15c"/>
+    <!-- @ 0xCB0000 -->
+    <part name="mbh-05.17c"/>
+    <!-- P4 5th plane low @0xD30000 (linear) @ 0xD30000 -->
+    <part name="mbh-06.18c"/>
+    <!-- P4 5th plane high @0xE30000 (linear) @ 0xE30000 -->
+    <part name="mbh-07.19c"/>
+    <!-- sprites2 chip1 4bpp (VERIFIED DIFF=0 as-is) -->
+    <!-- chip1 @0xE70000 @ 0xE70000 -->
+    <part name="mbh-08.16e"/>
+    <!-- chip1 @0xEF0000 @ 0xEF0000 -->
+    <part name="mbh-09.18e"/>
+    <!-- oki @0xF70000 / 0xFF0000 -->
+    <!-- oki1 @0xF70000 @ 0xF70000 -->
+    <part name="mbh-10.14l"/>
+    <!-- oki2 @0xFF0000 @ 0xFF0000 -->
+    <part name="mbh-11.16l"/>
+  </rom>
+</misterromdescription>

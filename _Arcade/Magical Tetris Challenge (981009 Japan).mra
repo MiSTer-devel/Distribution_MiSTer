@@ -1,0 +1,59 @@
+<misterromdescription>
+  <name>Magical Tetris Challenge (981009 Japan)</name>
+  <mratimestamp>20260717</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>mtetrisc</setname>
+  <year>1998</year>
+  <manufacturer>Capcom</manufacturer>
+  <category>Puzzle</category>
+  <rbf>Aleck64</rbf>
+
+  <buttons names="Button 1,Button 2,Start,Coin,Service,Test,-,-,-,-,Soft Reset" default="A,B,Start,Select,R,L"/>
+
+  <remark>
+    Requires the Aleck64-capable N64 core from this repository.  Put
+    mtetrisc.zip and its parent BIOS aleck64.zip in games/mame. The standard
+    BK4D-NUS PIF EEPROM and the board's separate S2D serial memory are
+    both persistent in one MRA NVRAM file.
+  </remark>
+
+  <romstruct>
+    index 3: descriptor (bit 0 Aleck64, bit 1 E90, bit 2 8 MiB RDRAM,
+             bits 4:3 input profile: PIF/direct/mahjong, bit 6 EEPROM)
+    index 0: 2 KiB Aleck64 PIF boot ROM
+    index 2: 1 MiB E90 auxiliary mask ROM
+    index 5: 128-byte factory S2D image (MAME name at24c01.u34)
+    index 1: 16 MiB N64 program ROM, word-swapped and protection-patched
+  </romstruct>
+
+  <!-- Configure the machine before any board ROM is downloaded. -->
+  <rom index="3" md5="dd1c7ceb4c92653a696b7907a4dd4df1">
+    <part>43 00</part>
+  </rom>
+
+  <rom index="0" zip="aleck64.zip" md5="4921d5f2165dee6e2496f4388c4c81da">
+    <part name="pifdata.bin" crc="5ec82be9"/>
+  </rom>
+
+  <rom index="2" zip="mtetrisc.zip" md5="bd9a97e4bec49d2ed6d7fd59511705dd">
+    <part name="tet-01m.u5" crc="f78f859b"/>
+  </rom>
+
+  <rom index="5" zip="mtetrisc.zip" md5="93a74be7cce22f08b802c6aae4a377c9">
+    <part name="at24c01.u34" crc="ba7e503f"/>
+  </rom>
+
+  <!-- The N64 core copies cartridges from its DDR staging buffer.  MRA ROMs
+       do not inherit the FS1 menu entry's address, so it must be explicit.
+       Main checks this MD5 on the source stream before swap/patch assembly. -->
+  <rom index="1" address="0x32000000" zip="mtetrisc.zip" md5="99789ac65e0a39e6869ed0fe0e0ba798">
+    <interleave output="16">
+      <!-- Source is .v64 order (37 80 40 12); map 12 emits .z64 order. -->
+      <part name="nus-zcaj.u4" crc="c9de64db" map="12"/>
+    </interleave>
+    <!-- Aleck64 CIC/protection bypass used by the reference MAME driver. -->
+    <patch offset="0x67c">00 00 00 00</patch>
+  </rom>
+  <!-- 512-byte BK4D-NUS image, two-byte extension tag, then S2D memory. -->
+  <nvram index="4" size="642"/>
+</misterromdescription>

@@ -1,0 +1,73 @@
+<misterromdescription>
+	<name>Lunar Battle</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Prototype</version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1982</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Lander</category>
+
+	<setname>lunarbat</setname>
+	<parent>lunarbat</parent>
+	<mameversion>0218</mameversion>
+	<rbf>blackwidow</rbf>
+	<about></about>
+
+	<resolution>31kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>1</players>
+	<joystick>2-way horizontal</joystick>
+	<special_controls></special_controls>
+	<num_buttons>3</num_buttons>
+	<buttons default="A,B,Y,Start,Select,R,L" names="Fire,Thrust,-,Shield,Start 1P,Start 2P,Coin,Pause,Aux Coin"></buttons>
+
+	<switches default="04,00,00">
+		<dip bits="8,9" ids="1 Coin 1 Credit,2 Coins 1 Credit,Free Play,1 Coin 2 Credits" name="Coinage"></dip>
+		<dip bits="10,11" ids="1,4,5,6" name="Coin Right"></dip>
+		<dip bits="12" ids="1,2" name="Coin Left"></dip>
+		<dip bits="13,15" ids="None,1 each 2,1 each 4,2 each 4,1 each 5,1 each 3,None,None" name="Bonus Coins"></dip>
+		<dip bits="2,3" ids="3,4,5,6" name="Lives"></dip>
+		<dip bits="4" ids="Easy,Hard" name="Difficulty"></dip>
+		<dip bits="6,7" ids="10000,20000,30000,None" name="Bonus Life"></dip>
+		<dip bits="16" ids="Off,On" name="Service"></dip>
+		<dip bits="17" ids="Off,On" name="Diagnostic Step"></dip>
+		</switches>
+
+	<rom index="1">
+		<part>2</part>
+		</rom>
+	<rom index="0" md5="b1753bc14662d3b2155ea31f86f2bbc3" type="merged|nonmerged" zip="lunarbat.zip|gravitar.zip">
+		<part crc="cd7e1780" name="136010-001.d1"></part>
+		<part crc="dc813a54" name="136010-002.ef1"></part>
+		<part crc="8e1fecd3" name="136010-003.h1"></part>
+		<part crc="c407764f" name="136010-004.j1"></part>
+		<part crc="4feb6f81" name="136010-005.kl1"></part>
+		<part crc="f8ad139d" name="136010-006.m1"></part>
+		<part crc="48fd38aa" name="136010-010.l7"></part>
+		<part crc="48fd38aa" name="136010-010.l7"></part>
+		<part crc="9754830e" name="136010-007.mn7"></part>
+		<part crc="084aa8db" name="136010-008.np7"></part>
+		<part repeat="0x1000">00</part>
+		<part crc="5903af03" name="136002-125.n4"></part>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3" md5="none">
+		<part>
+		00 00 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 04 2B 00 2D 50 03 
+		</part>
+	</rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="45"></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
+</misterromdescription>

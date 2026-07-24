@@ -1,0 +1,83 @@
+<misterromdescription>
+	<name>The Killing Blade (ver. 109, Chinese Board)</name>
+	<setname>killbld</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|killbld.zip">
+		<!-- REGION_BIOS_PROG_ROM  = 00 -->
+
+		<!-- REGION_BIOS_TILE_ROM  = 01 -->
+
+		<!-- REGION_BIOS_MUSIC_ROM = 02 -->
+
+		<!-- REGION_CART_PROG_ROM  = 03 -->
+
+		<!-- REGION_CART_TILE_ROM  = 04 -->
+
+		<!-- REGION_CART_MUSIC_ROM = 05 -->
+
+		<!-- REGION_CART_A_ROM     = 06 -->
+
+		<!-- REGION_CART_B_ROM     = 07 -->
+
+		<!-- REGION_IGS022_ROM     = 08 -->
+
+		<!-- SYSTEM INFO (game = GAME_KILLBLD = 9) -->
+		<part>09 00</part>
+
+		<!-- BIOS PROG -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+
+		<!-- BIOS TILE -->
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+
+		<!-- BIOS MUSIC -->
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG (ROM_LOAD16_WORD_SWAP) -->
+		<part>03 00200000 00100000</part>
+		<part name="p0300_v109.u9" crc="2fcee215"/>
+
+		<!-- CART TILE -->
+		<part>04 00400000 00180000</part>
+		<part name="pgm_t0300.u14" crc="0922f7d9"/>
+
+		<!-- CART MUSIC -->
+		<part>05 00400000 00400000</part>
+		<part name="pgm_m0300.u1" crc="93159695"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 01400000 00000000</part>
+		<part name="pgm_a0300.u9" crc="3f9455d3"/>
+		<part name="pgm_a0301.u10" crc="92776889"/>
+		<part name="pgm_a0303.u11" crc="33f5cc69"/>
+		<part name="pgm_a0306.u12" crc="cc018a8e"/>
+		<part name="pgm_a0307.u2" crc="bc772e39"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 00a00000 00000000</part>
+		<part name="pgm_b0300.u13" crc="7f876981"/>
+		<part name="pgm_b0302.u14" crc="eea9c502"/>
+		<part name="pgm_b0303.u15" crc="77a9652e"/>
+
+		<!-- IGS022 PROTECTION DATA (64KB -> block RAM) -->
+		<part>08 00010000 00000000</part>
+		<part name="kb_u2_v109.u2" crc="de3eae63"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

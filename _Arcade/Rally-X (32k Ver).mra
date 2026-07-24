@@ -1,0 +1,63 @@
+<misterromdescription>
+	<name>Rally-X</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>32k Ver</version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Rally-X</series>
+	<year>1980</year>
+	<manufacturer>Namco</manufacturer>
+	<category>Maze</category>
+
+	<setname>rallyx</setname>
+	<parent>rallyx</parent>
+	<mameversion>0220</mameversion>
+	<rbf>rallyx</rbf>
+	<about author="MrX-8B" source="https://github.com/MiSTer-devel/Arcade-RallyX_MiSTer" twitter="@MrX_8B" webpage="https://patreon.com/MrX_8B"></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>2 (alternating)</players>
+	<joystick>4-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>1</num_buttons>
+	<buttons names="Smoke,Start 1P,Start 2P,Coin,Pause" default="A,Start,Select,R,L"/>
+
+	<switches>
+		<dip bits="6,7" name="Coinage"	ids="1 Coin 1 Credit, 1 Coin 2 Credits, 2 Coins 1 Credit, Free Play" />
+		<dip bits="3,5"	name="Difficulty"	ids="3 Cars Hard, 3 Cars Medium, 3 Cars Easy, 2 Cars Hard, 2 Cars Medium, 2 Cars Easy, 1 Car Hard, 1 Car Medium" values="0,3,6,1,4,7,2,5" />
+		<dip bits="1,2" name="Bonus Life"	ids="Hard, Medium, Easy, Never" />
+		<dip bits="0"	name="Service Mode"	ids="Off,On" />
+	</switches>
+
+	<rom index="1"></rom>
+	<rom index="0" md5="none" zip="rallyx.zip">
+		<part crc="5882700d" name="1b"></part>
+		<part crc="ed1eba2b" name="rallyxn.1e"></part>
+		<part crc="4f98dd1c" name="rallyxn.1h"></part>
+		<part crc="9aacccf0" name="rallyxn.1k"></part>
+		<part crc="277c1de5" name="8e"></part>
+		<part crc="3c16f62c" name="rx1-6.8m"></part>
+		<part crc="4bad7017" name="rx1-5.3p"></part>
+		<part crc="834d4fda" name="rx1-7.8p"></part>
+		<part crc="c7865434" name="rx1-1.11n"></part>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3" md5="none">
+		<part>
+				12 98 BE 00 00 FF 00 08 00 08 00 01 00 FF 0F 00
+				00 00 80 60 00 08 00 01
+				</part>
+		</rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="8"></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
+</misterromdescription>

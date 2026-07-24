@@ -1,0 +1,91 @@
+<misterromdescription>
+  <name>Night Slashers (US Rev 1.2, DE-0395-1 PCB)</name>
+  <setname>nslasheru</setname>
+  <mameversion>0264</mameversion>
+  <rbf>NightSlashers</rbf>
+  <year>1994</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>3</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,X,Start" names="Attack,Jump,Special,-,-,-,Start,Coin,Pause"/>
+  <switches default="21,06">
+    <!-- La scheda non ha DIP fisici: i settings vivono in EEPROM (service menu).
+         Il core inietta al reset il blocco EEPROM generato da questi switch
+         (formato + checksum del firmware). Default = valori di fabbrica.
+         REGION XM (marker EEPROM "XM") e' via mod byte <rom index="1">=02, NON dai DIP.
+         Il set USA (nslasheru) usa audio HuC6280 invece dello Z80: selezionato
+         dal mod byte bit1 (0x02). DIP identici agli altri set NS. -->
+    <dip name="Lives" bits="0,2" ids="1,2,3,4,5"/>
+    <dip name="Screen Rotation" bits="3" ids="Normal,Reverse"/>
+    <dip name="Violence" bits="4" ids="Off,On"/>
+    <dip name="Demo Sounds" bits="5" ids="Off,On"/>
+    <dip name="Free Play" bits="6" ids="No,Yes"/>
+    <dip name="Game Start" bits="7" ids="Normal,2 Coin Credit"/>
+    <dip name="Credit Counter" bits="8" ids="One,Individual"/>
+    <dip name="Difficulty" bits="9,11" ids="Easiest,Very Easy,Easy,Medium,Medium Hard,Hard,Very Hard,Hardest"/>
+    <dip name="Player Life Value" bits="12,13" ids="Normal,Less,Least"/>
+    <dip name="Player Number" bits="14,15" ids="2P Start,2P Shot,3P Shot" values="0,2,3"/>
+  </switches>
+  <rom index="1">
+    <!-- mod byte (region select, letto dal core via ioctl index=1):
+         bit0 = REGION XM (marker EEPROM). bit1 = REGION US -> audio HuC6280.
+         I due bit sono INDIPENDENTI: bit0 = quale marker EEPROM (DIP), bit1 = quale
+         CPU audio. USA = 0x03 (bit0=1 marker "XM" come Jap/Overseas, i cui DIP
+         funzionano; bit1=1 audio HuC6280). -->
+    <part>03</part>
+  </rom>
+  <rom index="0" zip="nslasher.zip" md5="None">
+    <!-- ROM main USA (nslasheru): 00.f1 / 01.f2 (decrittate runtime DE156 come
+         gli altri set NS: MAME init_nslasher). Interleave dword identico.
+         Clone-specifiche -> prefisso setname/ (merged); condivise senza prefisso. -->
+    <interleave output="32">
+      <part name="nslasheru/00.f1" crc="944f3329" map="0021"/>
+      <part name="nslasheru/01.f2" crc="ac12d18a" map="2100"/>
+    </interleave>
+    <!-- audio HuC6280 @0x100000 (64KB) = 02.l18 (codice H6280, NON Z80) -->
+    <!--  @ 0x100000 -->
+    <part name="nslasheru/02.l18" crc="5e63bd91"/>
+    <!-- tiles1 text_lo @0x110000 = mbh-00[0:0x10000] (deco56 no-reorder) -->
+    <!--  @ 0x110000 -->
+    <part name="mbh-00.8c" crc="a877f8a3" offset="0x0" length="0x10000"/>
+    <!-- tiles1 text_hi @0x120000 = mbh-00[0x80000:0x90000] -->
+    <!--  @ 0x120000 -->
+    <part name="mbh-00.8c" crc="a877f8a3" offset="0x80000" length="0x10000"/>
+    <!-- tiles1 BG1 @0x130000 = mbh-00 full (deco56+reorder, bridge ba3) -->
+    <!--  @ 0x130000 -->
+    <part name="mbh-00.8c" crc="a877f8a3"/>
+    <!-- pad 0x100000 @ 0x330000 -->
+    <part repeat="0x100000"> 00 </part>
+    <!-- tiles2 FG0 @0x430000 = mbh-01 (deco74_fg0 T_BASE 0x430000, ba0) -->
+    <!--  @ 0x430000 -->
+    <part name="mbh-01.9c" crc="1853dafc"/>
+    <!-- tiles2 FG1 @0x630000 = mbh-01 (deco74_fg1 T_BASE 0x630000, ba1, dup) -->
+    <!--  @ 0x630000 -->
+    <part name="mbh-01.9c" crc="1853dafc"/>
+    <!-- sprites1 chip0 5bpp (ordine 02-first, come gli altri set NS) -->
+    <!-- @ 0x830000 -->
+    <part name="mbh-02.14c" crc="b2f158a1"/>
+    <!-- @ 0xA30000 -->
+    <part name="mbh-04.16c" crc="eecfe06d"/>
+    <!-- @ 0xC30000 -->
+    <part name="mbh-03.15c" crc="787787e3"/>
+    <!-- @ 0xCB0000 -->
+    <part name="mbh-05.17c" crc="1d2b7c17"/>
+    <!-- P4 5th plane low @0xD30000 (linear) @ 0xD30000 -->
+    <part name="mbh-06.18c" crc="038c2127"/>
+    <!-- P4 5th plane high @0xE30000 (linear) @ 0xE30000 -->
+    <part name="mbh-07.19c" crc="bbd22323"/>
+    <!-- sprites2 chip1 4bpp @0xE70000 -->
+    <part name="mbh-08.16e" crc="cdd7f8cb"/>
+    <!-- chip1 @0xEF0000 -->
+    <part name="mbh-09.18e" crc="33fa2121"/>
+    <!-- oki1 @0xF70000 -->
+    <part name="mbh-10.14l" crc="c4d6b116"/>
+    <!-- oki2 @0xFF0000 -->
+    <part name="mbh-11.16l" crc="0ec40b6b"/>
+  </rom>
+</misterromdescription>

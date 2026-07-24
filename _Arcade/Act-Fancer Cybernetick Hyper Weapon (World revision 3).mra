@@ -1,0 +1,125 @@
+<misterromdescription>
+  <name>Act-Fancer Cybernetick Hyper Weapon (World rev 3)</name>
+  <setname>actfancr</setname>
+  <mameversion>0264</mameversion>
+  <rbf>ActFancer</rbf>
+  <year>1989</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Platformer</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <dip bits="0,1"   ids="3C/1C,2C/1C,1C/2C,1C/1C" name="Coin A"/>
+    <dip bits="2,3"   ids="3C/1C,2C/1C,1C/2C,1C/1C" name="Coin B"/>
+    <dip bits="5"     ids="Off,On"            name="Demo Sounds"/>
+    <dip bits="6"     ids="On,Off"            name="Flip Screen"/>
+    <dip bits="7"     ids="Upright,Cocktail"  name="Cabinet"/>
+    <dip bits="8,9"   ids="100 (Cheat),5,4,3" name="Lives"/>
+    <dip bits="10,11" ids="Hardest,Easy,Hard,Normal" name="Difficulty"/>
+    <dip bits="13"    ids="None,800000"       name="Bonus Life"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <!--
+    SDRAM layout (con interleave 32-bit per regioni gfx):
+      0x000000 +0x030000  maincpu  (H6280) 192KB
+      0x030000 +0x010000  audiocpu (M6502) 64KB
+      0x040000 +0x020000  chars  8x8  4bpp interleaved (32-bit per row)
+      0x060000 +0x060000  sprites 16x16 4bpp interleaved
+      0x0C0000 +0x040000  tiles  16x16 4bpp interleaved
+      0x100000 +0x040000  oki M6295
+  -->
+  <rom index="0" zip="actfancr.zip" md5="None">
+    <!-- H6280 main CPU 192KB @ 0x000000 -->
+    <part name="fe08-3.bin" crc="35f1999d"/>
+    <part name="fe09-3.bin" crc="d21416ca"/>
+    <part name="fe10-3.bin" crc="85535fcc"/>
+
+    <!-- M6502 sound CPU 64KB @ 0x030000 (pad 32KB di FF, poi 32KB ROM) -->
+    <part repeat="0x8000">FF</part>
+    <part name="17-1"       crc="289ad106"/>
+
+    <!-- ===== Chars 8x8 4bpp 128KB @ 0x040000 =====
+         MAME layout planes = {RGN_FRAC(1,4), RGN_FRAC(3,4), RGN_FRAC(0,4), RGN_FRAC(2,4)}
+         jtcop_bac06 fetch 32-bit, format byte = {B3, B2, B1, B0}
+         pixel bit3 = B2, bit2 = B3, bit1 = B0, bit0 = B1
+         → B0 = plane bit1 = region 0/4
+           B1 = plane bit0 = region 2/4
+           B2 = plane bit3 = region 1/4
+           B3 = plane bit2 = region 3/4
+         ROM 15 (64KB) contiene region 0 (0..0x7FFF) e region 2 (0x8000..0xFFFF)
+         ROM 16 (64KB) contiene region 1 (0..0x7FFF) e region 3 (0x8000..0xFFFF)
+    -->
+    <!-- Fix MAME ROM_REGION:
+         offs 0x00000-0x07FFF = ROM15 1st half = RGN_FRAC(0,4) → pen bit 1 → B0 (map=0001)
+         offs 0x08000-0x0FFFF = ROM15 2nd half = RGN_FRAC(1,4) → pen bit 3 → B2 (map=0100)
+         offs 0x10000-0x17FFF = ROM16 1st half = RGN_FRAC(2,4) → pen bit 0 → B1 (map=0010)
+         offs 0x18000-0x1FFFF = ROM16 2nd half = RGN_FRAC(3,4) → pen bit 2 → B3 (map=1000) -->
+    <interleave output="32">
+      <part name="15" crc="a1baf21e" offset="0x00000" length="0x8000" map="0001"/>  <!-- region 0/4 → B0 = pen bit 1 -->
+      <part name="16" crc="22e64730" offset="0x00000" length="0x8000" map="0010"/>  <!-- region 2/4 → B1 = pen bit 0 -->
+      <part name="15" crc="a1baf21e" offset="0x08000" length="0x8000" map="0100"/>  <!-- region 1/4 → B2 = pen bit 3 -->
+      <part name="16" crc="22e64730" offset="0x08000" length="0x8000" map="1000"/>  <!-- region 3/4 → B3 = pen bit 2 -->
+    </interleave>
+
+    <!-- ===== Sprites 16x16 4bpp 384KB @ 0x060000 =====
+         MAME layout planes = {0, RGN_FRAC(1,4), RGN_FRAC(2,4), RGN_FRAC(3,4)}
+         pixel bit3 = B2, bit2 = B3, bit1 = B0, bit0 = B1
+         → B0 = bit1 = region 2/4
+           B1 = bit0 = region 3/4
+           B2 = bit3 = region 0
+           B3 = bit2 = region 1/4
+         Regioni (96KB ciascuna):
+           region 0   = 02(64KB) + 03(32KB)
+           region 1/4 = 06(64KB) + 07(32KB)
+           region 2/4 = 00(64KB) + 01(32KB)
+           region 3/4 = 04(64KB) + 05(32KB)
+    -->
+    <!-- Sprite mapping CORRETTO vs MAME planes={0, 1/4, 2/4, 3/4} + draw_pxl jtcop:
+         pen[3]=B2=region 0, pen[2]=B3=region 1/4, pen[1]=B0=region 2/4, pen[0]=B1=region 3/4
+         (stesso layout/pattern di tiles, confermato vs jtcop_bac06.v draw_pxl) -->
+    <interleave output="32">
+      <!-- B0 = region 2/4 (00+01) -->
+      <part name="00" crc="d50a9550" map="0001"/>
+      <part name="01" crc="34935e93" map="0001"/>
+      <!-- B1 = region 3/4 (04+05) -->
+      <part name="04" crc="bcf41795" map="0010"/>
+      <part name="05" crc="d38b94aa" map="0010"/>
+      <!-- B2 = region 0 (02+03) -->
+      <part name="02" crc="b1db0efc" map="0100"/>
+      <part name="03" crc="f313e04f" map="0100"/>
+      <!-- B3 = region 1/4 (06+07) -->
+      <part name="06" crc="8cb6dd87" map="1000"/>
+      <part name="07" crc="dd345def" map="1000"/>
+    </interleave>
+
+    <!-- ===== Tiles 16x16 4bpp 256KB @ 0x0C0000 =====
+         Stesso layout sprites: planes = {0, 1/4, 2/4, 3/4}
+         Regioni 64KB ciascuna:
+           region 0   = 14 (64KB)
+           region 1/4 = 12 (64KB)
+           region 2/4 = 13 (64KB)
+           region 3/4 = 11 (64KB)
+    -->
+    <interleave output="32">
+      <part name="13" crc="c30c37dc" map="0001"/>  <!-- B0 = region 2/4 -->
+      <part name="11" crc="1f006d9f" map="0010"/>  <!-- B1 = region 3/4 -->
+      <part name="14" crc="d6457420" map="0100"/>  <!-- B2 = region 0 -->
+      <part name="12" crc="08787b7a" map="1000"/>  <!-- B3 = region 1/4 -->
+    </interleave>
+
+    <!-- OKI M6295 ADPCM 256KB @ 0x100000 -->
+    <part name="18"         crc="5c55b242"/>
+  </rom>
+  <rom index="2"></rom>
+
+  <mratimestamp>20260516000000</mratimestamp>
+</misterromdescription>

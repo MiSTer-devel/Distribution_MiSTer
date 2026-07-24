@@ -1,0 +1,82 @@
+<misterromdescription>
+  <name>Legionnaire (Japan)</name>
+  <setname>legionnaj</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Legionnaire</rbf>
+  <year>1992</year>
+  <manufacturer>Tad Corporation</manufacturer>
+  <category>Beat-em-up</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <!--
+    Legionnaire (Japan) = MAME set "legionnaj". Stessa init_legiongfx del parent
+    World: cambia SOLO la 4a ROM main CPU (4.u023 crc 4c385dc7, nel merged zip
+    sotto legionnaj/). Audio, tiles, sprites, oki, copx, prom = condivisi.
+  -->
+
+  <switches default="FF,FF">
+    <!-- Legionnaire DIPs (MAME legionna.cpp:456-516). 16-bit word LE, active LOW.
+         DSW1 = bit 0..7 (low byte). DSW2 = bit 8..15 (high byte). Default 0xFFFF. -->
+    <!-- DSW1 (SW01) -->
+    <dip bits="0"     ids="Mode 2,Mode 1"                                                                                                  name="Coin Mode"/>
+    <dip bits="1,4"   ids="Free Play,8C 3C,5C 3C,3C 2C,2C 3C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C"            name="Coinage (Mode 1)"/>
+    <dip bits="5"     ids="On,Off"                                                                                                          name="Unknown SW01:6"/>
+    <dip bits="6"     ids="On,Off"                                                                                                          name="Freeze"/>
+    <dip bits="7"     ids="On,Off"                                                                                                          name="Flip Screen"/>
+    <!-- DSW2 (SW02) -->
+    <dip bits="8,9"   ids="4,3,1,2"                                                                                                         name="Lives"/>
+    <dip bits="10"    ids="No,Yes"                                                                                                          name="Extend Play"/>
+    <dip bits="11"    ids="On,Off"                                                                                                          name="Unknown SW02:4"/>
+    <dip bits="12,13" ids="Very Hard,Hard,Easy,Normal"                                                                                      name="Difficulty"/>
+    <dip bits="14"    ids="No,Yes"                                                                                                          name="Allow Continue"/>
+    <dip bits="15"    ids="Off,On"                                                                                                          name="Demo Sounds"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="legionna.zip" md5="None">
+    <!-- maincpu 512KB @ 0x000000: ROM_LOAD32_BYTE 4-byte interlace.
+         byte[0]=1.u025, byte[1]=2.u024, byte[2]=3.u026, byte[3]=4.u023 (legionnaj).
+         Japan: la 4a ROM e' 4.u023 crc 4c385dc7 (nel merged zip sotto legionnaj/). -->
+    <interleave output="32">
+      <part name="1.u025" crc="9e2d3ec8" map="0010"/>
+      <part name="2.u024" crc="35c8a28f" map="0001"/>
+      <part name="3.u026" crc="553fc7c0" map="1000"/>
+      <part name="legionnaj/4.u023" crc="4c385dc7" map="0100"/>
+    </interleave>
+
+    <!-- txtiles 128KB @ 0x080000: MAME "user1" region 128KB. -->
+    <interleave output="16">
+      <part name="7.u077" crc="88e26809" map="01"/>
+      <part name="8.u072" crc="06e35407" map="10"/>
+    </interleave>
+
+    <!-- bgtiles 1024KB @ 0x0A0000 (back ROM region, 1MB): legionnire_back -->
+    <interleave output="16"><part name="legionnire_back.u075" crc="58280989" map="21"/></interleave>
+
+    <!-- mgtiles 1024KB slot: vuoto (Legionnaire MG shared BG ROM con tile_idx +0x1000) -->
+    <part repeat="0x100000">00</part>
+
+    <!-- sprites 2MB @ 0x2A0000: legionnire_obj1 1MB + legionnire_obj2 1MB -->
+    <interleave output="16"><part name="legionnire_obj1.u0815" crc="d35602f5" map="21"/></interleave>
+    <interleave output="16"><part name="legionnire_obj2.u0814" crc="351d3917" map="21"/></interleave>
+
+    <!-- oki @ 0x4A0000: 5.u106 128KB + padding 128KB = 256KB region totale. -->
+    <interleave output="16"><part name="5.u106" crc="21d09bde" map="21"/></interleave>
+    <part repeat="0x20000">00</part>
+
+    <!-- audiocpu 32KB @ 0x4E0000 (6.u1110). -->
+    <interleave output="16"><part name="6.u1110" crc="fe7b8d06" map="21"/></interleave>
+
+    <!-- copx-d1 (COP3 LUT data) @ 0x4F0000 (512KB) -->
+    <interleave output="16"><part name="copx-d1.u0330" crc="029bc402" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260516000000</mratimestamp>
+</misterromdescription>

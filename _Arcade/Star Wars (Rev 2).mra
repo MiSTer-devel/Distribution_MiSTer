@@ -1,0 +1,60 @@
+<misterromdescription>
+	<name>Star Wars (Rev 2)</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform>Atari Vector</platform>
+	<series>Star Wars</series>
+	<year>1983</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Shooter</category>
+
+	<setname>starwars</setname>
+	<parent>starwars</parent>
+	<mameversion>0228</mameversion>
+	<rbf>StarWars</rbf>
+	<about></about>
+
+	<resolution>31kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>1</players>
+	<joystick>Analog</joystick>
+	<special_controls>yoke</special_controls>
+	<num_buttons>7</num_buttons>
+	<buttons default="A,B,Start,R,L,Y,Z" names="Fire L,Shield L,Aux Coin,Coin L,Coin R,Fire R,Shield R"></buttons>
+
+
+
+	<rom index="1">
+		<part>0</part>
+	</rom>
+	<rom index="0" md5="none" type="merged|nonmerged" zip="starwars.zip">
+		<!-- Main CPU ROMs (48KB) -->
+		<part crc="04f1876e" name="136021.214.1f"></part>
+		<part crc="f725e344" name="136021.102.1hj"></part>
+		<part crc="f6da0a00" name="136021.203.1jk"></part>
+		<part crc="7e406703" name="136021.104.1kl"></part>
+		<part crc="c7e51237" name="136021.206.1m"></part>
+		<!-- Vector ROM (4KB) -->
+		<part crc="538e7d2f" name="136021-105.1l"></part>
+		<!-- Audio ROMs (16KB) -->
+		<part crc="dbf3aea2" name="136021-107.1jk"></part>
+		<part crc="e38070a8" name="136021-208.1h"></part>
+		<!-- AVG PROM (256B) -->
+		<part crc="82fc3eb2" name="136021-109.4b"></part>
+		<!-- Mathbox PROMs (4KB) -->
+		<part crc="810e040e" name="136021-110.7h"></part>
+		<part crc="ae69881c" name="136021-111.7j"></part>
+		<part crc="ecf22628" name="136021-112.7k"></part>
+		<part crc="83febfde" name="136021-113.7l"></part>
+	</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="256"></nvram>
+</misterromdescription>

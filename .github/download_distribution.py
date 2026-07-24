@@ -250,7 +250,7 @@ MetadataProps = Dict[str, Any]
 class Metadata:
     @staticmethod
     def new_props() -> MetadataProps:
-        return {'home': {}, 'aliases': []}
+        return {'home': {}, 'aliases': [], 'core_terms': []}
 
     def __init__(self, props: MetadataProps):
         self._props = props
@@ -270,13 +270,13 @@ class Metadata:
         self._props['home'][lower]['mgl_dependency'] = ''
 
     def add_core_aliases(self, core_aliases: List[str]) -> None:
+        home = to_filter_term(core_aliases[0])
         terms = {to_filter_term(c) for c in core_aliases}
         for t in terms:
             if t in self._terms:
                 raise ValueError(f'{t} from {str(core_aliases)} was already present!', self._ctx)
             self._terms.add(t)
-        if len(terms) > 1:
-            self._props['aliases'].append(list(terms))
+        self._props['core_terms'].append({'home': home, 'binaries': sorted(terms - {home})})
 
 # processors
 
@@ -344,7 +344,33 @@ def process_extra_content(url: str, category: str, delme: str, target: str):
 
     raise SystemError(f'Ignored extra content: {url} {category}')
 
+def resolve_core_terms(metadata_props: MetadataProps) -> None:
+    home_count: Dict[str, int] = {}
+    for entry in metadata_props['core_terms']:
+        home_count[entry['home']] = home_count.get(entry['home'], 0) + 1
+
+    aliases: List[List[str]] = []
+    binary_homes: Dict[str, str] = {}
+    for entry in metadata_props['core_terms']:
+        home, binaries = entry['home'], entry['binaries']
+        if len(binaries) == 0:
+            continue
+
+        if home_count[home] > 1:
+            # More than one core shares this home (AtariLynx and AtariLynx2P). Aliasing them would turn both
+            # terms into a single tag, so every path of the home would match the binary term too. Instead,
+            # each binary keeps its own term and gets the home term added on top of it.
+            for binary in binaries:
+                binary_homes[binary] = home
+        else:
+            aliases.append([home, *binaries])
+
+    del metadata_props['core_terms']
+    metadata_props['aliases'] = aliases
+    metadata_props['binary_homes'] = binary_homes
+
 def save_metadata(metadata_props: MetadataProps):
+    resolve_core_terms(metadata_props)
     metadata_props['aliases'] = sorted(metadata_props['aliases'], key=lambda arr: sorted(arr)[0])  # This allow us to have a deterministic build, otherwise this array would introduce RNG in the tag indexes calculation
 
     print()

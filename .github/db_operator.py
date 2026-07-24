@@ -484,6 +484,7 @@ class Tags:
                 self._append(result, self._use_arcade_term(nodates))
             else:
                 self._append(result, self._use_term(nodates))
+                self._append_home_term(result, nodates)
 
             if nodates in ['gba2p', 'gameboy2p']:
                 self._append(result, self._use_term('handheld2p'))
@@ -504,6 +505,7 @@ class Tags:
             self._append(result, self._use_term('mgl'))
             self._append(result, self._use_term('cores'))
             self._append(result, self._use_term(stem))
+            self._append_home_term(result, stem)
             rbf, _, broken_error = read_mgl_fields(path)
             if broken_error is None and rbf is not None:
                 self._append(result, self._use_term(Path(rbf).name.lower()))
@@ -694,6 +696,11 @@ class Tags:
         if term in result:
             return
         result.append(term)
+
+    def _append_home_term(self, result: List[int], binary: str) -> None:
+        home = self._metadata.home_by_binary(self._clean_term(binary))
+        if home is not None:
+            self._append(result, self._use_term(home))
 
     def get_dictionary(self) -> Dict[str, int]:
         result: Dict[str, int] = {}
@@ -1071,7 +1078,7 @@ class ZipsBuilder:
 class Metadata:
     @staticmethod
     def new_props() -> Dict[str, Any]:
-        return {'home': {}, 'aliases': []}
+        return {'home': {}, 'aliases': [], 'binary_homes': {}}
 
     def __init__(self, props: Dict[str, Any]):
         self._props = props
@@ -1090,6 +1097,9 @@ class Metadata:
 
     def aliases(self) -> List[List[str]]:
         return self._props['aliases']
+
+    def home_by_binary(self, binary: str) -> Optional[str]:
+        return self._props.get('binary_homes', {}).get(binary)
 
 # MiSTer save functions
 

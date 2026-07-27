@@ -1,0 +1,50 @@
+<misterromdescription>
+  <name>Super Real Mahjong VS</name>
+  <mratimestamp>20260718</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>srmvsa</setname>
+  <parent>srmvs</parent>
+  <year>1999</year>
+  <manufacturer>Seta</manufacturer>
+  <category>Mahjong</category>
+  <rbf>Aleck64</rbf>
+
+  <buttons names="Mahjong E,Mahjong F,Mahjong G,Mahjong H,Mahjong I,Mahjong J,Mahjong K,Mahjong L,Mahjong M,Mahjong N,Mahjong Kan,Mahjong Pon,Mahjong Chi,Mahjong Reach,Mahjong Ron,Start,Coin,Service,Test" default="A,B,X,Y,L,R"/>
+
+  <switches default="DF,FF">
+    <dip bits="15" name="SW1 #8 (Unknown)" ids="On,Off"/>
+    <dip bits="14" name="SW1 #7 (Unknown)" ids="On,Off"/>
+    <dip bits="13" name="SW1 #6 (Unknown)" ids="On,Off"/>
+    <dip bits="12" name="SW1 #5 (Unknown)" ids="On,Off"/>
+    <dip bits="11" name="SW1 #4 (Unknown)" ids="On,Off"/>
+    <dip bits="8,9,10" name="Coinage" ids="5C/1C,4C/1C,3C/1C,2C/1C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="7" name="Test Mode" ids="On,Off"/>
+    <dip bits="6" name="SW2 #7 (Unknown)" ids="On,Off"/>
+    <dip bits="5" name="Demo Sounds" ids="On,Off"/>
+    <dip bits="4" name="SW2 #5 (Unknown)" ids="On,Off"/>
+    <dip bits="3" name="SW2 #4 (Unknown)" ids="On,Off"/>
+    <dip bits="2" name="SW2 #3 (Unknown)" ids="On,Off"/>
+    <dip bits="1" name="SW2 #2 (Unknown)" ids="On,Off"/>
+    <dip bits="0" name="SW2 #1 (Unknown)" ids="On,Off"/>
+  </switches>
+
+  <remark>
+    Requires srmvsa.zip and the parent BIOS aleck64.zip in games/mame.
+    D-pad directions map Mahjong A-D; the named buttons map E-N and the five
+    actions. Start+Pon/Chi/Reach provide Coin/Service/Test respectively.
+  </remark>
+
+  <rom index="3" md5="f68eb6ef7715a07d688b530b7388c958">
+    <part>55 00</part>
+  </rom>
+  <rom index="0" zip="aleck64.zip" md5="4921d5f2165dee6e2496f4388c4c81da">
+    <part name="pifdata.bin" crc="5ec82be9"/>
+  </rom>
+  <rom index="1" address="0x32000000" zip="srmvsa.zip" md5="none">
+    <interleave output="16">
+      <part name="nus-zsej-0.u2" crc="44f40102" map="12"/>
+    </interleave>
+    <patch offset="0x67c">00 00 00 00</patch>
+  </rom>
+  <nvram index="4" size="512"/>
+</misterromdescription>

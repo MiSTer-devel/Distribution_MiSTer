@@ -1,0 +1,55 @@
+<misterromdescription>
+    <name>Slither</name>
+    <setname>slither</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1982</year>
+    <manufacturer>Century II (GDI license)</manufacturer>
+    <players>2</players>
+    <joystick>Trackball</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <buttons names="Fire 1,Fire 2,Test Advance,Not Used,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <!--
+        Slither runs on Taito Qix hardware (2x 6809) but: NO third (6802) audio CPU,
+        NO MCU, and it does NOT use the video-RAM access mask. Audio is 2x SN76489
+        driven via PIA CB2 (see qix.cpp). game_id = 0x05.
+
+        ROM LOADING ORDER (ioctl_addr, non-zookeep regions):
+        $00000-$05FFF : maincpu  (24KB window, $A000-$FFFF; ROMs at $D800 = pad $3800 + 5x $0800)
+        $06000-$0BFFF : videocpu (24KB window, $A000-$FFFF; ROMs at $D000 = pad $3000 + 6x $0800)
+        $0C000-$0EFFF : audiocpu (UNUSED — Slither has no 6802 board; no parts loaded here)
+    -->
+
+    <rom index="0" zip="slither.zip" md5="none">
+        <!-- Data CPU (maincpu): 5x 2KB at $D800-$FFFF -->
+        <part repeat="0x3800">00</part>
+        <part name="u31.cpu" crc="3dfff970"/>
+        <part name="u30.cpu" crc="8cbc5af8"/>
+        <part name="u29.cpu" crc="98c14510"/>
+        <part name="u28.cpu" crc="2762f612"/>
+        <part name="u27.cpu" crc="9306d5b1"/>
+
+        <!-- Video CPU (videocpu): 6x 2KB at $D000-$FFFF -->
+        <part repeat="0x3000">00</part>
+        <part name="u41.cpu" crc="e4c60a57"/>
+        <part name="u40.cpu" crc="5dcec622"/>
+        <part name="u39.cpu" crc="69829c2a"/>
+        <part name="u38.cpu" crc="6adc64c6"/>
+        <part name="u37.cpu" crc="55d31c96"/>
+        <part name="u36.cpu" crc="d5ffc013"/>
+
+        <!-- No audio CPU ROM: Slither uses 2x SN76489 via PIA, not the 6802+DAC board. -->
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x05 (SLITHER) -->
+    <rom index="1">
+        <part>05</part>
+    </rom>
+
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

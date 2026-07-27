@@ -1,0 +1,88 @@
+<misterromdescription>
+  <name>Sky Smasher</name>
+  <setname>skysmash</setname>
+  <mameversion>0264</mameversion>
+  <rbf>SkySmasher</rbf>
+  <year>1990</year>
+  <manufacturer>Nihon System</manufacturer>
+  <category>Shoot</category>
+  <rotation>vertical (cw)</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start,Y" names="Shoot,Missile,-,Service,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- Sky Smasher DIPs - allineati 1:1 a MAME src/mame/seibu/bloodbro.cpp
+         INPUT_PORTS_START(skysmash). DSW e' 16-bit (SW1 lo byte + SW2 hi byte).
+         BLOODBRO_COINAGE macro (SW1:1-6) condivisa con bloodbro:
+           SW1:1 Coin Mode (decide se SW1:2-5 sono Coinage o Coin_A+Coin_B)
+           SW1:2-5 Coinage (Mode 1) / Coin_A SW1:2-3 + Coin_B SW1:4-5 (Mode 2)
+           SW1:6 Starting Coin (Normal / x2)
+           SW1:7 unused (PORT_DIPUNUSED)
+           SW1:8 unused (PORT_DIPUNUSED) -->
+    <!-- Coin Mode: bit=0 -> Mode 2 (0x0000), bit=1 -> Mode 1 (0x0001). Default FF=Mode 1. -->
+    <dip bits="0"   ids="Mode 2,Mode 1" name="Coin Mode"/>
+    <!-- Coinage SW1:2-5 (16 valori per Mode 1, default 1111 = 1C 1C).
+         MRA non supporta PORT_CONDITION come MAME, quindi mostriamo solo
+         la lista Mode 1 (Mode 2 ha sub-coinage condizionato che non si
+         puo' rappresentare nell'MRA senza creare DIP sovrapposti). -->
+    <dip bits="1,4" ids="Free Play,8C 3C,5C 3C,3C 2C,2C 3C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C" name="Coinage"/>
+    <!-- Starting Coin: bit=0 -> x2 (0x0000), bit=1 -> Normal (0x0020). Default FF=Normal. -->
+    <dip bits="5"   ids="x2,Normal" name="Starting Coin"/>
+    <!-- SW1:7-8 marcati PORT_DIPUNUSED in MAME (nessun effetto gameplay).
+         Service mode = bottone joypad J1 bit 7 (gestito nel core), non DIP. -->
+    <dip bits="6"   ids="On,Off" name="Unused SW1.7"/>
+    <dip bits="7"   ids="On,Off" name="Unused SW1.8"/>
+    <!-- SW2: skysmash-specific (different from Blood Bros).
+         Lives default 11 = 3, Bonus Life default 11 = 120K 200K+,
+         Difficulty default 11 = Normal, Allow Continue default 1 = Yes,
+         Demo Sounds default 1 = On. -->
+    <dip bits="8,9" ids="Infinite,5,2,3" name="Lives"/>
+    <dip bits="10,11" ids="200K,250K+,200K+,120K 200K+" name="Bonus Life"/>
+    <dip bits="12,13" ids="Easy,Very Hard,Hard,Normal" name="Difficulty"/>
+    <dip bits="14"  ids="No,Yes" name="Allow Continue"/>
+    <dip bits="15"  ids="Off,On" name="Demo Sounds"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="skysmash.zip" md5="None">
+    <!-- maincpu 512KB @ 0x000000 (4× 128KB interleaved word, V30/68000-like) -->
+    <interleave output="16">
+      <part name="rom5" crc="867f9897" map="10"/>
+      <part name="rom6" crc="e9c1d308" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="rom7" crc="d209db4d" map="10"/>
+      <part name="rom8" crc="d3646728" map="01"/>
+    </interleave>
+
+    <!-- txtiles 128KB @ 0x080000 — file order SWAPPED (Fix D3, come BB) -->
+    <interleave output="16"><part name="rom4" crc="ad3cde81" map="21"/></interleave>
+    <interleave output="16"><part name="rom3" crc="fbb241be" map="21"/></interleave>
+
+    <!-- bgtiles 1024KB @ 0x0A0000 (Sky Smasher: BG e FG condividono rom9 come Blood Bros) -->
+    <interleave output="16"><part name="rom9" crc="b0a5eecf" map="21"/></interleave>
+
+    <!-- mgtiles 1024KB slot: vuoto (Sky Smasher NO MG layer) -->
+    <part repeat="0x100000">00</part>
+
+    <!-- sprites 512KB @ 0x2A0000 (rom10 = 512KB) + padding 1.5MB -->
+    <interleave output="16"><part name="rom10" crc="1bbcda5d" map="21"/></interleave>
+    <part repeat="0x80000">00</part>
+    <part repeat="0x100000">00</part>
+
+    <!-- oki 128KB @ 0x4A0000 (rom1 = 128KB) -->
+    <interleave output="16"><part name="rom1" crc="e69986f6" map="21"/></interleave>
+    <part repeat="0x20000">00</part>
+
+    <!-- audiocpu 32KB @ 0x4E0000 (rom2 ha layout speciale: ROM_LOAD 8KB + ROM_CONTINUE 8KB,
+         poi ROM_COPY duplica i primi 8KB a 0x18000. Per MiSTer carichiamo 32KB grezzi). -->
+    <interleave output="16"><part name="rom2" crc="75b194cf" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260516000000</mratimestamp>
+</misterromdescription>

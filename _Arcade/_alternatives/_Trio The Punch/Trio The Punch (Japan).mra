@@ -1,0 +1,83 @@
+<misterromdescription>
+  <name>Trio The Punch - Never Forget Me... (Japan)</name>
+  <setname>triothepj</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TrioThePunch</rbf>
+  <year>1989</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,Y,Start" names="Button1,Button2,Button3,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <dip bits="0,1"   ids="3C/1C,2C/1C,1C/2C,1C/1C"          name="Coin A"/>
+    <dip bits="2,3"   ids="3C/1C,2C/1C,1C/2C,1C/1C"          name="Coin B"/>
+    <dip bits="5"     ids="Off,On"                            name="Demo Sounds"/>
+    <dip bits="6"     ids="On,Off"                            name="Flip Screen"/>
+    <dip bits="7"     ids="Upright,Cocktail"                  name="Cabinet"/>
+    <dip bits="8,9"   ids="8,10,14,12"                        name="Lives"/>
+    <dip bits="10,11" ids="Hardest (60s),Hard (70s),Easy (130s),Normal (100s)" name="Difficulty (Time)"/>
+    <dip bits="12"    ids="2,3"                               name="Bonus Lives"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <!--
+    Trio The Punch — Never Forget Me... (Japan, triothepj clone)
+    Merged ROM: triothep.zip with `triothepj/` subfolder for clone-specific files.
+    MAME ref: dataeast/actfancr.cpp::triothepj
+    Layout SDRAM identico al World (vedi Trio The Punch (World).mra).
+  -->
+  <rom index="0" zip="triothep.zip" md5="None">
+    <!-- ===== H6280 main CPU 256KB @ 0x000000 (Japan-specific) ===== -->
+    <part name="triothepj/ff-16.bin" crc="84d7e1b6"/>  <!-- 128KB clone -->
+    <part name="triothepj/ff-15.bin" crc="6eada47c"/>  <!-- 64KB  clone -->
+    <part name="fg-14.bin"           crc="4ba7de4a"/>  <!-- 64KB  parent (same CRC) -->
+
+    <!-- ===== M6502 sound CPU 64KB @ 0x040000 (parent shared) ===== -->
+    <part name="fg-18.bin" crc="9de9ee63"/>
+
+    <!-- ===== Chars 8x8 4bpp 128KB @ 0x050000 (parent shared) ===== -->
+    <interleave output="32">
+      <part name="fg-12.bin" crc="15fb49f2" offset="0x00000" length="0x8000" map="0001"/>
+      <part name="fg-13.bin" crc="e20c9623" offset="0x00000" length="0x8000" map="0010"/>
+      <part name="fg-12.bin" crc="15fb49f2" offset="0x08000" length="0x8000" map="0100"/>
+      <part name="fg-13.bin" crc="e20c9623" offset="0x08000" length="0x8000" map="1000"/>
+    </interleave>
+
+    <!-- ===== Sprites 16x16 4bpp 384KB @ 0x070000 (Japan-specific 4 files) =====
+         Cloni: ff-11, ff-09, ff-03, ff-01 (CRC diverso da parent).
+         Shared: ff-10, ff-08, ff-02, ff-00 (CRC == parent fg-XX).
+    -->
+    <interleave output="32">
+      <part name="triothepj/ff-03.bin" crc="b36ad42d" map="0001"/>  <!-- B0 = region 2/4 (clone) -->
+      <part name="fg-02.bin" crc="6b9d24ce"           map="0001"/>
+      <part name="triothepj/ff-01.bin" crc="68d80a66" map="0010"/>  <!-- B1 = region 3/4 (clone) -->
+      <part name="fg-00.bin" crc="41232442"           map="0010"/>
+      <part name="triothepj/ff-11.bin" crc="19e885c7" map="0100"/>  <!-- B2 = region 0   (clone) -->
+      <part name="fg-10.bin" crc="4b6b477a"           map="0100"/>
+      <part name="triothepj/ff-09.bin" crc="79c6bc0e" map="1000"/>  <!-- B3 = region 1/4 (clone) -->
+      <part name="fg-08.bin" crc="1391e445"           map="1000"/>
+    </interleave>
+
+    <!-- ===== Tiles 16x16 4bpp 256KB @ 0x0D0000 (parent shared, same CRC) ===== -->
+    <interleave output="32">
+      <part name="fg-05.bin" crc="8bb13f05" map="0001"/>  <!-- B0 = region 2/4 -->
+      <part name="fg-07.bin" crc="0d7affc3" map="0010"/>  <!-- B1 = region 3/4 -->
+      <part name="fg-04.bin" crc="7cea3c87" map="0100"/>  <!-- B2 = region 0   -->
+      <part name="fg-06.bin" crc="5e7f3e8f" map="1000"/>  <!-- B3 = region 1/4 -->
+    </interleave>
+
+    <!-- ===== OKI M6295 ADPCM 64KB @ 0x110000 (parent shared) ===== -->
+    <part name="fg-17.bin" crc="f0ab0d05"/>
+  </rom>
+  <rom index="2"></rom>
+
+  <mratimestamp>20260615000000</mratimestamp>
+</misterromdescription>

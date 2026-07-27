@@ -1,0 +1,97 @@
+<misterromdescription>
+    <name>Gulf War II (set 2)</name>
+    <setname>gulfwar2a</setname>
+    <rbf>GulfWarII</rbf>
+    <mameversion>0287</mameversion>
+    <year>1991</year>
+    <manufacturer>Comad</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Vertical (CCW)</rotation>
+    <region>Korea</region>
+    <platform>Toaplan 1</platform>
+    <category>Shoot'em up</category>
+    <catver>Shooter / Flying Vertical</catver>
+
+    <switches default="00,00">
+        <!-- DSWA / SW1. MRA bit numbers are zero-based; physical SW1:1 is unused. -->
+        <dip name="Flip Screen" bits="1" ids="Off,On"/>
+        <dip name="Service Mode" bits="2" ids="Off,On"/>
+        <dip name="Demo Sounds" bits="3" ids="On,Off"/>
+        <dip name="Coin A" bits="4,5" ids="2/1,1/1,2/3,1/2" values="2,0,3,1"/>
+        <dip name="Coin B" bits="6,7" ids="2/1,1/1,2/3,1/2" values="2,0,3,1"/>
+        <!-- DSWB / SW2. Physical SW2:8 is unused. -->
+        <dip name="Difficulty" bits="8,9" ids="Easy,Normal,Hard,Very Hard" values="1,0,2,3"/>
+        <dip name="Bonus Life" bits="10,11" ids="50k 200k 150k+,70k 270k 200k+,50k Only,100k Only"/>
+        <dip name="Lives" bits="12,13" ids="2,3,4,5" values="3,0,2,1"/>
+        <dip name="Dip Switch Display" bits="14" ids="Off,On"/>
+    </switches>
+
+    <buttons names="Shot,Bomb,P1 Start,P2 Start,Coin,Pause" default="A,B,Start,Select,L,R"/>
+
+    <rom index="0" zip="gulfwar2a.zip|gulfwar2.zip" md5="None">
+        <!-- Fixed download layout for the in-progress GulfWarII core. -->
+        <!-- Total fixed ROM stream: 0x102700 bytes. -->
+        <!-- Main 68K code - starts at 0x000000, fixed slot 0x40000 -->
+        <interleave output="16">
+            <part name="gw2_28.u119" crc="b9118660" map="01"/>
+            <part name="gw2_27.u92" crc="3494f1aa" map="10"/>
+        </interleave>
+
+        <!-- Sound Z80 code - starts at 0x040000, fixed slot 0x8000 -->
+        <part name="06-u51.bin" crc="75504f95"/>
+
+        <!-- TMS320C10 DSP code - starts at 0x048000, fixed slot 0x2000 -->
+        <!-- MAME uses only the first 0x800 bytes from each duplicated PROM. -->
+        <interleave output="16">
+            <part name="gw2_21.udsp2" crc="87a473af" length="0x800" map="01"/>
+            <part name="gw2_22.udsp1" crc="3a97b0db" length="0x800" map="10"/>
+        </interleave>
+        <part repeat="0x1000"> FF</part>
+
+        <!-- Text characters - starts at 0x04a000, fixed slot 0x18000 -->
+        <interleave output="32">
+            <part repeat="0x4000" map="0001">00</part>
+            <part name="gw2_23.u9" crc="a2aee4c8" length="0x4000" map="0010"/>
+            <part name="gw2_24.u10" crc="fb3f71cd" length="0x4000" map="0100"/>
+            <part name="gw2_25.u11" crc="90eeb0a0" length="0x4000" map="1000"/>
+        </interleave>
+        <part repeat="0x8000"> FF</part>
+
+        <!-- Foreground tiles - starts at 0x062000, fixed slot 0x40000 -->
+        <interleave output="32">
+            <part name="16-u202.bin" crc="d815d175" map="0001"/>
+            <part name="13-u199.bin" crc="d949b0d9" map="0010"/>
+            <part name="14-u200.bin" crc="c109a6ac" map="0100"/>
+            <part name="15-u201.bin" crc="ad21f2ab" map="1000"/>
+        </interleave>
+
+        <!-- Background tiles - starts at 0x0a2000, fixed slot 0x20000 -->
+        <interleave output="32">
+            <part name="09-u195.bin" crc="b7be3a6d" map="0001"/>
+            <part name="12-u198.bin" crc="fd7032a6" map="0010"/>
+            <part name="11-u197.bin" crc="7b721ed3" map="0100"/>
+            <part name="10-u196.rom" crc="160f38ab" map="1000"/>
+        </interleave>
+
+        <!-- SCU sprites - starts at 0x0c2000, fixed slot 0x40000 -->
+        <interleave output="32">
+            <part name="20-u262.bin" crc="10665ca0" map="0001"/>
+            <part name="19-u261.bin" crc="cfa6d417" map="0010"/>
+            <part name="18-u260.bin" crc="2e6a0c49" map="0100"/>
+            <part name="17-u259.bin" crc="66c1b0e6" map="1000"/>
+        </interleave>
+
+        <!-- Priority/control PROMs - starts at 0x102000, fixed slot 0x300 -->
+        <part name="82s129.d3" crc="24e7d62f"/>
+        <part name="82s129.d4" crc="a50cef09"/>
+        <part name="82s123.d2" crc="f72482db"/>
+        <part name="82s123.e18" crc="bc88cced"/>
+        <part name="82s123.b24" crc="4fb5df2a"/>
+        <part repeat="0xa0"> FF</part>
+
+        <!-- Optional i8741 MCU region - starts at 0x102300, fixed slot 0x400 -->
+        <part repeat="0x400"> FF</part>
+
+    </rom>
+</misterromdescription>

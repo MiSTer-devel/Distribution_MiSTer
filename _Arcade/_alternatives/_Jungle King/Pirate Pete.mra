@@ -1,0 +1,72 @@
+<misterromdescription>
+	<n>Pirate Pete</n>
+	<mameversion>0245</mameversion>
+	<setname>piratpet</setname>
+	<parent>junglek</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1982</year>
+	<manufacturer>Taito America Corporation</manufacturer>
+	<category>Platform</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>horizontal (180)</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Jump,-,Coin A,Start 1P,Coin B,Start 2P,Service,Pause"
+	         default="A,Select,Start,X,Y,L,R"/>
+	<switches default="00,3F,00,FF,00,00,00,00">
+		<dip bits="8,9" name="Finish Bonus" ids="Timerx3,Timerx2,Timerx1,None"/>
+		<dip bits="11,12" name="Lives" ids="6,5,4,3"/>
+		<dip bits="14" name="Flip Screen" ids="Off,On"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="13" name="Service Mode" ids="On,Off"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Infinite Lives" ids="Yes,No"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+		<dip bits="10" name="Debug Mode" ids="On,Off"/>
+		<dip bits="24,25" name="Bonus Life" ids="50000,20000,10000,None"/>
+		<dip bits="26,28" name="Difficulty" ids="Hardest,Harder,Hard,Medium,Normal,Easy,Easier,Easiest"/>
+	</switches>
+	<rom index="0" md5="none" zip="junglek.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="8287dbc2" name="pp0p_ic.69"/>
+		<part crc="27a90850" name="pp1p_ic.68"/>
+		<part crc="d224fa85" name="pp2p_ic.67"/>
+		<part crc="2c900874" name="pp3p_ic.66"/>
+		<part crc="1aed98d9" name="pp4p_ic.65"/>
+		<part crc="09c3aacd" name="pp5p_ic.64"/>
+		<part crc="bdeed702" name="pp6p_ic.55"/>
+		<part crc="5f36d082" name="pp7p_ic.54"/>
+		<!-- Main CPU - Pass 2 (base + banked) [0x8000/0x8000] -->
+		<part crc="8287dbc2" name="pp0p_ic.69"/>
+		<part crc="27a90850" name="pp1p_ic.68"/>
+		<part crc="d224fa85" name="pp2p_ic.67"/>
+		<part crc="2c900874" name="pp3p_ic.66"/>
+		<part crc="1aed98d9" name="pp4p_ic.65"/>
+		<part crc="09c3aacd" name="pp5p_ic.64"/>
+		<!-- Padding bank gap: 0x1000 -->
+		<part repeat="0x1000"> 00 </part>
+		<part crc="bbc38b03" name="pp7b_ic.52"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="aceaf79b" name="pp0e_ic.1"/>
+		<part crc="ac148214" name="pp1e_ic.2"/>
+		<part crc="108194d2" name="pp2e_ic.3"/>
+		<part crc="621b0da1" name="pp3e_ic.4"/>
+		<part crc="e9826d90" name="pp4e_ic.5"/>
+		<part crc="fe0d38c6" name="pp5e_ic.6"/>
+		<part crc="2cfd127b" name="pp6e_ic.7"/>
+		<part crc="9857533f" name="pp7e_ic.8"/>
+		<!-- Audio CPU ROMs [0x2000/0x4000] -->
+		<part crc="dcb5eb9d" name="pp05_ic.70"/>
+		<part crc="3123dbe1" name="pp15_ic.71"/>
+		<!-- Padding audio: 0x2000 -->
+		<part repeat="0x2000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+	</rom>
+	<rom index="1">
+		<part>0</part>
+	</rom>
+</misterromdescription>

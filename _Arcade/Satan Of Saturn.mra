@@ -1,0 +1,70 @@
+<misterromdescription>
+    <name>Satan Of Saturn</name>
+    <setname>satansat</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1980</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>2-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <rom index="0" zip="satansat.zip" md5="none">
+
+        <!-- maincpu: 64KB at offset $00000 -->
+        <!-- $0000-$3FFF: padding (16KB) -->
+        <part repeat="0x4000">00</part>
+
+        <!-- $4000: ss1 (2KB) -->
+        <part name="ss1"/>
+        <!-- $4800: ss2 (2KB) -->
+        <part name="ss2"/>
+        <!-- $5000: ss3 (2KB) -->
+        <part name="ss3"/>
+        <!-- $5800: ss4 (2KB) -->
+        <part name="ss4"/>
+        <!-- $6000: ss5 (2KB) -->
+        <part name="ss5"/>
+        <!-- $6800: ss6 (2KB) -->
+        <part name="ss6"/>
+        <!-- $7000: zarz128.15 (2KB) -->
+        <part name="zarz128.15"/>
+        <!-- $7800: zarz129.16 (2KB) -->
+        <part name="zarz129.16"/>
+
+        <!-- $8000: zarz130.22 (2KB) -->
+        <part name="zarz130.22"/>
+        <!-- $8800: ss10 (2KB) -->
+        <part name="ss10"/>
+        <!-- $9000: ss11 (2KB) -->
+        <part name="ss11"/>
+
+        <!-- $F800: zarz129.16 mirror for reset/interrupt vectors -->
+        <part name="zarz129.16"/>
+
+        <!-- gfx1: 4KB at offset $10000 -->
+        <!-- plane 0: zarz135.73 (2KB)  -->
+        <part name="zarz135.73"/>
+        <!-- plane 1: zarz136.75 (2KB)  -->
+        <part name="zarz136.75"/>
+        <part repeat="0x1000">00</part>
+
+        <!-- proms: 32 bytes at offset $12000 (only one PROM for sasuke) -->
+        <part name="zarz138.03"/>
+        <!-- pad to 64 bytes -->
+        <part repeat="0x0020">00</part>
+
+        <!-- sound ROMs at offset $12040 -->
+        <part name="ss12"/>
+        <part name="zarz134.54"/>
+
+    </rom>
+
+    <!-- ROM index 1: game_id = 1 (GID_SATANSAT) -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+</misterromdescription>

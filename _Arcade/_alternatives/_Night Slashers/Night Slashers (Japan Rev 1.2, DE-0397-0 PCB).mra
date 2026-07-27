@@ -1,0 +1,96 @@
+<misterromdescription>
+  <name>Night Slashers (Japan Rev 1.2, DE-0397-0 PCB)</name>
+  <setname>nslasherj</setname>
+  <mameversion>0264</mameversion>
+  <rbf>NightSlashers</rbf>
+  <year>1993</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>3</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,X,Start" names="Attack,Jump,Special,-,-,-,Start,Coin,Pause"/>
+  <switches default="21,06">
+    <!-- La scheda non ha DIP fisici: i settings vivono in EEPROM (service menu).
+         Il core inietta al reset il blocco EEPROM generato da questi switch
+         (formato + checksum del firmware). Default = valori di fabbrica.
+         REGION XM (marker EEPROM "XM") e' via mod byte <rom index="1">=01, NON dai DIP
+         (metodo robusto: il core lo latcha su ioctl index=1, Korea non lo tocca).
+         Violence (gore, jap/overseas) = DIP bit4 (word4 bit8 del blocco EEPROM, handler
+         menu voce8). Korea non ha questa voce (bit4 libero). -->
+    <dip name="Lives" bits="0,2" ids="1,2,3,4,5"/>
+    <dip name="Screen Rotation" bits="3" ids="Normal,Reverse"/>
+    <dip name="Violence" bits="4" ids="Off,On"/>
+    <dip name="Demo Sounds" bits="5" ids="Off,On"/>
+    <dip name="Free Play" bits="6" ids="No,Yes"/>
+    <dip name="Game Start" bits="7" ids="Normal,2 Coin Credit"/>
+    <dip name="Credit Counter" bits="8" ids="One,Individual"/>
+    <dip name="Difficulty" bits="9,11" ids="Easiest,Very Easy,Easy,Medium,Medium Hard,Hard,Very Hard,Hardest"/>
+    <dip name="Player Life Value" bits="12,13" ids="Normal,Less,Least"/>
+    <!-- Player Number accoppia Players(bit14)+Start Button(bit15): in 3P Shot forzato. -->
+    <dip name="Player Number" bits="14,15" ids="2P Start,2P Shot,3P Shot" values="0,2,3"/>
+  </switches>
+  <rom index="1">
+    <!-- mod byte (region select, letto dal core via ioctl index=1): bit0=1 = region XM
+         (marker EEPROM "XM" per Japan/Overseas invece di "OC" di Korea). NON dai DIP. -->
+    <part>01</part>
+  </rom>
+  <rom index="0" zip="nslasher.zip" md5="None">
+    <!-- 2026-07-09 decrypt runtime RIATTIVATO (prima luce col bypass provata):
+         ROM STOCK mainprg.1f/2f + interleave map= (VALIDATO sul ferro 2026-07-10:
+         DIFF=0 vs main_phys_enc.bin offline + boot identico). Niente enc.zip.
+         Ordine byte fisico verificato: dword s*=0x92C6 = E8 99 33 EE. -->
+    <interleave output="32">
+      <part name="nslasherj/lx-00.1f" crc="6ed5fb88" map="0021"/>
+      <part name="nslasherj/lx-01.2f" crc="a6df2152" map="2100"/>
+    </interleave>
+    <!-- audio @0x100000 (64KB) -> is_audio_dl AUDIO_DL_LO=0x100000 -->
+    <!--  @ 0x100000 -->
+    <part name="sndprg.17l" crc="18939e92"/>
+    <!-- tiles1 text_lo @0x110000 = mbh-00[0:0x10000] (deco56 no-reorder) -->
+    <!--  @ 0x110000 -->
+    <part name="mbh-00.8c" crc="a877f8a3" offset="0x0" length="0x10000"/>
+    <!-- tiles1 text_hi @0x120000 = mbh-00[0x80000:0x90000] -->
+    <!--  @ 0x120000 -->
+    <part name="mbh-00.8c" crc="a877f8a3" offset="0x80000" length="0x10000"/>
+    <!-- tiles1 BG1 @0x130000 = mbh-00 full (deco56+reorder, bridge ba3) -->
+    <!--  @ 0x130000 -->
+    <part name="mbh-00.8c" crc="a877f8a3"/>
+    <!-- pad 0x100000 @ 0x330000 -->
+    <part repeat="0x100000"> 00 </part>
+    <!-- tiles2 FG0 @0x430000 = mbh-01 (deco74_fg0 T_BASE 0x430000, ba0) -->
+    <!--  @ 0x430000 -->
+    <part name="mbh-01.9c" crc="1853dafc"/>
+    <!-- tiles2 FG1 @0x630000 = mbh-01 (deco74_fg1 T_BASE 0x630000, ba1, dup) -->
+    <!--  @ 0x630000 -->
+    <part name="mbh-01.9c" crc="1853dafc"/>
+    <!-- sprites1 chip0 5bpp — 2026-07-09 ordine 02-first RIPRISTINATO per
+         verdetto A SCHERMO dell'utente (04-first = regressione: nessuna
+         permutazione OSD dava risultati; con 02-first esisteva la combo
+         "quasi giusta"). Fa fede lo schermo, non i modelli offline. -->
+    <!-- @ 0x830000 -->
+    <part name="mbh-02.14c" crc="b2f158a1"/>
+    <!-- @ 0xA30000 -->
+    <part name="mbh-04.16c" crc="eecfe06d"/>
+    <!-- @ 0xC30000 -->
+    <part name="mbh-03.15c" crc="787787e3"/>
+    <!-- @ 0xCB0000 -->
+    <part name="mbh-05.17c" crc="1d2b7c17"/>
+    <!-- P4 5th plane low @0xD30000 (linear) @ 0xD30000 -->
+    <part name="mbh-06.18c" crc="038c2127"/>
+    <!-- P4 5th plane high @0xE30000 (linear) @ 0xE30000 -->
+    <part name="mbh-07.19c" crc="bbd22323"/>
+    <!-- sprites2 chip1 4bpp (VERIFIED DIFF=0 as-is) -->
+    <!-- chip1 @0xE70000 @ 0xE70000 -->
+    <part name="mbh-08.16e" crc="cdd7f8cb"/>
+    <!-- chip1 @0xEF0000 @ 0xEF0000 -->
+    <part name="mbh-09.18e" crc="33fa2121"/>
+    <!-- oki @0xF70000 / 0xFF0000 -->
+    <!-- oki1 @0xF70000 @ 0xF70000 -->
+    <part name="mbh-10.14l" crc="c4d6b116"/>
+    <!-- oki2 @0xFF0000 @ 0xFF0000 -->
+    <part name="mbh-11.16l" crc="0ec40b6b"/>
+  </rom>
+</misterromdescription>

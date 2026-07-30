@@ -1,0 +1,60 @@
+<misterromdescription>
+  <name>Mazinger Z (World)</name>
+  <mameversion>0275</mameversion>
+  <setname>mazinger</setname>
+  <year>1994</year>
+  <manufacturer>Banpresto / Dynamic Pl. Toei Animation</manufacturer>
+  <category>Vertical Shooter</category>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <rotation>vertical (cw)</rotation>
+  <region>World</region>
+  <rbf>CaveBanpresto</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="mazinger.zip" md5="none" address="0x30000000">
+    <!-- prog ROM -->
+    <interleave output="16">
+      <part name="mzp-0.u24" crc="43a4279f" map="12" />
+    </interleave>
+
+    <!-- extra 68000 data ROM -->
+    <interleave output="16">
+      <part name="mzp-1.924" crc="db40acba" map="12" />
+    </interleave>
+
+    <!-- EEPROM -->
+    <part name="mazinger_world.nv" crc="4f6225c6" />
+
+    <!-- sound ROM -->
+    <part name="mzs.u21" crc="c5b4f7ed" />
+
+    <!-- PCM ROM -->
+    <part name="bp943a-4.u64" crc="3fc7f29a" />
+
+    <!-- layer 0 -->
+    <part name="bp943a-1.u60" crc="46327415" />
+
+    <!-- layer 1 -->
+    <part name="bp943a-0.u63" crc="c1fed98a" />
+
+    <!-- sprites -->
+    <part name="bp943a-2.u56" crc="97e13959" />
+    <part name="bp943a-3.u55" crc="9c4957dd" />
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>01</part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="128" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0180 00f0 0004 0008 0014 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Shot,Punch,Super Weapon,-,Start,Coin,Pause" default="Y,X,B,A,R,L,Start" />
+</misterromdescription>

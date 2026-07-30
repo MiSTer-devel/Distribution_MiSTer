@@ -1,0 +1,115 @@
+<misterromdescription>
+  <name>Trio The Punch - Never Forget Me... (World)</name>
+  <setname>triothep</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TrioThePunch</rbf>
+  <year>1989</year>
+  <manufacturer>Data East Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,Y,Start" names="Button1,Button2,Button3,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <dip bits="0,1"   ids="3C/1C,2C/1C,1C/2C,1C/1C"          name="Coin A"/>
+    <dip bits="2,3"   ids="3C/1C,2C/1C,1C/2C,1C/1C"          name="Coin B"/>
+    <dip bits="5"     ids="Off,On"                            name="Demo Sounds"/>
+    <dip bits="6"     ids="On,Off"                            name="Flip Screen"/>
+    <dip bits="7"     ids="Upright,Cocktail"                  name="Cabinet"/>
+    <dip bits="8,9"   ids="8,10,14,12"                        name="Lives"/>
+    <dip bits="10,11" ids="Hardest (60s),Hard (70s),Easy (130s),Normal (100s)" name="Difficulty (Time)"/>
+    <dip bits="12"    ids="2,3"                               name="Bonus Lives"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <!--
+    Trio The Punch — HW board: stessa famiglia ActFancer
+    MAME ref: dataeast/actfancr.cpp::triothep
+    SDRAM layout (Trio-specific, maincpu 256KB):
+      0x000000 +0x040000  maincpu  (HuC6280) 256KB
+      0x040000 +0x010000  audiocpu (M6502)   64KB intera (no pad FF)
+      0x050000 +0x020000  chars  8x8  4bpp interleaved (32-bit)
+      0x070000 +0x060000  sprites 16x16 4bpp interleaved (96KB × 4 region)
+      0x0D0000 +0x040000  tiles  16x16 4bpp interleaved (64KB × 4 region)
+      0x110000 +0x010000  oki M6295 (64KB)
+  -->
+  <rom index="0" zip="triothep.zip" md5="None">
+    <!-- ===== H6280 main CPU 256KB @ 0x000000 ===== -->
+    <part name="fg-16.bin" crc="7238355a"/>  <!-- 128KB -->
+    <part name="fg-15.bin" crc="1c0551ab"/>  <!-- 64KB  -->
+    <part name="fg-14.bin" crc="4ba7de4a"/>  <!-- 64KB  -->
+
+    <!-- ===== M6502 sound CPU 64KB @ 0x040000 =====
+         Trio: ROM 64KB intera. CPU vede $4000-$FFFF (mappa MAME 0x4000-0xFFFF).
+         Vettori RST=$4000, NMI=$40D3, IRQ=$409E (verificati dump fg-18.bin).
+    -->
+    <part name="fg-18.bin" crc="9de9ee63"/>
+
+    <!-- ===== Chars 8x8 4bpp 128KB @ 0x050000 =====
+         MAME layout planes = {RGN_FRAC(1,4), RGN_FRAC(3,4), RGN_FRAC(0,4), RGN_FRAC(2,4)}
+         Mapping pen[3:0] (stesso ActFancer):
+           B0 = region 0/4 → pen bit 1
+           B1 = region 2/4 → pen bit 0
+           B2 = region 1/4 → pen bit 3
+           B3 = region 3/4 → pen bit 2
+         ROM 12/13 da 64KB ciascuna, splittate 32+32KB:
+           fg-12 offs 0x00000-0x07FFF = region 0/4
+           fg-12 offs 0x08000-0x0FFFF = region 1/4
+           fg-13 offs 0x00000-0x07FFF = region 2/4
+           fg-13 offs 0x08000-0x0FFFF = region 3/4
+    -->
+    <interleave output="32">
+      <part name="fg-12.bin" offset="0x00000" length="0x8000" map="0001"/>
+      <part name="fg-13.bin" offset="0x00000" length="0x8000" map="0010"/>
+      <part name="fg-12.bin" offset="0x08000" length="0x8000" map="0100"/>
+      <part name="fg-13.bin" offset="0x08000" length="0x8000" map="1000"/>
+    </interleave>
+
+    <!-- ===== Sprites 16x16 4bpp 384KB @ 0x070000 =====
+         MAME layout planes = {0, RGN_FRAC(1,4), RGN_FRAC(2,4), RGN_FRAC(3,4)}
+         pen[3]=B2=region 0, pen[2]=B3=region 1/4, pen[1]=B0=region 2/4, pen[0]=B1=region 3/4
+         Regioni 96KB:
+           region 0   = fg-11 (64K) + fg-10 (32K)
+           region 1/4 = fg-09 (64K) + fg-08 (32K)
+           region 2/4 = fg-03 (64K) + fg-02 (32K)
+           region 3/4 = fg-01 (64K) + fg-00 (32K)
+    -->
+    <interleave output="32">
+      <part name="fg-03.bin" map="0001"/>  <!-- B0 = region 2/4 -->
+      <part name="fg-02.bin" map="0001"/>
+      <part name="fg-01.bin" map="0010"/>  <!-- B1 = region 3/4 -->
+      <part name="fg-00.bin" map="0010"/>
+      <part name="fg-11.bin" map="0100"/>  <!-- B2 = region 0 -->
+      <part name="fg-10.bin" map="0100"/>
+      <part name="fg-09.bin" map="1000"/>  <!-- B3 = region 1/4 -->
+      <part name="fg-08.bin" map="1000"/>
+    </interleave>
+
+    <!-- ===== Tiles 16x16 4bpp 256KB @ 0x0D0000 =====
+         Stesso layout sprites: planes = {0, 1/4, 2/4, 3/4}
+         Regione 64KB ciascuna:
+           region 0   = fg-04 (64KB)
+           region 1/4 = fg-06 (64KB)
+           region 2/4 = fg-05 (64KB)
+           region 3/4 = fg-07 (64KB)
+    -->
+    <interleave output="32">
+      <part name="fg-05.bin" map="0001"/>  <!-- B0 = region 2/4 -->
+      <part name="fg-07.bin" map="0010"/>  <!-- B1 = region 3/4 -->
+      <part name="fg-04.bin" map="0100"/>  <!-- B2 = region 0   -->
+      <part name="fg-06.bin" map="1000"/>  <!-- B3 = region 1/4 -->
+    </interleave>
+
+    <!-- ===== OKI M6295 ADPCM 64KB @ 0x110000 ===== -->
+    <part name="fg-17.bin" crc="f0ab0d05"/>
+  </rom>
+  <rom index="2"></rom>
+
+  <mratimestamp>20260521000000</mratimestamp>
+</misterromdescription>

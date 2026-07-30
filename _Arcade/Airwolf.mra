@@ -1,0 +1,100 @@
+<misterromdescription>
+	<n>Airwolf</n>
+	<region>World</region>
+	<year>1987</year>
+	<manufacturer>Kyugo</manufacturer>
+	<category>Shooter</category>
+
+	<setname>airwolf</setname>
+	<rbf>Kyugo</rbf>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Machine Gun,Missile</button_names>
+
+	<switches default="BB,FF">
+		<!-- DSW1 -->
+		<dip bits="0,1"      name="Lives"          ids="7,6,5,4"/>
+		<dip bits="2"        name="Allow Continue" ids="Yes,No"/>
+		<dip bits="3"        name="Slow Motion"    ids="On,Off"/>
+		<dip bits="4"        name="Invulnerability" ids="On,Off"/>
+		<dip bits="5"        name="Sound Test"     ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"        ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"         ids="On,Off"/>
+		<!-- DSW2 -->
+		<dip bits="8,10"     name="Coin A"         ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"         ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: byte = variant(3) | no_rotate(bit4). MAME: GAME(airwolf,...,srdmissn,...). Airwolf
+	     reuses SRD Mission's machine config verbatim (same sub-RAM/input/AY address map), so
+	     variant = VAR_SRDMISSN = 3, already implemented in this core's RTL. ROT0/horizontal per MAME
+	     and the flight manual ("horizontally [X] mounted ... monitor") -> no_rotate. rot_flip left 0,
+	     following the Flashgal/Legend ROT0 precedent (both reuse a ROT90 variant's address map but
+	     ship rot_flip=0) -> byte = 0x03 | 0x10 = 0x13.
+	     UNVERIFIED: no HW test yet, first time this core's SRDMISSN decode path runs Airwolf's own
+	     firmware. -->
+	<rom index="1">
+		<part>13</part>
+	</rom>
+
+	<!-- Index 0: ROM blob in loader order (needs the sub_rom-widened core: sub region is 32KB) -->
+	<rom index="0" md5="none" zip="airwolf.zip">
+		<!-- Main CPU 32KB (1x 32KB, no pad needed) -->
+		<part crc="8c993cce" name="b.2s"/>
+		<!-- Sub CPU 32KB (1x 32KB, no pad needed) -->
+		<part crc="a3c7af5c" name="a.7s"/>
+		<!-- FG 4KB -->
+		<part crc="4df44ce9" name="f.4a"/>
+		<!-- BG planes 16KB each (8KB ROM + 8KB pad). MAME gfx2 load order is plane1,plane0,plane2
+		     (see comments in kyugo.cpp ROM_START(airwolf)). Reordered here to plane0,plane1,plane2
+		     to match the renderer's convention, same fix SRD Mission needed (best guess; swap
+		     bg0/bg1 if BG colours look wrong). -->
+		<!-- BG plane 0 = 10h_13.bin -->
+		<part crc="cf0de5e9" name="10h_13.bin"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 1 = 09h_14.bin -->
+		<part crc="25e57e1f" name="09h_14.bin"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 2 = 11h_12.bin -->
+		<part crc="4050c048" name="11h_12.bin"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 0 32KB. UNVERIFIED / first use on this core: MAME loads this via
+		     ROM_LOAD+ROM_CONTINUE that scrambles e.6a's four 8KB quarters into the region as
+		     [Q0,Q2,Q1,Q3] (kyugo.cpp ROM_START(airwolf) gfx3). Unlike every other Kyugo game done
+		     so far, which use flat unscrambled sprite ROMs. Un-scrambled here back to ascending
+		     region order by pulling the quarters out of source-file order (offset/length slices of
+		     the same 32KB file; crc is the whole-file crc each time, per mra-tools convention).
+		     If sprites render as garbled/interleaved noise, this 4-part reorder is the first
+		     suspect; the offset/length part syntax itself is unverified against a local example. -->
+		<part crc="e8fbc7d2" name="e.6a" offset="0x0000" length="0x2000"/>
+		<part crc="e8fbc7d2" name="e.6a" offset="0x4000" length="0x2000"/>
+		<part crc="e8fbc7d2" name="e.6a" offset="0x2000" length="0x2000"/>
+		<part crc="e8fbc7d2" name="e.6a" offset="0x6000" length="0x2000"/>
+		<!-- Sprite plane 1 32KB (same scramble pattern, source d.8a) -->
+		<part crc="c5d4156b" name="d.8a" offset="0x0000" length="0x2000"/>
+		<part crc="c5d4156b" name="d.8a" offset="0x4000" length="0x2000"/>
+		<part crc="c5d4156b" name="d.8a" offset="0x2000" length="0x2000"/>
+		<part crc="c5d4156b" name="d.8a" offset="0x6000" length="0x2000"/>
+		<!-- Sprite plane 2 32KB (same scramble pattern, source c.10a) -->
+		<part crc="de91dfb1" name="c.10a" offset="0x0000" length="0x2000"/>
+		<part crc="de91dfb1" name="c.10a" offset="0x4000" length="0x2000"/>
+		<part crc="de91dfb1" name="c.10a" offset="0x2000" length="0x2000"/>
+		<part crc="de91dfb1" name="c.10a" offset="0x6000" length="0x2000"/>
+		<!-- Color PROMs R,G,B -->
+		<part crc="6a94b2a3" name="01j.bin"/>
+		<part crc="ec0923d3" name="01h.bin"/>
+		<part crc="ade97052" name="01f.bin"/>
+		<!-- Char lookup PROM 32B (same CRC as SRD Mission's m2.5j -> confirms shared board family) -->
+		<part crc="190a55ad" name="74s288-2.bin"/>
+		<!-- Timing PROM 32B (unused) -->
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+</misterromdescription>

@@ -1,0 +1,81 @@
+<misterromdescription>
+	<n>Legend</n>
+	<region>World</region>
+	<year>1986</year>
+	<manufacturer>Sega</manufacturer>
+	<category>Shooter</category>
+
+	<setname>legend</setname>
+	<rbf>Kyugo</rbf>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="BF,FF">
+		<!-- DSW1 (AY1 port A, read & inverted by sub) -->
+		<dip bits="0,1"      name="Lives"          ids="6,5,4,3"/>
+		<dip bits="2"        name="Bonus/Continue" ids="70k/Yes,50k/No"/>
+		<dip bits="3"        name="Slow Motion"    ids="On,Off"/>
+		<dip bits="4"        name="DSW1.5 (unused)" ids="On,Off"/>
+		<dip bits="5"        name="Sound Test"     ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"        ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"         ids="On,Off"/>
+		<!-- DSW2 (AY1 port B) -->
+		<dip bits="8,10"     name="Coin A"         ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"         ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: byte = variant(4) | no_rotate(bit4) — Legend is ROT0/horizontal → 0x14 -->
+	<rom index="1">
+		<part>14</part>
+	</rom>
+
+	<!-- Index 0: ROM blob in loader order (needs the sub_rom-widened core: sub region is 32KB) -->
+	<rom index="0" md5="none" zip="legend.zip">
+		<!-- Main CPU 32KB (2x 16KB) -->
+		<part crc="0cc1c4f4" name="a_r2.rom"/>
+		<part crc="4b270c6b" name="a_r3.rom"/>
+		<!-- Sub CPU 32KB (4x 8KB) -->
+		<part crc="abfe5eb4" name="a_r7.rom"/>
+		<part crc="7e7b9ba9" name="a_r8.rom"/>
+		<part crc="66737f1e" name="a_r9.rom"/>
+		<part crc="13915a53" name="a_n7.rom"/>
+		<!-- FG 4KB -->
+		<part crc="c7dd3cf7" name="b_a4.rom"/>
+		<!-- BG plane 0 16KB (8KB ROM + 8KB pad) — gfx2 offset order (MAME gives no plane labels;
+		     swap bg0/bg1 if BG colours look wrong) -->
+		<part crc="1fe8644a" name="b_h9.rom"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 1 16KB -->
+		<part crc="5f7dc82e" name="b_h10.rom"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 2 16KB -->
+		<part crc="46741643" name="b_h11.rom"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 0 32KB (2x 16KB, no pad) -->
+		<part crc="1689f21c" name="b_a6.rom"/>
+		<part crc="f527c909" name="b_a7.rom"/>
+		<!-- Sprite plane 1 32KB -->
+		<part crc="8d618629" name="b_a8.rom"/>
+		<part crc="7d7e2d55" name="b_a9.rom"/>
+		<!-- Sprite plane 2 32KB -->
+		<part crc="f12232fe" name="b_a10.rom"/>
+		<part crc="8c09243d" name="b_a11.rom"/>
+		<!-- Color PROMs R,G,B -->
+		<part crc="40590ac0" name="82s129.1j"/>
+		<part crc="e542b363" name="82s129.1h"/>
+		<part crc="75536fc8" name="82s129.1f"/>
+		<!-- Char lookup PROM 32B -->
+		<part crc="c98f0651" name="82s123.5j"/>
+		<!-- Timing PROM 32B (unused) -->
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+</misterromdescription>

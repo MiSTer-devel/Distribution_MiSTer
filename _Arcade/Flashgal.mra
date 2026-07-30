@@ -1,0 +1,85 @@
+<misterromdescription>
+	<n>Flashgal</n>
+	<region>World</region>
+	<year>1985</year>
+	<manufacturer>Sega</manufacturer>
+	<category>Shooter</category>
+
+	<setname>flashgal</setname>
+	<rbf>Kyugo</rbf>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="AF,FF">
+		<!-- DSW1 (AY1 port A, read & inverted by sub) -->
+		<dip bits="0,1"      name="Lives"          ids="6,5,4,3"/>
+		<dip bits="2"        name="Bonus Life"     ids="Every 70000,Every 50000"/>
+		<dip bits="3"        name="Slow Motion"    ids="On,Off"/>
+		<dip bits="4"        name="Allow Continue" ids="Yes,No"/>
+		<dip bits="5"        name="Sound Test"     ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"        ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"         ids="On,Off"/>
+		<!-- DSW2 (AY1 port B) -->
+		<dip bits="8,10"     name="Coin A"         ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"         ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: variant_sel[2:0] | rot_flip[3] | no_rotate[4]. Flashgal (Sega) runs the REPULSE
+	     hardware map (sub shared @ A000, AY1 @ port 00, inputs C000/C040/C080) per MAME
+	     GAME(flashgal,...,repulse,...) — variant = 1 (REPULSE), NOT 2 (flashgala's E000/AY40 map).
+	     ROT0/horizontal -> no_rotate set: byte = 0x11. -->
+	<rom index="1">
+		<part>11</part>
+	</rom>
+
+	<!-- Index 0: ROM blob in loader order (needs the sub_rom-widened core: sub region is 32KB) -->
+	<rom index="0" md5="none" zip="flashgal.zip">
+		<!-- Main CPU 32KB (4x 8KB) -->
+		<part crc="cf5ad733" name="epr-7167.4f"/>
+		<part crc="00c4851f" name="epr-7168.4h"/>
+		<part crc="1ef0b8f7" name="epr-7169.4j"/>
+		<part crc="885d53de" name="epr-7170.4k"/>
+		<!-- Sub CPU 32KB (4x 8KB) -->
+		<part crc="eee2134d" name="epr-7163.2f"/>
+		<part crc="e5e0cd22" name="epr-7164.2h"/>
+		<part crc="4cd3fe5e" name="epr-7165.2j"/>
+		<part crc="552ca339" name="epr-7166.2k"/>
+		<!-- FG 4KB -->
+		<part crc="dca9052f" name="epr-7177.4a"/>
+		<!-- BG plane 0 16KB (8KB ROM + 8KB pad) -->
+		<part crc="2f5b62c0" name="epr-7178.9h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 1 16KB -->
+		<part crc="8fbb49b5" name="epr-7179.10h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 2 16KB -->
+		<part crc="26a8e5c3" name="epr-7180.11h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 0 32KB (2x 16KB, no pad) -->
+		<part crc="62caf2a1" name="epr-7171.6a"/>
+		<part crc="10f78a10" name="epr-7172.7a"/>
+		<!-- Sprite plane 1 32KB -->
+		<part crc="36ea1d59" name="epr-7173.8a"/>
+		<part crc="f527d837" name="epr-7174.9a"/>
+		<!-- Sprite plane 2 32KB -->
+		<part crc="ba76e4c1" name="epr-7175.10a"/>
+		<part crc="f095d619" name="epr-7176.11a"/>
+		<!-- Color PROMs R,G,B -->
+		<part crc="02c4043f" name="7161.1j"/>
+		<part crc="225938d1" name="7160.1h"/>
+		<part crc="1e0a1cd3" name="7159.1f"/>
+		<!-- Char lookup PROM 32B -->
+		<part crc="cce2e29f" name="7162.5j"/>
+		<!-- Timing PROM 32B (unused) -->
+		<part crc="83a39201" name="bpr.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+</misterromdescription>

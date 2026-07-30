@@ -1,0 +1,94 @@
+<misterromdescription>
+	<name>S.V.G. - Spectral vs Generation (ver. 101HK)</name>
+	<setname>svghk</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|svg.zip|svghk.zip">
+		<!-- SYSTEM INFO (game id = 21) -->
+		<part>15 00</part>
+
+		<!-- BIOS PROG / TILE / MUSIC -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG (68k, plaintext) -->
+		<part>03 00080000 00100000</part>
+		<part name="v101hk_u30.u30" crc="8d0405e4"/>
+
+		<!-- CART TILE -->
+		<part>04 00200000 00180000</part>
+		<part name="igs_t05601w016.u29" crc="03e110dc"/>
+
+		<!-- CART MUSIC (ICS @0x400000) -->
+		<part>05 00c00000 00400000</part>
+		<part name="igs_w05601b064.u5" crc="bfe61a71"/>
+		<part name="igs_w05602b032.u7" crc="0685166d"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 01c00000 00000000</part>
+		<part name="igs_a05601w064.u3" crc="ea6453e4"/>
+		<part name="igs_a05602w064.u4" crc="6d00621b"/>
+		<part name="igs_a05603w064.u6" crc="7b71c64f"/>
+		<part name="igs_a05604w032.u8" crc="9452a567"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 01000000 00000000</part>
+		<part name="igs_b05601w064.u9" crc="35c0a489"/>
+		<part name="igs_b05602w064.u11" crc="8aad3f85"/>
+
+		<!-- IGS027A INTERNAL ARM ROM: synthesized 0x188 execute-only area
+		     (NO_DUMP on hardware; reconstructed as MAME does) followed by the
+		     real dumped internal-ROM body at 0x188.  Total 0x4000. -->
+		<part>09 00004000 00000000</part>
+		<part>
+			0A 00 00 EA FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA 00 F0 9F E5
+			38 00 00 08 38 00 00 08 FE FF FF EA FE FF FF EA
+			D2 00 A0 E3 00 F0 21 E1 01 40 A0 E3 06 4B 84 E2
+			FA 0C A0 E3 04 D8 80 E0 D1 00 A0 E3 00 F0 21 E1
+			F6 0C A0 E3 04 D8 80 E0 D7 00 A0 E3 00 F0 21 E1
+			FF 0C A0 E3 04 D8 80 E0 DB 00 A0 E3 00 F0 21 E1
+			40 41 C4 E1 FE 0C A0 E3 04 D8 80 E0 D3 00 A0 E3
+			00 F0 21 E1 01 4A A0 E3 01 0B A0 E3 04 D8 80 E0
+			0F 5A A0 E3 08 00 A0 E3 05 88 80 E0 10 00 A0 E3
+			00 00 C8 E5 05 78 A0 E1 01 6A A0 E3 12 00 A0 E3
+			02 0A 80 E2 06 68 80 E0 00 60 87 E5 D3 00 A0 E3
+			00 F0 21 E1 01 40 A0 E3 06 4B 84 E2 F2 0C A0 E3
+			04 D8 80 E0 13 00 A0 E3 00 F0 21 E1 28 00 00 EA
+			FE FF FF EA FE FF FF EA 04 E0 2D E5 D3 00 A0 E3
+			00 F0 21 E1 04 E0 9D E4 1E FF 2F E1 04 E0 2D E5
+			13 00 A0 E3 00 F0 21 E1 04 E0 9D E4 1E FF 2F E1
+			D1 00 A0 E3 00 F0 21 E1 B8 D0 9F E5 D3 00 A0 E3
+			00 F0 21 E1 B0 D0 9F E5 B8 10 9F E5 00 00 A0 E3
+			00 00 81 E5 B0 F0 9F E5 FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA FE FF FF EA
+			1E FF 2F E1 FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA FE FF FF EA FE FF FF EA FE FF FF EA
+			FE FF FF EA 5C 10 9F E5
+		</part>
+		<part name="svgcpb_igs027a_v100_japan.bin" crc="7a59da5d"/>
+
+		<!-- IGS027A EXTERNAL ARM ROM (encrypted; decrypted at load) -->
+		<part>0a 00800000 00000000</part>
+		<part name="v101hk_u26.u26" crc="42b0d5a9"/>
+		<part name="v101hk_u36.u36" crc="bf15a47a"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

@@ -1,0 +1,75 @@
+<misterromdescription>
+    <name>Fantasy</name>
+    <setname>fantasyu</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1981</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <rom index="0" zip="fantasyu.zip" md5="none">
+
+        <!-- maincpu: 64KB at offset $00000 -->
+        <!-- $0000-$2FFF: padding (12KB) -->
+        <part repeat="0x3000">00</part>
+
+        <!-- $3000: ic12 (4KB) -->
+        <part name="ic12.cpu"/>
+
+        <!-- $4000: ic07 (4KB) -->
+        <part name="ic07.cpu"/>
+
+        <!-- $5000: ic08 (4KB) -->
+        <part name="ic08.cpu"/>
+
+        <!-- $6000: ic09 (4KB) -->
+        <part name="ic09.cpu"/>
+
+        <!-- $7000: ic10 (4KB) -->
+        <part name="ic10.cpu"/>
+
+        <!-- $8000: ic14 (4KB) -->
+        <part name="ic14.cpu"/>
+
+        <!-- $9000: ic15 (4KB) -->
+        <part name="ic15.cpu"/>
+
+        <!-- $A000: ic16 (4KB) -->
+        <part name="ic16.cpu"/>
+
+        <!-- $B000: ic17 (4KB) -->
+        <part name="ic17.cpu"/>
+
+        <!-- $C000-$EFFF: padding (12KB) -->
+        <part repeat="0x3000">00</part>
+
+        <!-- $F000: ic14 mirror for reset/interrupt vectors -->
+        <part name="ic14.cpu"/>
+
+        <!-- gfx1: 8KB at offset $10000 -->
+        <!-- plane 0: ic50 (4KB) -->
+        <part name="fs10ic50.bin"/>
+        <!-- plane 1: ic51 (4KB) -->
+        <part name="fs11ic51.bin"/>
+
+        <!-- proms: 64 bytes at offset $12000 -->
+        <part name="fantasy.ic7"/>
+        <part name="fantasy.ic6"/>
+
+        <!-- sound ROMs at offset $12040 -->
+        <part name="fs_b_51.bin"/>
+        <part name="fs_a_52.bin"/>
+        <part name="fs_c_53.bin"/>
+
+    </rom>
+
+    <!-- ROM index 1: game_id = 3 (GID_FANTASY) -->
+    <rom index="1">
+        <part>03</part>
+    </rom>
+
+</misterromdescription>

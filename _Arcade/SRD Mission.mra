@@ -1,0 +1,84 @@
+<misterromdescription>
+	<n>S.R.D. Mission</n>
+	<region>World</region>
+	<year>1986</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Shooter</category>
+
+	<setname>srdmissn</setname>
+	<rbf>Kyugo</rbf>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="BF,FF">
+		<!-- DSW1 (AY1 port A, read & inverted by sub) -->
+		<dip bits="0,1"      name="Lives"           ids="6,5,4,3"/>
+		<dip bits="2"        name="Bonus/Continue"  ids="70k/Yes,50k/No"/>
+		<dip bits="3"        name="Slow Motion"     ids="On,Off"/>
+		<dip bits="4"        name="Invulnerability" ids="On,Off"/>
+		<dip bits="5"        name="Sound Test"      ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"         ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"          ids="On,Off"/>
+		<!-- DSW2 (AY1 port B) -->
+		<dip bits="8,10"     name="Coin A"          ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"          ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: byte = variant(3) | rot_flip(bit3) — SRD Mission needs the opposite rotation
+	     direction from Gyrodine to render upright. flip_screen is hardwired off in the RTL (see
+	     Kyugo_CPU.sv), so this is supplied entirely by rot_flip, not by the game's own flip
+	     request: 0x0B -->
+	<rom index="1">
+		<part>0B</part>
+	</rom>
+
+	<!-- Index 0: ROM blob in loader order (needs the sub_rom-widened core: sub region is 32KB) -->
+	<rom index="0" md5="none" zip="srdmissn.zip">
+		<!-- Main CPU 32KB (2x 16KB) -->
+		<part crc="a682b48c" name="5.t2"/>
+		<part crc="1719c58c" name="7.t3"/>
+		<!-- Sub CPU 32KB (2x 16KB) -->
+		<part crc="dc48595e" name="1.t7"/>
+		<part crc="216be1e8" name="3.t8"/>
+		<!-- FG 4KB -->
+		<part crc="4961f7fd" name="15.4a"/>
+		<!-- BG planes 16KB each (8KB ROM + 8KB pad). NOTE: srdmissn's gfx2 load order puts
+		     plane1 before plane0, so reordered here to plane order (bg0=plane0) to match the
+		     renderer's convention (best guess; swap bg0/bg1 if BG colours look wrong). -->
+		<!-- BG plane 0 = 18.10h -->
+		<part crc="740eccd4" name="18.10h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 1 = 17.9h -->
+		<part crc="41211458" name="17.9h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 2 = 16.11h -->
+		<part crc="c1f4a5db" name="16.11h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 0 32KB (2x 16KB, no pad) -->
+		<part crc="3d4c0447" name="14.6a"/>
+		<part crc="22414a67" name="13.7a"/>
+		<!-- Sprite plane 1 32KB -->
+		<part crc="61e34283" name="12.8a"/>
+		<part crc="bbbaffef" name="11.9a"/>
+		<!-- Sprite plane 2 32KB -->
+		<part crc="de564f97" name="10.10a"/>
+		<part crc="890dc815" name="9.11a"/>
+		<!-- Color PROMs R,G,B -->
+		<part crc="110a436e" name="mr.1j"/>
+		<part crc="0fbfd9f0" name="mg.1h"/>
+		<part crc="a342890c" name="mb.1f"/>
+		<!-- Char lookup PROM 32B -->
+		<part crc="190a55ad" name="m2.5j"/>
+		<!-- Timing PROM 32B (unused) -->
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+</misterromdescription>

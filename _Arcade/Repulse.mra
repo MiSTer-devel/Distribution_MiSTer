@@ -1,0 +1,86 @@
+<misterromdescription>
+	<n>Repulse</n>
+	<region>World</region>
+	<year>1985</year>
+	<manufacturer>Sega</manufacturer>
+	<category>Shooter</category>
+
+	<setname>repulse</setname>
+	<rbf>Kyugo</rbf>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="BF,BF">
+		<!-- DSW1 (AY1 port A, read & inverted by sub) -->
+		<dip bits="0,1"      name="Lives"           ids="6,5,4,3"/>
+		<dip bits="2"        name="Bonus Life"      ids="Every 70000,Every 50000"/>
+		<dip bits="3"        name="Slow Motion"     ids="On,Off"/>
+		<dip bits="4"        name="Invulnerability" ids="On,Off"/>
+		<dip bits="5"        name="Sound Test"      ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"         ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"          ids="On,Off"/>
+		<!-- DSW2 (AY1 port B) -->
+		<dip bits="8,10"     name="Coin A"          ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"          ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="14,15"    name="Difficulty"      ids="Hardest,Hard,Normal,Easy"/>
+	</switches>
+
+	<!-- Index 1: byte = variant(1) | rot_flip(bit3) — Repulse needs the opposite rotation direction
+	     from Gyrodine to render upright. flip_screen is hardwired off in the RTL (see Kyugo_CPU.sv),
+	     so this is supplied entirely by rot_flip, not by the game's own flip request: 0x09 -->
+	<rom index="1">
+		<part>09</part>
+	</rom>
+
+	<!-- Index 0: ROM blob in loader order (needs the sub_rom-widened core: sub region is 32KB) -->
+	<rom index="0" md5="none" zip="repulse.zip">
+		<!-- Main CPU 32KB (3x 8KB + 8KB pad) -->
+		<part crc="fb2b7c9d" name="repulse.b5"/>
+		<part crc="99129918" name="repulse.b6"/>
+		<part crc="57a8e900" name="7.j4"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sub CPU 32KB (4x 8KB) -->
+		<part crc="c485c621" name="1.f2"/>
+		<part crc="b3c6a886" name="2.h2"/>
+		<part crc="197e314c" name="3.j2"/>
+		<part crc="86b267f3" name="repulse.b4"/>
+		<!-- FG 4KB -->
+		<part crc="8e1de90a" name="repulse.a11"/>
+		<!-- BG plane 0 16KB (8KB ROM + 8KB pad) -->
+		<part crc="c9213469" name="15.9h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 1 16KB -->
+		<part crc="7de5d39e" name="16.10h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 2 16KB -->
+		<part crc="0ba5f72c" name="17.11h"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 0 32KB (2x 16KB, no pad) -->
+		<part crc="0e9f757e" name="8.6a"/>
+		<part crc="f7d2e650" name="9.7a"/>
+		<!-- Sprite plane 1 32KB -->
+		<part crc="e717baf4" name="10.8a"/>
+		<part crc="04b2250b" name="11.9a"/>
+		<!-- Sprite plane 2 32KB -->
+		<part crc="d110e140" name="12.10a"/>
+		<part crc="8fdc713c" name="13.11a"/>
+		<!-- Color PROMs reordered R,G,B (MAME stores them B,G,R) -->
+		<part crc="b7f48b41" name="r.1f"/>
+		<part crc="acd7a69e" name="g.1h"/>
+		<part crc="3ea35431" name="b.1j"/>
+		<!-- Char lookup PROM: NONE in this set (MAME: not dumped/absent) — 32B zero pad.
+		     FG colours may be wrong until/unless a lookup PROM is supplied. -->
+		<part repeat="32"> 00 </part>
+		<!-- Timing PROM 32B (unused) -->
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+</misterromdescription>

@@ -1,0 +1,132 @@
+<misterromdescription>
+  <name>Raiden (World set 1)</name>
+  <setname>raiden</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Raiden</rbf>
+  <year>1990</year>
+  <manufacturer>Seibu Kaihatsu</manufacturer>
+  <category>Shoot</category>
+  <rotation>vertical</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Fire,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- ============================================================
+         DIP layout from MAME raiden.cpp INPUT_PORTS_START(raiden):
+         SW1 (low byte):
+           bit 0     Coin Mode (A=1, B=0)
+           bit 1-4   Coinage in Mode A (16 values)
+                     in Mode B: bits 1-2 = Coin A 4 vals, bits 3-4 = Coin B 4 vals
+           bit 5     Credits to Start (1=1, 0=2)
+           bit 6     unused (tied 1)
+           bit 7     Flip Screen (Off=1, On=0)
+         SW2 (high byte):
+           bit 8-9   Lives (00=5, 01=2, 10=1, 11=3)
+           bit 10-11 Bonus Life (00=1M/5M, 01=300k/1M, 10=80k/300k, 11=150k/400k)
+           bit 12-13 Difficulty (00=Very Hard, 01=Hard, 10=Easy, 11=Normal)
+           bit 14    Allow Continue (1=Yes, 0=No)
+           bit 15    Demo Sounds (1=On, 0=Off)
+         Default 0xFFFF = Mode A 1C_1C, 1 Credit, Flip Off, 3 Lives, 150k/400k,
+                          Normal, Continue Yes, Demo On.
+         ============================================================ -->
+    <dip bits="0"     ids="B,A" name="Coin Mode"/>
+    <dip bits="1,4"   ids="Free Play,8C 3C,5C 3C,3C 2C,2C 3C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C" name="Coinage (Mode A)"/>
+    <dip bits="5"     ids="2,1" name="Credits to Start"/>
+    <dip bits="7"     ids="On,Off" name="Flip Screen"/>
+    <dip bits="8,9"   ids="5,2,1,3" name="Lives"/>
+    <dip bits="10,11" ids="1M/5M,300k/1M,80k/300k,150k/400k" name="Bonus Life"/>
+    <dip bits="12,13" ids="Very Hard,Hard,Easy,Normal" name="Difficulty"/>
+    <dip bits="14"    ids="No,Yes" name="Allow Continue"/>
+    <dip bits="15"    ids="Off,On" name="Demo Sounds"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="raiden.zip" md5="None">
+    <!-- ============================================================
+         Layout SDRAM CALCOLATO matematicamente da file size + map MRA:
+           - interleave 16-bit di 2 part: SDRAM size = 2 × file_size
+           - map="21" singolo part: SDRAM size = 2 × file_size (byte duplicato in word)
+         File size (MAME raiden.cpp ROM_START raidenj):
+           1.u0253=64K  2.u0252=64K   → interleave 128K SDRAM
+           3.u022 =128K 4j.u023=128K  → interleave 256K SDRAM
+           5.u042 =128K 6.u043 =128K  → interleave 256K SDRAM
+           8.u212 =64K  map21         → 64K SDRAM* (byte dup)
+           9      =32K  10=32K        → interleave 64K SDRAM
+           sei420 =512K map21         → 1024K SDRAM (byte dup)
+           sei430 =512K map21         → 1024K SDRAM
+           sei440 =512K map21         → 1024K SDRAM
+           7.u203 =64K  map21         → 128K SDRAM (byte dup)
+
+         Layout SDRAM (byte) — Audio/OKI dimensionati in base a file ZIP reali:
+           $000000-$01FFFF  Main 1   128K   (1.u0253 + 2.u0252 interleave)
+           $020000-$05FFFF  Main 2   256K   (3.u022 + 4j.u023 interleave)
+           $060000-$09FFFF  Sub      256K   (5.u042 + 6.u043 interleave)
+           $0A0000-$0AFFFF  AudioZ80  64K   (8.u212 map21, byte dup → 64K word area)
+           $0B0000-$0BFFFF  Text      64K   (9 + 10 interleave)
+           $0C0000-$1BFFFF  bgtiles  1024K  (sei420 map21 byte dup)
+           $1C0000-$2BFFFF  fgtiles  1024K  (sei430)
+           $2C0000-$3BFFFF  sprites  1024K  (sei440)
+           $3C0000-$3DFFFF  oki       128K  (7.u203 map21 byte dup)
+
+         Bridge sdram_bridge.sv BASE (word = byte/2):
+           MAIN_BASE = 0x000000
+           SUB_BASE  = 0x030000
+           TXT_BASE  = 0x058000  (audio in mezzo a 0x050000, non letto)
+           BG_BASE   = 0x060000
+           FG_BASE   = 0x0E0000
+           SPR_BASE  = 0x160000
+           OKI_BASE  = 0x1E0000
+         ============================================================ -->
+
+    <!-- Main 1: 0x000000-0x01FFFF (128K) -->
+    <interleave output="16">
+      <part name="1.u0253" crc="a4b12785" map="01"/>
+      <part name="2.u0252" crc="17640bd5" map="10"/>
+    </interleave>
+
+    <!-- Main 2: 0x020000-0x05FFFF (256K) - CRC MAME originali (encryption runtime) -->
+    <interleave output="16">
+      <part name="3.u022" crc="f6af09d0" map="01"/>
+      <part name="4.u023" crc="6bdfd416" map="10"/>
+    </interleave>
+
+    <!-- Sub V30: 0x060000-0x09FFFF (256K) - CRC MAME originali -->
+    <interleave output="16">
+      <part name="5.u042" crc="ed03562e" map="01"/>
+      <part name="6.u043" crc="a19d5b5d" map="10"/>
+    </interleave>
+
+    <!-- Audio Z80: 0x0A0000-0x0AFFFF (64K raw byte-pack) -->
+    <part name="8.u212" crc="cbe055c7"/>
+
+    <!-- Text: 0x0B0000-0x0BFFFF (64K SDRAM interleave 32K+32K)
+         MAME ROM_LOAD16_BYTE: "9" planes 2,3 (offset dispari), "10" planes 0,1 (offset pari).
+         SWAP pattern DCon/GundamSD: planes 2,3 in charrom_lo, planes 0,1 in charrom_hi
+         (decode mode SI per matchare il decoder DCon "Fix D3 swap"). -->
+    <interleave output="16">
+      <part name="10" crc="5f90786a" map="10"/>
+      <part name="9"  crc="1922b25e" map="01"/>
+    </interleave>
+
+    <!-- bgtiles: 0x0C0000-0x13FFFF (512K raw byte-pack)
+         MAME: ROM_LOAD( "sei420", 0x00000, 0x80000 ) linear byte-addressable.
+         Bridge legge SDRAM word(W) = {file[2W+1], file[2W]}. -->
+    <part name="sei420" crc="da151f0b"/>
+
+    <!-- fgtiles: 0x140000-0x1BFFFF (512K raw byte-pack) -->
+    <part name="sei430" crc="ac1f57ac"/>
+
+    <!-- sprites: 0x1C0000-0x23FFFF (512K raw byte-pack) -->
+    <part name="sei440" crc="946d7bde"/>
+
+    <!-- oki: 0x240000-0x24FFFF (64K raw byte-pack) -->
+    <part name="7.u203" crc="8f927822"/>
+  </rom>
+
+  <mratimestamp>20260508190000</mratimestamp>
+</misterromdescription>

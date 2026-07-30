@@ -1,0 +1,108 @@
+<misterromdescription>
+	<n>Gyrodine</n>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1984</year>
+	<manufacturer>Crux</manufacturer>
+	<category>Shooter</category>
+
+	<setname>gyrodine</setname>
+	<parent>gyrodine</parent>
+	<mameversion>0220</mameversion>
+	<rbf>Kyugo</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="BF,FF">
+		<!-- DSW1 (AY1 port A, read & inverted by sub) -->
+		<dip bits="0,1"      name="Lives"       ids="6,5,4,3"/>
+		<dip bits="4"        name="Difficulty"  ids="Hard,Easy"/>
+		<dip bits="5"        name="Bonus Life"  ids="40k/70k,20k/50k"/>
+		<dip bits="6"        name="Cabinet"     ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"      ids="On,Off"/>
+		<!-- DSW2 (AY1 port B) -->
+		<dip bits="8,10"     name="Coin A"      ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"      ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: variant selector (0 = Gyrodine) -->
+	<!-- core_config: bits[2:0]=variant_sel (0=VAR_GYRO), bit3=rot_flip, bit4=no_rotate (ROT0 sets) -->
+	<!-- rot_flip=0 (bit3 clear) => rotate CCW. In rtl/Kyugo_CPU.sv, flip_screen is hardwired to 0 and
+	     the render stays unflipped; a 180 degree flip and the rotation direction commute, so
+	     unflipped-render + CCW == flipped-render + CW. This is a MATCHED PAIR: do not set bit 3 here
+	     without also un-forcing flip_screen in the RTL, or Gyrodine renders 180 degrees out. Gyrodine
+	     is intentionally the only ROT90 set with bit3 clear; Repulse (09) and SRD Mission (0B) set it
+	     because they never assert their own flip request. -->
+	<rom index="1">
+		<part>00</part>
+	</rom>
+
+	<!-- Index 0: ROM blob in loader order -->
+	<rom index="0" md5="none" zip="gyrodine.zip">
+		<!-- Main CPU 32KB -->
+		<part crc="85ddea38" name="rom2"/>
+		<part crc="4e9323bd" name="a21.03"/>
+		<part crc="57e659d4" name="a21.04"/>
+		<part crc="1e7293f3" name="a21.05"/>
+		<!-- Sub CPU 32KB region (8KB ROM + 24KB pad). The shared ROM loader reserves a fixed
+		     0x08000-0x0FFFF (32KB) window for sub_rom across all variants, sized for the larger
+		     sub ROMs of Repulse/Flashgal/SRDMission/Legend. Gyrodine's sub is only 8KB, so it MUST
+		     be padded out to the full 32KB here or every region after it (fg/bg/sprite/color PROMs)
+		     shifts early and the palette PROMs load zeros. -->
+		<part crc="b2ce0aa2" name="a21.01"/>
+		<part repeat="24576"> 00 </part>
+		<!-- FG 4KB -->
+		<part crc="adba18d0" name="a21.15"/>
+		<!-- BG plane 0 16KB region (8KB ROM + 8KB pad) -->
+		<part crc="a57df1c9" name="a21.08"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 1 16KB region -->
+		<part crc="63623ba3" name="a21.07"/>
+		<part repeat="8192"> 00 </part>
+		<!-- BG plane 2 16KB region -->
+		<part crc="4cc969a9" name="a21.06"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 0 32KB (4x 8KB slot, ROMs at slots 0 and 2) -->
+		<part crc="9c5c4d5b" name="a21.14"/>
+		<part repeat="8192"> 00 </part>
+		<part crc="d36b5aad" name="a21.13"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 1 32KB -->
+		<part crc="f387aea2" name="a21.12"/>
+		<part repeat="8192"> 00 </part>
+		<part crc="87967d7d" name="a21.11"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Sprite plane 2 32KB -->
+		<part crc="59640ab4" name="a21.10"/>
+		<part repeat="8192"> 00 </part>
+		<part crc="22ad88d8" name="a21.09"/>
+		<part repeat="8192"> 00 </part>
+		<!-- Color PROMs -->
+		<part crc="cc25fb56" name="a21.16"/>
+		<part crc="ca054448" name="a21.17"/>
+		<part crc="23c0c449" name="a21.18"/>
+		<!-- Char lookup PROM 32B -->
+		<part crc="efc4985e" name="a21.20"/>
+		<!-- Timing PROM 32B (unused) -->
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+
+	<remark></remark>
+	<mratimestamp>20260425000000</mratimestamp>
+</misterromdescription>

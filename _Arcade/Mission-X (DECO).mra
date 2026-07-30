@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Mission-X (cmissnx) — Type 2 Dongle — DECO release 21 (0x15)
+
+  MAME ROM references (decocass.cpp ROM_START(cmissnx), BIOS_B):
+  - Main BIOS:   v0b-.7e         (4 KB)  CRC 23d929b7  @ 0xf000
+  - Audio BIOS:  v1-.5a          (2 KB)  CRC b66b2c2a
+  - MCU:         cassmcu.1c      (1 KB)  CRC a6df18fd
+  - PROMs:       v2.3m + v4.10d + v3.3j  (32 B each)
+  - Dongle:      dp-121_b.dgl    (2 KB)  CRC 8a41c071   -> ioctl index 1 (SDRAM/DDR3)
+  - Cassette:    cmissnx.cas     (32 KB) CRC 3a094e11
+
+  Dongle config (metadata @ $02E00):
+  - dongle_type = 0x02 (Type 2)
+  - game_id     = 0x15 (release 21; unused by type2 dongle module)
+  - swap_mode   = 0x00 (unused)
+
+  ⚠️ NOTE: the Type-2 dongle RTL module (dongle_type2.v) is NOT yet re-keyed/verified vs MAME
+  (pending audit 2026-06-27). This MRA exercises the LOAD path; full decode may not work until
+  the module is verified. Region map matches rom_loader.v (see Burger Time / Pro Golf MRAs).
+-->
+<misterromdescription>
+    <name>Mission-X</name>
+    <setname>cmissnx</setname>
+    <rbf>DECOCassette</rbf>
+    <year>1982</year>
+    <manufacturer>Data East</manufacturer>
+    <category>Shooter</category>
+
+    <rom index="0" zip="decocass.zip|cmissnx.zip" md5="none">
+        <!-- $00000-$00FFF: Main 6502 BIOS -->
+        <part name="v0b-.7e" crc="23d929b7"/>
+
+        <!-- $01000-$017FF: Audio 6502 BIOS -->
+        <part name="v1-.5a" crc="b66b2c2a"/>
+
+        <!-- $01800-$01BFF: MCU ROM -->
+        <part name="cassmcu.1c" crc="a6df18fd"/>
+
+        <!-- $01C00-$01CFF: BIOS PROMs (96 B + 160 B pad) -->
+        <part name="v2.3m"  crc="238fdb40"/>
+        <part name="v4.10d" crc="3b5836b4"/>
+        <part name="v3.3j"  crc="51eef657"/>
+        <part repeat="0xA0">00</part>
+
+        <!-- $01D00-$02CFF: legacy dongle PROM region (UNUSED — dongle moved to ioctl index 1; zero-filled) -->
+        <part repeat="0x1000">00</part>
+
+        <!-- $02D00-$02DFF: Spare -->
+        <part repeat="0x100">00</part>
+
+        <!-- $02E00-$02EFF: Metadata (Type 2, game_id=15, swap=00) -->
+        <part>02 15 00</part>
+        <part repeat="0xFD">00</part>
+
+        <!-- $02F00-$02FFF: Reserved -->
+        <part repeat="0x100">00</part>
+
+        <!-- $03000-: Cassette image -->
+        <part name="cmissnx.cas" crc="3a094e11"/>
+    </rom>
+
+    <!-- DONGLE-NEW-SPACE-2026-06-27: Type-2 dongle PROM (2 KB) on its OWN ioctl index = 1. -->
+    <rom index="1" zip="decocass.zip|cmissnx.zip" md5="none">
+        <part name="dp-121_b.dgl" crc="8a41c071"/>
+    </rom>
+
+    <buttons names="Button1,Button2,Coin,Start" default="A,B,Select,Start"/>
+    <!-- DIPs from MAME decocass.cpp (input port cmissnx); Country Code bits="21,23" (inclusive range). DSW1/DSW2 byte-swapped so RTL feeds .dsw2 from sw[2], .dsw1 from sw[3]. -->
+    <switches default="00,00,FF,3F">
+        <dip bits="16" name="Lives" ids="5,3"/>
+        <dip bits="17,18" name="Bonus Life" ids="None,15000,10000,5000"/>
+        <dip bits="19,20" name="Difficulty" ids="Hardest,Hard,Normal,Easy"/>
+        <dip bits="21,23" name="Country Code" ids="inv,inv,F,E,D,C,B,A"/>
+        <dip bits="24,25" name="Coin A" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="26,27" name="Coin B" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="28,29" name="Type of Tape" ids="MT Big,inv,inv,MD Small"/>
+        <dip bits="30" name="Cabinet" ids="Upright,Cocktail"/>
+    </switches>
+</misterromdescription>

@@ -1,0 +1,93 @@
+<misterromdescription>
+  <name>Blood Bros</name>
+  <setname>bloodbro</setname>
+  <mameversion>0264</mameversion>
+  <rbf>BloodBros</rbf>
+  <year>1990</year>
+  <manufacturer>TAD Corporation</manufacturer>
+  <category>Shoot</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,X,Start" names="Fire,Roll,Dynamite,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- Blood Bros DIPs allineati 1:1 a MAME bloodbro.cpp INPUT_PORTS_START(bloodbro_base).
+         DSW e' 16-bit (SW1 lo byte + SW2 hi byte).
+         BLOODBRO_COINAGE macro (SW1:1-6):
+           SW1:1 Coin Mode (decide se SW1:2-5 sono Coinage o Coin_A+Coin_B)
+           SW1:2-5 Coinage (Mode 1) / Coin_A SW1:2-3 + Coin_B SW1:4-5 (Mode 2)
+           SW1:6 Starting Coin (Normal / x2)
+           SW1:7 unknown (PORT_DIPUNKNOWN)
+           SW1:8 unknown (PORT_DIPUNKNOWN) -->
+    <!-- Coin Mode: bit=0 -> Mode 2 (0x0000), bit=1 -> Mode 1 (0x0001). Default FF=Mode 1. -->
+    <dip bits="0"   ids="Mode 2,Mode 1" name="Coin Mode"/>
+    <!-- Coinage Mode 1 (SW1:2-5, 16 valori, valido se Coin Mode = Mode 1).
+         ids ordine bit 0000..1111 (default 1111 = 1C 1C). -->
+    <dip bits="1,4" ids="Free Play,8C 3C,5C 3C,3C 2C,2C 3C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C" name="Coinage (Mode 1)"/>
+    <!-- Starting Coin: bit=0 -> x2 (0x0000), bit=1 -> Normal (0x0020). Default FF=Normal. -->
+    <dip bits="5"   ids="x2,Normal" name="Starting Coin"/>
+    <!-- SW1:7-8 marcati PORT_DIPUNKNOWN in MAME (sconosciuti, non testati). -->
+    <dip bits="6"   ids="On,Off" name="Unknown SW1.7"/>
+    <dip bits="7"   ids="On,Off" name="Unknown SW1.8"/>
+    <!-- SW2 (default 0xFF00):
+         SW2:1,2 Lives (1/2/3/5 - default 3)
+         SW2:3,4 Bonus Life (300K 500K+/500K+/500K/None - default 300K 500K+)
+         SW2:5,6 Difficulty (Easy/Normal/Hard/Very Hard - default Normal)
+         SW2:7 Allow Continue (No/Yes - default Yes)
+         SW2:8 Demo Sounds (Off/On - default On) -->
+    <dip bits="8,9" ids="1,5,2,3" name="Lives"/>
+    <dip bits="10,11" ids="None,500K,500K+,300K 500K+" name="Bonus Life"/>
+    <dip bits="12,13" ids="Very Hard,Hard,Easy,Normal" name="Difficulty"/>
+    <dip bits="14"  ids="No,Yes" name="Allow Continue"/>
+    <dip bits="15"  ids="Off,On" name="Demo Sounds"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="bloodbro.zip" md5="None">
+    <!-- maincpu 512KB @ 0x000000 (4× 128KB interleaved word) -->
+    <interleave output="16">
+      <part name="1.u022.8n" crc="ac6719e7" map="10"/>
+      <part name="2.u021.7n" crc="204dca6e" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="3.u024.8l" crc="18d3c460" map="10"/>
+      <part name="4.u023.7l" crc="fd951c2c" map="01"/>
+    </interleave>
+
+    <!-- txtiles 128KB @ 0x080000 — file order SWAPPED (bb_06 prima, bb_05 dopo)
+         per allineare con la convenzione GundamSD/DCon (planes 2,3 in primo
+         slot SDRAM → charrom_lo, planes 0,1 in secondo slot → charrom_hi).
+         Il pen decode in text_renderer è "Fix D3 swap" (vedi DCon). -->
+    <interleave output="16"><part name="bb_06.u063.6d" crc="7092e35b" map="21"/></interleave>
+    <interleave output="16"><part name="bb_05.u061.6f" crc="04ba6d19" map="21"/></interleave>
+
+    <!-- bgtiles 1024KB @ 0x0A0000 (Blood Bros: shared by BG AND FG layers).
+         Il file riempie 1MB consecutivo che copre BG_BASE slot (512KB) +
+         FG_BASE slot (512KB), totale 1MB. sdram_bridge mappa FG kind a BG_BASE
+         quindi BG e FG leggono entrambi da 0x0A0000 con tile_idx 0..8191. -->
+    <interleave output="16"><part name="blood_bros_bk__=c=1990_tad_corp.u064.4d" crc="1aa87ee6" map="21"/></interleave>
+
+    <!-- mgtiles 1024KB slot: vuoto (Blood Bros NO MG layer) -->
+    <part repeat="0x100000">00</part>
+
+    <!-- sprites 1024KB @ 0x2A0000 (blood_bros_obj 1MB) -->
+    <interleave output="16"><part name="blood_bros_obj__=c=1990_tad_corp.u078.2n" crc="d27c3952" map="21"/></interleave>
+
+    <!-- Sprites slot SDRAM da 2MB: padding 1MB -->
+    <part repeat="0x100000">00</part>
+
+    <!-- oki 128KB @ 0x4A0000 (bb_08 128KB) -->
+    <interleave output="16"><part name="bb_08.u095.5a" crc="deb1b975" map="21"/></interleave>
+    <part repeat="0x20000">00</part>
+
+    <!-- audiocpu 32KB @ 0x4E0000 (bb_07 Z80 program) -->
+    <interleave output="16"><part name="bb_07.u1016.6a" crc="411b94e8" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260512000000</mratimestamp>
+</misterromdescription>

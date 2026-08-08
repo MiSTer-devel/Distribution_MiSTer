@@ -1,0 +1,83 @@
+<misterromdescription>
+    <name>Kangaroo (Atari)</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative>Kangaroo</alternative>
+    <platform></platform>
+    <series>Kangaroo</series>
+    <year>1982</year>
+    <manufacturer>Sun Electronics (Atari license)</manufacturer>
+    <category>Platform</category>
+
+    <setname>kangarooa</setname>
+    <parent>kangaroo</parent>
+    <mameversion>0270</mameversion>
+    <rbf>Kangaroo</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (cw)</rotation>
+    <flip>no</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Jump,Punch,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <!-- DIP-FIX-2026-06-21: aligned to MAME kangaroo DSW0 (bits 2-3 = Bonus Life; Lives/Difficulty order;
+         Coinage = MAME dual A/B). Cabinet/Music/Flip live in IN0, not DSW0. -->
+    <switches default="00">
+        <dip bits="0"     name="Lives" ids="3,5"/>
+        <dip bits="1"     name="Difficulty" ids="Easy,Hard"/>
+        <dip bits="2,3"   name="Bonus Life" ids="None,10000,10000 30000,20000 40000"/>
+        <dip bits="4,7"   name="Coinage" ids="A 1C/1C B 1C/1C,A 2C/1C B 2C/1C,A 2C/1C B 1C/3C,A 1C/1C B 1C/2C,A 1C/1C B 1C/3C,A 1C/1C B 1C/4C,A 1C/1C B 1C/5C,A 1C/1C B 1C/6C,A 1C/2C B 1C/2C,A 1C/2C B 1C/4C,A 1C/2C B 1C/5C,A 1C/2C B 1C/10C,A 1C/2C B 1C/11C,A 1C/2C B 1C/12C,A 1C/2C B 1C/6C,Free Play"/>
+    </switches>
+
+    <!-- Index 0: Main CPU ROMs (24KB) -->
+    <rom index="0" md5="none" zip="kangarooa.zip|kangaroo.zip">
+        <part crc="0d18c581" name="136008-101.ic7"/>
+        <part crc="5978d37a" name="136008-102.ic8"/>
+        <part crc="522d1097" name="136008-103.ic9"/>
+        <part crc="063da970" name="136008-104.ic10"/>
+        <part crc="82a26c7d" name="136008-105.ic16"/>
+        <part crc="3dead542" name="136008-106.ic17"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU ROM (4KB) -->
+    <rom index="1" md5="none" zip="kangarooa.zip|kangaroo.zip">
+        <part crc="fb449bfd" name="136008-107.ic24"/>
+    </rom>
+
+    <!-- Index 2: Blitter GFX ROMs (16KB) -->
+    <rom index="2" md5="none" zip="kangarooa.zip|kangaroo.zip">
+        <part crc="c0446ca6" name="136008-108.ic76"/>
+        <part crc="72c52695" name="136008-110.ic77"/>
+        <part crc="e4cb26c2" name="136008-109.ic52"/>
+        <part crc="9e6a599f" name="136008-111.ic53"/>
+    </rom>
+
+	<rom index="3" md5="none">
+		<part>
+		02 FA F0 80 00 FF 00 02 00 02 00 01 11 11 00 00
+		00 00 E1 A0 00 3C 00 00
+        00 00 E3 00 00 06 00 00
+		</part>
+	</rom>
+	<rom index="4"></rom>
+	<nvram index="4" size="66"></nvram>
+
+	<!-- Index 5: game-select mod byte. bit0 = Funky Fish, bit1 = MB8841 MCU fitted. 0x02 = Kangaroo + MCU. -->
+	<rom index="5"><part>02</part></rom>
+
+	<!-- Index 6: MB8841 MCU internal ROM (0x800) + protection PROM (0x800); split on address bit11 in-core. -->
+	<rom index="6" md5="none" zip="kangarooa.zip|kangaroo.zip">
+	    <part crc="04ca58ee" name="mb8841_477m.ic29"/>
+	    <part crc="57766f69" name="136008-112.ic28"/>
+	</rom>
+
+    <remark>Atari license variant</remark>
+    <mratimestamp>20260329000000</mratimestamp>
+</misterromdescription>

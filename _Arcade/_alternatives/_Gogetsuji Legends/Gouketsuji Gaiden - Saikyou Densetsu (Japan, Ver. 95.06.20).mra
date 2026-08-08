@@ -1,0 +1,93 @@
+<misterromdescription>
+  <name>Gouketsuji Gaiden - Saikyou Densetsu (Japan, Ver. 95.06.20)</name>
+  <mameversion>0275</mameversion>
+  <setname>plegendsj</setname>
+  <year>1995</year>
+  <manufacturer>Atlus</manufacturer>
+  <category>Fighting</category>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <rotation>horizontal</rotation>
+  <region>Japan</region>
+  <rbf>cave</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="plegendsj.zip|plegends.zip" md5="none" address="0x30000000">
+    <!-- prog ROMs -->
+    <interleave output="16">
+      <part name="prog.u45" crc="94f53db2" map="01" />
+      <part name="prog.u44" crc="db0ad756" map="10" />
+    </interleave>
+    <interleave output="16">
+      <part name="pr12.u2" crc="0e202559" map="01" />
+      <part name="pr12.u3" crc="54742f21" map="10" />
+    </interleave>
+
+    <!-- 68000 extra data ROMs -->
+    <interleave output="16">
+      <part name="d15.u4" crc="6352cec0" map="01" />
+      <part name="d17.u5" crc="7af810d8" map="10" />
+    </interleave>
+
+    <!-- erased 93C46 EEPROM seed -->
+    <part>
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+    </part>
+
+    <!-- sound program ROM; pad to preserve the parent 0x40000 sound slot -->
+    <part name="sound.u3" crc="36f71520" />
+    <part repeat="0x20000">FF</part>
+
+    <!-- OKI 0 samples -->
+    <part name="g02.u53" crc="c4bdd9e0" />
+    <part name="g02.u54" crc="1357d50e" />
+
+    <!-- OKI 1 samples -->
+    <part name="g02.u55" crc="2d102898" />
+    <part name="g02.u56" crc="9ff50dda" />
+
+    <!-- layer 0 -->
+    <part name="atgs.u78" crc="16710ecb" />
+
+    <!-- layer 1 -->
+    <part name="atgs.u81" crc="cb2aca91" />
+
+    <!-- layer 2 -->
+    <part name="atgs.u89" crc="65f45a0f" />
+
+    <!-- layer 3 text -->
+    <part name="text.u82" crc="f57333ea" />
+
+    <!-- sprites -->
+    <part name="g02.u61" crc="91e30398" />
+    <part name="g02.u62" crc="d9455dd7" />
+    <part name="g02.u63" crc="4d20560b" />
+    <part name="g02.u64" crc="b17b9b6e" />
+    <part name="g02.u65" crc="08541878" />
+    <part name="g02.u66" crc="becf2a36" />
+    <part name="atgs.u1" crc="aa6f34a9" />
+    <part name="atgs.u2" crc="553eda27" />
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>08</part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="128" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0140 00f0 0020 0008 001A 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Button 1,Button 2,Button 3,Button 4,Start,Coin,Pause" default="Y,X,B,A,R,L,Start" />
+</misterromdescription>

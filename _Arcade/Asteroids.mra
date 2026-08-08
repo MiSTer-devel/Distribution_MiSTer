@@ -1,0 +1,51 @@
+<misterromdescription>
+	<name>Asteroids (Rev 4)</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Rev 4</version>
+	<alternative></alternative>
+	<platform>Asteroids</platform>
+	<series></series>
+	<year>1979</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Shooter - Multi-directional</category>
+
+	<setname>asteroid</setname>
+	<parent>asteroid</parent>
+	<mameversion>0287</mameversion>
+	<rbf>Asteroids</rbf>
+	<about>Atari Asteroids with a hardware-level DVG and high-resolution vector framebuffer.</about>
+
+	<rotation>horizontal</rotation>
+	<flip>yes</flip>
+
+	<players>2</players>
+	<joystick>2-way horizontal</joystick>
+	<num_buttons>3</num_buttons>
+	<buttons default="A,B,X,Start,Select,R,L,Y" names="Fire,Thrust,Hyperspace,Start 1,Start 2,Coin,Pause,Coin Right"></buttons>
+
+	<switches default="84,00">
+		<dip bits="0,1" ids="English,German,French,Spanish" name="Language"></dip>
+		<dip bits="2" ids="4,3" name="Lives"></dip>
+		<dip bits="3" ids="x1,x2" name="Center Coin"></dip>
+		<dip bits="4,5" ids="x1,x4,x5,x6" name="Right Coin"></dip>
+		<dip bits="6,7" ids="Free Play,1 Coin 2 Credits,1 Coin 1 Credit,2 Coins 1 Credit" name="Coinage"></dip>
+		<dip bits="8" ids="Off,On" name="Service Mode"></dip>
+		<dip bits="9" ids="Off,On" name="Diagnostic Step"></dip>
+	</switches>
+
+	<rom index="1">
+		<part>0</part>
+	</rom>
+
+	<rom index="0" md5="none" type="merged|nonmerged" zip="asteroid.zip">
+		<part crc="b503eaf7" name="035145-04e.ef2"></part>
+		<part crc="25233192" name="035144-04e.h2"></part>
+		<part crc="312caa02" name="035143-02.j2"></part>
+		<part crc="8b71fd9e" name="035127-02.np3"></part>
+		<part crc="97953db8" name="034602-01.c8"></part>
+	</rom>
+
+	<mratimestamp>20260804000000</mratimestamp>
+</misterromdescription>

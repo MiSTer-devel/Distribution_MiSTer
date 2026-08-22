@@ -1,0 +1,57 @@
+<misterromdescription>
+    <name>Dragon's Lair</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version>Rev F2</version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Dragon's Lair</series>
+    <year>1983</year>
+    <manufacturer>Cinematronics</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">dlair</setname>
+    <parent>dlair</parent>
+    <mameversion>0270</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Sword,Not Used,Not Used,Not Used,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <switches default="22,D8">
+        <dip bits="15" name="Difficulty" ids="Ramps Up,Always Easy"/>
+        <dip bits="2"  name="- Ramp Style" ids="Gradual,Instant (Hard)"/>
+        <dip bits="12" name="- Ramp After" ids="5 In A row,9 In A Row"/>
+        <dip bits="0"  name="Coinage" ids="2 Coins/1 Credit,3 Coins/1 Credit"/>
+        <dip bits="6"  name="Pay As You Go" ids="Off,On"/>
+        <dip bits="13,14" name="- Pay As You Go Option" ids="PAYG1,PAYG2,PAYG3,PAYG4"/>
+        <dip bits="4"  name="Free Play" ids="Off,On"/>
+        <dip bits="5"  name="Lives" ids="3,5"/>
+        <dip bits="10" name="Unlimited Dirks" ids="Off,On"/>
+        <dip bits="9"  name="Demo Sounds" ids="On,Off"/>
+        <dip bits="8"  name="- Demo Sound Reps" ids="Every 8,All"/>
+        <dip bits="3"  name="Engineering Mode" ids="Off,On"/>
+        <dip bits="7"  name="Service Mode" ids="Off,On"/>
+        <dip bits="11" name="LD Player" ids="LD-PR7820,LD-V1000"/>
+    </switches>
+
+    <!-- Index 0: Main Z80 program ROMs. Rev F2 = 4x 8KB @ 0x0000-0x7FFF (region is 0xA000; 0x8000-0x9FFF unused on F2). -->
+    <rom index="0" md5="none" zip="dlair.zip">
+        <part crc="f5ea3b9d" name="dl_f2_u1.bin"/>
+        <part crc="dcc1dff2" name="dl_f2_u2.bin"/>
+        <part crc="ab514e5b" name="dl_f2_u3.bin"/>
+        <part crc="f5ec23d2" name="dl_f2_u4.bin"/>
+    </rom>
+
+    <remark>Dragon's Lair (Cinematronics)</remark>
+    <mratimestamp>20260703000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,60 @@
+<misterromdescription>
+    <name>Space Ace</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version>Rev A3</version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Space Ace</series>
+    <year>1983</year>
+    <manufacturer>Cinematronics</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">spaceace</setname>
+    <parent>spaceace</parent>
+    <mameversion>0270</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Fire/Energize,Cadet,Captain,Space Ace,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <switches default="3D,FE">
+        <dip bits="3" name="Difficulty" ids="Ramps Fast,Ramps Slow"/>
+        <dip bits="2" name="Ramp Rate" ids="3 In A Row,5 In A Row"/>
+        <dip bits="0" name="Coinage" ids="3 Coins/1 Credit,2 Coins/1 Credit"/>
+        <dip bits="12" name="Free Play" ids="On,Off"/>
+        <dip bits="1" name="Lives" ids="5,3"/>
+        <dip bits="13" name="Unlimited Dexters" ids="On,Off"/>
+        <dip bits="4" name="Demo Sounds" ids="No,Yes"/>
+        <dip bits="5" name="- Demo Sound Reps" ids="Every 8, All"/>
+        <dip bits="14" name="Frame Display" ids="On,Off"/>
+        <dip bits="15" name="Diagnostics Mode" ids="On,Off"/>
+        <dip bits="8"  name="LD Player" ids="LDV-1000,LDV-7820"/>
+    </switches>
+
+    <!-- GAME-ID - 01 = Space Ace (For LED Band Changes). Dragon's Lair has no index 1, gets default LED Band. -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+    <!-- Index 0: Main Z80 program ROMs. Rev A3 = 5x 8KB @ 0x0000-0x9FFF (fills the full 0xA000 region). -->
+    <rom index="0" md5="none" zip="spaceace.zip">
+        <part crc="427522d0" name="sa_a3_u1.bin"/>
+        <part crc="18d0262d" name="sa_a3_u2.bin"/>
+        <part crc="4646832d" name="sa_a3_u3.bin"/>
+        <part crc="57db2a79" name="sa_a3_u4.bin"/>
+        <part crc="85cbcdc4" name="sa_a3_u5.bin"/>
+    </rom>
+
+    <remark>Space Ace (Cinematronics)</remark>
+    <mratimestamp>20260703000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,63 @@
+<misterromdescription>
+    <about author="alanswx" webpage="https://github.com/alanswx/Arcade-SegaG80V_MiSTer"/>
+    <name>Tac/Scan</name>
+    <setname>tacscan</setname>
+    <rbf>SegaG80V</rbf>
+    <mameversion>0283</mameversion>
+    <year>1982</year>
+    <manufacturer>Sega</manufacturer>
+    <category>Shooter</category>
+    <players>2</players>
+    <joystick></joystick>
+    <special_controls>spinner</special_controls>
+    <num_buttons>2</num_buttons>
+    <!-- index 0: 48K program ROM at $0000, sin/cos PROM at $C000 -->
+    <rom index="0" zip="tacscan.zip" md5="none">
+        <part name="1711a.cpu-u25" crc="0da13158"/>
+        <part name="1670c.prom-u1" crc="98de6fd5"/>
+        <part name="1671a.prom-u2" crc="dc400074"/>
+        <part name="1672a.prom-u3" crc="2caf6f7e"/>
+        <part name="1673a.prom-u4" crc="1495ce3d"/>
+        <part name="1674a.prom-u5" crc="ab7fc5d9"/>
+        <part name="1675a.prom-u6" crc="cf5e5016"/>
+        <part name="1676a.prom-u7" crc="b61a3ab3"/>
+        <part name="1677a.prom-u8" crc="bc0273b1"/>
+        <part name="1678b.prom-u9" crc="7894da98"/>
+        <part name="1679a.prom-u10" crc="db865654"/>
+        <part name="1680a.prom-u11" crc="2c2454de"/>
+        <part name="1681a.prom-u12" crc="77028885"/>
+        <part name="1682a.prom-u13" crc="babe5cf1"/>
+        <part name="1683a.prom-u14" crc="1b98b618"/>
+        <part name="1684a.prom-u15" crc="cb3ded3b"/>
+        <part name="1685a.prom-u16" crc="43016a79"/>
+        <part name="1686a.prom-u17" crc="a4397772"/>
+        <part name="1687a.prom-u18" crc="002f3bc4"/>
+        <part name="1688a.prom-u19" crc="0326d87a"/>
+        <part name="1709a.prom-u20" crc="f35ed1ec"/>
+        <part name="1710a.prom-u21" crc="6203be22"/>
+        <part repeat="4096">00</part>
+        <!-- $C000: sin/cos PROM, X-Y Timing board U39 -->
+        <part name="s-c.xyt-u39" crc="56484d19"/>
+        <part repeat="2048">00</part>
+        <part repeat="16384">00</part>
+    </rom>
+
+    <!-- index 1: game identifier, decoded by rtl/sega_game_pkg.sv -->
+    <rom index="1">
+        <part>04</part>
+    </rom>
+
+    <!-- Two physical DIP banks plus a virtual self-test switch. -->
+    <switches default="8D,33,00">
+        <dip bits="0" ids="Cocktail,Upright" name="Cabinet"/>
+        <dip bits="1" ids="On,Off" name="Demo Sounds"/>
+        <dip bits="2,3" ids="2,4,6,8" name="Ships"/>
+        <dip bits="4,5" ids="Easy,Normal,Hard,Very Hard" name="Difficulty"/>
+        <dip bits="6,7" ids="None,30000,20000,10000" name="Bonus Life"/>
+        <dip bits="8,11" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin A"/>
+        <dip bits="12,15" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin B"/>
+        <dip bits="16" ids="Trigger,Trigger" name="Self-Test"/>
+    </switches>
+
+    <buttons names="Fire,Add Ship,-,-,Start 1,Start 2,Coin,Pause" default="A,B,Start,Select,R,L"/>
+</misterromdescription>

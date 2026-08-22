@@ -1,0 +1,52 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>mjgtaste</setname>
+	<mameversion>0165</mameversion>
+	<description>Mahjong G-Taste</description>
+	<rotation>horizontal</rotation>
+	<year>2002</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="A,B,C,D,E,F,G,H,I,J,K,L,M,N,Chi,Pon,Kan,Reach,Ron,Start,Coin,Test,Service" />
+
+	<switches default="40">
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="mjgtaste.zip" address="0x30000000">
+		<part repeat="0x400000">00</part>
+		<interleave output="64">
+			<part crc="30da42b1" name="1l.u4" map="125600" />
+			<part crc="629c1d44" name="1h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="1f6126ab" name="2l.u5" map="125600" />
+			<part crc="dba34e46" name="2h.u13" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="1023e35e" name="3l.u6" map="125600" />
+			<part crc="8aebec7f" name="3h.u14" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="9acf018b" name="4l.u7" map="125600" />
+			<part crc="f93e154c" name="4h.u15" map="1256" />
+		</interleave>
+		<part repeat="0x2800000">00</part>
+		<interleave output="64">
+			<part crc="0179f018" name="snd0.u52" map="12345678" />
+		</interleave>
+
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="5f2041dc" name="2.u21" map="216500" />
+			<part crc="f5ff7876" name="1.u22" map="2165" />
+		</interleave>
+		<part repeat="0x300000">00</part>
+		<interleave output="64">
+			<part crc="d35586f2" name="eeprom-mjgtaste.u44" map="12345678" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" >
+		<part>41</part>
+	</rom>
+	<nvram index="4" size="256" />
+</misterromdescription>

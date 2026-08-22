@@ -1,0 +1,59 @@
+<misterromdescription>
+	<name>Cavelon</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform>Scramble</platform>
+	<series></series>
+	<year>1981</year>
+	<manufacturer>Jetsoft</manufacturer>
+	<category>Maze - Horizontal</category>
+
+	<setname>cavelon</setname>
+	<parent>scramble</parent>
+	<mameversion>0216</mameversion>
+	<rbf>scramble</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>yes</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,Start,Select,R,L" names="Shoot,Bomb,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
+
+	<switches default="FF,FC,F1">
+		<dip bits="17,18" ids="5,3,4,2" name="Lives"></dip>
+		<dip bits="9" ids="1c/1cr,2c/1cr" name="Coinage"></dip>
+		<dip bits="8" ids="Cocktail,Upright" name="Cabinet"></dip>
+		</switches>
+
+	<rom index="1">
+		<part>13</part>
+		</rom>
+	<rom index="0" md5="none" type="merged|nonmerged" zip="cavelon.zip">
+		<part crc="a3b353ac" name="2.bin"></part>
+		<part crc="3f62efd6" name="1.bin"></part>
+		<part crc="39d74e4e" name="3.bin"></part>
+		<part crc="3f62efd6" name="1.bin"></part>
+		<part crc="f58dcf55" name="1c_snd.bin"></part>
+		<part crc="f58dcf55" name="1c_snd.bin"></part>
+		<part crc="f58dcf55" name="1c_snd.bin"></part>
+		<part crc="f58dcf55" name="1c_snd.bin"></part>
+		<part crc="59bc7f9e" name="k.bin" repeat="2"></part>
+		<part crc="d44fcd6f" name="h.bin" repeat="2"></part>
+		<part crc="d133356b" name="cavelon.clr"></part>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3" md5="none"></rom>
+	<rom index="4"></rom>
+
+	<remark>\n		prg    0000-7FFF\n		aud    8000-9FFF\n		obj0   A000-BFFF\n		obj1   C000-DFFF\n		col    E000-E01F\n</remark>
+
+	<mratimestamp>20260407005030</mratimestamp>
+</misterromdescription>

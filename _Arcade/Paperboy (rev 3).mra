@@ -1,0 +1,140 @@
+<misterromdescription>
+	<name>Paperboy (rev 3)</name>
+	<setname>paperboy</setname>
+	<mratimestamp>20260621000000</mratimestamp>
+	<year>1985</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<category>Arcade</category>
+	<rbf>atarisys2</rbf>
+	<mameinfo parent="paperboy" cpp="atarisy2" input="paperboy"/>
+	<display type="raster" rotate="0"/>
+	<!-- Button order MUST match the core's CONF_STR J1 (atarisys2.sv): MiSTer assigns these
+	     names to joystick_0[4],[5],[6]... in order. Core wiring: bit4 -> Throw Right (S2/IN0 bit6),
+	     bit5 -> Throw Left (S1/IN0 bit7), bit6 -> Coin, bit7 -> Service Credit (0x1840 bit5).
+	     Paperboy has NO separate Start (the two throw buttons double as start, per TM-275), so
+	     there is no Start entry. Service Credit is the coin-door button that grants a credit
+	     without advancing the coin counter. MAME commit 76f3936 (2026-07-20) reclassified this
+	     input from IPT_COIN3 to IPT_SERVICE1.
+	     Slots 5 and 6 (Start, Button 3) exist because the core's J1 is SHARED by all five
+	     System 2 games and must cover their union; Paperboy uses neither, but the name list
+	     has to fill every slot in order or the remaining ones keep the generic CONF_STR
+	     labels. -->
+	<buttons names="Throw Right,Throw Left,Coin,Service Credit,-,-" default="A,B,R,L"/>
+
+	<!-- Game descriptor, 4 bytes (rtl/rom/sys2_rom_layout.vh):
+	       [0] slapstic type  105 = 0x69
+	       [1] game id        0 = Paperboy
+	       [2] flags          bit0 = TMS5220 populated -> 0x01
+	       [3] reserved       0
+	     The core validates all four and checks that the slapstic type matches the game
+	     id, then holds the T-11 in reset if anything disagrees (status LED fast-blinks).
+	     A pre-v2 MRA carrying only the single slapstic byte is rejected on that path. -->
+	<rom index="1">
+		<part>69 00 01 00</part>
+	</rom>
+
+	<!-- Fixed stream contract. -->
+	<rom index="0" zip="paperboy.zip" md5="none">
+		<!-- maincpu: stream 0x000000-0x08ffff, MAME logical size 0x90000 -->
+		<part repeat="32768">FF</part>
+		<interleave output="16">
+			<part name="cpu_l07.rv3" crc="4024bb9b" map="01"/>
+			<part name="cpu_n07.rv3" crc="0260901a" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="cpu_f06.rv2" crc="3fea86ac" map="01"/>
+			<part name="cpu_n06.rv2" crc="711b17ba" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+		<interleave output="16">
+			<part name="cpu_j06.rv1" crc="a754b12d" map="01"/>
+			<part name="cpu_p06.rv1" crc="89a1ff9c" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+		<interleave output="16">
+			<part name="cpu_k06.rv1" crc="290bb034" map="01"/>
+			<part name="cpu_r06.rv1" crc="826993de" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+		<interleave output="16">
+			<part name="cpu_l06.rv2" crc="8a754466" map="01"/>
+			<part name="cpu_s06.rv2" crc="224209f9" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+
+		<!-- audiocpu: stream 0x090000-0x09ffff, MAME logical size 0x10000 -->
+		<part repeat="16384">FF</part>
+		<part name="cpu_a02.rv3" crc="ba251bc4"/>
+		<part name="cpu_b02.rv2" crc="e4e7a8b9"/>
+		<part name="cpu_c02.rv2" crc="d44c2aa2"/>
+
+		<!-- tiles: stream 0x0a0000-0x11ffff, region 0x80000 (family maximum; Paperboy fills
+		     the first 0x20000 and the rest is the 0xff tail below).
+		     The two RGN_FRAC(1,2) plane halves of MAME's region (split at 0x10000) are
+		     byte-interleaved here, so one 16-bit word is {high-plane byte, low-plane byte}.
+		     That is the pair both tile readers want, which lets the loader stay a straight
+		     byte-through map.  -->
+		<interleave output="16">
+			<part name="vid_a06.rv1" crc="b32ffddf" map="01"/>
+			<part name="vid_c06.rv1" crc="7bb59d68" map="10"/>
+		</interleave>
+		<part repeat="32768">FF</part>
+		<interleave output="16">
+			<part name="vid_b06.rv1" crc="301b849d" map="01"/>
+			<part name="vid_d06.rv1" crc="1a1d4ba8" map="10"/>
+		</interleave>
+		<part repeat="393216">FF</part>
+
+		<!-- sprites: stream 0x120000-0x21ffff, region 0x100000 (family maximum; Paperboy fills
+		     the first 0x40000). Core inverts every loaded byte. -->
+		<part name="vid_l06.rv1" crc="067ef202"/>
+		<part name="vid_k06.rv1" crc="76b977c4"/>
+		<part name="vid_j06.rv1" crc="2a3cc8d0"/>
+		<part name="vid_h06.rv1" crc="6763a321"/>
+		<part name="vid_s06.rv1" crc="0a321b7b"/>
+		<part name="vid_p06.rv1" crc="5bd089ee"/>
+		<part name="vid_n06.rv1" crc="c34a517d"/>
+		<part name="vid_m06.rv1" crc="df723956"/>
+		<part repeat="786432">FF</part>
+
+		<!-- chars: stream 0x220000-0x223fff, region 0x4000 (family maximum; Paperboy fills
+		     the first 0x2000) -->
+		<part name="vid_t06.rv1" crc="60d7aebb"/>
+		<part repeat="8192">FF</part>
+
+		<!-- eeprom: stream 0x224000-0x2241ff.
+		     NOT taken from paperboy.zip. MAME commit 4902ae0 (2026-07-23, "paperboy: fix factory
+		     reset eeprom for calibrated controls") replaced the shipped default image
+		     756b90cc -> 1bbf9b07 because the old one stores bad handlebar calibration. EEPROM
+		     defaults are romset data, not source, so those bytes cannot be tracked here, and
+		     pinning a new CRC would make this MRA build only against an updated zip. So the seed
+		     is inlined instead: identical to the factory image except for the calibration records
+		     below, and independent of which paperboy.zip the user has.
+		      -->
+		<!-- accounting counters: factory-clear -->
+		<part repeat="64">00</part>
+		<!-- default high-score table (0x040-0x0FA), verbatim from the factory image -->
+		<part>00 00 00 13 24 50 53 54 00 12 C0 55 43 48 00 12 5C 54 4F 49 00 11 F8 20 52 53 00 11 49</part>
+		<part>59 45 20 00 11 30 4F 20 54 00 10 CC 55 4F 41 00 10 68 52 4E 42 00 10 04 20 54 4C 00 0F</part>
+		<part>A0 20 4F 45 00 26 AC 50 49 47 00 26 48 41 53 52 00 25 E4 50 20 45 00 25 80 45 54 41 00</part>
+		<part>25 1C 52 48 54 00 24 B8 20 45 45 00 24 54 42 20 53 00 23 F0 4F 20 54 00 23 8C 59 20 20</part>
+		<part>00 23 28 20 20 20 00 3A 34 44 41 54 00 39 D0 54 48 45 00 39 6C 42 4F 59 00 39 08 42 46</part>
+		<part>20 00 38 A4 4D 45 43 00 38 40 43 4A 20 00 37 DC 4A 45 53 00 37 78 50 43 54 00 37 14 4D</part>
+		<part>41 41 00 36 B0 42 41 46 01 00 00 00 00</part>
+		<!-- control calibration: 3 redundant copies of payload 77 7F 7F 7F, each followed by
+		     its checksum ck_i = (sum(payload) + 6 - i) &amp; 0xFF, as validated by the sound-ROM
+		     routine at $656C. The factory image holds a VALID record containing 0F 7F 2A 7F,
+		     which the game accepts as genuine calibration. That is the hard-left veer. -->
+		<part>77 7F 7F 7F FA</part>  <!-- copy 0 -->
+		<part>77 7F 7F 7F F9</part>  <!-- copy 1 -->
+		<part>77 7F 7F 7F F8</part>  <!-- copy 2 -->
+		<part repeat="246">00</part>
+	</rom>
+
+	<!-- 2804 EEPROM save-back: settings + high scores persist across power cycles. This is a
+	     dedicated NVRAM channel (index 2) restored AFTER the factory-default fill embedded in
+	     the ROM stream above, so a previous save always overwrites the factory default when one
+	     exists. "Save Settings" (added to the OSD automatically by this tag) writes it back. -->
+	<nvram index="2" size="512"/>
+</misterromdescription>

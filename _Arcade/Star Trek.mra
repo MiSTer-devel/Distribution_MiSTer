@@ -1,0 +1,68 @@
+<misterromdescription>
+    <about author="alanswx" webpage="https://github.com/alanswx/Arcade-SegaG80V_MiSTer"/>
+    <name>Star Trek</name>
+    <setname>startrek</setname>
+    <rbf>SegaG80V</rbf>
+    <mameversion>0283</mameversion>
+    <year>1982</year>
+    <manufacturer>Sega</manufacturer>
+    <category>Shooter</category>
+    <players>2</players>
+    <joystick></joystick>
+    <special_controls>spinner</special_controls>
+    <num_buttons>4</num_buttons>
+    <!-- index 0: 48K program ROM at $0000, sin/cos PROM at $C000 -->
+    <rom index="0" zip="startrek.zip" md5="none">
+        <part name="1873.cpu-u25" crc="be46f5d9"/>
+        <part name="1848.prom-u1" crc="65e3baf3"/>
+        <part name="1849.prom-u2" crc="8169fd3d"/>
+        <part name="1850.prom-u3" crc="78fd68dc"/>
+        <part name="1851.prom-u4" crc="3f55ab86"/>
+        <part name="1852.prom-u5" crc="2542ecfb"/>
+        <part name="1853.prom-u6" crc="75c2526a"/>
+        <part name="1854.prom-u7" crc="096d75d0"/>
+        <part name="1855.prom-u8" crc="bc7b9a12"/>
+        <part name="1856.prom-u9" crc="ed9fe2fb"/>
+        <part name="1857.prom-u10" crc="28699d45"/>
+        <part name="1858.prom-u11" crc="3a7593cb"/>
+        <part name="1859.prom-u12" crc="5b11886b"/>
+        <part name="1860.prom-u13" crc="62eb96e6"/>
+        <part name="1861.prom-u14" crc="99852d1d"/>
+        <part name="1862.prom-u15" crc="76ce27b2"/>
+        <part name="1863.prom-u16" crc="dd92d187"/>
+        <part name="1864.prom-u17" crc="e37d3a1e"/>
+        <part name="1865.prom-u18" crc="b2ec8125"/>
+        <part name="1866.prom-u19" crc="6f188354"/>
+        <part name="1867.prom-u20" crc="b0a3eae8"/>
+        <part name="1868.prom-u21" crc="8b4e2e07"/>
+        <part name="1869.prom-u22" crc="e5663070"/>
+        <part name="1870.prom-u23" crc="4340616d"/>
+        <!-- $C000: sin/cos PROM, X-Y Timing board U39 -->
+        <part name="s-c.xyt-u39" crc="56484d19"/>
+        <!-- $C400: speech:cpu -->
+        <part name="1607.speech-u7" crc="b779884b"/>
+        <!-- $CC00: speech:data -->
+        <part name="1871.speech-u6" crc="03713920"/>
+        <part name="1872.speech-u5" crc="ebb5c3a9"/>
+        <part repeat="8192">00</part>
+    </rom>
+
+    <!-- index 1: game identifier, decoded by rtl/sega_game_pkg.sv -->
+    <rom index="1">
+        <part>05</part>
+    </rom>
+
+    <!-- Two physical DIP banks plus a virtual self-test switch. -->
+    <switches default="8D,33,00">
+        <dip bits="0" ids="Cocktail,Upright" name="Cabinet"/>
+        <dip bits="1" ids="On,Off" name="Demo Sounds"/>
+        <dip bits="2,3" ids="1,2,3,4" name="Photon Torpedoes"/>
+        <dip bits="4,5" ids="Easy,Medium,Hard,Tournament" name="Difficulty"/>
+        <dip bits="6,7" ids="10000,20000,30000,40000" name="Bonus Life"/>
+        <dip bits="8,11" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin A"/>
+        <dip bits="12,15" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin B"/>
+        <dip bits="16" ids="Trigger,Trigger" name="Self-Test"/>
+    </switches>
+
+    <buttons names="Phaser,Impulse,Photon,Warp,Start 1,Start 2,Coin,Pause" default="A,B,X,Y,Start,Select,R,L"/>
+</misterromdescription>

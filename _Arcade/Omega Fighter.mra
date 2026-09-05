@@ -1,0 +1,81 @@
+<misterromdescription>
+    <name>Omega Fighter</name>
+    <setname>omegaf</setname>
+    <parent>omegaf</parent>
+    <year>1989</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Omega Fighter</series>
+    <category>Shooter</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Attack,Jump,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="FF,FF">
+        <dip bits="0" name="Flip Screen" ids="On,Off"/>
+        <dip bits="1,2" name="Difficulty" ids="Easy,Hard,Hardest,Normal"/>
+        <dip bits="3" name="Service Mode" ids="On,Off"/>
+        <dip bits="4" name="Unused" ids="On,Off"/>
+        <dip bits="5" name="Demo Sounds" ids="Off,On"/>
+        <dip bits="6,7" name="Lives" ids="2,4,5,3"/>
+        <dip bits="8,9" name="Bonus Life" ids="200000,500000,1000000,300000"/>
+        <dip bits="10,12" name="Coin B" ids="5 Coins/1 Credit,1 Coin/4 Credits,3 Coins/1 Credit,1 Coin/2 Credits,4 Coins/1 Credit,1 Coin/3 Credits,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="13,15" name="Coin A" ids="5 Coins/1 Credit,1 Coin/4 Credits,3 Coins/1 Credit,1 Coin/2 Credits,4 Coins/1 Credit,1 Coin/3 Credits,2 Coins/1 Credit,1 Coin/1 Credit"/>
+    </switches>
+
+    <!-- Index 0: Main CPU. 0x8000 fixed, then banks 0-15 packed -->
+    <rom index="0" md5="none" zip="omegaf.zip">
+        <part name="1.5.3l" crc="57a7fd96" length="0x8000"/>
+        <part name="1.5.3l" crc="57a7fd96"/>
+        <part name="6.4l" crc="6277735c"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU -->
+    <rom index="1" md5="none" zip="omegaf.zip">
+        <part name="7.7m" crc="d40fc8d5"/>
+    </rom>
+
+    <!-- Index 2: FG char ROM -->
+    <rom index="2" md5="none" zip="omegaf.zip">
+        <part name="4.18h" crc="9e2d8152"/>
+    </rom>
+
+    <!-- Index 6: Sprite ROM -->
+    <rom index="6" md5="none" zip="omegaf.zip">
+        <part name="8.23m" crc="0bd2a5d1"/>
+    </rom>
+
+    <!-- Index 7: BG tile ROM 1 -->
+    <rom index="7" md5="none" zip="omegaf.zip">
+        <part name="2back1.27b" crc="21f8a32e"/>
+    </rom>
+
+    <!-- Index 8: BG tile ROM 2 -->
+    <rom index="8" md5="none" zip="omegaf.zip">
+        <part name="1back2.15b" crc="6210ddcc"/>
+    </rom>
+
+    <!-- Index 9: BG tile ROM 3 -->
+    <rom index="9" md5="none" zip="omegaf.zip">
+        <part name="3back3.5f" crc="c31cae56"/>
+    </rom>
+
+    <!-- Index 11: PROMs -->
+    <rom index="11" md5="none" zip="omegaf.zip">
+        <part name="10.20l" crc="89e0763f"/>
+        <part name="11.27n" crc="59e44236"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>0D</part></rom>
+
+    <remark>Omega Fighter (set 1)</remark>
+</misterromdescription>

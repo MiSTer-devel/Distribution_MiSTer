@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DECO Cassette Multigame — David Widel (decomult)   *** FIRST-PASS MRA — verify ROM CRCs ***
+
+  Per MAME decocass.cpp:
+  - GAME(2008, decomult, decocass, decocass, decocass, decocass_widel_state, init_decocass, ROT270,
+    "bootleg (David Widel)", "DECO Cassette System ROM Multigame (David Widel)", 0)   (line 2201)
+  - TAPELESS: games come from a 1 MB dongle ROM via the $E5xx Widel protocol
+    (decocass_widel_r/_w, decocass_m.cpp:1068-1146), NOT a cassette.
+  - widlbios.v0b = the multigame's replacement MAIN BIOS, but only 2 KB @0xf800-0xffff
+    (half the size of the standard 4 KB v0b-.7e) — $f000-$f7ff is not present in the
+    romset, zero-filled here to match MAME's default region fill.
+  - UNLIKE Darksoft, Widel's dongle_r/_w still routes through the real 8041 MCU when not
+    latched (decocass_widel_r calls upi41_master_r(0)/(1)) — so the real cassmcu.1c MUST
+    be present, not blanked like the Darksoft MRA's MCU-BLANK-TEST.
+  - Base hardware (audio BIOS / PROMs) = the shared decocass BIOS.
+
+  Core support added this session:
+  - dongle_widel.v : 20-bit counter/latch, mirrors dongle_type4.v's interface; see file
+                      header for the full read/write truth table (decocass_m.cpp:1068-1146).
+  - dongle_mux.v   : Widel = dongle_type 8.
+  - Loads via the SAME generic multigame-dongle SDRAM path Darksoft already uses
+    (Arcade-DECOCassette.sv: dongle_ld = ioctl_index==1, full-range prefetch on dprom_addr —
+    NOT capped at 256 KB; that cap only existed in a dead rom_loader.v code path).
+
+  Region map (index 0) matches rtl/rom/rom_loader.v:
+    $00000-$007FF  Main 6502 BIOS lower half (2 KB) — NOT in romset, zero-filled
+    $00800-$00FFF  Main 6502 BIOS upper half = widlbios.v0b (2 KB, @$f800-$ffff)
+    $01000-$017FF  Audio 6502 BIOS = v1-.5a        (2 KB)
+    $01800-$01BFF  MCU ROM         = cassmcu.1c    (1 KB) — REAL MCU, Widel needs it live
+    $01C00-$01CFF  BIOS PROMs      (3 x 32 B + 160 B pad)
+    $01D00-$02CFF  legacy 4 KB dongle PROM region (UNUSED by Widel; zeros)
+    $02D00-$02DFF  Spare
+    $02E00-$02EFF  Metadata: dongle_type=08 (Widel), game_id=00, swap_mode=00
+    $02F00-$02FFF  Reserved
+    (NO cassette — tapeless)
+  index 1:  the 1 MB Widel dongle ROM (widldeco.low + widldeco.hgh, 0x80000 each).
+
+  TO VERIFY (add CRCs / confirm):
+   - widlbios.v0b really is a $f800-only replacement (matches MAME ROM_LOAD offset/size).
+   - that the MENU lives at dongle-ROM offset 0 (widel_ctrs resets to 0 on activation).
+-->
+<misterromdescription>
+    <name>DECO Multigame (Widel)</name>
+    <setname>decomult</setname>
+    <rbf>DECOCassette</rbf>
+    <mameversion>0268</mameversion>
+    <year>2008</year>
+    <manufacturer>bootleg (David Widel)</manufacturer>
+    <category>Multigame</category>
+
+  	<rotation>vertical (ccw)</rotation>
+
+    <rom index="0" zip="decocass.zip|decomult.zip" md5="none">
+        <!-- $00000-$007FF: Main 6502 BIOS lower half — not in romset, zero-filled -->
+        <part repeat="0x800">00</part>
+
+        <!-- $00800-$00FFF: Main 6502 BIOS upper half = widlbios.v0b (2 KB, @$f800-$ffff) -->
+        <part name="widlbios.v0b" crc="9ad7c451"/>
+
+        <!-- $01000-$017FF: Audio 6502 BIOS (2 KB) -->
+        <part name="v1-.5a" crc="b66b2c2a"/>
+
+        <!-- $01800-$01BFF: MCU ROM (1 KB) — real MCU, Widel routes through it when not latched -->
+        <part name="cassmcu.1c" crc="a6df18fd"/>
+
+        <!-- $01C00-$01CFF: BIOS PROMs (3 x 32 B = 96 B + 160 B pad) -->
+        <part name="v2.3m"  crc="238fdb40"/>
+        <part name="v4.10d" crc="3b5836b4"/>
+        <part name="v3.3j"  crc="51eef657"/>
+        <part repeat="0xA0">00</part>
+
+        <!-- $01D00-$02CFF: legacy 4 KB dongle PROM region (unused by Widel; zeros) -->
+        <part repeat="0x1000">00</part>
+
+        <!-- $02D00-$02DFF: Spare -->
+        <part repeat="0x100">00</part>
+
+        <!-- $02E00-$02EFF: Metadata — dongle_type=08 (Widel), game_id=00, swap_mode=00 -->
+        <part>08 00 00</part>
+        <part repeat="0xFD">00</part>
+
+        <!-- $02F00-$02FFF: Reserved -->
+        <part repeat="0x100">00</part>
+    </rom>
+
+    <!-- The 1 MB Widel dongle ROM on its OWN ioctl index = 1 — same generic SDRAM path
+         Darksoft uses (Arcade-DECOCassette.sv: dongle_ld = ioctl_index==1, full-range,
+         no 256 KB cap). Two files concatenated: low half then high half. -->
+    <rom index="1" zip="decocass.zip|decomult.zip" md5="none">
+        <part name="widldeco.low" crc="fd4dc36c"/>
+        <part name="widldeco.hgh" crc="a8a30112"/>
+    </rom>
+
+    <!-- DIPs from MAME decocass.cpp (input port decocass / multigame base); Country Code bits="21,23" (inclusive range). DSW1/DSW2 byte-swapped so RTL feeds .dsw2 from sw[2], .dsw1 from sw[3]. -->
+    <switches default="00,00,FF,3F">
+        <dip bits="21,23" name="Country Code" ids="inv,inv,F,E,D,C,B,A"/>
+        <dip bits="24,25" name="Coin A" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="26,27" name="Coin B" ids="2C/1C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="28,29" name="Type of Tape" ids="MT Big,inv,inv,MD Small"/>
+        <dip bits="30" name="Cabinet" ids="Upright,Cocktail"/>
+    </switches>
+
+    <buttons names="Button1,Button2,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+</misterromdescription>

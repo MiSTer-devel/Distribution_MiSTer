@@ -1,0 +1,54 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>soldivid</setname>
+	<mameversion>0233</mameversion>
+	<description>Sol Divide: Sword Of Darkness</description>
+	<rotation>horizontal</rotation>
+	<year>1997</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="Button 1,Button 2,Button 3,Start,Coin,Test,Service" />
+
+	<switches default="41">
+		<dip bits="0,1,2,3" name="Region" ids="Japan,World"/>
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="soldivid.zip" address="0x30000000">
+		<part repeat="0x2000000">00</part>
+		<interleave output="64">
+			<part crc="9eb9f269" name="4l.u10" map="216500" />
+			<part crc="7c76cfe7" name="4h.u31" map="2165" />
+		</interleave>
+		<interleave output="64">
+			<part crc="c59c6858" name="5l.u9" map="216500" />
+			<part crc="73bc66d0" name="5h.u30" map="2165" />
+		</interleave>
+		<interleave output="64">
+			<part crc="f01b816e" name="6l.u8" map="216500" />
+			<part crc="fdd57361" name="6h.u37" map="2165" />
+		</interleave>
+		<part repeat="0x400000">00</part>
+		<interleave output="64">
+			<part crc="e98f8d45" name="sound.u32" map="12345678" />
+		</interleave>
+
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="f467d1c4" name="1-prog_h.u17" map="216500" />
+			<part crc="cf179b04" name="2-prog_l.u18" map="2165" />
+		</interleave>
+		<part repeat="0x300000">00</part>
+		<part repeat="0x100">00</part>
+	</rom>
+	<rom index="2" md5="" >
+		<part>20</part>
+	</rom>
+
+	<rom index="3" md5="none">
+		<part>
+			00 00 BB 50 00 18 00 50
+			00 00 BB 68 00 1E 24 02
+		</part>
+	</rom>
+	<nvram index="4" size="310" />
+</misterromdescription>

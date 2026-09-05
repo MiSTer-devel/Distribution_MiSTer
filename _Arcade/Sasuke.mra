@@ -1,0 +1,54 @@
+<misterromdescription>
+    <name>Sasuke vs. Commander</name>
+    <setname>sasuke</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1980</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>2-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="15" base="16">
+        <dip name="Cabinet" bits="0" ids="Cocktail,Upright"/>
+        <dip name="Coinage" bits="1" ids="1C/1C,1C/2C"/>
+        <dip name="Bonus Life" bits="2" ids="10000,5000"/>
+        <dip name="Unused SW1:4" bits="3" ids="Off,On"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5,3"/>
+        <dip name="Unused SW1:7" bits="6" ids="Off,On"/>
+        <dip name="RAM Test" bits="7" ids="Off,On"/>
+    </switches>
+
+    <buttons names="Fire,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <rom index="0" zip="sasuke.zip" md5="none">
+        <part repeat="0x4000">00</part>
+        <part crc="34cbbe03" name="sc1"/>
+        <part crc="38cc14f0" name="sc2"/>
+        <part crc="54c41285" name="sc3"/>
+        <part crc="23edafcf" name="sc4"/>
+        <part crc="ca410e4f" name="sc5"/>
+        <part crc="80406afb" name="sc6"/>
+        <part crc="04d0f104" name="sc7"/>
+        <part crc="0219104b" name="sc8"/>
+        <part crc="d6ff889a" name="sc9"/>
+        <part crc="19df6b9a" name="sc10"/>
+        <part repeat="0x6800">00</part>
+        <part crc="0219104b" name="sc8"/>
+        <part crc="aff9743d" name="mcs_c"/>
+        <part repeat="0x0800">00</part>
+        <part crc="9c805120" name="mcs_d"/>
+        <part repeat="0x0800">00</part>
+        <part crc="b70f34c1" name="sasuke.clr"/>
+        <part repeat="0x0020">00</part>
+        <part crc="24a0e121" name="sc11"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0 (GID_SASUKE) -->
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+</misterromdescription>

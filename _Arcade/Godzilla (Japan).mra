@@ -1,0 +1,84 @@
+<misterromdescription>
+  <name>Godzilla (Japan)</name>
+  <setname>godzilla</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Godzilla</rbf>
+  <year>1993</year>
+  <manufacturer>Banpresto</manufacturer>
+  <category>Fighter</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,X,Start" names="Attack,Jump,Special,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- DSW godzilla 1:1 MAME INPUT_PORTS(godzilla) legionna.cpp:673-721.
+         16-bit LE active-low, default 0xFFFF = tutto Off / Demo Sounds Yes.
+         SW1: bit0=Demo Sounds, bit4=Flip Screen, bit7=Service Mode.
+         SW2: bit8-10=Coin A, bit11-13=Coin B, bit15=Free Play.
+         Bit 1-3, 5, 6, 14 = Unknown in MAME (restano a 1). -->
+    <dip bits="0"     ids="No,Yes"                                                          name="Demo Sounds"/>
+    <dip bits="4"     ids="On,Off"                                                          name="Flip Screen"/>
+    <dip bits="7"     ids="On,Off"                                                          name="Service Mode"/>
+    <dip bits="8,10"  ids="4C 1C,3C 1C,2C 1C,1C 4C,1C 5C,1C 3C,1C 2C,1C 1C"                 name="Coin A"/>
+    <dip bits="11,13" ids="3C 5C,2C 5C,2C 3C,1C 4C,1C 5C,1C 3C,1C 2C,1C 1C"                 name="Coin B"/>
+    <dip bits="15"    ids="On,Off"                                                          name="Free Play"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="godzilla.zip" md5="None">
+    <!-- ============================================================
+         Layout SDRAM Godzilla (offset byte ioctl = base SDRAM del core):
+           MAIN  0x000000 (1MB)   TXT/char 0x100000 (128KB)
+           BG    0x120000 (1MB)   FG       0x220000 (1MB)
+           SPR   0x320000 (6MB -> DDR3)   OKI 0x920000 (512KB)
+           AUDIO 0x9A0000 (128KB z80)     COPX 0x9C0000 (512KB)
+         ============================================================ -->
+
+    <!-- MAIN 68k @ 0x000000 (512KB reali, region 1MB): ROM_LOAD32_BYTE.
+         MAME: byte0=2.025, byte1=1.024, byte2=4.026, byte3=3.023.
+         Convention output=32 (come Legionnaire): map 0010/0001/1000/0100. -->
+    <interleave output="32">
+      <part name="2.025" crc="be9c6e5a" map="0010"/>
+      <part name="1.024" crc="0d6b663d" map="0001"/>
+      <part name="4.026" crc="bb8c0132" map="1000"/>
+      <part name="3.023" crc="bb16e5d0" map="0100"/>
+    </interleave>
+    <part repeat="0x80000">00</part>
+
+    <!-- CHAR (text 8x8) @ 0x100000 (128KB): 11.620 pari, 10.615 dispari. -->
+    <interleave output="16">
+      <part name="11.620" crc="58e0e41f" map="01"/>
+      <part name="10.615" crc="9c22bc13" map="10"/>
+    </interleave>
+
+    <!-- BACK (BG, condiviso con MG) @ 0x120000 (1MB): bg1.618 WORD_SWAP. -->
+    <interleave output="16"><part name="bg1.618" crc="78fbbb84" map="21"/></interleave>
+
+    <!-- FORE (FG) @ 0x220000 (1MB): bg2.619 WORD_SWAP (region propria, no descramble). -->
+    <interleave output="16"><part name="bg2.619" crc="8ac192a5" map="21"/></interleave>
+
+    <!-- SPRITE @ 0x320000 (6MB -> DDR3): obj1/2 (2MB) + obj3/4 (1MB) WORD_SWAP. -->
+    <interleave output="16"><part name="obj1.748" crc="0dfaf26d" map="21"/></interleave>
+    <interleave output="16"><part name="obj2.756" crc="32b1516a" map="21"/></interleave>
+    <interleave output="16"><part name="obj3.743" crc="5af0114e" map="21"/></interleave>
+    <interleave output="16"><part name="obj4.757" crc="7448b054" map="21"/></interleave>
+
+    <!-- OKI (ADPCM) @ 0x920000 (512KB): pcm.922. -->
+    <interleave output="16"><part name="pcm.922" crc="59cbef10" map="21"/></interleave>
+
+    <!-- AUDIOCPU (Z80) @ 0x9A0000 (128KB region): 8.016 raw 64KB.
+         MAME layout: ROM_LOAD 0x8000 + CONTINUE 0x10000 + COPY (banked, gestito dal core). -->
+    <interleave output="16"><part name="8.016" crc="4ab76e43" map="21"/></interleave>
+    <part repeat="0x10000">00</part>
+
+    <!-- COPX (SEI300 LUT) @ 0x9C0000 (512KB): copx-d2.313. -->
+    <interleave output="16"><part name="copx-d2.313" crc="7c52581b" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260709000000</mratimestamp>
+</misterromdescription>

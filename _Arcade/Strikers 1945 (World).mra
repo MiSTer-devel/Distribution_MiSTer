@@ -1,0 +1,76 @@
+<misterromdescription>
+	<about author="Paul Priest" webpage="" source="MAME psikyo.cpp"/>
+	<name>Strikers 1945 (World)</name>
+	<setname>s1945</setname>
+	<mameversion>0298</mameversion>
+	<year>1995</year>
+	<manufacturer>Psikyo</manufacturer>
+	<category>Shoot 'Em Up</category>
+	<rbf>Psikyo</rbf>
+	<rotation>vertical</rotation>
+	<players>2</players>
+	<joystick>8-way</joystick>
+	<region>World</region>
+
+	<rom index="1"><part>0D 00 00 00 00 00 64 AE 00 00 26 2C 00 00 2C DA 00 00 2C BC 00 00 2C 9E 00 00 2F 0E 00 00 31 10 00 00 C5 1E 00 00 32 90 00 00 AC 5C 00 00 2B C0</part></rom>
+	<rom index="0" zip="s1945.zip" md5="none" address="0x30000000">
+		<interleave output="32">
+			<part name="2s.u40" crc="9b10062a" map="0012"/>
+			<part name="3s.u41" crc="f87e871a" map="1200"/>
+		</interleave>
+		<part repeat="0x180000">FF</part>
+
+		<part name="3-u63.bin" crc="42d40ae1"/>
+		<part repeat="0x20000">FF</part>
+
+		<interleave output="16">
+			<part name="u20.bin" crc="28a27fee" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="u22.bin" crc="ca152a32" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="u21.bin" crc="c5d60ea9" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="u23.bin" crc="48710332" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="u34.bin" crc="aaf83e23" map="12"/>
+		</interleave>
+		<part repeat="0x200000">FF</part>
+
+		<part name="u61.bin" crc="a839cf47"/>
+		<part repeat="0x200000">FF</part>
+
+		<part name="u1.bin" crc="dee22654"/>
+	</rom>
+
+	<rom index="3">
+		<part>
+		19 9A 57 EF 3F FF 00 02 00 02 00 01 00 0F 10 00
+		00 FE 2A F8 78 2D F8 00
+		</part>
+	</rom>
+
+	<nvram index="4" size="120"/>
+
+	<buttons names="Button 1,Button 2,Button 3,-,-,-,Start,Coin,Pause" default="Y,B,A,Start,Select,R" count="3"/>
+
+	<switches default="FD,FF,0F">
+
+		<dip name="Flip Screen" bits="0" ids="On,Off"/>
+		<dip name="Demo Sounds" bits="1" ids="On,Off"/>
+		<dip name="Difficulty" bits="2,3" ids="Hardest,Hard,Easy,Normal"/>
+		<dip name="Lives" bits="4,5" ids="4,2,1,3"/>
+		<dip name="Bonus Life" bits="6" ids="800K,600K"/>
+		<dip name="Service Mode" bits="7" ids="On,Off"/>
+		<dip name="Coin Slot" bits="8" ids="Individual,Shared"/>
+		<dip name="Coin A" bits="9,10,11" ids="1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,3C 1C,2C 1C,1C 1C"/>
+		<dip name="Coin B" bits="12,13,14" ids="1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,3C 1C,2C 1C,1C 1C"/>
+		<dip name="2 Coins Start, 1 Coin Continue" bits="15" ids="On,Off"/>
+		<dip name="Region" bits="16,17,18,19" ids="Taiwan,Hong Kong,Korea,USA and Canada,World" values="0x7,0xb,0xd,0xe,0xf"/>
+	</switches>
+
+	<mratimestamp>20260901000922</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,68 @@
+<misterromdescription>
+    <about author="alanswx and Videodr0me" webpage="https://github.com/MiSTer-devel/Arcade-SegaG80V_MiSTer"/>
+    <name>Zektor (revision B)</name>
+    <setname>zektor</setname>
+	<rbf>SegaG80V</rbf>
+    <mameversion>0283</mameversion>
+    <year>1982</year>
+    <manufacturer>Sega</manufacturer>
+    <category>Shooter</category>
+    <players>2</players>
+    <joystick></joystick>
+    <special_controls>spinner</special_controls>
+    <num_buttons>2</num_buttons>
+    <!-- index 0: 48K program ROM at $0000, sin/cos PROM at $C000 -->
+    <rom index="0" zip="zektor.zip" md5="none">
+        <part name="1611.cpu-u25" crc="6245aa23"/>
+        <part name="1586.prom-u1" crc="efeb4fb5"/>
+        <part name="1587.prom-u2" crc="daa6c25c"/>
+        <part name="1588.prom-u3" crc="62b67dde"/>
+        <part name="1589.prom-u4" crc="c2db0ba4"/>
+        <part name="1590.prom-u5" crc="4d948414"/>
+        <part name="1591.prom-u6" crc="b0556a6c"/>
+        <part name="1592.prom-u7" crc="750ecadf"/>
+        <part name="1593.prom-u8" crc="34f8850f"/>
+        <part name="1594.prom-u9" crc="52b22ab2"/>
+        <part name="1595.prom-u10" crc="a704d142"/>
+        <part name="1596.prom-u11" crc="6975e33d"/>
+        <part name="1597.prom-u12" crc="d48ab5c2"/>
+        <part name="1598.prom-u13" crc="ab54a94c"/>
+        <part name="1599.prom-u14" crc="c9d4f3a5"/>
+        <part name="1600.prom-u15" crc="893b7dbc"/>
+        <part name="1601.prom-u16" crc="867bdf4f"/>
+        <part name="1602.prom-u17" crc="bd447623"/>
+        <part name="1603.prom-u18" crc="9f8f10e8"/>
+        <part name="1604.prom-u19" crc="ad2f0f6c"/>
+        <part name="1605.prom-u20" crc="e27d7144"/>
+        <part name="1606.prom-u21" crc="7965f636"/>
+        <part repeat="4096">00</part>
+        <!-- $C000: sin/cos PROM, X-Y Timing board U39 -->
+        <part name="s-c.xyt-u39" crc="56484d19"/>
+        <!-- $C400: speech:cpu -->
+        <part name="1607.speech-u7" crc="b779884b"/>
+        <!-- $CC00: speech:data -->
+        <part name="1608.speech-u6" crc="637e2b13"/>
+        <part name="1609.speech-u5" crc="675ee8e5"/>
+        <part name="1610.speech-u4" crc="2915c7bd"/>
+        <part repeat="4096">00</part>
+    </rom>
+
+    <!-- index 1: game identifier, decoded by rtl/sega_game_pkg.sv -->
+    <rom index="1">
+        <part>03</part>
+    </rom>
+
+    <!-- Two physical DIP banks plus a virtual self-test switch. -->
+    <switches default="8D,33,00">
+        <dip bits="0" ids="Cocktail,Upright" name="Cabinet"/>
+        <dip bits="1" ids="On,Off" name="Demo Sounds"/>
+        <dip bits="2,3" ids="2,3,4,5" name="Lives"/>
+        <dip bits="4,5" ids="Easy,Medium,Hard,Hardest" name="Difficulty"/>
+        <dip bits="6,7" ids="None,30000,20000,10000" name="Bonus Life"/>
+        <dip bits="8,11" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin A"/>
+        <dip bits="12,15" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin B"/>
+        <dip bits="16" ids="Trigger,Trigger" name="Self-Test"/>
+    </switches>
+
+    <buttons names="Fire,Thrust,-,-,Start 1,Start 2,Coin,Pause" default="A,B,Start,Select,R,L"/>
+</misterromdescription>

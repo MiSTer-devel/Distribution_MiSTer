@@ -1,0 +1,75 @@
+<misterromdescription>
+  <name>After Burner II</name>
+  <setname>aburner2</setname>
+  <rbf>SegaXBoard</rbf>
+  <mameversion>0289</mameversion>
+  <year>1987</year>
+  <manufacturer>Sega</manufacturer>
+  <category>Shooter / Flight</category>
+  <rom index="0" zip="aburner2.zip" md5="None">
+    <part>00 04 08 00 70 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</part>
+    <!-- main -->
+      <interleave output="16">
+        <part name="epr-11107.58" crc="6d87bab7" map="10"/>
+        <part name="epr-11108.63" crc="202a3e1d" map="01"/>
+      </interleave>
+      <part repeat="262144">00</part>
+    <!-- sub -->
+      <interleave output="16">
+        <part name="epr-11109.20" crc="85a0fe07" map="10"/>
+        <part name="epr-11110.29" crc="f3d6797c" map="01"/>
+      </interleave>
+      <part repeat="262144">00</part>
+    <!-- z80 -->
+      <part name="epr-11112.17" crc="d777fc6d"/>
+    <!-- road -->
+      <part name="epr-10922.40" crc="b49183d4"/>
+    <!-- pcm -->
+      <part name="mpr-10931.11" crc="9209068f"/>
+      <part name="mpr-10930.12" crc="6493368b"/>
+      <part name="epr-11102.13" crc="6c07c78d"/>
+      <part repeat="131072">FF</part>
+    <!-- sprite -->
+      <interleave output="32">
+        <part name="mpr-10932.90" crc="cc0821d6" map="0001"/>
+        <part name="mpr-10934.94" crc="4a51b1fa" map="0010"/>
+        <part name="mpr-10936.98" crc="ada70d64" map="0100"/>
+        <part name="mpr-10938.102" crc="e7675baf" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="mpr-10933.91" crc="c8efb2c3" map="0001"/>
+        <part name="mpr-10935.95" crc="c1e23521" map="0010"/>
+        <part name="mpr-10937.99" crc="f0199658" map="0100"/>
+        <part name="mpr-10939.103" crc="a0d49480" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-11103.92" crc="bdd60da2" map="0001"/>
+        <part name="epr-11104.96" crc="06a35fce" map="0010"/>
+        <part name="epr-11105.100" crc="027b0689" map="0100"/>
+        <part name="epr-11106.104" crc="9e1fec09" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-11116.93" crc="49b4c1ba" map="0001"/>
+        <part name="epr-11117.97" crc="821fbb71" map="0010"/>
+        <part name="epr-11118.101" crc="8f38540b" map="0100"/>
+        <part name="epr-11119.105" crc="d0343a8e" map="1000"/>
+      </interleave>
+      <part repeat="2097152">00</part>
+    <!-- tile -->
+      <part name="epr-11115.154" crc="e8e32921"/>
+      <part name="epr-11114.153" crc="2e97f633"/>
+      <part name="epr-11113.152" crc="36058c8c"/>
+      <part repeat="65536">00</part>
+  </rom>
+  <nvram index="3" size="32768"/>
+  <switches default="FF,DD" base="0">
+    <dip bits="0,3" name="Coin A" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="4,7" name="Coin B" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="8,9" name="Cabinet" ids="Upright 2,Upright 1,Moving Standard,Moving Deluxe"/>
+    <dip bits="10" name="Throttle Lever" ids="No,Yes"/>
+    <dip bits="11,12" name="Lives" ids="4x Credits,3x Credits,4,3"/>
+    <dip bits="13" name="Allow Continue" ids="Yes,No"/>
+    <dip bits="14,15" name="Difficulty" ids="Hardest,Hard,Easy,Normal"/>
+  </switches>
+  <buttons names="Vulcan,Missile,Speed Up,Slow Down,Start,Coin,Pause,Test,Service" default="A,B,R2,L2,Start,R,X,L,Select"/>
+</misterromdescription>

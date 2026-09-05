@@ -1,0 +1,63 @@
+<misterromdescription>
+	<name>Jr. Pac-Man</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Pac-Man</series>
+	<year>1983</year>
+	<manufacturer>Bally Midway</manufacturer>
+	<category>Maze</category>
+
+	<setname>jrpacman</setname>
+	<mameversion>0220</mameversion>
+	<rbf>pacman</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>4-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>0</num_buttons>
+	<button_names></button_names>
+
+	<!-- DIP switches map to dipsw1 = sw[2] (bits 16-23). sw[0]/sw[1] = input masks (FF). -->
+	<switches default="FF,FF,C9">
+		<dip bits="16,17" ids="Free Play,1C/2C,1C/1C,2C/1C" name="Coinage"></dip>
+		<dip bits="18,19" ids="1,2,3,5" name="Lives"></dip>
+		<dip bits="20,21" ids="10000,15000,20000,30000" name="Bonus Life"></dip>
+		<dip bits="22" ids="Hard,Normal" name="Difficulty"></dip>
+	</switches>
+
+	<!-- mod byte: selects mod_jr in the Pac-Man core (mod == 18 == 0x12) -->
+	<rom index="1">
+		<part>12</part>
+	</rom>
+
+	<!-- index 0 : ROM blob in dn_addr order (see pacman.vhd / pacman_video Jr decode)
+	     0000-9FFF prog(40K) | A000 tiles(8K) | C000 sprites(8K) | E000 pal_lo | E100 pal_hi | E200 clut | E300 wave -->
+	<rom index="0" md5="none" zip="jrpacman.zip">
+		<!-- Program ROM 40KB: CPU 0000-3FFF + 8000-DFFF -->
+		<part crc="e3fa972e" name="jr.pac-man_8d_11-9-83.8d"></part>
+		<part crc="ec889e94" name="jr.pac-man_8e_11-9-83.8e"></part>
+		<part crc="35f1fc6e" name="jr.pac-man_8h_11-9-83.8h"></part>
+		<part crc="9737099e" name="jr.pac-man_8j_11-9-83.8j"></part>
+		<part crc="5252dd97" name="jr.pac-man_8k_11-9-83.8k"></part>
+		<!-- gfx: tiles 8KB then sprites 8KB -->
+		<part crc="0527ff9b" name="jr.pac-man_2c_11-9-83.2c"></part>
+		<part crc="73477193" name="jr.pac-man_2e_11-9-83.2e"></part>
+		<!-- color PROMs: palette low nibble (9e), palette high nibble (9f), colour lookup (9p) -->
+		<part crc="029d35c4" name="a290-27axv-bxhd.9e"></part>
+		<part crc="eee34a79" name="a290-27axv-cxhd.9f"></part>
+		<part crc="9f6ea9d8" name="a290-27axv-axhd.9p"></part>
+		<!-- Namco WSG waveform PROM (7p) -->
+		<part crc="a9cc86bf" name="a290-27axv-dxhd.7p"></part>
+	</rom>
+
+	<nvram index="2" size="2048"></nvram>
+</misterromdescription>

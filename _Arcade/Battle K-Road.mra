@@ -1,0 +1,83 @@
+<misterromdescription>
+	<about author="Paul Priest" webpage="" source="MAME psikyo.cpp"/>
+	<name>Battle K-Road</name>
+	<setname>btlkroad</setname>
+	<mameversion>0298</mameversion>
+	<year>1994</year>
+	<manufacturer>Psikyo</manufacturer>
+	<category>Fight</category>
+	<rbf>Psikyo</rbf>
+	<rotation>horizontal</rotation>
+	<players>2</players>
+	<joystick>8-way</joystick>
+	<region>Japan</region>
+
+	<rom index="1"><part>01</part></rom>
+	<rom index="0" zip="btlkroad.zip" md5="none" address="0x30000000">
+		<interleave output="32">
+			<part name="4-u46.bin" crc="8a7a28b4" map="0012"/>
+			<part name="5-u39.bin" crc="933561fa" map="1200"/>
+		</interleave>
+		<part repeat="0x180000">FF</part>
+
+		<part name="3-u71.bin" crc="22411fab"/>
+		<part repeat="0x20000">FF</part>
+
+		<interleave output="16">
+			<part name="u14.bin" crc="282d89c3" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="u24.bin" crc="bbe9d3d1" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="u15.bin" crc="d4d1b07c" map="12"/>
+		</interleave>
+		<part repeat="0x200000">FF</part>
+
+		<interleave output="16">
+			<part name="u33.bin" crc="4c8577f1" map="12"/>
+		</interleave>
+
+		<part repeat="0x200000">FF</part>
+
+		<part name="u56.bin" crc="51d73682"/>
+
+		<part name="u64.bin" crc="0f33049f"/>
+
+		<part repeat="0x280000">FF</part>
+
+		<part name="u3.bin" crc="30d541ed"/>
+	</rom>
+
+	<rom index="3">
+		<part>
+		19 9A 57 EF 3F FF 00 02 00 02 00 01 00 0F 10 00
+		00 FE 1A F4 4E 00 04 00
+		</part>
+	</rom>
+
+	<nvram index="4" size="78"/>
+
+	<buttons names="Button 1,Button 2,Button 3,Button 4,Button 5,Button 6,Start,Coin,Pause" default="Y,B,A,X,L,R,Start,Select" count="6"/>
+
+	<switches default="FD,FF,00">
+
+		<dip name="Flip Screen" bits="0" ids="On,Off"/>
+		<dip name="Demo Sounds" bits="1" ids="On,Off"/>
+		<dip name="Difficulty" bits="2,3" ids="Hardest,Hard,Easy,Normal"/>
+
+		<dip name="Blood Effects" bits="4" ids="Off,On"/>
+		<dip name="Handicap Mode" bits="5" ids="On,Off"/>
+		<dip name="Use DSW 3 (Debug)" bits="6" ids="On,Off"/>
+
+		<dip name="Service Mode" bits="7" ids="On,Off"/>
+		<dip name="Coin Slot" bits="8" ids="Individual (Free Play),Shared"/>
+		<dip name="Coin A" bits="9,10,11" ids="1C 6C (Free Play),1C 5C,1C 4C,1C 3C,1C 2C,3C 1C,2C 1C,1C 1C"/>
+		<dip name="Coin B" bits="12,13,14" ids="1C 6C (Free Play),1C 5C,1C 4C,1C 3C,1C 2C,3C 1C,2C 1C,1C 1C"/>
+		<dip name="2 Coins Start, 1 Coin Continue" bits="15" ids="On (Free Play),Off"/>
+
+		<dip name="Region" bits="16,17,18,19" ids="World,Taiwan,Hong Kong,Korea,USA and Canada (Jaleco license),Japan" values="0x0,0x6,0xa,0xc,0xe,0xf"/>
+	</switches>
+
+	<mratimestamp>20260901000922</mratimestamp>
+</misterromdescription>

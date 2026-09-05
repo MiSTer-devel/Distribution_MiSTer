@@ -1,0 +1,49 @@
+<misterromdescription>
+    <name>Pioneer Balloon</name>
+    <setname>pballoon</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1982</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>8-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="83" base="16">
+        <dip name="Cabinet" bits="0" ids="Cocktail,Upright"/>
+        <dip name="Coinage" bits="1,3" ids="1C/1C,2C/1C,1C/3C,1C/1C,1C/2C,1C/1C,1C/6C,1C/1C"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5,3"/>
+        <dip name="Coinage Bonus" bits="6" ids="1C/1C,2C/1C"/>
+        <dip name="Language" bits="7" ids="Japanese,English"/>
+    </switches>
+
+    <buttons names="Fire,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <rom index="0" zip="pballoon.zip" md5="none">
+        <part repeat="0x3000">00</part>
+        <part crc="dfe2ae05" name="sk7_ic12.bin"/>
+        <part crc="736e67df" name="sk7_ic07.bin"/>
+        <part crc="7a2032b2" name="sk7_ic08.bin"/>
+        <part crc="2d63cf3a" name="sk7_ic09.bin"/>
+        <part crc="7b88cbd4" name="sk7_ic10.bin"/>
+        <part crc="6a8817a5" name="sk7_ic14.bin"/>
+        <part crc="1f78d814" name="sk7_ic15.bin"/>
+        <part repeat="0x5000">00</part>
+        <part crc="6a8817a5" name="sk7_ic14.bin"/>
+        <part crc="560df07f" name="sk8_ic50.bin"/>
+        <part crc="d415de51" name="sk8_ic51.bin"/>
+        <part crc="ef6c82a0" name="sk8_ic7.bin"/>
+        <part crc="eabc6a00" name="sk8_ic6.bin"/>
+        <part crc="0345f8b7" name="sk7_ic51.bin"/>
+        <part crc="5d6d68ea" name="sk7_ic52.bin"/>
+        <part crc="a4c505cd" name="sk7_ic53.bin"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 4 (GID_PBALLOON) -->
+    <rom index="1">
+        <part>04</part>
+    </rom>
+
+</misterromdescription>

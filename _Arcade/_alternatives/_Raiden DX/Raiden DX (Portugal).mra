@@ -1,0 +1,128 @@
+<misterromdescription>
+  <name>Raiden DX (Portugal)</name>
+  <setname>raidendxpt</setname>
+  <mameversion>0288</mameversion>
+  <rbf>Raiden2</rbf>
+  <year>1994</year>
+  <manufacturer>Seibu Kaihatsu</manufacturer>
+  <category>Shoot</category>
+  <rotation>vertical (ccw)</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Fire,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- ============================================================
+         MAME raiden2.cpp INPUT_PORTS_START(raidendx): PORT_INCLUDE(raiden2)
+         con DUE sole modifiche alla DSW, i bit 12 e 13 (SW2:5,6), che su
+         Raiden II sono "Bonus Life" e qui il manuale da' come NON USATI.
+         Tutto il resto e' identico a Raiden II. Porta letta a $00740.
+         ============================================================ -->
+    <dip bits="0,2"   ids="Free Play,4C 1C,3C 1C,1C 4C,2C 1C,1C 3C,1C 2C,1C 1C" name="Coin A"/>
+    <dip bits="3,5"   ids="Free Play,4C 1C,3C 1C,1C 4C,2C 1C,1C 3C,1C 2C,1C 1C" name="Coin B"/>
+    <dip bits="6"     ids="X 2,Normal"                          name="Starting Coin"/>
+    <dip bits="7"     ids="On,Off"                              name="Flip Screen"/>
+    <dip bits="8,9"   ids="Very Hard,Hard,Easy,Normal"          name="Difficulty"/>
+    <dip bits="10,11" ids="1,4,2,3"                             name="Lives"/>
+    <dip bits="12"    ids="On,Off"                              name="SW2:5 (non usato)"/>
+    <dip bits="13"    ids="On,Off"                              name="SW2:6 (non usato)"/>
+    <dip bits="14"    ids="Off,On"                              name="Demo Sounds"/>
+    <dip bits="15"    ids="On,Off"                              name="Test Mode"/>
+  </switches>
+
+  <!-- Board select, caricato PRIMA delle ROM (index=0), mentre i DIP
+       (index=254) arrivano DOPO: il core deve conoscere la variante gia'
+       durante il download. 00 = Raiden II, 01 = Raiden DX. -->
+  <rom index="1">
+    <part>01</part>
+  </rom>
+  <rom index="0" zip="raidendxpt.zip|raidendx.zip" md5="None">
+    <!-- ============================================================
+         ⚠ Il core deve girare con board select = 01 (regione index=1 sopra):
+         Raiden DX e' una revisione di scheda e differisce in tre punti
+         (MAME raiden2.cpp raidendx_mem / raiden2_v.cpp raidendx_cop_bank_2_w
+         / seibu_crtc.cpp read_alt):
+           1. CRTC con i bit 3 e 4 dell'indice di registro SCAMBIATI
+              (reg 0x1C <-> 0x2C). E' la sola differenza che questa MRA NON
+              puo' assorbire, perche' avviene mentre il gioco scrive.
+           2. programma 2 MB: $20000-$2FFFF bancata a pagine da 64K prese dal
+              SECONDO MB, selezionate da $470[15:12] (NON da $6C9 come
+              Raiden II); $30000-$FFFFF ROM diretta.
+           3. banco tile FG da $470 bit 5-4 (Raiden II: bit 15-14).
+
+         LAYOUT DELLO STREAM — identico a Raiden II per TUTTE le region, con
+         il secondo MB di programma messo in CODA apposta per non far slittare
+         nulla. Il bridge lo rimappa a byte SDRAM $600000 (libero: OKI1
+         finisce a $560000), e il decoder lo indirizza come {4'h6, banco, A}.
+
+           $000000  MAIN 1o MB   1 MB    -> SDRAM byte $000000  (ROM diretta)
+           $100000  CHARS      128 KB    -> BRAM text renderer
+           $120000  TILES        4 MB    -> SDRAM (BG+MG+FG)
+           $520000  OKI1       256 KB    -> SDRAM porta 3
+           $560000  AUDIO Z80   64 KB    -> BRAM audio
+           $570000  (padding fino a $600000)
+           $600000  SPRITES      8 MB    -> DDR3 (con decrypt)
+           $E00000  OKI2       256 KB    -> DDR3
+           $E40000  (padding fino a $F00000)
+           $F00000  MAIN 2o MB   1 MB    -> SDRAM byte $600000 (pagine bancate)
+
+         NON caricato: copx-d2 (il microcodice COP lo carica la CPU).
+         ============================================================ -->
+
+    <!-- MAIN, PRIMO MB @ $000000: ROM_LOAD32_BYTE su quattro chip, prima
+         meta' di ciascun file (256 KB x 4 = 1 MB interleavato).
+         1d=byte 0, 2d=byte 1, 3d=byte 2, 4d=byte 3 della dword. -->
+    <interleave output="32">
+      <part name="seibu_1d.u1210" crc="14d725fc" offset="0x000000" length="0x40000" map="0001"/>
+      <part name="seibu_2d.u1211" crc="5e7e45cb" offset="0x000000" length="0x40000" map="0010"/>
+      <part name="seibu_3d.u129" crc="f0a47e67" offset="0x000000" length="0x40000" map="0100"/>
+      <part name="seibu_4d.u1212" crc="e4fa53ac" offset="0x000000" length="0x40000" map="1000"/>
+    </interleave>
+
+    <!-- CHARS (text 8x8) @ $100000 (128 KB) -->
+    <part name="seibu_7.u0724" crc="c73986d4"/>
+
+    <!-- TILES @ $120000 (4 MB) -->
+    <part name="dx_back-1.u075"  crc="90970355"/>
+    <part name="dx_back-2.u0714" crc="5799af3e"/>
+
+    <!-- OKI1 (ADPCM) @ $520000 (256 KB) -->
+    <part name="seibu_6.u1017" crc="9a9196da"/>
+
+    <!-- AUDIO Z80 @ $560000 (64 KB raw) -->
+    <part name="seibu_5.u1110" crc="8c46857a"/>
+
+    <!-- padding $570000 -> $600000 -->
+    <part repeat="0x90000">00</part>
+
+    <!-- SPRITES @ $600000 (8 MB -> DDR3, decifrati nel download).
+         I primi 4 MB sono le stesse mask ROM di Raiden II. -->
+    <interleave output="32">
+      <part name="raiden_2_obj-1.u0811" crc="ff08ef0b" map="0021"/>
+      <part name="raiden_2_obj-2.u082"  crc="638eb771" map="2100"/>
+    </interleave>
+    <interleave output="32">
+      <part name="dx_obj-3.u0837" crc="ba381227" map="0021"/>
+      <part name="dx_obj-4.u0836" crc="65e50d19" map="2100"/>
+    </interleave>
+
+    <!-- OKI2 (ADPCM) @ $E00000 (256 KB -> DDR3) -->
+    <part name="raiden_2_pcm.u1018" crc="8cf0d17e"/>
+
+    <!-- padding $E40000 -> $F00000 -->
+    <part repeat="0xC0000">00</part>
+
+    <!-- MAIN, SECONDO MB @ $F00000: seconda meta' dei quattro file.
+         Sono le 16 pagine da 64K indirizzate da $470[15:12]. -->
+    <interleave output="32">
+      <part name="seibu_1d.u1210" crc="14d725fc" offset="0x40000" length="0x40000" map="0001"/>
+      <part name="seibu_2d.u1211" crc="5e7e45cb" offset="0x40000" length="0x40000" map="0010"/>
+      <part name="seibu_3d.u129" crc="f0a47e67" offset="0x40000" length="0x40000" map="0100"/>
+      <part name="seibu_4d.u1212" crc="e4fa53ac" offset="0x40000" length="0x40000" map="1000"/>
+    </interleave>
+  </rom>
+
+  <mratimestamp>20260821000000</mratimestamp>
+</misterromdescription>

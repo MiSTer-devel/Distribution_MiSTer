@@ -32,7 +32,8 @@ jobs:
 
     - name: Install 7-Zip
       run: |
-      run: python3 -B -m unittest discover -s .github -p 'test_*.py'
+        sudo apt-get update
+        sudo apt-get install -y 7zip
 
     - name: Set Git User
       run: |

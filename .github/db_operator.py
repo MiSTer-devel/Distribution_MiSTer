@@ -93,7 +93,7 @@ def build_database(source_dir: str):
 
     transformer = DatabaseTransformer(db, vars)
     transformer.apply_urls()
-    transformer.apply_linux_update()
+    #transformer.apply_linux_update()
     transformer.apply_zips()
 
     persistence = DatabasePersistence(db, vars)

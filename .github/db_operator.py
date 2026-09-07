@@ -14,6 +14,7 @@ import os
 import json
 import hashlib
 import shlex
+import shutil
 import tempfile
 import csv
 from urllib.parse import urlparse
@@ -93,7 +94,7 @@ def build_database(source_dir: str):
 
     transformer = DatabaseTransformer(db, vars)
     transformer.apply_urls()
-    #transformer.apply_linux_update()
+    transformer.apply_linux_update()
     transformer.apply_zips()
 
     persistence = DatabasePersistence(db, vars)
@@ -127,6 +128,7 @@ class BuildVars:
     db_json_name: str = os.getenv('DB_JSON_NAME', 'dbresult.json').strip()
     base_files_url: str = os.getenv('BASE_FILES_URL', '').strip()
     linux_github_repository: str = os.getenv('LINUX_GITHUB_REPOSITORY', '').strip()
+    github_repository: str = os.getenv('GITHUB_REPOSITORY', '').strip()
     zips_config: str = os.getenv('ZIPS_CONFIG', '').strip()
     download_metadata_json: str = os.getenv('DOWNLOAD_METADATA_JSON', '/tmp/download_metadata.json').strip()
     finder_ignore: str = os.getenv('FINDER_IGNORE', '').strip()
@@ -890,13 +892,10 @@ class DatabaseTransformer:
     def apply_linux_update(self) -> None:
         if self._vars.linux_github_repository == '':
             return
-        
+
         print('LINUX_GITHUB_REPOSITORY:', self._vars.linux_github_repository)
-        url_linux = get_linux_latest_release_url(self._vars.linux_github_repository, self._vars.github_token)
-        with tempfile.NamedTemporaryFile() as tmp_file:
-            download_file(url_linux, tmp_file.name)
-            version = Path(url_linux).stem[-6:]
-            self._db['linux'] = {**new_file_description(tmp_file.name), "url": url_linux, "version": version}
+        name, urls = get_linux_latest_release(self._vars.linux_github_repository, self._vars.github_token)
+        self._db['linux'] = fetch_linux_release(name, urls, self._vars.github_repository)
 
     def apply_zips(self) -> None:
         if self._vars.zips_config == '':
@@ -1311,7 +1310,19 @@ def get_summary_file_content(url: str) -> Dict[str, Any]:
     
     return content
 
-def get_linux_latest_release_url(linux_github_repository: str, github_token: str) -> str:
+# linux release
+
+GIT_LFS_POINTER_VERSION = 'version https://git-lfs.github.com/spec/v1'
+SEVEN_ZIP_SIGNATURE = b"7z\xbc\xaf'\x1c"
+MIN_LINUX_RELEASE_SIZE = 10_000_000
+LINUX_MIRROR_RELEASE = 'all_releases'  # Reuse the existing release maintained by push_database.sh.
+
+@dataclass
+class GitLfsPointer:
+    sha256: str
+    size: int
+
+def get_linux_latest_release(linux_github_repository: str, github_token: str) -> Tuple[str, List[str]]:
     auth = '' if github_token == '' else f'-H "Authorization: Bearer {github_token}"'
     sd_installer_output = run_stdout(f'curl --fail --location --silent -H "Accept: application/vnd.github.v3+json" {auth} https://api.github.com/repos/{linux_github_repository}/git/trees/HEAD')
     try:
@@ -1320,10 +1331,92 @@ def get_linux_latest_release_url(linux_github_repository: str, github_token: str
         print('Could not parse output: ' + sd_installer_output)
         raise e
 
-    releases = sorted([x['path'] for x in sd_installer_json['tree'] if x['path'][0:8].lower() == 'release_' and x['path'][-3:].lower() == '.7z'])
+    releases: Dict[str, List[str]] = {}
+    for entry in sd_installer_json['tree']:
+        match = re.fullmatch(r'(release_[0-9]{8})\.7z(?:\.[0-9]+)?', entry['path'], re.IGNORECASE)
+        if match is not None and entry['type'] == 'blob':
+            releases.setdefault(match[1].lower(), []).append(entry['path'])
+    if not releases:
+        raise ValueError(f'No release_*.7z file found in {linux_github_repository}')
 
-    latest_release = releases[-1]
-    return 'https://raw.githubusercontent.com/%s/%s/%s' % (linux_github_repository, sd_installer_json['sha'], latest_release)
+    name = max(releases)
+    files = releases[name]
+    single = next((path for path in files if path.lower().endswith('.7z')), None)
+    if single is not None:
+        files = [single]
+    else:
+        files.sort(key=lambda path: int(Path(path).suffix[1:]))
+        if [int(Path(path).suffix[1:]) for path in files] != list(range(1, len(files) + 1)):
+            raise ValueError(f'Incomplete or invalid volume sequence for {name}: {files}')
+    base_url = f'https://raw.githubusercontent.com/{linux_github_repository}/{sd_installer_json["sha"]}/'
+    return name, [base_url + path for path in files]
+
+def fetch_linux_release(name: str, urls: List[str], github_repository: str) -> Dict[str, Any]:
+    """Publish one archive per release_<DATE>, regardless of how upstream stores its volumes."""
+    if github_repository == '':
+        raise ValueError('GITHUB_REPOSITORY is required to mirror the Linux release.')
+    asset_name = f'{name}.7z'
+    mirror_url = f'https://github.com/{github_repository}/releases/download/{LINUX_MIRROR_RELEASE}/{asset_name}'
+    names = run_stdout(f'gh release view "{LINUX_MIRROR_RELEASE}" --repo "{github_repository}" --json assets --jq ".assets[].name"')
+    cached = asset_name in names.splitlines()
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        target = Path(tmp_dir) / asset_name
+        if cached:
+            download_file(mirror_url, str(target))
+        else:
+            # 7z volumes are consecutive slices of one archive. Joining also handles a single .7z or .001.
+            part = os.path.join(tmp_dir, 'part')
+            with target.open('wb') as archive:
+                for url in urls:
+                    download_file(url, part)
+                    pointer = read_git_lfs_pointer(part)
+                    if pointer is not None:
+                        download_file(url.replace('raw.githubusercontent.com/', 'media.githubusercontent.com/media/', 1), part)
+                        if file_size(part) != pointer.size or file_hash(part, 'sha256') != pointer.sha256:
+                            raise ValueError(f'The file downloaded from {url} does not match its Git LFS pointer.')
+                    with open(part, 'rb') as source:
+                        shutil.copyfileobj(source, archive)
+        validate_linux_release_archive(str(target))
+        if not cached:
+            try:
+                run(f'gh release upload "{LINUX_MIRROR_RELEASE}" "{target}" --repo "{github_repository}"')
+            except ReturnCodeException:
+                # Another build may have published this date first. Use its archive and calculate its metadata.
+                download_file(mirror_url, str(target))
+                validate_linux_release_archive(str(target))
+        return {**new_file_description(str(target)), "url": mirror_url, "version": name[-6:]}
+
+def read_git_lfs_pointer(path: str) -> Optional[GitLfsPointer]:
+    if file_size(path) > 1024:
+        return None
+
+    with open(path, 'rb') as f:
+        content = f.read()
+    try:
+        lines = content.decode('utf-8').splitlines()
+    except UnicodeDecodeError:
+        return None
+    if len(lines) == 0 or lines[0].strip() != GIT_LFS_POINTER_VERSION:
+        return None
+
+    fields: Dict[str, str] = {}
+    for line in lines[1:]:
+        key, _, value = line.strip().partition(' ')
+        fields[key] = value
+    oid, size = fields.get('oid', ''), fields.get('size', '')
+    if re.fullmatch(r'sha256:[0-9a-f]{64}', oid) is None or not size.isdigit():
+        raise ValueError(f'Malformed Git LFS pointer: {content!r}')
+
+    return GitLfsPointer(sha256=oid[len('sha256:'):], size=int(size))
+
+def validate_linux_release_archive(path: str) -> None:
+    size = file_size(path)
+    with open(path, 'rb') as f:
+        signature = f.read(len(SEVEN_ZIP_SIGNATURE))
+    if signature != SEVEN_ZIP_SIGNATURE or size < MIN_LINUX_RELEASE_SIZE:
+        raise ValueError(f'The Linux release {path} failed the 7z signature/size sanity check ({size} bytes).')
+    # Detect missing final volumes and damaged payloads before publishing an unusable Linux update.
+    run(f'7z t -bd "{path}"')
 
 # db diff tooling
 
@@ -1391,9 +1484,9 @@ def et_iterparse(xml: str, events: Tuple[str]) -> Iterator[Tuple[str, Any]]:
 def file_size(file: str) -> int:
     return os.path.getsize(file)
 
-def file_hash(file: str) -> str:
+def file_hash(file: str, algorithm: str = 'md5') -> str:
     with open(file, "rb") as f:
-        file_hash = hashlib.md5()
+        file_hash = hashlib.new(algorithm)
         chunk = f.read(8192)
         while chunk:
             file_hash.update(chunk)

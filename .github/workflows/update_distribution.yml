@@ -30,6 +30,10 @@ jobs:
       with:
         python-version: '3.9'
 
+    - name: Install 7-Zip
+      run: |
+      run: python3 -B -m unittest discover -s .github -p 'test_*.py'
+
     - name: Set Git User
       run: |
         git config --global user.email "theypsilon@gmail.com"

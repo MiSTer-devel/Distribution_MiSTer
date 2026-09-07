@@ -228,7 +228,6 @@ def classify_extra_content(extra_content_urls: List[str]) -> ContentClassificati
         elif url == "user-content-unzip": current_category = url
         elif url == "user-content-folders": current_category = url
         elif url == "user-content-mra-alternatives": current_category = url
-        elif url == "user-content-mra-alternatives-under-releases": current_category = url
         elif url == "user-content-fonts": current_category = url
         elif url in ["user-content-fpga-cores", "user-content-development", ""]: print('WARNING! Ignored url: ' + url)
         else:
@@ -403,6 +402,9 @@ def install_arcade_core(path: str, target_dir: str, core: CoreProps, metadata: M
         for mra in mra_files(mra_dir):
             copy_file(f'{mra_dir}/{mra}', f'{target_dir}/_Arcade/{mra}')
 
+    if Path(f'{releases_dir}/_alternatives').is_dir():
+        copy_folder(f'{releases_dir}/_alternatives', f'{target_dir}/_Arcade/_alternatives', dirs_exist_ok=True)
+
 def install_console_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
 def install_computer_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=True)
 def install_other_core(path: str, target_dir: str, core: CoreProps, metadata: Metadata): impl_install_generic_core(path, target_dir, core, metadata, touch_games_folder=False)
@@ -522,17 +524,7 @@ def install_zip_release(path: str, target_dir: str, category: str, url: str):
 
 def install_mra_alternatives(path: str, target_dir: str, category: str, url: str):
     print(f'Installing MRA Alternatives {url}')
-    copy_folder(f'{path}/_alternatives', f'{target_dir}/_Arcade/_alternatives')
-
-def install_mra_alternatives_under_releases(path: str, target_dir: str, category: str, url: str):
-    print(f'Installing MRA Alternatives under /releases {url}')
-    alternative_folders = [*list_folders(f'{get_releases_dir(path, url)}/_alternatives')]
-    if len(alternative_folders) == 0:
-        print('WARNING! _alternatives folder is empty.')
-        return
-
-    for folder in alternative_folders:
-        copy_folder(f'{get_releases_dir(path, url)}/_alternatives/{folder}', f'{target_dir}/_Arcade/_alternatives/{folder}')
+    copy_folder(f'{path}/_alternatives', f'{target_dir}/_Arcade/_alternatives', dirs_exist_ok=True)
 
 def install_fonts(path: str, target_dir: str, category: str, url: str):
     print(f'Installing Fonts {url}')
@@ -555,7 +547,6 @@ extra_content_late_installers = {
     "user-content-folders": install_folders,
     "user-content-fonts": install_fonts,
     "user-content-mra-alternatives": install_mra_alternatives,
-    "user-content-mra-alternatives-under-releases": install_mra_alternatives_under_releases,
 }
 
 def install_empty_folder(url: str, target_dir: str):
@@ -792,8 +783,8 @@ def copy_file(source: str, target: str) -> None:
     Path(target).parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, target)
 
-def copy_folder(source: str, target: str) -> None:
-    shutil.copytree(source, target)
+def copy_folder(source: str, target: str, dirs_exist_ok: bool = False) -> None:
+    shutil.copytree(source, target, dirs_exist_ok=dirs_exist_ok)
 
 def touch_folder(folder: str) -> None:
     path = Path(folder)

@@ -1355,7 +1355,7 @@ def fetch_linux_release(name: str, urls: List[str], github_repository: str) -> D
     """Publish one archive per release_<DATE>, regardless of how upstream stores its volumes."""
     if github_repository == '':
         raise ValueError('GITHUB_REPOSITORY is required to mirror the Linux release.')
-    asset_name = f'{name}.7z'
+    asset_name = f'linux_{name}.7z'
     mirror_url = f'https://github.com/{github_repository}/releases/download/{LINUX_MIRROR_RELEASE}/{asset_name}'
     names = run_stdout(f'gh release view "{LINUX_MIRROR_RELEASE}" --repo "{github_repository}" --json assets --jq ".assets[].name"')
     cached = asset_name in names.splitlines()

@@ -1,0 +1,108 @@
+<misterromdescription>
+  <name>The Ninja Warriors (World, earlier version)</name>
+  <setname>ninjaw1</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Darius2NinjaWarriors</rbf>
+  <year>1987</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Fighter</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- DSWA (bits 0-7) — MAME ninjaw input, WORLD coinage -->
+    <dip bits="0"   ids="No,Yes"                       name="Allow Continue"/>
+    <dip bits="1"   ids="On,Off"                       name="Unused (SW1:2)"/>
+    <dip bits="2"   ids="On,Off"                       name="Service Mode"/>
+    <dip bits="3"   ids="Off,On"                       name="Demo Sounds"/>
+    <dip bits="4,5" ids="4C/1C,3C/1C,2C/1C,1C/1C"      name="Coin A"/>
+    <dip bits="6,7" ids="1C/6C,1C/4C,1C/3C,1C/2C"      name="Coin B"/>
+    <!-- DSWB (bits 8-15) -->
+    <dip bits="8,9" ids="Hardest,Hard,Easy,Medium"     name="Difficulty"/>
+    <dip bits="10"  ids="On,Off"                       name="Unused (SW2:3)"/>
+    <dip bits="11"  ids="On,Off"                       name="Unused (SW2:4)"/>
+    <dip bits="12"  ids="On,Off"                       name="Unused (SW2:5)"/>
+    <dip bits="13"  ids="On,Off"                       name="Unused (SW2:6)"/>
+    <dip bits="14"  ids="On,Off"                       name="Unused (SW2:7)"/>
+    <dip bits="15"  ids="On,Off"                       name="Unused (SW2:8)"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <!-- Core layout (2MB sprite): main 768KB, sub 512KB slot (384KB used),
+       audio 128KB, sprite 2MB, tile 1MB, adpcm-a 1.5MB, adpcm-b 512KB. -->
+  <rom index="0" zip="ninjaw1.zip|ninjaw.zip" md5="None">
+
+    <!-- Main CPU 768KB @ 0x000000 (4 interleave: 128+128+256+256) -->
+    <interleave output="16">
+      <part name="b31_30.35" crc="056edd9f" map="10"/>
+      <part name="b31_43.32" crc="56ae37a6" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31_29.34" crc="f2941a37" map="10"/>
+      <part name="b31_27.31" crc="2f3ff642" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31_41.5" crc="0daef28a" map="10"/>
+      <part name="b31_39.2" crc="e9197c3c" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31_40.6" crc="2ce0f24e" map="10"/>
+      <part name="b31_38.3" crc="bc68cd99" map="01"/>
+    </interleave>
+
+    <!-- Sub CPU 384KB @ 0x0C0000 (3 interleave: 128+128+128) -->
+    <interleave output="16">
+      <part name="b31_33.87" crc="6ce9af44" map="10"/>
+      <part name="b31_36.97" crc="ba20b0d4" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31_32.86" crc="e6025fec" map="10"/>
+      <part name="b31_35.96" crc="70d9a89f" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31_31.85" crc="837f47e2" map="10"/>
+      <part name="b31_34.95" crc="d6b5fb2a" map="01"/>
+    </interleave>
+
+    <!-- Audio Z80 (128KB) @ 0x120000 -->
+    <part name="b31_37.11" crc="0ca5799d"/>
+
+    <!-- Sprite ROM slot 2MB @ 0x140000 -->
+    <interleave output="16">
+      <part name="b31-07.176" crc="33568cdb" map="21"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31-06.175" crc="0d59439e" map="21"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31-05.174" crc="0a1fc9fb" map="21"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31-04.173" crc="2e1e4cb5" map="21"/>
+    </interleave>
+
+    <!-- Tile SCN ROM (1MB) @ 0x340000 -->
+    <interleave output="16">
+      <part name="b31-01.23" crc="8e8237a7" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b31-02.24" crc="4c3b4e33" map="12"/>
+    </interleave>
+
+    <!-- YM2610 ADPCM-A (1.5MB) @ 0x440000 -->
+    <part name="b31-09.18" crc="60a73382"/>
+    <part name="b31-10.17" crc="c6434aef"/>
+    <part name="b31-11.16" crc="8da531d4"/>
+
+    <!-- YM2610 ADPCM-B (512KB) @ 0x5C0000 -->
+    <part name="b31-08.19" crc="a0a1f87d"/>
+
+  </rom>
+</misterromdescription>

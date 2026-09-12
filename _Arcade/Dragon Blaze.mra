@@ -1,0 +1,85 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>dragnblz</setname>
+	<mameversion>0165</mameversion>
+	<description>Dragon Blaze</description>
+	<rotation>Vertical (CCW)</rotation>
+	<year>2000</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="Button 1,Button 2,Button 3,Start,Coin,Test,Service" />
+
+	<switches default="01">
+		<dip bits="0,1,2,3" name="Region" ids="Japan,International Ver B,International Ver A"/>
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="dragnblz.zip" address="0x30000000">
+		<part repeat="0x400000">00</part>
+		<interleave output="64">
+			<part crc="c2eb565c" name="1l.u4" map="125600" />
+			<part crc="23cb46b7" name="1h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="bc256aea" name="2l.u5" map="125600" />
+			<part crc="b75f59ec" name="2h.u13" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="4284f008" name="3l.u6" map="125600" />
+			<part crc="abe5cbbf" name="3h.u14" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="c9fcf2e5" name="4l.u7" map="125600" />
+			<part crc="0ab0a12a" name="4h.u15" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="68d03ccf" name="5l.u8" map="125600" />
+			<part crc="5450fbca" name="5h.u16" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="8b52c90b" name="6l.u1" map="125600" />
+			<part crc="7362f929" name="6h.u2" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="b4f4d86e" name="7l.u19" map="125600" />
+			<part crc="44b7b9cc" name="7h.u20" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="cd079f89" name="8l.u28" map="125600" />
+			<part crc="3edb508a" name="8h.u29" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="0b53cd78" name="9l.u41" map="125600" />
+			<part crc="bc61998a" name="9h.u42" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="a3f5c7f8" name="10l.u58" map="125600" />
+			<part crc="30e304c4" name="10h.u59" map="1256" />
+		</interleave>
+		<part repeat="0x1000000">00</part>
+		<interleave output="64">
+			<part crc="7fd1b225" name="snd0.u52" map="12345678" />
+		</interleave>
+		<part repeat="0x200000">00</part>
+
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="fc5eade8" name="2prog_h.u21" map="216500" />
+			<part crc="95d6fd02" name="1prog_l.u22" map="2165" />
+		</interleave>
+		<part repeat="0x300000">00</part>
+		<interleave output="64">
+			<part crc="46e85da9" name="eeprom-dragnblz.u44" map="12345678" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" >
+		<part>25</part>
+	</rom>
+
+	<rom index="3" md5="none">
+		<part>
+			00 08 24 B4 00 DD 00 00
+			00 08 25 D4 00 4D 00 03
+		</part>
+	</rom>
+	<nvram index="4" size="554" />
+</misterromdescription>

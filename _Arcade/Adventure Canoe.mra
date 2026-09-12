@@ -1,0 +1,66 @@
+<misterromdescription>
+	<n>Adventure Canoe</n>
+	<mameversion>0245</mameversion>
+	<setname>adcanoe</setname>
+	<parent>adcanoe</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1982</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Action</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>vertical (cw)</rotation>
+	<joystick>2-way</joystick>
+	<buttons names="Button 1,Button 2,Coin A,Start 1P,Coin B,Start 2P,Service,Pause"
+	         default="A,B,Select,Start,X,Y,L,R"/>
+	<switches default="00,FF,00,FF,00,00,00,00">
+		<dip bits="8,9" name="Lives" ids="3,4,5,6"/>
+		<dip bits="10" name="Extend" ids="5000,10000"/>
+		<dip bits="14" name="Flip Screen" ids="On,Off"/>
+		<dip bits="15" name="Cabinet" ids="Cocktail,Upright"/>
+		<dip bits="13" name="Service Mode" ids="On,Off"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>		
+	</switches>
+	<rom index="0" md5="none" zip="adcanoe.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="4179cdc7" name="ac_12.ic69"/>
+		<part crc="17d97740" name="ac_13.ic68"/>
+		<part crc="4b0c895e" name="ac_14.ic67"/>
+		<part crc="262f4ce2" name="ac_15.ic66"/>
+		<part crc="e68c7053" name="ac_16.ic65"/>
+		<part crc="0bdd9efe" name="ac_17.ic64"/>
+		<part crc="959a143b" name="ac_18.ic55"/>
+		<part crc="9e7693f6" name="ac_19.ic54"/>
+		<!-- Main CPU - Pass 2 (duplicate) [0x8000/0x8000] -->
+		<part crc="4179cdc7" name="ac_12.ic69"/>
+		<part crc="17d97740" name="ac_13.ic68"/>
+		<part crc="4b0c895e" name="ac_14.ic67"/>
+		<part crc="262f4ce2" name="ac_15.ic66"/>
+		<part crc="e68c7053" name="ac_16.ic65"/>
+		<part crc="0bdd9efe" name="ac_17.ic64"/>
+		<part crc="959a143b" name="ac_18.ic55"/>
+		<part crc="9e7693f6" name="ac_19.ic54"/>
+		<!-- GFX ROMs [0x5000/0x8000] -->
+		<part crc="21b49aae" name="ac_20.ic1"/>
+		<part crc="d7efd8f7" name="ac_21.ic2"/>
+		<part crc="44290adf" name="ac_22.ic3"/>
+		<part crc="011daec9" name="ac_23.ic4"/>
+		<part crc="42943c3d" name="ac_24.ic5"/>
+		<!-- Padding GFX: 0x3000 -->
+		<part repeat="0x3000"> 00 </part>
+		<!-- Audio CPU ROMs [0x1000/0x4000] -->
+		<part crc="bed871c5" name="ac_09.ic70"/>
+		<!-- Padding audio: 0x3000 -->
+		<part repeat="0x3000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+	</rom>
+	<rom index="1">
+		<part>1</part>
+	</rom>
+</misterromdescription>

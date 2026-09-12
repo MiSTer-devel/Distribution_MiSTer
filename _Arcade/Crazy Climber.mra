@@ -1,0 +1,63 @@
+<misterromdescription>
+	<name>Crazy Climber</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1980</year>
+	<manufacturer>Nichibutsu</manufacturer>
+	<category>Platform - Climb</category>
+
+	<setname>cclimber</setname>
+	<parent>cclimber</parent>
+	<mameversion>0216</mameversion>
+	<rbf>crazyclimber</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls>twin stick</special_controls>
+	<num_buttons>4</num_buttons>
+	<button_names></button_names>
+
+	<switches default="00,00">
+		<dip bits="0,1" ids="3,4,5,6" name="Lives"></dip>
+		<dip bits="3" ids="Off,On" name="Rack Test"></dip>
+		<dip bits="4,5" ids="1 Coin,2 Coins,3 Coins,4 Coins" name="for credit"></dip>
+		<dip bits="6,7" ids="1 Game,2 Games,3 Games,Freeplay" name="for credit"></dip>
+		<dip bits="8" ids="Cocktail,Upright" name="Cabinet"></dip>
+	</switches>
+
+	<rom index="1"></rom>
+	<rom index="0" md5="b6b06723da0f0e6e183723285b0bf5be" type="merged|nonmerged" zip="cclimber.zip">
+		<part crc="217ec4ff" name="cc11"></part>
+		<part crc="b3c26cef" name="cc10"></part>
+		<part crc="6db0879c" name="cc09"></part>
+		<part crc="f48c5fe3" name="cc08"></part>
+		<part crc="3e873baf" name="cc07"></part>
+		<part crc="481b64cc" name="cc06"></part>
+		<part crc="2c33b760" name="cc05"></part>
+		<part crc="332347cb" name="cc04"></part>
+		<part crc="4e4b3658" name="cc03"></part>
+		<part crc="14f3ecc9" name="cc02"></part>
+		<part crc="21c0f9fb" name="cc01"></part>
+		<part crc="e0042f75" name="cc13"></part>
+		<part crc="5da13aaa" name="cc12"></part>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+
+	<nvram></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20260520135930</mratimestamp>
+</misterromdescription>

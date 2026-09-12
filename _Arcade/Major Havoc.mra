@@ -1,0 +1,60 @@
+<misterromdescription>
+	<name>Major Havoc</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Rev 3</version>
+	<alternative></alternative>
+	<platform>Major Havoc</platform>
+	<series></series>
+	<year>1983</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Maze / Platform</category>
+
+	<setname>mhavoc</setname>
+	<parent>mhavoc</parent>
+	<mameversion>0287</mameversion>
+	<rbf>MajorHavoc</rbf>
+	<about>Atari Major Havoc with dual T65 CPUs, a PROM-driven AVG, roller controls, and a high-resolution vector framebuffer.</about>
+
+	<resolution>31kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>2</players>
+	<joystick></joystick>
+	<special_controls>spinner</special_controls>
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,R,L,Select" names="Jump / Fire / Start 1P,Shield / Start 2P,Coin Left,Coin Right,Pause"></buttons>
+
+	<switches default="00,FF,00">
+		<dip bits="0" ids="Yes,No" name="Adaptive Difficulty"></dip>
+		<dip bits="1" ids="Yes,No" name="Demo Sounds"></dip>
+		<dip bits="2,3" ids="100000,200000,None,50000" name="Bonus Life"></dip>
+		<dip bits="4,5" ids="Medium,Easy,Demo,Hard" name="Difficulty"></dip>
+		<dip bits="6,7" ids="3 / 5 / 2,4 / 4 / 3,5 / 6 / 4,6 / 7 / 5" name="Lives 1C/2C/FP" values="0,3,2,1"></dip>
+		<dip bits="8,9" ids="1 Coin 2 Credits,Free Play,2 Coins 1 Credit,1 Coin 1 Credit" name="Coinage"></dip>
+		<dip bits="10,11" ids="x6,x5,x4,x1" name="Coin Right"></dip>
+		<dip bits="12" ids="x2,x1" name="Coin Left"></dip>
+		<dip bits="13,15" ids="None,1 each 4,2 each 4,1 each 5,1 each 3" name="Bonus Credits" values="7,5,4,3,2"></dip>
+		<dip bits="16" ids="Off,On" name="Service Mode"></dip>
+		<dip bits="17" ids="Off,On" name="Aux Coin / Step"></dip>
+		<dip bits="18" ids="1 Credit,2 Credits" name="Credit to Start"></dip>
+	</switches>
+
+	<rom index="0" md5="none" type="merged|nonmerged" zip="mhavoc.zip">
+		<part crc="522a9cc0" name="136025.216"></part>
+		<part crc="ea3d6877" name="136025.217"></part>
+		<part crc="a4d380ca" name="136025.215"></part>
+		<part crc="ba935067" name="136025.318"></part>
+		<part crc="93faf210" name="136025.108"></part>
+		<part crc="c67284ca" name="136025.210"></part>
+		<part crc="2ca83c76" name="136025.106"></part>
+		<part crc="5f81c5f3" name="136025.107"></part>
+		<part crc="5903af03" name="136002-125.6c"></part>
+	</rom>
+
+	<nvram index="4" size="512"></nvram>
+	<remark>Roller, spinner, mouse, analog-stick, and digital left/right input are supported.</remark>
+	<mratimestamp>20260725000000</mratimestamp>
+</misterromdescription>

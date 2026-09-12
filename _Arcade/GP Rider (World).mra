@@ -1,0 +1,79 @@
+<misterromdescription>
+  <name>GP Rider (World)</name>
+  <setname>gpriders</setname>
+  <rbf>SegaXBoard</rbf>
+  <mameversion>0289</mameversion>
+  <year>1990</year>
+  <manufacturer>Sega</manufacturer>
+  <category>Shooter / Flight</category>
+  <rom index="0" zip="gpriders.zip|gprider.zip" md5="None">
+    <part>06 65 08 00 70 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</part>
+    <!-- main -->
+      <interleave output="16">
+        <part name="epr-13409.ic58" crc="9abb81b6" map="10"/>
+        <part name="epr-13408.ic63" crc="8e410e97" map="01"/>
+      </interleave>
+      <part repeat="262144">00</part>
+    <!-- sub -->
+      <interleave output="16">
+        <part name="epr-13395.ic20" crc="d6ccfac7" map="10"/>
+        <part name="epr-13394.ic29" crc="914a55ec" map="01"/>
+      </interleave>
+      <interleave output="16">
+        <part name="epr-13393.ic21" crc="08d023cc" map="10"/>
+        <part name="epr-13392.ic30" crc="f927cd42" map="01"/>
+      </interleave>
+    <!-- z80 -->
+      <part name="epr-13388.ic17" crc="706581e4"/>
+    <!-- road -->
+      <part repeat="65536">00</part>
+    <!-- pcm -->
+      <part name="epr-13391.ic11" crc="8c30c867"/>
+      <part name="epr-13390.ic12" crc="8c93cd05"/>
+      <part name="epr-13389.ic13" crc="4e4c758e"/>
+      <part repeat="131072">FF</part>
+    <!-- sprite -->
+      <interleave output="32">
+        <part name="epr-13382.ic90" crc="01dac209" map="0001"/>
+        <part name="epr-13381.ic94" crc="3a50d931" map="0010"/>
+        <part name="epr-13380.ic98" crc="ad1024c8" map="0100"/>
+        <part name="epr-13379.ic102" crc="1ac17625" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-13378.ic91" crc="50c9b867" map="0001"/>
+        <part name="epr-13377.ic95" crc="9b12f5c0" map="0010"/>
+        <part name="epr-13376.ic99" crc="449ac518" map="0100"/>
+        <part name="epr-13375.ic103" crc="5489a9ff" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-13374.ic92" crc="6a319e4f" map="0001"/>
+        <part name="epr-13373.ic96" crc="eca5588b" map="0010"/>
+        <part name="epr-13372.ic100" crc="0b45a433" map="0100"/>
+        <part name="epr-13371.ic104" crc="b68f4cff" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-13370.ic93" crc="78276620" map="0001"/>
+        <part name="epr-13369.ic97" crc="8625bf0f" map="0010"/>
+        <part name="epr-13368.ic101" crc="0f50716c" map="0100"/>
+        <part name="epr-13367.ic105" crc="4b1bb51f" map="1000"/>
+      </interleave>
+      <part repeat="2097152">00</part>
+    <!-- tile -->
+      <part name="epr-13383.ic154" crc="24f897a7"/>
+      <part name="epr-13384.ic153" crc="fe8238bd"/>
+      <part name="epr-13385.ic152" crc="6df1b995"/>
+      <part repeat="65536">00</part>
+    <!-- key -->
+      <part name="317-0163.key" crc="c1d4d207"/>
+  </rom>
+  <nvram index="3" size="32768"/>
+  <switches default="FF,FE" base="0">
+    <dip bits="0,3" name="Coin A" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="4,7" name="Coin B" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="8,9" name="Cabinet" ids="Unused,Unused,Upright,Ride On"/>
+    <dip bits="11" name="ID No." ids="Slave,Main"/>
+    <dip bits="12" name="Demo Sounds" ids="Off,On"/>
+    <dip bits="14,15" name="Difficulty" ids="Hardest,Hard,Easy,Normal"/>
+  </switches>
+  <buttons names="Gas,Brake,Shift Down,Shift Up,Start,Coin,Pause,Test,Service" default="Y,L2,A,B,Start,R,X,L,Select"/>
+</misterromdescription>

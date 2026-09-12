@@ -1,0 +1,78 @@
+<misterromdescription>
+    <name>Ark Area</name>
+    <setname>arkarea</setname>
+    <parent>arkarea</parent>
+    <year>1988</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Ark Area</series>
+    <category>Shooter</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Attack,Jump,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="EF,FF">
+        <dip bits="0,1" name="Coinage" ids="3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+        <dip bits="2" name="Flip Screen" ids="On,Off"/>
+        <dip bits="3" name="Unused" ids="On,Off"/>
+        <dip bits="4" name="Demo Sounds" ids="On,Off"/>
+        <dip bits="5" name="Difficulty" ids="Hard,Normal"/>
+        <dip bits="6" name="Bonus Life" ids="100000 and every 100000,50000 and every 50000"/>
+        <dip bits="7" name="Lives" ids="4,3"/>
+        <dip bits="8" name="Service Mode" ids="On,Off"/>
+        <dip bits="9" name="Unused" ids="On,Off"/>
+        <dip bits="10" name="Unused" ids="On,Off"/>
+        <dip bits="11" name="Unused" ids="On,Off"/>
+        <dip bits="12" name="Unused" ids="On,Off"/>
+        <dip bits="13" name="Unused" ids="On,Off"/>
+        <dip bits="14" name="Unused" ids="On,Off"/>
+        <dip bits="15" name="Unused" ids="On,Off"/>
+    </switches>
+
+    <!-- Index 0: Main CPU. 0x8000 fixed, then banks -->
+    <rom index="0" md5="none" zip="arkarea.zip">
+        <part name="arkarea.008" crc="1ce1b5b9"/>
+        <part name="arkarea.009" crc="db1c81d1"/>
+        <part name="arkarea.010" crc="5a460dae"/>
+        <part name="arkarea.011" crc="63f022c9"/>
+        <part name="arkarea.012" crc="3c4c65d5"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU -->
+    <rom index="1" md5="none" zip="arkarea.zip">
+        <part name="arkarea.013" crc="2d409d58"/>
+        <part repeat="0x8000">00</part>
+    </rom>
+
+    <!-- Index 2: FG char ROM -->
+    <rom index="2" md5="none" zip="arkarea.zip">
+        <part name="arkarea.004" crc="69e36af2"/>
+    </rom>
+
+    <!-- Index 6: Sprite ROM -->
+    <rom index="6" md5="none" zip="arkarea.zip">
+        <part name="arkarea.007" crc="d5684a27"/>
+        <part name="arkarea.006" crc="2c0567d6"/>
+        <part name="arkarea.005" crc="9886004d"/>
+    </rom>
+
+    <!-- Index 7: BG tile ROM 1 -->
+    <rom index="7" md5="none" zip="arkarea.zip">
+        <part name="arkarea.003" crc="6f45a308"/>
+        <part name="arkarea.002" crc="051d3482"/>
+        <part name="arkarea.001" crc="09d11ab7"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>08</part></rom>
+
+    <remark>Ark Area</remark>
+</misterromdescription>

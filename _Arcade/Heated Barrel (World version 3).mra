@@ -1,0 +1,73 @@
+<misterromdescription>
+  <name>Heated Barrel (World version 3)</name>
+  <setname>heatbrl</setname>
+  <mameversion>0264</mameversion>
+  <rbf>HeatedBarrel</rbf>
+  <year>1992</year>
+  <manufacturer>TAD Corporation</manufacturer>
+  <category>Shoot-em-up</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>4</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- Heated Barrel DIPs (MAME INPUT_PORTS heatbrl). 16-bit word LE, active LOW.
+         DSW1 = bit 0..7 (low byte). DSW2 = bit 8..15 (high byte). -->
+    <dip bits="0"     ids="Mode 2,Mode 1"                                                                              name="Coin Mode"/>
+    <dip bits="1,4"   ids="Free Play,8C 3C,5C 3C,3C 2C,2C 3C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C" name="Coinage (Mode 1)"/>
+    <dip bits="5,6"   ids="4P 4C,4P 2C,2P,3P"                                                                           name="Cabinet Setting"/>
+    <dip bits="7"     ids="On,Off"                                                                                      name="Flip Screen"/>
+    <dip bits="8,9"   ids="5,3,1,2"                                                                                     name="Lives"/>
+    <dip bits="10,11" ids="1St 2Jn,2St 2Jn,2St 1Jn,Normal"                                                            name="Start/Join"/>
+    <dip bits="12,13" ids="Very Hard,Hard,Easy,Normal"                                                                  name="Difficulty"/>
+    <dip bits="14"    ids="No,Yes"                                                                                      name="Allow Continue"/>
+    <dip bits="15"    ids="Off,On"                                                                                      name="Demo Sounds"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="heatbrl.zip" md5="None">
+    <!-- maincpu 512KB @ 0x000000 (ROM_LOAD32_BYTE, interleave verificato su HW) -->
+    <interleave output="32">
+      <part name="1e_ver3.9k" crc="6b41fbac" map="0010"/>
+      <part name="2e_ver3.9m" crc="dd21969b" map="0001"/>
+      <part name="3e_ver3.9f" crc="09544a91" map="1000"/>
+      <part name="4e_ver3.9h" crc="ebd34559" map="0100"/>
+    </interleave>
+
+    <!-- char 128KB @ 0x080000 (region "char", 2x ROM_LOAD16_BYTE) -> BRAM text -->
+    <interleave output="16">
+      <part name="barrel_6.u077" crc="bea3c581" map="01"/>
+      <part name="barrel_5.u072" crc="5604d155" map="10"/>
+    </interleave>
+
+    <!-- back (BG) 1MB @ 0x0A0000 (region "back", WORD_SWAP) -> SDRAM BG_BASE 0x050000 -->
+    <interleave output="16"><part name="heated-barrel_bg-1.u075" crc="2f5d8baa" map="21"/></interleave>
+
+    <!-- mid (MG) 512KB @ 0x1A0000 (region "mid" INDIPENDENTE, WORD_SWAP) -> SDRAM MG_BASE 0x0D0000 -->
+    <interleave output="16"><part name="heated-barrel_bg-2.u074" crc="77ee4c6f" map="21"/></interleave>
+
+    <!-- fore (FG) 512KB @ 0x220000 (region "fore", WORD_SWAP, NO de-scramble) -> SDRAM FG_BASE 0x110000 -->
+    <interleave output="16"><part name="heated-barrel_bg-3.u076" crc="83850e2d" map="21"/></interleave>
+
+    <!-- sprites 2MB @ 0x2A0000 (obj1 1MB + obj2 1MB, WORD_SWAP) -> DDR3 -->
+    <interleave output="16"><part name="heated-barrel_obj1.u085"  crc="f7a7c31c" map="21"/></interleave>
+    <interleave output="16"><part name="heated-barrel_obj2.u0814" crc="24236116" map="21"/></interleave>
+
+    <!-- oki 256KB @ 0x4A0000 (128KB sample + 128KB pad) -> SDRAM OKI_BASE 0x250000 -->
+    <interleave output="16"><part name="barrel_8.u106" crc="489e5b1d" map="21"/></interleave>
+    <part repeat="0x20000">00</part>
+
+    <!-- audiocpu 32KB @ 0x4E0000 (Z80) -> BRAM audio -->
+    <interleave output="16"><part name="barrel_7.u1110" crc="0784dbd8" map="21"/></interleave>
+
+    <!-- copx-d2 512KB @ 0x4F0000 (SEI300 / COP3 data, riservato) -->
+    <interleave output="16"><part name="copx-d2.u0339" crc="7c52581b" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260619000000</mratimestamp>
+</misterromdescription>

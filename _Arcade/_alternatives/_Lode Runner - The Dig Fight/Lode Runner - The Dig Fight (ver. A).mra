@@ -1,0 +1,41 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>loderndfa</setname>
+	<mameversion>0133</mameversion>
+	<description>Lode Runner - The Dig Fight (ver. A)</description>
+	<rotation>horizontal</rotation>
+	<year>2000</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="Button 1,Button 2,Button 3,Start,Coin,Test,Service" />
+
+	<switches default="41">
+		<dip bits="0,1,2,3" name="Region" ids="Japan,World"/>
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="loderndfa.zip|loderndf.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="ccae855d" name="0l.u2" map="125600" />
+			<part crc="7a146c59" name="0h.u11" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="7a9cd21e" name="1l.u3" map="125600" />
+			<part crc="78f40d0d" name="1h.u12" map="1256" />
+		</interleave>
+		<part repeat="0x2000000">00</part>
+		<interleave output="64">
+			<part crc="2da3788f" name="snd0.u10" map="12345678" />	
+		</interleave>
+
+		<interleave output="64">
+			<part crc="0a63529f" name="3.u22" map="216500" />
+			<part crc="661d372e" name="12.u23" map="2165" />
+		</interleave>
+		<part repeat="0x300000">00</part>
+		<part repeat="0x100">00</part>
+	</rom>
+	<rom index="2" md5="">
+		<part>22</part>
+	</rom>
+	<nvram index="4" size="256" />
+</misterromdescription>

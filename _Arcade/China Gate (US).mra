@@ -1,0 +1,95 @@
+<misterromdescription>
+  <name>China Gate (US)</name>
+  <setname>chinagat</setname>
+  <mameversion>0264</mameversion>
+  <rbf>ChinaGate</rbf>
+  <year>1988</year>
+  <manufacturer>Technos Japan (Taito / Romstar license)</manufacturer>
+  <category>Platformer</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,C,Start" names="Attack,Jump,Special,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- ===== DSW1 (bits 0-7) — active LOW, default FF (all OFF) ===== -->
+    <dip bits="0,1,2"  ids="4C/1C,3C/1C,2C/1C,1C/5C,1C/4C,1C/3C,1C/2C,1C/1C" name="Coin A"/>
+    <dip bits="3,4,5"  ids="4C/1C,3C/1C,2C/1C,1C/5C,1C/4C,1C/3C,1C/2C,1C/1C" name="Coin B"/>
+    <!-- bit 6 unused -->
+    <dip bits="7"      ids="On,Off"           name="Flip Screen"/>
+
+    <!-- ===== DSW2 (bits 8-15) — active LOW ===== -->
+    <dip bits="8,9"    ids="Hardest,Hard,Easy,Normal" name="Difficulty"/>
+    <dip bits="10"     ids="Off,On"            name="Demo Sounds"/>
+    <!-- bit 11 unused (SW2:4 left empty in manual) -->
+    <dip bits="12,13"  ids="50,70,55,60"       name="Timer"/>
+    <dip bits="14,15"  ids="1,4,3,2"           name="Lives"/>
+  </switches>
+
+  <!-- Cartridge ID lookup (always 0x00 for arcade ROMs) -->
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <!--
+    SDRAM memory map:
+      0x000000 +0x020000 (128 KB)  maincpu  : cgate51.bin
+      0x020000 +0x020000 (128 KB)  sub      : 23j4-0.48
+      0x040000 +0x008000 ( 32 KB)  soundcpu : 23j0-0.40 (Z80)
+      0x048000 +0x020000 (128 KB)  chars    : cgate18.bin (FG, 8x8 tiles)
+      0x068000 +0x080000 (512 KB)  sprites  : 23j7..23ja
+      0x0E8000 +0x040000 (256 KB)  tiles    : chinagat_a-13/12/15/14 (BG)
+      0x128000 +0x040000 (256 KB)  oki      : 23j1, 23j2 (ADPCM)
+      0x168000 +0x000300 (768  B)  proms    : 23jb (video) + 23j5 (main)
+    Total: 0x168300 (~1.41 MB)
+  -->
+  <rom index="0" zip="chinagat.zip" md5="None">
+    <!-- ===== Main CPU ROM 128KB @ SDRAM 0x000000 ===== -->
+    <part name="cgate51.bin" crc="439a3b19"/>
+
+    <!-- ===== Sub CPU ROM 128KB @ SDRAM 0x020000 ===== -->
+    <part name="23j4-0.48"   crc="2914af38"/>
+
+    <!-- ===== Sound Z80 ROM 32KB @ SDRAM 0x040000 ===== -->
+    <part name="23j0-0.40"   crc="9ffcadb6"/>
+
+    <!-- ===== FG Chars ROM 128KB @ SDRAM 0x048000 ===== -->
+    <part name="cgate18.bin" crc="8d88d64d"/>
+
+    <!-- ===== Sprite ROM 512KB @ SDRAM 0x068000 (interleaved 16-bit) =====
+         JOTEGO Double Dragon MRA pattern: each file from the first half of
+         the sprite region (planes 2,3 LSB) is paired with the corresponding
+         file from the second half (planes 0,1 MSB), byte-interleaved into
+         16-bit words. The jtcg_obj sorted swizzle expects this layout. -->
+    <interleave output="16">
+      <part name="23j7-0.103" crc="2f445030" map="01"/>   <!-- planes 2,3 -> low byte -->
+      <part name="23j9-0.101" crc="8caf6097" map="10"/>   <!-- planes 0,1 -> high byte -->
+    </interleave>
+    <interleave output="16">
+      <part name="23j8-0.102" crc="237f725a" map="01"/>
+      <part name="23ja-0.100" crc="f678594f" map="10"/>
+    </interleave>
+
+    <!-- ===== BG Tiles ROM 256KB @ SDRAM 0x0E8000 =====
+         Note: TRJ-100 custom ROM is undumped on the original board; the
+         MAME chinagat set substitutes the bootleg dumps and marks them as
+         BAD_DUMP. We use the same files. -->
+    <part name="chinagat_a-13" crc="b745cac4"/>
+    <part name="chinagat_a-12" crc="3c864299"/>
+    <part name="chinagat_a-15" crc="2f268f37"/>
+    <part name="chinagat_a-14" crc="aef814c8"/>
+
+    <!-- ===== OKI M6295 ADPCM samples 256KB @ SDRAM 0x128000 ===== -->
+    <part name="23j1-0.53"   crc="f91f1001"/>
+    <part name="23j2-0.52"   crc="8b6f26e9"/>
+
+    <!-- ===== PROMs 768B @ SDRAM 0x168000 ===== -->
+    <part name="23jb-0.16"   crc="46339529"/>
+    <part name="23j5-0.45"   crc="fdb130a9"/>
+  </rom>
+  <rom index="2"></rom>
+
+  <mratimestamp>20260426000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,85 @@
+<misterromdescription>
+    <name>Arabian (Atari)</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Arabian</series>
+    <year>1983</year>
+    <manufacturer>Sun Electronics/Atari</manufacturer>
+    <category>Action</category>
+
+    <setname>arabiana</setname>
+    <parent>arabian</parent>
+    <mameversion>0289</mameversion>
+    <rbf>Arabian</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (ccw)</rotation>
+    <flip>no</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Kick,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <switches default="06,0D">
+        <dip name="Lives"         bits="0"     ids="3,5"/>
+        <dip name="Cabinet"       bits="1"     ids="Cocktail,Upright"/>
+        <dip name="Flip Screen"   bits="2"     ids="On,Off"/>
+        <dip name="Difficulty"    bits="3"     ids="Easy,Hard"/>
+        <dip name="Coinage"       bits="4,7"   ids="A 1C/1C B 1C/1C,A 2C/1C B 2C/1C,A 2C/1C B 1C/3C,A 1C/1C B 1C/2C,A 1C/1C B 1C/3C,A 1C/1C B 1C/4C,A 1C/1C B 1C/5C,A 1C/1C B 1C/6C,A 1C/2C B 1C/2C,A 1C/2C B 1C/4C,A 1C/2C B 1C/5C,A 1C/2C B 1C/10C,A 1C/2C B 1C/11C,A 1C/2C B 1C/12C,A 1C/2C B 1C/6C,Free Play"/>
+        <dip name="Coin Counters" bits="8"     ids="2,1"/>
+        <dip name="Demo Sounds"   bits="9"     ids="On,Off"/>
+        <dip name="Bonus Life"    bits="10,11" ids="None,20k only,40k only,20k 50k 150k 100k+"/>
+    </switches>
+
+    <!-- Index 0: Main CPU ROMs, 32KB flat at $0000-$7FFF (no banking on this board) -->
+    <rom index="0" md5="none" zip="arabian.zip|arabiana.zip">
+        <part crc="51e9a6b1" name="tvg-87.ic1"/>
+        <part crc="1cdcc1ab" name="tvg-88.ic2"/>
+        <part crc="b7b7faa0" name="tvg-89.ic3"/>
+        <part crc="dbded961" name="tvg-90.ic4"/>
+    </rom>
+
+    <!-- Index 2: Blitter GFX ROMs, 32KB. Addressed as two 16KB planes: bytes 0x0000-0x3FFF
+         and 0x4000-0x7FFF are fetched as a pair to build 4 pixels of 4 bits each. -->
+    <rom index="2" md5="none" zip="arabian.zip|arabiana.zip">
+        <part crc="c4637822" name="tvg-91.ic84"/>
+        <part crc="f7c6866d" name="tvg-92.ic85"/>
+        <part crc="71acd48d" name="tvg-93.ic86"/>
+        <part crc="82160b9a" name="tvg-94.ic87"/>
+    </rom>
+
+    <!-- Index 6: MB8841 (SUN 8212) internal ROM, 2KB. No protection PROM on this board. -->
+    <rom index="6" md5="none" zip="arabian.zip|arabiana.zip">
+        <part crc="8869611e" name="sun-8212.ic3"/>
+    </rom>
+
+
+    <!-- Index 3: hiscore config (hiscore.v v0014, CFG_LENGTHWIDTH=2).
+         Header: START_WAIT, CHECK_WAIT, CHECK_HOLD, WRITE_HOLD, REPEATCOUNT, REPEATWAIT, PAUSEPAD, CHANGEMASK
+         Entries [ADDR:4][LEN:2][START:1][END:1], from MAME hiscore.dat:
+             @:maincpu,program,d384,3c,00,00
+             @:maincpu,program,d3bd,1,01,01
+         DIAG 2026-08-22: entry-2 sentinels forced 00/00 so the check always passes.
+         Restores => the 01 sentinel was never matching. Still fails => writeback path. -->
+    <rom index="3" md5="none">
+        <part>
+	    00 00 FF FF 00 FF 00 02 00 02 00 01 11 11 00 00
+        00 00 D3 84 00 3C 00 00
+        00 00 D3 BD 00 01 00 00
+        </part>
+    </rom>
+
+    <!-- Index 4: hiscore data. 0x3C + 0x01 = 61 bytes -->
+    <rom index="4"></rom>
+    <nvram index="4" size="61"></nvram>
+
+    <remark>Arabian (Sun Electronics, Atari license)</remark>
+    <mratimestamp>20260822000000</mratimestamp>
+</misterromdescription>

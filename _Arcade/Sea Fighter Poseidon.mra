@@ -1,0 +1,59 @@
+<misterromdescription>
+	<n>Sea Fighter Poseidon</n>
+	<mameversion>0245</mameversion>
+	<setname>sfposeid</setname>
+	<parent>sfposeid</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1984</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Shooter</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>horizontal</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Fire,Torpedo,Coin A,Start 1P,Coin B,Start 2P,Service,Pause"
+	         default="A,B,Select,Start,X,Y,L,R"/>
+	<switches default="00,6E,00,FC,00,00,00,00">
+		<dip bits="8,9" name="Bonus Life" ids="5000,10000,15000,20000"/>
+		<dip bits="11,12" name="Lives" ids="2,3,4,5"/>
+		<dip bits="14" name="Flip Screen" ids="On,Off"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="24,25" name="Weapons Range" ids="Longest,Long,Medium,Short"/>
+		<dip bits="28" name="Coinage Display" ids="InsertCoin,Coins/Credits"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="sfposeid.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="aa779fbb" name="a14-01.1"/>
+		<part crc="ecec9dc3" name="a14-02.2"/>
+		<part crc="469498c1" name="a14-03.3"/>
+		<part crc="1db4bc02" name="a14-04.6"/>
+		<!-- Main CPU - Pass 2 (base + banked) [0x8000/0x8000] -->
+		<part crc="aa779fbb" name="a14-01.1"/>
+		<part crc="ecec9dc3" name="a14-02.2"/>
+		<part crc="469498c1" name="a14-03.3"/>
+		<part crc="95e2f903" name="a14-05.7"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="9740493b" name="a14-06.4"/>
+		<part crc="1c93de97" name="a14-07.5"/>
+		<part crc="4367e65a" name="a14-08.9"/>
+		<part crc="677cffd5" name="a14-09.10"/>
+		<!-- Audio CPU ROMs [0x2000/0x4000] -->
+		<part crc="f1365f35" name="a14-10.70"/>
+		<part crc="74a12fe2" name="a14-11.71"/>
+		<!-- Padding audio: 0x2000 -->
+		<part repeat="0x2000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+		<!-- MCU ROM [0x800] -->
+		<part crc="091beed8" name="a14-12"/>
+	</rom>
+	<rom index="1">
+		<part>4</part>
+	</rom>
+</misterromdescription>

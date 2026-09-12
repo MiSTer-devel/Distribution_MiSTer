@@ -1,0 +1,72 @@
+<misterromdescription>
+	<name>StarForce</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1984</year>
+	<manufacturer>TEHKAN</manufacturer>
+	<category>Shooter - Vertical</category>
+
+	<setname>megaforcu</setname>
+	<parent>starforc</parent>
+	<mameversion>0220</mameversion>
+	<rbf>starforce</rbf>
+	<about author="madov" source="https://" twitter="@" webpage="https://"></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>1</num_buttons>
+	<buttons default="A,Start,Select,R" names="Fire,-,Start 1P,-,Coin"></buttons>
+
+	<switches default="00,00">
+	  <dip bits="12,13" name="Lives" ids="3,4,5,2"></dip>
+	  <dip bits="15" name="Demo sound" ids="off,on"></dip>
+	  <dip bits="0,2" name="Extend" ids="5/20/50,10/30/80,5/20,10/30,5,10,20,No"></dip>
+	  <dip bits="3,5" name="Difficulty" ids="Norm,1,2,3,4,5,-"></dip>
+		<!-- dip bits="15" name="Cabinet" ids="Upright,Cocktail"></dip -->
+	</switches>
+
+	<rom index="0" zip="starforc.zip|megaforcu.zip" md5="none" type="merged|nonmerged">
+	   	<part crc="d3ea82ec" name="mf3.3p"/>  <!-- main 0-3fff -->      <!-- 00000 - 03FFF -->
+		<part crc="aa320718" name="mf2.3mn"/> <!-- 4000-7fff -->        <!-- 04000 - 07FFF -->
+		<part crc="2735bb22" name="1.3hj"/> <!-- snd 0-1fff -->       <!-- 08000 - 09FFF -->
+		<part repeat="8192">00</part>       <!-- (snd stereo ) -->    <!-- 0A000 - 0BFFF -->
+		<part crc="62e7c9ec" name="9.4f"/> <!-- rom6 0-fff -->       <!-- 0C000 - 0CFFF -->
+		<part crc="c36fb746" name="8.3f"/> <!-- rom7 0-fff -->       <!-- 0D000 - 0DFFF -->
+		<part crc="43ef8d20" name="7.2f"/> <!-- rom8 0-fff -->       <!-- 0E000 - 0EFFF -->
+		<part repeat="4096">00</part>       <!-- pad -->              <!-- 0F000 - 0FFFF -->
+		<part crc="dd9d68a4" name="4.8lm"/> <!-- rom9,10 0-3fff -->   <!-- 10000 - 13FFF -->
+ 		<part crc="f71717f8" name="5.9lm"/> <!-- rom11,12 0-3fff -->  <!-- 14000 - 17FFF --> 
+		<part crc="5468a21d" name="6.10lm"/> <!-- rom13,14 0-3fff --> <!-- 18000 - 1BFFF -->
+		<part crc="68c60d0f" name="17.9pq"/> <!-- sw1 0-fff -->       <!-- 1C000 - 1CFFF -->
+		<part crc="ce20b469" name="16.8pq"/> <!-- sw1 1000-1fff -->   <!-- 1D000 - 1DFFF -->
+		<part crc="6455c3ad" name="18.10pq"/> <!-- sw2 0-fff -->      <!-- 1E000 - 1EFFF -->
+		<part repeat="4096">00</part>       <!-- pad -->              <!-- 1F000 - 1FFFF -->
+		<part crc="84603285" name="13.8jk"/> <!-- rom15 0-1fff -->    <!-- 20000 - 21FFF --> 
+		<part crc="9e9384fe" name="14.9jk"/> <!-- rom16 0-1fff -->    <!-- 22000 - 23FFF -->
+		<part crc="c3bda12f" name="15.10jk"/> <!-- rom17 0-1fff -->   <!-- 24000 - 25FFF -->
+		<part crc="c62a19c1" name="10.8de"/> <!-- rom18 0-1fff -->    <!-- 26000 - 27FFF -->
+		<part crc="668aea14" name="11.9de"/> <!-- rom19 0-1fff -->    <!-- 28000 - 29FFF -->
+		<part crc="fdd9e38b" name="12.10de"/> <!-- rom20 0-1fff -->   <!-- 2A000 - 2BFFF -->
+		<part crc="68db8300" name="07b.bin"/> <!-- prom 0-1f -->      <!-- 2C000 - 2C01F --> 
+ 
+	</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+
+	<nvram></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20250713085200</mratimestamp>
+</misterromdescription>

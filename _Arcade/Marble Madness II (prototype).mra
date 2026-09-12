@@ -1,0 +1,48 @@
+<misterromdescription>
+	<name>Marble Madness II (prototype)</name>
+	<setname>marblmd2</setname>
+	<year>1991</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rbf>Arcade-MarbleMadness2</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="A,Start,Select" names="Action/Start,-,-,-,-,-,Start,Coin,Pause"/>
+	<switches default="00ff">
+		<dip name="Number of Players (Test Mode)" bits="5" values="0,1" ids="2,3"/>
+		<dip name="Number of Players (Game)" bits="7" values="0,1" ids="2,3"/>
+	</switches>
+	<rom index="0" zip="marblmd2.zip">
+		<!-- Region: 68000 main program, 0x80000 bytes -->
+		<interleave output="16">
+			<part crc="d1a17d67" name="rom0h.20c" map="01"/>
+			<part crc="a4db40d9" name="rom0l.18c" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part crc="b2a361a8" name="rom1h.20e" map="01"/>
+			<part crc="b6fb08b5" name="rom1l.18e" map="10"/>
+		</interleave>
+
+		<!-- Region: JSA III 6502 program, 0x10000 bytes -->
+		<part crc="89a8d90a" name="aud0.12c"/>
+
+		<!-- Region: playfield graphics, 0x100000 bytes -->
+		<part crc="a4fe377a" name="pf0l.3p"/>
+		<part crc="5dc7aaa8" name="pf1l.3m"/>
+		<part crc="0c7c5f74" name="pf2l.3k"/>
+		<part crc="0a780429" name="pf3l.3j"/>
+		<part crc="a6297a83" name="pf0h.1p"/>
+		<part crc="5b40f1bb" name="pf1h.1m"/>
+		<part crc="18323df9" name="pf2h.1k"/>
+		<part crc="05d86ef8" name="pf3h.1j"/>
+
+		<!-- Region: motion-object graphics, 0x80000 bytes -->
+		<part crc="950d95a3" name="mo0l.7p"/>
+		<part crc="b62b6ebf" name="mo1l.10p"/>
+		<part crc="e47d92b0" name="mo0h.12p"/>
+		<part crc="317a03fb" name="mo1h.14p"/>
+
+		<!-- Populated OKI sockets, packed; HDL restores 0x00000/0x60000 -->
+		<part crc="e916bef7" name="sound.19e"/>
+		<part crc="bab2f8e5" name="sound.12e"/>
+	</rom>
+</misterromdescription>

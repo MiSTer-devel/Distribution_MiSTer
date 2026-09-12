@@ -1,0 +1,63 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>gunbird2</setname>
+	<mameversion>0136</mameversion>
+	<description>Gunbird 2 (set 1)</description>
+	<rotation>Vertical (CCW)</rotation>
+	<year>1998</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="Button 1,Button 2,Button 3,Start,Coin,Test,Service" />
+
+	<switches default="41">
+		<dip bits="0,1,2,3" name="Region" ids="Japan,International Ver A,International Ver B"/>
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="gunbird2.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="5c826bc8" name="0l.u3" map="125600" />
+			<part crc="3df0cb6c" name="0h.u10" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="1558358d" name="1l.u4" map="125600" />
+			<part crc="4ee0103b" name="1h.u11" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="e1c7a7b8" name="2l.u5" map="125600" />
+			<part crc="bc8a41df" name="2h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="0229d37f" name="3l.u6" map="125600" />
+			<part crc="f41bbf2b" name="3h.u13" map="1256" />
+		</interleave>
+		<part repeat="0x400000">00</part>
+		<interleave output="64">
+			<part crc="f19796ab" name="sound.u9" map="12345678" />
+		</interleave>
+
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="76f934f0" name="2_prog_l.u16" map="2165" />
+			<part crc="7328d8bf" name="1_prog_h.u17" map="216500" />
+		</interleave>
+		<part repeat="0x100000">00</part>
+		<interleave output="64">
+			<part crc="a5b697e6" name="3_pdata.u1" map="21436587" />
+		</interleave>
+		<part repeat="0x180000">00</part>
+		<interleave output="64">
+			<part crc="7ac38846" name="eeprom-gunbird2.bin" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" >
+		<part>21</part>
+	</rom>
+
+	<rom index="3" md5="none">
+		<part>
+			00 04 C7 58 00 28 00 70
+			00 04 C7 80 00 3C 1E 00
+		</part>
+	</rom>
+	<nvram index="4" size="356" />
+</misterromdescription>

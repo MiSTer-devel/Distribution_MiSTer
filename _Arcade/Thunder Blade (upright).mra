@@ -1,0 +1,84 @@
+<misterromdescription>
+  <name>Thunder Blade (upright)</name>
+  <setname>thndrbld</setname>
+  <rbf>SegaXBoard</rbf>
+  <mameversion>0289</mameversion>
+  <year>1987</year>
+  <manufacturer>Sega</manufacturer>
+  <category>Shooter / Flight</category>
+  <rom index="0" zip="thndrbld.zip" md5="None">
+    <part>02 27 08 01 70 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</part>
+    <!-- main -->
+      <interleave output="16">
+        <part name="epr-11405.ic58" crc="e057dd5a" map="10"/>
+        <part name="epr-11406.ic63" crc="c6b994b8" map="01"/>
+      </interleave>
+      <interleave output="16">
+        <part name="epr-11306.ic57" crc="4b95f2b4" map="10"/>
+        <part name="epr-11307.ic62" crc="2d6833e4" map="01"/>
+      </interleave>
+    <!-- sub -->
+      <interleave output="16">
+        <part name="epr-11390.ic20" crc="ed988fdb" map="10"/>
+        <part name="epr-11391.ic29" crc="12523bc1" map="01"/>
+      </interleave>
+      <interleave output="16">
+        <part name="epr-11310.ic21" crc="5d9fa02c" map="10"/>
+        <part name="epr-11311.ic30" crc="483de21b" map="01"/>
+      </interleave>
+    <!-- z80 -->
+      <part name="epr-11396.ic17" crc="d37b54a4"/>
+    <!-- road -->
+      <part name="epr-11313.ic29" crc="6a56c4c3"/>
+    <!-- pcm -->
+      <part name="epr-11317.ic11" crc="d4e7ac1f"/>
+      <part name="epr-11318.ic12" crc="70d3f02c"/>
+      <part name="epr-11319.ic13" crc="50d9242e"/>
+      <part repeat="131072">FF</part>
+    <!-- sprite -->
+      <interleave output="32">
+        <part name="epr-11323.ic90" crc="27e40735" map="0001"/>
+        <part name="epr-11322.ic94" crc="10364d74" map="0010"/>
+        <part name="epr-11321.ic98" crc="8e738f58" map="0100"/>
+        <part name="epr-11320.ic102" crc="a95c76b8" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-11327.ic91" crc="deae90f1" map="0001"/>
+        <part name="epr-11326.ic95" crc="29198403" map="0010"/>
+        <part name="epr-11325.ic99" crc="b9e98ae9" map="0100"/>
+        <part name="epr-11324.ic103" crc="9742b552" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-11331.ic92" crc="3a2c042e" map="0001"/>
+        <part name="epr-11330.ic96" crc="aa7c70c5" map="0010"/>
+        <part name="epr-11329.ic100" crc="31b20257" map="0100"/>
+        <part name="epr-11328.ic104" crc="da39e89c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-11395.ic93" crc="90775579" map="0001"/>
+        <part name="epr-11394.ic97" crc="5f2783be" map="0010"/>
+        <part name="epr-11393.ic101" crc="525e2e1d" map="0100"/>
+        <part name="epr-11392.ic105" crc="b4a382f7" map="1000"/>
+      </interleave>
+      <part repeat="2097152">00</part>
+    <!-- tile -->
+      <part name="epr-11314.ic154" crc="d4f954a9"/>
+      <part name="epr-11315.ic153" crc="35813088"/>
+      <part name="epr-11316.ic152" crc="84290dff"/>
+      <part repeat="65536">00</part>
+    <!-- key -->
+      <part name="317-0056.key" crc="b40cd2c5"/>
+  </rom>
+  <nvram index="3" size="32768"/>
+  <switches default="FF,FD" base="0">
+    <dip bits="0,3" name="Coin A" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="4,7" name="Coin B" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="8" name="Cabinet" ids="Mini Upright,Econ Upright"/>
+    <dip bits="9" name="Demo Sounds" ids="On,Off"/>
+    <dip bits="10" name="Time" ids="0 sec,30 sec"/>
+    <dip bits="11,12" name="Lives" ids="5,2,4,3"/>
+    <dip bits="13" name="Allow Continue" ids="No,Yes"/>
+    <dip bits="14,15" name="Difficulty" ids="Hardest,Easy,Hard,Normal"/>
+  </switches>
+  <buttons names="Cannon,Missile,Speed Up,Slow Down,Start,Coin,Pause,Test,Service" default="A,B,R2,L2,Start,R,X,L,Select"/>
+</misterromdescription>

@@ -1,0 +1,41 @@
+<misterromdescription>
+  <name>Hi Pai Paradise 2</name>
+  <mratimestamp>20260718</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>hipai2</setname>
+  <year>2004</year>
+  <manufacturer>Aruze / Seta / Paon</manufacturer>
+  <category>Mahjong</category>
+  <rbf>Aleck64</rbf>
+
+  <buttons names="Mahjong E,Mahjong F,Mahjong G,Mahjong H,Mahjong I,Mahjong J,Mahjong K,Mahjong L,Mahjong M,Mahjong N,Mahjong Kan,Mahjong Pon,Mahjong Chi,Mahjong Reach,Mahjong Ron,Start,Coin,Service,Test" default="A,B,X,Y,L,R"/>
+  <switches default="DF,FF">
+    <dip bits="15" name="Free Play" ids="On,Off"/>
+    <dip bits="14" name="Backup Settings" ids="On,Off"/>
+    <dip bits="8,9,10" name="Coinage" ids="5C/1C,4C/1C,3C/1C,2C/1C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="7" name="Test Mode" ids="On,Off"/>
+    <dip bits="5" name="Demo Sounds" ids="On,Off"/>
+    <dip bits="4" name="Allow Continue" ids="Off,On"/>
+    <dip bits="3" name="Kuitan" ids="Off,On"/>
+    <dip bits="0,1,2" name="Difficulty" ids="Hardest,Very Hard,Hard,Normal+,Easy,Very Easy,Easiest,Normal"/>
+  </switches>
+  <remark>
+    Requires hipai2.zip and the parent BIOS aleck64.zip in games/mame.
+    D-pad directions map Mahjong A-D; the named buttons map E-N and the five
+    actions. Start+Pon/Chi/Reach provide Coin/Service/Test respectively.
+  </remark>
+
+  <rom index="3" md5="f68eb6ef7715a07d688b530b7388c958"><part>55 00</part></rom>
+  <rom index="0" zip="aleck64.zip" md5="4921d5f2165dee6e2496f4388c4c81da">
+    <part name="pifdata.bin" crc="5ec82be9"/>
+  </rom>
+  <rom index="2" zip="hipai2.zip" md5="none">
+    <interleave output="16"><part name="nus-zsij-0.u1" crc="2389576f" map="12"/></interleave>
+  </rom>
+  <rom index="1" address="0x32000000" zip="hipai2.zip" md5="none">
+    <interleave output="16"><part name="ua3029-all01.u3" crc="88b83e93" map="12"/></interleave>
+    <interleave output="16"><part name="ua3029-alh01.u4" crc="4f79fa94" map="12"/></interleave>
+    <patch offset="0x67c">00 00 00 00</patch>
+  </rom>
+  <nvram index="4" size="512"/>
+</misterromdescription>

@@ -1,0 +1,63 @@
+<misterromdescription>
+    <about author="alanswx and Videodr0me" webpage="https://github.com/MiSTer-devel/Arcade-SegaG80V_MiSTer"/>
+    <name>Eliminator (2 Players, set 2)</name>
+    <setname>elim2a</setname>
+	<rbf>SegaG80V</rbf>
+    <mameversion>0283</mameversion>
+    <year>1981</year>
+    <manufacturer>Gremlin</manufacturer>
+    <category>Shooter</category>
+    <parent>elim2</parent>
+    <players>2</players>
+    <joystick>2-way horizontal</joystick>
+    <num_buttons>2</num_buttons>
+    <!-- index 0: 48K program ROM at $0000, sin/cos PROM at $C000 -->
+    <rom index="0" zip="elim2a.zip|elim2.zip" md5="none">
+        <part name="969.cpu-u25" crc="411207f2"/>
+        <part name="1158.prom-u1" crc="a40ac3a5"/>
+        <part name="1159.prom-u2" crc="ff100604"/>
+        <part name="1160a.prom-u3" crc="ebfe33bd"/>
+        <part name="1161a.prom-u4" crc="03d41db3"/>
+        <part name="1162a.prom-u5" crc="f2c7ece3"/>
+        <part name="1163a.prom-u6" crc="1fc58b00"/>
+        <part name="1164a.prom-u7" crc="f37480d1"/>
+        <part name="1165a.prom-u8" crc="328819f8"/>
+        <part name="1166a.prom-u9" crc="1b8e8380"/>
+        <part name="1167a.prom-u10" crc="16aa3156"/>
+        <part name="1168a.prom-u11" crc="3c7c893a"/>
+        <part name="1169a.prom-u12" crc="5cee23b1"/>
+        <part name="1170a.prom-u13" crc="8cdacd35"/>
+        <part repeat="20480">00</part>
+        <!-- $C000: sin/cos PROM, X-Y Timing board U39 -->
+        <part name="s-c.xyt-u39" crc="56484d19"/>
+        <part repeat="2048">00</part>
+        <part repeat="16384">00</part>
+    </rom>
+
+    <!-- index 1: game identifier, decoded by rtl/sega_game_pkg.sv -->
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <!-- index 3: high-score RAM ranges and initialization guards -->
+    <rom index="3" md5="none">
+        <part>
+            00 00 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+            00 00 C9 24 14 25 05 00
+            00 00 C9 9F 1E 0C 03 00
+        </part>
+    </rom>
+    <nvram index="4" size="50"/>
+
+    <!-- Two physical DIP banks plus a virtual self-test switch. -->
+    <switches default="45,33,00">
+        <dip bits="2,3" values="1,2,3" ids="3,4,5" name="Lives"/>
+        <dip bits="4,5" ids="Easy,Medium,Hard,Hardest" name="Difficulty"/>
+        <dip bits="6,7" ids="30000,20000,10000,None" name="Bonus Life"/>
+        <dip bits="8,11" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin A"/>
+        <dip bits="12,15" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin B"/>
+        <dip bits="16" ids="Trigger,Trigger" name="Self-Test"/>
+    </switches>
+
+    <buttons names="Fire,Thrust,-,-,Start 1,Start 2,Coin,Pause" default="A,B,Start,Select,R,L"/>
+</misterromdescription>

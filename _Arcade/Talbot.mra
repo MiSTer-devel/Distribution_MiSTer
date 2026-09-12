@@ -1,0 +1,86 @@
+<misterromdescription>
+    <name>Talbot</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Talbot</series>
+    <year>1982</year>
+    <manufacturer>Alpha Denshi Co. (Volt Electronics license)</manufacturer>
+    <category>Maze</category>
+
+    <setname>talbot</setname>
+    <parent>talbot</parent>
+    <mameversion>0270</mameversion>
+    <rbf>ChampionBaseball</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (ccw)</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>2</num_buttons>
+    <buttons names="Button 1,Button 2,-,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="33">
+        <dip bits="0,1" name="Coinage" ids="Free Play,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="2,3" name="Lives" ids="3,4,5,6"/>
+        <dip bits="4,5" name="Rabbits to Capture" ids="4,5,6,8"/>
+        <dip bits="6"   name="Cabinet" ids="Upright,Cocktail"/>
+    </switches>
+
+    <!-- Index 0: Main CPU ROMs (0x6000) -->
+    <rom index="0" md5="none" zip="talbot.zip">
+        <part crc="0368607d" name="11.10g"/>
+        <part crc="400e633b" name="12.11g"/>
+        <part crc="be575d9e" name="13.10h"/>
+        <part crc="56464614" name="14.11h"/>
+        <part crc="0225b7ef" name="15.10i"/>
+        <part crc="1612adf5" name="16.11i"/>
+    </rom>
+
+    <!-- Index 2: GFX (0x2000) -->
+    <rom index="2" md5="none" zip="talbot.zip">
+        <part crc="bde14194" name="7.6a"/>
+        <part crc="ddcd227a" name="8.6b"/>
+    </rom>
+
+    <!-- Index 6: ALPHA-8201 MCU ROM (0x2000). -->
+    <rom index="6" md5="none" zip="talbot.zip">
+        <part crc="b77931ac" name="alpha-8201_44801a75_2f25.bin"/>
+    </rom>
+
+    <!-- Index 7: PROMs (0x120) -->
+    <rom index="7" md5="none" zip="talbot.zip">
+        <part crc="7a153c60" name="mb7051.7h"/>
+        <part crc="a3189986" name="mb7052.5e"/>
+    </rom>
+
+    <!-- Index 5: game-select byte: 
+           0x00 champbas    0x01 champbasj   0x02 champbasja  0x03 champbasjb
+           0x04 champbb2    0x05 champbb2j   0x06 tbasebal    0x07 talbot
+           0x08 exctsccr    0x09 exctscc2    0x0A exctsccrb                    -->
+    <rom index="5"><part>07</part></rom>
+
+
+    <!-- Index 3: HiScore data - not working
+    <rom index="3" md5="none">
+        <part>
+        00 00 FF FF 00 FF 00 10 00 10 00 08 FF FF 00 00
+        00 00 87 C0 00 30 41 00
+        </part>
+    </rom>
+    -->
+
+    <!-- Index 4: hiscore data. 0x30 = 48 bytes -->
+    <rom index="4"></rom>
+    <nvram index="4" size="48"></nvram>
+
+    <remark>Talbot (Alpha Denshi, Volt Electronics license)</remark>
+    <mratimestamp>20260824000000</mratimestamp>
+</misterromdescription>

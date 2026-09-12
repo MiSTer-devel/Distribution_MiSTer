@@ -1,0 +1,73 @@
+<misterromdescription>
+  <name>Air Gallet (Hong Kong)</name>
+  <mameversion>0275</mameversion>
+  <setname>agalleth</setname>
+  <year>1996</year>
+  <manufacturer>Gazelle (Banpresto license)</manufacturer>
+  <category>Vertical Shooter</category>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <rotation>vertical (ccw)</rotation>
+  <region>Hong Kong</region>
+  <rbf>CaveBanpresto</rbf>
+
+  <!-- ROM data -->
+  <rom index="0" zip="agalleth.zip|agallet.zip" md5="none" address="0x30000000">
+    <!-- prog ROM -->
+    <interleave output="16">
+      <part name="bp962a.u45" crc="24815046" map="12" />
+    </interleave>
+
+    <!-- EEPROM -->
+    <part name="agallet_hongkong.nv" crc="998d1a74" />
+
+<!-- sound program ROM -->
+<part name="bp962a.u9" crc="06caddbe" />
+
+<!-- sprites -->
+<part name="bp962a.u76" crc="858da439" />
+<part name="bp962a.u77" crc="ea2ba35e" />
+
+<!-- layer 0 -->
+<part name="bp962a.u53" crc="fcd9a107" />
+
+<!-- layer 1 -->
+<part name="bp962a.u54" crc="0cfa3409" />
+
+<!-- layer 2 -->
+<part name="bp962a.u57" crc="6d608957" />
+<part name="bp962a.u65" crc="135fcf9a" />
+
+<!-- PCM ROMs -->
+<part name="bp962a.u48" crc="ae00a1ce" />
+<part name="bp962a.u47" crc="6d4e9737" />
+  </rom>
+
+  <!-- select game -->
+  <rom index="1">
+    <part>02</part>
+  </rom>
+
+  <!-- MAME hiscore ranges: 0x100292+0x5a, 0x100200+0x02 -->
+  <rom index="5">
+    <part>00 10 02 92 00 5a 00 00 00 10 02 00 00 02 02 1a</part>
+  </rom>
+
+  <!-- Generated exact save-state identity; do not hand edit. -->
+  <rom index="4">
+    <part>
+      43 42 49 44 01 00 02 00 8a 2a a3 b6 6d 9f 3b ea
+      80 00 10 01 01 00 00 00 f1 62 23 6e 01 98 55 34
+    </part>
+  </rom>
+
+  <!-- NVRAM -->
+  <nvram index="2" size="392" />
+
+  <!-- video timing -->
+  <rom index="3">
+    <part>0141 00f0 0020 0008 001A 0002 0000 0000</part>
+  </rom>
+
+  <buttons names="Shot,Bomb,-,-,Start,Coin,Pause" default="A,B,R,L,Start" />
+</misterromdescription>

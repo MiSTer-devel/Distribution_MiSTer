@@ -1,0 +1,88 @@
+<misterromdescription>
+	<name>Ring King</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1985</year>
+	<manufacturer>Data East</manufacturer>
+	<category>Sports</category>
+
+	<setname>ringking</setname>
+	<mameversion>0247</mameversion>
+	<rbf>ringking</rbf>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip></flip>
+
+	<players>2</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>5</num_buttons>
+	<buttons names="Punch,Jab,Block,Start,Coin" default="A,B,X,Start,Z"></buttons>
+
+	<switches default="5a,08">
+
+        <dip bits="0,1" name="Replay" ids="None,70000,100000,150000"/>
+        <dip bits="2" name="Attract Mode" ids="Sound,No Sound"/>
+	    <dip bits="3,4" name="Difficulty (2P)" ids="Easy,Normal,Difficult,Very Hard"/>
+        <dip bits="5" name="Cabinet" ids="Table,Upright"/>
+        <dip bits="7" name="Mode" ids="Game,Diag"/>
+
+		<dip bits="8,9" name="Coin A" ids="1C/1C,1C/2C,1C/3C,2C/1C"/>
+		<dip bits="10,11" name="Coin B" ids="1C/1C,1C/2C,1C/3C,2C/1C"/>
+		<dip bits="12,13" name="Difficulty (1P)" ids="Easy,Normal,Difficult,Very Hard"/>
+		<dip bits="14" name="Boxing Match" ids="2 Win End,1 Win End"/>
+		<dip bits="15" name="Mode" ids="Game Mode,Freeze Mode"/>
+
+	</switches>
+
+	<rom index="0" zip="ringking.zip" md5="none">
+
+		<!-- main cpu -->
+		<part name="cx13.9f"  crc="93e38c02"/>
+		<part name="cx14.11f" crc="a435acb0"/>
+
+		<!-- video cpu -->
+		<part name="cx07.10c" crc="9f074746"/>
+
+		<!-- sound cpu -->
+		<part name="cx12.4ef" crc="1d5d6c6b"/>
+		<part name="20.j4"    crc="64c137a4"/>
+
+		<!-- sprite cpu -->
+		<part name="cx00.4c"  crc="880b8aa7"/>
+
+		<!-- chars -->
+		<part name="cx08.13b" crc="dbd7c1c2"/>
+
+		<!-- sprites -->
+		<part name="cx04.11j" crc="506a2ed9"/>
+		<part name="cx02.8j"  crc="009dde6a"/>
+		<part name="cx06.13j" crc="d819a3b2"/>
+		<part name="cx03.9j"  crc="682fd1c4"/>
+		<part name="cx01.7j"  crc="85130b46"/>
+		<part name="cx05.12j" crc="f7c4f3dc"/>
+
+		<!-- bgtiles -->
+		<part name="cx09.17d" crc="37a082cf"/>
+		<part name="cx10.17e" crc="ab9446c5"/>
+
+		<!-- prom red+green, blue -->
+		<part name="82s135.2a" crc="0e723a83"/>
+		<part name="82s129.1a" crc="d345cbb3"/>
+
+	</rom>
+
+	<rom index="1"></rom>
+	<rom index="2"></rom>
+	<rom_3></rom_3>
+	<rom_4></rom_4>
+
+	<nvram></nvram>
+	<mratimestamp>202607280000</mratimestamp>
+</misterromdescription>

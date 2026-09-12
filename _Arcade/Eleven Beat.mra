@@ -1,0 +1,51 @@
+<misterromdescription>
+  <name>Eleven Beat</name>
+  <mratimestamp>20260717</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>11beat</setname>
+  <year>1998</year>
+  <manufacturer>Hudson Soft</manufacturer>
+  <category>Sports</category>
+  <rbf>Aleck64</rbf>
+
+  <buttons names="Button A,Button B,Start,-,Button C,-,-,Button D,-,-,Soft Reset,Coin,Service,Test,-,-" default="A,B,X,Y,Start,Select,R,L"/>
+
+  <switches default="FF,FF">
+    <dip bits="15" name="SW1 #8" ids="On,Off"/>
+    <dip bits="14" name="SW1 #7" ids="On,Off"/>
+    <dip bits="13" name="SW1 #6" ids="On,Off"/>
+    <dip bits="12" name="SW1 #5" ids="On,Off"/>
+    <dip bits="11" name="SW1 #4" ids="On,Off"/>
+    <dip bits="10" name="SW1 #3" ids="On,Off"/>
+    <dip bits="9" name="SW1 #2" ids="On,Off"/>
+    <dip bits="8" name="SW1 #1" ids="On,Off"/>
+    <dip bits="7" name="Test Mode" ids="On,Off"/>
+    <dip bits="6" name="SW2 #7" ids="On,Off"/>
+    <dip bits="5" name="SW2 #6" ids="On,Off"/>
+    <dip bits="4" name="SW2 #5" ids="On,Off"/>
+    <dip bits="3" name="SW2 #4" ids="On,Off"/>
+    <dip bits="2" name="SW2 #3" ids="On,Off"/>
+    <dip bits="1" name="SW2 #2" ids="On,Off"/>
+    <dip bits="0" name="SW2 #1" ids="On,Off"/>
+  </switches>
+
+  <remark>
+    Requires 11beat.zip and the parent BIOS aleck64.zip in games/mame.
+    Uses the standard Aleck64 PIF gamepad interface. MAME reports an
+    emulation-side crash at kick-off and during the attract sequence.
+  </remark>
+
+  <rom index="3" md5="a3962977a46ba2d91f2554e527ba98d6">
+    <part>65 00</part>
+  </rom>
+  <rom index="0" zip="aleck64.zip" md5="4921d5f2165dee6e2496f4388c4c81da">
+    <part name="pifdata.bin" crc="5ec82be9"/>
+  </rom>
+  <rom index="1" address="0x32000000" zip="11beat.zip" md5="none">
+    <interleave output="16">
+      <part name="nus-zhaj.u3" crc="02faa8a7" map="12"/>
+    </interleave>
+    <patch offset="0x67c">00 00 00 00</patch>
+  </rom>
+  <nvram index="4" size="512"/>
+</misterromdescription>

@@ -1,0 +1,251 @@
+# [IBM PC/XT](https://en.wikipedia.org/wiki/IBM_Personal_Computer_XT) for [MiSTer FPGA](https://mister-devel.github.io/MkDocs_MiSTer/)
+
+PCXT port for MiSTer by [@spark2k06](https://github.com/spark2k06/).
+
+Discussion and development take place in the
+[MiSTerFPGA PCXT forum section](https://misterfpga.org/viewforum.php?f=40).
+
+![PCXT MiSTer CGA/MDA splash](splash.jpg)
+
+## Description
+
+This core recreates an IBM PC/XT-compatible machine as RTL running on MiSTer.
+The design is built around the [MCL86 CPU](https://github.com/MicroCoreLabs/Projects/tree/master/MCL86),
+the [KFPC-XT chipset](https://github.com/kitune-san/KFPC-XT), and the MiSTer
+framework. The aim is a practical, observable PC/XT: real bus transactions,
+chipset timing, memory windows, video I/O and peripherals are represented in
+the FPGA rather than emulated by a host operating system.
+
+The video subsystem contains independent CGA and Hercules-compatible paths.
+CGA provides the native 200-line colour/composite raster; HGC/MDA provides the
+monochrome text and graphics raster. Both can be present at the same time, and
+the OSD or F11 can select which connector path is shown. HGC/MDA's 350-line
+timing can optionally be converted to a 15 kHz television raster without
+changing the video hardware seen by DOS software.
+
+AdLib sound uses [JTOPL](https://github.com/jotego/jtopl) by Jose Tejada
+([@jotego](https://github.com/jotego)). The project also integrates C/MS,
+the OPL2-compatible FM path, optional Tandy audio, PC speaker and MIDI/MT32-pi
+support.
+
+For the implementation notes behind the CPU and bus work, see
+[`docs/8086-adaptation.md`](docs/8086-adaptation.md). 
+
+For an architectural overview and possible future improvements, see the
+[PCXT technical report](https://aitorgomez.net/pcxt-cga/core-report) (source in
+[`docs/report/`](docs/report/CORE_REPORT.html)).
+
+## Key features
+
+* Selectable 8088 or 8086 bus mode, applied safely with **Reset & apply settings**
+* CPU speeds of 4.77 MHz, 7.16 MHz, 9.54 MHz and **Max**; Max is an unthrottled performance profile, not a historical CPU grade
+* Optional **Fake 286 FLAGS** compatibility behaviour for software that probes reserved FLAGS bits
+* IBM PC/XT 5160-compatible chipset, BIOS, DMA, IRQ, PIT, keyboard and disk services
+* 640 KiB conventional memory, optional A0000h UMB, and EMS up to 2 MiB
+* Native CGA text/graphics modes with simulated composite colour and selectable display tint
+* Hercules-compatible monochrome text and graphics modes through the HGC/MDA path
+* CGA and HGC/MDA available together, with OSD selection and **F11** video-output swap
+* HGC/MDA 350-line conversion to **480i 15 kHz** or **240p 15 kHz**; CGA bypasses this converter
+* A single 320×200, four-colour CGA graphical boot splash, also used while HGC/MDA is selected
+* **F12** pause and credits on the splash as well as after the machine starts
+* Startup hold with an on-screen notice when no PCXT BIOS is loaded
+* XTIDE option-ROM support and two SD-backed storage targets
+* AdLib OPL2, C/MS, optional Tandy audio, PC speaker and MIDI/MT32-pi
+* Joystick support and serial mouse support on COM1
+
+## Video architecture
+
+### CGA
+
+CGA is implemented as a real 6845-style raster path with its own VRAM,
+sequencer, attribute logic and composite decoder. The graphical splash is a
+320×200×4 image stored in `rtl/video/splash_cga_320x200.hex`; it is rendered
+through the CGA RGBI stream so the same timing and composite colour behaviour
+apply to the splash and to normal CGA software.
+
+The **Composite video** OSD option enables the simulated NTSC colour decoder.
+**Display** selects the RGBI presentation (full colour, green, amber, B&W,
+red, blue, fuchsia or purple), while **Border** exposes the active border.
+
+### HGC/MDA
+
+The HGC path implements the B0000h/B8000h video apertures, monochrome text,
+Hercules graphics and the corresponding CRTC/sequencer timing. It is available
+alongside CGA when both build macros are enabled. **PCXT 1st Video** selects
+which card the BIOS should treat as the first display; **F11** swaps the
+MiSTer output between the two live video paths.
+
+HGC/MDA's native 350-line raster is not a 15 kHz progressive television mode.
+When **350-line CRT** is set to `480i 15 kHz` or `240p 15 kHz`, the core captures
+a complete HGC/MDA frame in DDRAM and reads it back on a television-compatible
+raster. `480i` displays all source lines across two fields; `240p` is steady
+and progressive but reduces the active vertical detail. `Native` leaves the
+card's original raster untouched. CGA never enters this framebuffer path.
+
+The conversion is deliberately outside the emulated card: the CRTC registers,
+display-enable timing, retrace bits and software-visible memory remain HGC/MDA
+timing in every setting. `CRT H offset` and `CRT V offset` centre the converted
+television raster; `Native` is intended for a display or scaler that accepts
+the original 350-line output.
+
+### Splash and credits
+
+The splash is always generated by the CGA renderer. This keeps the startup
+picture stable and colour-capable even if HGC/MDA is the selected first video;
+the selected HGC/MDA path is restored when the splash has finished. If the
+required PCXT BIOS is absent, the core holds the splash and reports the exact
+OSD section to use instead of releasing the CPU into an empty F0000h region.
+
+F12 pauses the splash countdown and shows the credits. Press F12 again to
+resume. The same credits module is used after boot when the machine is paused.
+
+## Memory map
+
+The CPU exposes a 1 MiB physical address space. The active overlays depend on
+the enabled build features, the selected video card and the OSD settings.
+
+| Address range | Core assignment |
+| --- | --- |
+| `00000h–9FFFFh` | 640 KiB conventional SDRAM |
+| `A0000h–AFFFFh` | Optional SDRAM-backed A000 UMB; disabled by default in a minimal build |
+| `B0000h–B7FFFh` | HGC/MDA video aperture when the Hercules page is selected |
+| `B8000h–BFFFFh` | CGA colour/text aperture, or HGC/MDA page 1 |
+| `C0000h–EFFFFh` | EMS page-frame overlay when enabled; the OSD selects C000h, D000h or E000h |
+| `EC000h–EFFFFh` | XTIDE ROM window when an EC00 BIOS is loaded and not overlaid by EMS |
+| `F0000h–FFFFFh` | PCXT system BIOS |
+
+The video apertures are not conventional memory. EMS maps four 16 KiB banks
+through its selected page frame and is controlled at I/O ports `260h–263h`.
+Because EMS and option ROMs can occupy the same upper-memory ranges, DOS
+configuration must match the selected EMS frame; see the supplied files under
+`hdd/` and the notes in [`docs/`](docs/).
+
+## OSD configuration
+
+The default `config.tcl` build enables CGA, HGC, OPL2, C/MS, EMS, the A000 UMB
+and MIDI. Tandy video, Tandy keyboard and Tandy audio are disabled in this
+profile; they remain available as build-time variants where the source supports
+them.
+
+The main OSD groups are:
+
+| Group | Options of interest |
+| --- | --- |
+| Disks | Floppy A/B, write protection, IDE images and second SD card |
+| CPU | 4.77 MHz, 7.16 MHz, 9.54 MHz, Max |
+| System & BIOS | CGA/HGC enable, first video, splash, CPU type, Fake 286 FLAGS, PCXT BIOS, EC00 ROM and BIOS write protection |
+| Audio & Video | OPL2/CMS, speaker and audio boost, mixing, CRT offsets, sync widths, scaler effect, aspect ratio, border, composite and display tint |
+| Audio & Video | HGC/MDA `350-line CRT`: Native, 480i 15 kHz or 240p 15 kHz |
+| Hardware | EMS enable and page frame, A000 UMB, joysticks, joystick swap and CPU-speed synchronisation |
+| User I/O | MIDI, COM2 and MT32-pi options when `ENABLE_MIDI` is built |
+
+Settings that affect CPU bus width, first-video reset state or other startup
+hardware should be followed by **Reset & apply settings**. The CPU type is
+latched during reset; Fake 286 FLAGS is a live compatibility control.
+
+## Quick start
+
+1. Copy the contents of `games/PCXT` to the MiSTer SD card and extract the
+   included `hd_image.zip` if present.
+2. Select **Computers / PCXT**.
+3. Open the OSD with **Win + F12**.
+4. Select a PCXT model, a CPU speed and either 8088 or 8086 under **System & BIOS**.
+5. Mount a floppy or hard-disk image.
+6. Load a compatible image into **System & BIOS → PCXT BIOS**.
+7. Select **Reset & apply settings**.
+
+For the first test, the Micro8088 BIOS and the included FreeDOS hard-disk image
+are a practical combination. If no PCXT BIOS is selected, the splash remains
+visible and the OSD notice identifies the missing slot; this is expected and
+does not require an HDMI display to recover.
+
+The default splash timeout is approximately five seconds. **Boot Splash
+Screen → No** dismisses it, and **F12** pauses it while showing the credits.
+
+## ROM instructions
+
+ROMs are loaded from the **System & BIOS** section of the OSD. The PCXT BIOS
+slot is required. The EC00 slot accepts an XTIDE option ROM of up to 16 KiB;
+some system BIOS images already contain XTIDE at F0000h and do not need the
+additional slot.
+
+Open or redistributable BIOS choices in the repository include:
+
+* `pcxt_pcxt31.rom`, from [virtualxt/pcxtbios](https://github.com/virtualxt/pcxtbios)
+* `pcxt_micro8088.rom`, from [skiselev/8088_bios](https://github.com/skiselev/8088_bios)
+* `ide_xtl.rom`, from the [XTIDE Universal BIOS project](https://www.xtideuniversalbios.org/)
+
+The scripts in `SW/ROMs/` prepare compatible images from the IBM 5160 and Juko
+ST sources. Original copyrighted ROM dumps are not distributed by this
+repository. Not every BIOS has the same floppy geometry or video assumptions;
+IBM 5160 commonly uses 360 KiB media, while Micro8088 commonly uses 720 KiB or
+1.44 MiB media.
+
+## Audio, input and storage
+
+* **OPL2 / AdLib:** selectable at `388h`, or Sound Blaster FM-compatible `228h` when built and selected.
+* **C/MS:** enabled at `220h–22Fh` when `ENABLE_CMS=1`.
+* **FM-compatible address:** OPL2 can use the AdLib address `388h` or the Sound Blaster FM-compatible address `228h`, as selected in the OSD.
+* **Tandy audio:** optional SN76489-compatible audio at the classic Tandy I/O range; this does not imply Tandy video or keyboard are enabled.
+* **MIDI / MT32-pi:** MPU-401 UART at `330h–331h`, with MiSTer USER I/O and HPS USB MIDI options when enabled.
+* **Mouse:** a serial mouse can be used on COM1 with a DOS driver such as CTMOUSE.
+* **Joysticks:** two configurable analog or digital joystick inputs.
+* **Storage:** floppy A/B, IDE-backed hard-disk images and an optional second SD target.
+
+## Building
+
+The standard Quartus project is `PCXT.qsf`. The feature profile is controlled
+by `config.tcl`. From WSL, the containerised build used by the project is:
+
+```sh
+docker run --rm -v "$(pwd):/build" -w /build raetro/quartus:mister \
+  quartus_sh --flow compile PCXT.qsf
+```
+
+The repository includes focused RTL testbenches under
+`rtl/video/TESTBENCH/` and `rtl/KFPC-XT/TESTBENCH/`. The latter covers, among
+other things, the CPU bus, memory refresh collisions, splash pause handling
+and the missing-BIOS startup hold.
+
+## Repository layout
+
+* `PCXT.sv`, `config.tcl`, `PCXT.qsf` — MiSTer top level, feature profile and Quartus project
+* `rtl/video/` — CGA, HGC/MDA, composite, scandoubler and 15 kHz framebuffer paths
+* `rtl/KFPC-XT/` — chipset, CPU-facing bus, memory, peripherals and testbenches
+* `rtl/common/` — MiSTer/common support, credits and shared memory blocks
+* `rtl/sound/` — OPL2 and C/MS/Tandy-related sound cores
+* `SW/ROMs/` — BIOS and XTIDE preparation scripts
+* `SW/8088_bios/` — Micro8088 BIOS sources and build instructions
+* `SW/XTCTL/` — legacy runtime-control utility and its port-level notes
+* `credits/` — source text and converter for the JTFrame credits image
+* `docs/` — implementation notes, documentation index and technical report
+
+## Known scope
+
+This is a PC/XT core with CGA and HGC/MDA video paths. It does not claim to be
+a complete VGA, SVGA or general-purpose PC emulator. The `Max` CPU setting is
+intentionally a throughput mode, and exact cycle behaviour should be expected
+only from the named clock profiles. BIOS compatibility also varies by ROM and
+media geometry.
+
+## Credits and licence
+
+MiSTer integration and continuing development by **Aitor Gómez García
+(spark2k06)**, with contributions from the MCL86, KFPC-XT, JTFrame, JTOPL,
+Graphics Gremlin, MS mouse, sound and MiSTer communities, including
+**BoogerMann** among the project developers and collaborators. See
+[`credits/msg`](credits/msg) for the in-core credits list.
+
+BoogerMann contributed to the integration of the newer SystemVerilog MCL86
+organisation: separate BIU and EU implementations, microcode support and
+8088 wrappers. The integration also preserves the instruction-boundary
+`INTR` sampling fix (`intr_delay`), making maskable interrupt recognition
+deterministic across instruction timing and CPU speed profiles.
+
+The repository is distributed under the GNU General Public License. Individual
+integrated components retain their own copyright notices and licence terms.
+
+## Developers
+
+Please send contributions and pull requests to the prerelease branch. They are
+reviewed periodically and merged into the main branch as part of releases.

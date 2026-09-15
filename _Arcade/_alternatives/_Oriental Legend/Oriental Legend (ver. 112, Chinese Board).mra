@@ -1,0 +1,78 @@
+<misterromdescription>
+	<name>Oriental Legend (ver. 112, Chinese Board)</name>
+	<setname>orlegendc</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|orlegend.zip|orlegendc.zip">
+		<!-- REGION_BIOS_PROG_ROM  = 00 -->
+
+		<!-- REGION_BIOS_TILE_ROM  = 01 -->
+
+		<!-- REGION_BIOS_MUSIC_ROM = 02 -->
+
+		<!-- REGION_CART_PROG_ROM  = 03 -->
+
+		<!-- REGION_CART_TILE_ROM  = 04 -->
+
+		<!-- REGION_CART_MUSIC_ROM = 05 -->
+
+		<!-- REGION_CART_A_ROM     = 06 -->
+
+		<!-- REGION_CART_B_ROM     = 07 -->
+
+		<!-- SYSTEM INFO -->
+		<part>00 00</part>
+
+		<!-- BIOS PROG -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+
+		<!-- BIOS TILE -->
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+
+		<!-- BIOS MUSIC -->
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG -->
+		<part>03 00200000 00100000</part>
+		<part name="pgm_p0101.u2" crc="b24f0c1e"/>
+
+		<!-- CART TILE -->
+		<part>04 00400000 00180000</part>
+		<part name="pgm_t0100.u8" crc="61425e1e"/>
+
+		<!-- CART MUSIC -->
+		<part>05 00200000 00400000</part>
+		<part name="pgm_m0100.u1" crc="e5c36c83"/>
+
+		<!-- A ROM -->
+		<part>06 01800000 00000000</part>
+		<part name="pgm_a0100-1.u5" crc="8b3bd88a"/>
+		<part name="pgm_a0101-1.u6" crc="3b9e9644"/>
+		<part name="pgm_a0102-1.u7" crc="069e2c38"/>
+		<part name="pgm_a0103-1.u8" crc="4460a3fd"/>
+		<part name="pgm_a0104-1.u11" crc="5f8abb56"/>
+		<part name="pgm_a0105-1.u12" crc="a17a7147"/>
+
+		<!-- B ROM -->
+		<part>07 00c00000 00000000</part>
+		<part name="pgm_b0100-1.u9" crc="69d2e48c"/>
+		<part name="pgm_b0101-1.u10" crc="0d587bf3"/>
+		<part name="pgm_b0102.u15" crc="43823c1e"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

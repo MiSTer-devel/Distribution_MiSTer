@@ -1,0 +1,60 @@
+<misterromdescription>
+	<n>Elevator Action (BA3, 4 PCB version, 1.1)</n>
+	<mameversion>0245</mameversion>
+	<setname>elevator</setname>
+	<parent>elevator</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1983</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Platform</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>horizontal</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Fire,Jump,Coin A,Start 1P,Coin B,Start 2P,Service,Pause"
+	         default="A,B,Select,Start,X,Y,L,R"/>
+	<switches default="00,7F,00,FF,00,00,00,00">
+		<dip bits="8,9" name="Bonus Life" ids="25000,20000,15000,10000"/>
+		<dip bits="10" name="Free Play" ids="On,Off"/>
+		<dip bits="11,12" name="Lives" ids="6,5,4,3"/>
+		<dip bits="14" name="Flip Screen" ids="On,Off"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="24,25" name="Difficulty" ids="Hard,Normal,Easy,Easiest"/>
+		<dip bits="28" name="Coinage Display" ids="InsertCoin,Coins/Credits"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="elevator.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="da775a24" name="ba3__01.2764.ic1"/>
+		<part crc="fbfd8b3a" name="ba3__02.2764.ic2"/>
+		<part crc="a2e69833" name="ba3__03-1.2764.ic3"/>
+		<part crc="2b78c462" name="ba3__04-1.2764.ic6"/>
+		<!-- Main CPU - Pass 2 (duplicate) [0x8000/0x8000] -->
+		<part crc="da775a24" name="ba3__01.2764.ic1"/>
+		<part crc="fbfd8b3a" name="ba3__02.2764.ic2"/>
+		<part crc="a2e69833" name="ba3__03-1.2764.ic3"/>
+		<part crc="2b78c462" name="ba3__04-1.2764.ic6"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="6c4ee58f" name="ba3__05.2764.ic4"/>
+		<part crc="41ab0afc" name="ba3__06.2764.ic5"/>
+		<part crc="efe43731" name="ba3__07.2764.ic9"/>
+		<part crc="3ca20696" name="ba3__08.2764.ic10"/>
+		<!-- Audio CPU ROMs [0x2000/0x4000] -->
+		<part crc="6d5f57cb" name="ba3__09.2732.ic70"/>
+		<part crc="f0a769a1" name="ba3__10.2732.ic71"/>
+		<!-- Padding audio: 0x2000 -->
+		<part repeat="0x2000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.ic22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+		<!-- MCU ROM [0x800] -->
+		<part crc="9ce75afc" name="ba3__11.mc68705p3.ic24"/>
+	</rom>
+	<rom index="1">
+		<part>4</part>
+	</rom>
+</misterromdescription>

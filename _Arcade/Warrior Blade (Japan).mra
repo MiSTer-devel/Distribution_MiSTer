@@ -1,0 +1,103 @@
+<misterromdescription>
+  <name>Warrior Blade - Rastan Saga Episode III (Japan)</name>
+  <setname>warriorb</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Darius2WarriorBlade</rbf>
+  <year>1991</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Platform / Fight</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <!--
+    Warrior Blade — Rastan Saga Episode III (Taito 1991).
+    Runs on warriorb.cpp hardware: single 68000 @ 16MHz, 2 TC0100SCN tile
+    chips, YM2610B (no ADPCM-B Delta-T), TC0510NIO I/O.
+  -->
+
+  <switches default="FF,FF">
+    <!-- DSWA (bits 0-7) — MAME warriorb input, coinage JAPAN_NEW -->
+    <dip bits="0,1"   ids="Most,More,Less,Normal"      name="Vitality Recovery"/>
+    <dip bits="2"     ids="On,Off"                      name="Service Mode"/>
+    <dip bits="3"     ids="Off,On"                      name="Demo Sounds"/>
+    <dip bits="4,5"   ids="3C/1C,2C/1C,1C/2C,1C/1C"     name="Coin A"/>
+    <dip bits="6,7"   ids="3C/1C,2C/1C,1C/2C,1C/1C"     name="Coin B"/>
+    <!-- DSWB (bits 8-15) -->
+    <dip bits="8,9"   ids="Hardest,Hard,Easy,Medium"    name="Difficulty"/>
+    <dip bits="10"    ids="50k then every 70k,50k only" name="Gold Sheep at"/>
+    <dip bits="11"    ids="Player/Mage,Player Only" name="Magic E. Loss"/>
+    <dip bits="12"    ids="Full,Normal"             name="Start Strength"/>
+    <dip bits="13"    ids="Always,On Crystal"       name="Magician Appears"/>
+    <dip bits="14"    ids="No,Yes"                      name="Allow Continue"/>
+    <dip bits="15"    ids="Long (14),Normal (10-14)"    name="Rounds"/>
+  </switches>
+
+  <!-- Board select: region index=1 (mod byte) caricata PRIMA dei ROM.
+       01 = warriorb (il core latcha board_warriorb prima del download ROM,
+       così SPRITE_BASE/TILE_BASE sono giusti). Darius2d/Sagaia = 00. -->
+  <rom index="1">
+    <part>01</part>
+  </rom>
+
+  <rom index="0" zip="warriorb.zip" md5="None">
+
+    <!-- ==================== Main CPU 68000 (2MB region) ====================
+         MAME warriorb_main_map: 0x000000-0x1FFFFF ROM
+         Program code 0x000000-0x0FFFFF (4 × 256KB interleaved bytes)
+         Data ROM      0x100000-0x1FFFFF (single 1MB ROM_LOAD16_WORD_SWAP)
+         MAME ROM_LOAD16_BYTE: even=HIGH (map="10"), odd=LOW (map="01") -->
+    <interleave output="16">
+      <part name="d24_20-1.74" crc="4452dc25" map="10"/>
+      <part name="d24_19-1.73" crc="15c16016" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="d24_21-1.76" crc="783ef8e1" map="10"/>
+      <part name="d24_18-1.71" crc="4502db60" map="01"/>
+    </interleave>
+
+    <!-- Data ROM 1MB (ROM_LOAD16_WORD_SWAP) -->
+    <interleave output="16">
+      <part name="d24-09.75" crc="ece5cc59" map="21"/>
+    </interleave>
+
+    <!-- ==================== Audio Z80 (128KB) ==================== -->
+    <part name="d24_17.69" crc="e41e4aae"/>
+
+    <!-- ==================== Sprite ROMs (4MB) ====================
+         ROM_LOAD64_WORD: 4 ROMs × 1MB interleaved per 64-bit word. -->
+    <interleave output="64">
+      <part name="d24-03.24" crc="46db9fd7" map="00000021"/>
+      <part name="d24-06.27" crc="918486fe" map="00002100"/>
+      <part name="d24-05.26" crc="9f414317" map="00210000"/>
+      <part name="d24-04.25" crc="148e0493" map="21000000"/>
+    </interleave>
+
+    <!-- ==================== Tile SCN chip 1 (2MB) ==================== -->
+    <interleave output="16">
+      <part name="d24-02.12" crc="9f50c271" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="d24-01.11" crc="326dcca9" map="12"/>
+    </interleave>
+
+    <!-- ==================== Tile SCN chip 2 (2MB) ====================
+         NOTA: d24-07 == d24-02 (same CRC). d24-08 invece e' diverso. -->
+    <interleave output="16">
+      <part name="d24-07.47" crc="9f50c271" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="d24-08.48" crc="1e6d1528" map="12"/>
+    </interleave>
+
+    <!-- ==================== YM2610B ADPCM-A (3MB) ====================
+         warriorb usa YM2610B (no ADPCM-B/Delta-T). Slot ADPCM-A allargato. -->
+    <part name="d24-12.107" crc="279203a1"/>
+    <part name="d24-10.95" crc="0e0c716d"/>
+    <part name="d24-11.118" crc="15362573"/>
+
+  </rom>
+</misterromdescription>

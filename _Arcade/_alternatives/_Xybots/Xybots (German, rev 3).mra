@@ -1,0 +1,88 @@
+<misterromdescription>
+    <name>Xybots (German, rev 3)</name>
+    <setname>xybotsg</setname>
+    <rbf>Xybots</rbf>
+    <mameversion>0288</mameversion>
+    <mratimestamp>20260906000000</mratimestamp>
+    <year>1987</year>
+    <manufacturer>Atari Games</manufacturer>
+    <region>Germany</region>
+    <players>2</players>
+    <!-- MAME ROT0: an upright horizontal monitor, no rotation in the core. -->
+    <rotation>horizontal</rotation>
+
+    <!-- DOWNLOAD STREAM MAP (the core loader's address map; it must match
+         rtl/mem/xybots_rom_loader.sv):
+           0x000000  0x030000  maincpu
+           0x030000  0x010000  jsa:cpu
+           0x040000  0x040000  tiles
+           0x080000  0x080000  sprites
+           0x100000  0x002000  chars
+           0x102000  0x000200  EEPROM
+         total 0x102200 bytes. -->
+    <rom index="0" zip="xybotsg.zip|xybots.zip" md5="none">
+        <!-- maincpu 0x000000 + 0x30000 : 68000 program, MAME LOAD16_BYTE.  Inside an
+             interleave output="16", map="01" supplies the FIRST byte of each output
+             word (big endian D15:8) and map="10" the second (D7:0), so the MAME even
+             ROM (17cd, 17b) takes map="01" and the odd ROM (19cd, 19b) map="10".
+             Getting this backwards byte swaps every opcode, so the 68000 reads a
+             garbage reset vector and runs nonsense from its first instruction.
+             MAME declares this region 0x90000, but only 0x30000 is ever loaded
+             and the 68000 map stops at 0x03FFFF, so the padding is not shipped. -->
+        <interleave output="16">
+            <part name="136054-3212.17cd" crc="4cac5d7c" map="01"/>
+            <part name="136054-3213.19cd" crc="bfcb0b00" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136054-3214.17b" crc="4ad35093" map="01"/>
+            <part name="136054-3215.19b" crc="3a2afbaf" map="10"/>
+        </interleave>
+        <!-- jsa:cpu 0x030000 + 0x10000 : 6502 sound program (Atari JSA I, YM2151 only) -->
+        <part name="136054-1116.2k" crc="3b9f155d"/>
+        <!-- tiles 0x040000 + 0x40000 : playfield graphics, 8x8x4 packed MSB.
+             12L is a 32K part that MAME ROM_RELOADs at 0x8000 so it fills a 64K
+             slot.  0x20000 to 0x2FFFF is the UNPOPULATED 9L socket, shipped as
+             FF fill. -->
+        <part name="136054-2102.12l" crc="c1309674"/>
+        <!-- ROM_RELOAD of the part above (mirror at 0x08000) -->
+        <part name="136054-2102.12l" crc="c1309674"/>
+        <part name="136054-2103.11l" crc="907c024d"/>
+        <!-- unpopulated socket: 0x20000 to 0x2FFFF -->
+        <part repeat="65536">FF</part>
+        <part name="136054-2117.8l" crc="0cc9b42d"/>
+        <!-- sprites 0x080000 + 0x80000 : motion objects, 8x8x4 packed MSB.  Only seven of
+             the eight MO ROM sockets are populated; 0x70000 to 0x7FFFF is the empty
+             eighth socket, shipped as FF fill.  The operator manual's Motion Object
+             Test lists pictures 0 to 37FF only, i.e. the game never reaches it. -->
+        <part name="136054-1105.2e" crc="315a4274"/>
+        <part name="136054-1106.2ef" crc="3d8c1dd2"/>
+        <part name="136054-1107.2f" crc="b7217da5"/>
+        <part name="136054-1108.2fj" crc="77ac65e1"/>
+        <part name="136054-1109.2jk" crc="1b482c53"/>
+        <part name="136054-1110.2k" crc="99665ff4"/>
+        <part name="136054-1111.2l" crc="416107ee"/>
+        <!-- unpopulated socket: 0x70000 to 0x7FFFF -->
+        <part repeat="65536">FF</part>
+        <!-- chars 0x100000 + 0x2000 : alphanumerics (2 bpp, 8x8), single 2764 at 5C -->
+        <part name="136054-1101.5c" crc="59c028a2"/>
+        <!-- X2804 EEPROM 0x200 at the stream tail, shipped ERASED like the Atari
+             System 1 and Arcade-Toobin_MiSTer MRAs: the game writes its own
+             defaults into a blank part via the self test.  No NVRAM data is
+             embedded in the RTL. -->
+        <part repeat="512">FF</part>
+    </rom>
+
+    <!-- Saved settings and bookkeeping are restored over the erased image above and
+         add the OSD "Save Settings" entry.  Xybots has no DIP switches: every option
+         lives in this EEPROM and is set from the self test. -->
+    <nvram index="2" size="512"/>
+
+    <!-- Cabinet controls in the core's J1 order.  These names OVERRIDE the core's own
+         J1 labels in the OSD mapping screen, so they are what the player reads.
+         Naming follows the OPERATOR MANUAL's Switch Test page (chapter 2), which
+         calls the knob controls "Turn Left" / "Turn Right"; MAME names the same two
+         inputs "Twist Left" / "Twist Right".  The stick is a normal 8 way with an
+         independently turning knob, so Turn Left/Right are separate switches and not
+         a stick direction.  Coin is on the JSA sound board (coins are swapped). -->
+    <buttons names="Fire,Turn Left,Turn Right,Start,Coin" default="A,L,R,Start,Select"/>
+</misterromdescription>

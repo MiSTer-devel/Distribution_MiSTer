@@ -1,0 +1,83 @@
+<misterromdescription>
+  <name>SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)</name>
+  <setname>grainbow</setname>
+  <mameversion>0264</mameversion>
+  <rbf>SDGundamRainbow</rbf>
+  <year>1993</year>
+  <manufacturer>Banpresto</manufacturer>
+  <category>Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,X,Start" names="Attack,Jump,Debug,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF,FF,FF">
+    <!-- DSW grainbow 1:1 MAME INPUT_PORTS(grainbow) legionna.cpp:727-.
+         Word 0 (bit 0-15) = DSW1 ($100740), word 1 (bit 16-31) = DSW2 ($10075C).
+         Active-low, default 0xFFFF/0xFFFF. -->
+    <dip bits="0,1"   ids="5,4,2,3"                                                     name="Lives"/>
+    <dip bits="2,3"   ids="4,4,0,2"                                                     name="Difficulty"/>
+    <dip bits="4,7"   ids="Free Play,8C 3C,5C 3C,3C 2C,2C 3C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C" name="Coin A"/>
+    <dip bits="8"     ids="On,Off"                                                      name="Flip Screen"/>
+    <dip bits="9"     ids="No,Yes"                                                      name="Demo Sounds"/>
+    <dip bits="15"    ids="On,Off"                                                      name="Service Mode"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="grainbow.zip" md5="None">
+    <!-- ============================================================
+         Layout SDRAM SDGundamRainbow (identico al layout Godzilla del core):
+           MAIN  0x000000 (1MB)   TXT/char 0x100000 (128KB)
+           BG    0x120000 (1MB)   FG       0x220000 (1MB)
+           SPR   0x320000 (2MB -> DDR3, region 6MB)
+           OKI   0x920000 (128KB) AUDIO    0x9A0000 (128KB z80)
+           COPX  0x9C0000 (256KB)
+         ============================================================ -->
+
+    <!-- MAIN 68k @ 0x000000 (1MB pieno): ROM_LOAD32_BYTE.
+         MAME: byte0=rb-p1.25, byte1=rb-p2.24, byte2=rb-p3.26, byte3=rb-p4.23.
+         Convention come Godzilla: map 0010/0001/1000/0100. -->
+    <interleave output="32">
+      <part name="rb-p1.25" crc="0995c511" map="0010"/>
+      <part name="rb-p2.24" crc="c9eb756f" map="0001"/>
+      <part name="rb-p3.26" crc="fe2f08a8" map="1000"/>
+      <part name="rb-p4.23" crc="f558962a" map="0100"/>
+    </interleave>
+
+    <!-- CHAR (text 8x8) @ 0x100000 (128KB): rb-f1.620 pari, rb-f2.615 dispari. -->
+    <interleave output="16">
+      <part name="rb-f1.620" crc="792c403d" map="01"/>
+      <part name="rb-f2.615" crc="a30e0903" map="10"/>
+    </interleave>
+
+    <!-- BACK (BG, condiviso con MG) @ 0x120000 (1MB): rb-bg-01.618 WORD_SWAP. -->
+    <interleave output="16"><part name="rb-bg-01.618" crc="6a4ca7e7" map="21"/></interleave>
+
+    <!-- FORE (FG) @ 0x220000 (1MB): rb-bg-2.619 WORD_SWAP. -->
+    <interleave output="16"><part name="rb-bg-2.619" crc="a9b5c85e" map="21"/></interleave>
+
+    <!-- SPRITE @ 0x320000 (2MB -> DDR3): rb-spr01 + rb-spr23 WORD_SWAP.
+         Pad fino a 0x920000 (region sprite 6MB nel layout). -->
+    <interleave output="16"><part name="rb-spr01.748" crc="11a3479d" map="21"/></interleave>
+    <interleave output="16"><part name="rb-spr23.756" crc="fd08a761" map="21"/></interleave>
+    <part repeat="0x400000">00</part>
+
+    <!-- OKI (ADPCM) @ 0x920000 (128KB, NO banking): rb-ad.922. Pad a 0x9A0000. -->
+    <interleave output="16"><part name="rb-ad.922" crc="a364cb42" map="21"/></interleave>
+    <part repeat="0x60000">00</part>
+
+    <!-- AUDIOCPU (Z80) @ 0x9A0000 (128KB region): rb-s.016 raw 64KB.
+         MAME layout: ROM_LOAD 0x8000 + CONTINUE 0x10000 + COPY (gestito dal core). -->
+    <interleave output="16"><part name="rb-s.016" crc="8439bf5b" map="21"/></interleave>
+    <part repeat="0x10000">00</part>
+
+    <!-- COPX (SEI300 LUT) @ 0x9C0000 (256KB): copx-d2.313 (CRC diverso dal godzilla). -->
+    <interleave output="16"><part name="copx-d2.313" crc="a6732ff9" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260722000000</mratimestamp>
+</misterromdescription>

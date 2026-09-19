@@ -1,0 +1,68 @@
+<misterromdescription>
+	<n>High Way Race</n>
+	<mameversion>0245</mameversion>
+	<setname>hwrace</setname>
+	<parent>hwrace</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1983</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Racing</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>vertical (ccw)</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Accelerate,Brake,Coin A,Start 1P,Coin B,Start 2P,Service,Pause"
+	         default="A,B,Select,Start,X,Y,L,R"/>
+	<switches default="00,7F,00,FF,00,00,00,00">
+		<dip bits="10" name="Free Play" ids="On,Off"/>
+		<dip bits="14" name="Flip Screen" ids="On,Off"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="13" name="Service Mode" ids="On,Off"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="28" name="Coinage Display" ids="Off,On"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="hwrace.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="8beec11f" name="hw_race.01"/>
+		<part crc="72ad099d" name="hw_race.02"/>
+		<part crc="d0c221d7" name="hw_race.03"/>
+		<part crc="eb97015b" name="hw_race.04"/>
+		<part crc="777c8007" name="hw_race.05"/>
+		<part crc="165f46a3" name="hw_race.06"/>
+		<part crc="53d7e323" name="hw_race.07"/>
+		<part crc="bdbc1208" name="hw_race.08"/>
+		<!-- Main CPU - Pass 2 (duplicate) [0x8000/0x8000] -->
+		<part crc="8beec11f" name="hw_race.01"/>
+		<part crc="72ad099d" name="hw_race.02"/>
+		<part crc="d0c221d7" name="hw_race.03"/>
+		<part crc="eb97015b" name="hw_race.04"/>
+		<part crc="777c8007" name="hw_race.05"/>
+		<part crc="165f46a3" name="hw_race.06"/>
+		<part crc="53d7e323" name="hw_race.07"/>
+		<part crc="bdbc1208" name="hw_race.08"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="345b9b88" name="hw_race.09"/>
+		<part crc="598a3c3e" name="hw_race.10"/>
+		<part crc="3f436a7d" name="hw_race.11"/>
+		<part crc="8694b2c6" name="hw_race.12"/>
+		<part crc="a0af7711" name="hw_race.13"/>
+		<part crc="9be0f556" name="hw_race.14"/>
+		<part crc="e1057eb7" name="hw_race.15"/>
+		<part crc="f7104668" name="hw_race.16"/>
+		<!-- Audio CPU ROMs [0x2000/0x4000] -->
+		<part crc="afe24f3e" name="hw_race.17"/>
+		<part crc="dbec897d" name="hw_race.18"/>
+		<!-- Padding audio: 0x2000 -->
+		<part repeat="0x2000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+	</rom>
+	<rom index="1">
+		<part>1</part>
+	</rom>
+</misterromdescription>

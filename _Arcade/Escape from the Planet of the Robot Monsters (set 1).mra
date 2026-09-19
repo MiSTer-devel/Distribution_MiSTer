@@ -1,0 +1,128 @@
+<misterromdescription>
+	<name>Escape from the Planet of the Robot Monsters (set 1)</name>
+	<setname>eprom</setname>
+	<mameversion>0254</mameversion>
+	<year>1989</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<category>Arcade</category>
+	<rbf>Escape</rbf>
+	<mameinfo parent="eprom" cpp="eprom" input="eprom"/>
+	<display type="raster" rotate="0"/>
+	<!-- On an MRA launch this element OVERRIDES the core's J1/jn lines, so
+	     it must mirror Arcade-Escape.sv exactly: seven buttons including the
+	     wrapper-level Pause, owner defaults Jump=Y(left) Fire=B(bottom)
+	     Duck=A(right) Bomb=X(top), Pause on the left shoulder.  Build 159
+	     shipped six with A,B,X,Y here and silently hid Pause. -->
+	<buttons names="Jump,Fire,Duck,Bomb,Start,Coin,Pause" default="Y,B,A,X,Start,Select,L"/>
+
+	<!--
+	  ROM STREAM LAYOUT
+
+	  The core writes this stream into SDRAM at the same byte offsets, with
+	  ONE transform: the sprite region is bit-inverted and repacked from four
+	  bit-planes to chunky 4bpp by the loader (rtl/escape_mister.v, SPRITE
+	  REPACK).  MRA has no primitive for either operation, and the planar to
+	  chunky repack is not expressible as an interleave, so the .mra's job is
+	  to deliver the four planes byte-adjacent and let the RTL finish it.
+	  See docs/MISTER.md "ROM mapping".
+
+	    0x000000  0x080000  maincpu   video 68000 program (even/odd)
+	    0x080000  0x020000  extra     second 68000 own program
+	    0x0A0000  0x040000  filler    (MAME leaves this region zeroed)
+	    0x0E0000  0x020000  extra     ROM_COPY of maincpu 0x60000
+	    0x100000  0x010000  jsa:cpu   6502 program + TMS5220 speech LPC
+	    0x110000  0x004000  chars     alphanumerics
+	    0x114000  0x00C000  filler
+	    0x120000  0x100000  spr_tiles four interleaved bit-planes
+
+	  map="01" is the FIRST byte of each interleaved word, i.e. MAME's even
+	  address, i.e. D15-D8 of the 68000 big-endian word.  Note the 0x60000
+	  pair is the one place Atari swapped the .40/.50 suffixes: there
+	  136069-2033.40k is the EVEN byte.
+	-->
+	<rom index="0" zip="eprom.zip" md5="none">
+
+		<!-- ================= maincpu 0x000000 - 0x07FFFF ================= -->
+		<!-- 0x00000 -->
+		<interleave output="16">
+			<part crc="08888dec" map="01" name="136069-3025.50a"/>
+			<part crc="29cb1e97" map="10" name="136069-3024.40a"/>
+		</interleave>
+		<!-- 0x20000 -->
+		<interleave output="16">
+			<part crc="702241c9" map="01" name="136069-4027.50b"/>
+			<part crc="fecbf9e2" map="10" name="136069-4026.40b"/>
+		</interleave>
+		<!-- 0x40000 -->
+		<interleave output="16">
+			<part crc="0f2f1502" map="01" name="136069-4029.50d"/>
+			<part crc="bc6f6ae8" map="10" name="136069-4028.40d"/>
+		</interleave>
+		<!-- 0x60000 - shared program, seen by both CPUs -->
+		<interleave output="16">
+			<part crc="130650f6" map="01" name="136069-2033.40k"/>
+			<part crc="1da21ed8" map="10" name="136069-2032.50k"/>
+		</interleave>
+
+		<!-- ============ extra CPU 0x080000 - 0x0FFFFF ==================== -->
+		<!-- own program at region 0x00000 -->
+		<interleave output="16">
+			<part crc="deff6469" map="01" name="136069-2035.10s"/>
+			<part crc="5d7afca2" map="10" name="136069-2034.10u"/>
+		</interleave>
+		<!-- region 0x20000 - 0x5FFFF: nothing loaded -->
+		<part repeat="262144">00</part>
+		<!-- region 0x60000: ROM_COPY( "maincpu", 0x60000, 0x60000, 0x20000 ) -->
+		<interleave output="16">
+			<part crc="130650f6" map="01" name="136069-2033.40k"/>
+			<part crc="1da21ed8" map="10" name="136069-2032.50k"/>
+		</interleave>
+
+		<!-- ============ JSA-I 6502 + speech 0x100000 ===================== -->
+		<part crc="86e93695" name="136069-1040.7b"/>
+
+		<!-- ============ alphanumerics 0x110000 ========================== -->
+		<part crc="409d818e" name="136069-1007.125d"/>
+		<part repeat="49152">00</part>
+
+		<!-- ============ sprite / tile graphics 0x120000 =================
+		     MAME: ROM_REGION( 0x100000, "spr_tiles", ROMREGION_INVERT ),
+		     decoded as RGN_FRAC(1,4) - four 256 KB bit-planes, plane 0 is the
+		     MSB.  Each block below interleaves the four chips that hold the
+		     SAME 64 KB slice of each plane, so the loader receives
+		     plane0,plane1,plane2,plane3 for every source index in a row and
+		     can build the chunky pixels without buffering.
+		     map 0001 = plane 0 (first byte of the group).
+		-->
+		<!-- slice 0: region 0x00000 / 0x40000 / 0x80000 / 0xC0000 -->
+		<interleave output="32">
+			<part crc="0de9d98d" map="0001" name="136069-1020.47s"/>
+			<part crc="602d939d" map="0010" name="136069-1016.76s"/>
+			<part crc="e7edcced" map="0100" name="136069-1012.47u"/>
+			<part crc="b0cead58" map="1000" name="136069-1008.76u"/>
+		</interleave>
+		<!-- slice 1: region 0x10000 / 0x50000 / 0x90000 / 0xD0000 -->
+		<interleave output="32">
+			<part crc="8eb106ad" map="0001" name="136069-1013.43s"/>
+			<part crc="f6c973af" map="0010" name="136069-1011.70s"/>
+			<part crc="9d3e144d" map="0100" name="136069-1010.43u"/>
+			<part crc="fbc3934b" map="1000" name="136069-1009.70u"/>
+		</interleave>
+		<!-- slice 2: region 0x20000 / 0x60000 / 0xA0000 / 0xE0000 -->
+		<interleave output="32">
+			<part crc="bf3d0e18" map="0001" name="136069-1018.38s"/>
+			<part crc="9cd52e30" map="0010" name="136069-1017.64s"/>
+			<part crc="23f40437" map="0100" name="136069-1015.38u"/>
+			<part crc="0e07493b" map="1000" name="136069-1014.64u"/>
+		</interleave>
+		<!-- slice 3: region 0x30000 / 0x70000 / 0xB0000 / 0xF0000 -->
+		<interleave output="32">
+			<part crc="48fb2e42" map="0001" name="136069-1023.32s"/>
+			<part crc="4e2c2e7e" map="0010" name="136069-1022.57s"/>
+			<part crc="2a47ff7b" map="0100" name="136069-1021.32u"/>
+			<part crc="34f8f0ed" map="1000" name="136069-1019.57u"/>
+		</interleave>
+
+	</rom>
+</misterromdescription>

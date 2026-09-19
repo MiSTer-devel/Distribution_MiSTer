@@ -1,0 +1,88 @@
+<misterromdescription>
+  <name>D-Con</name>
+  <setname>dcon</setname>
+  <mameversion>0264</mameversion>
+  <rbf>DCon</rbf>
+  <year>1992</year>
+  <manufacturer>Success</manufacturer>
+  <category>Shoot</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Fire,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- DSW (MAME dcon.cpp:367-415). Tutti gli "Unknown" esposti come DIP per
+         permettere all'utente di sperimentarli (default Off = bit=1).
+         bit 0-2 Coin A, bit 3-5 Coin B, bit 6-15 Unknown. -->
+    <dip bits="0,2" ids="5C 1C,4C 1C,3C 1C,2C 1C,1C 4C,1C 3C,1C 2C,1C 1C" name="Coin A"/>
+    <dip bits="3,5" ids="5C 1C,4C 1C,3C 1C,2C 1C,1C 4C,1C 3C,1C 2C,1C 1C" name="Coin B"/>
+    <dip bits="6"  ids="On,Off" name="DSW bit 6 (Unknown)"/>
+    <dip bits="7"  ids="On,Off" name="DSW bit 7 (Unknown)"/>
+    <dip bits="8"  ids="On,Off" name="DSW bit 8 (Unknown)"/>
+    <dip bits="9"  ids="On,Off" name="DSW bit 9 (Unknown)"/>
+    <dip bits="10" ids="On,Off" name="DSW bit 10 (Unknown)"/>
+    <dip bits="11" ids="On,Off" name="DSW bit 11 (Unknown)"/>
+    <dip bits="12" ids="On,Off" name="DSW bit 12 (Unknown)"/>
+    <dip bits="13" ids="On,Off" name="DSW bit 13 (Unknown)"/>
+    <!-- bit 14 usato come Service Mode virtuale dal core (esposto via OSD
+         invece del bottone HW SERVICE1) -->
+    <dip bits="14" ids="Off,On" name="Service Mode"/>
+    <dip bits="15" ids="On,Off" name="DSW bit 15 (Unknown)"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="dcon.zip" md5="None">
+    <!-- maincpu 512KB @ 0x000000 (interleaved word from 4× 128KB ROMs) -->
+    <interleave output="16">
+      <part name="p0-0" crc="a767ec15" map="10"/>
+      <part name="p0-1" crc="a7efa091" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="p1-0" crc="3ec1ef7d" map="10"/>
+      <part name="p1-1" crc="4b8de320" map="01"/>
+    </interleave>
+
+    <!-- txtiles 128KB @ 0x080000 — file order SWAPPED (fix1 prima, fix0 dopo)
+         per allineare con la convenzione GundamSD (a07 prima, a08 dopo).
+         Il pen decode in text_renderer è identico a GundamSD (Fix D3 swap),
+         quindi serve lo stesso ordering. fix1 = planes 2,3 MAME → charrom_lo,
+         fix0 = planes 0,1 MAME → charrom_hi. -->
+    <interleave output="16"><part name="fix1" crc="a0582115" map="21"/></interleave>
+    <interleave output="16"><part name="fix0" crc="ab30061f" map="21"/></interleave>
+
+    <!-- bgtiles 512KB @ 0x0A0000 -->
+    <interleave output="16"><part name="bg1" crc="eac43283" map="21"/></interleave>
+
+    <!-- fgtiles 512KB @ 0x120000 (MAME: bg3) -->
+    <interleave output="16"><part name="bg3" crc="1408a1e0" map="21"/></interleave>
+
+    <!-- mgtiles 512KB @ 0x1A0000 (MAME: bg2). Slot SDRAM da 1MB:
+         carichiamo solo i primi 512KB, secondo half resta non scritto (= 0). -->
+    <interleave output="16"><part name="bg2" crc="01864eb6" map="21"/></interleave>
+    <part repeat="0x80000">00</part>
+
+    <!-- sprites 2048KB @ 0x2A0000 (4× 512KB obj0..obj3) -->
+    <interleave output="16"><part name="obj0" crc="c3af37db" map="21"/></interleave>
+    <interleave output="16"><part name="obj1" crc="be1f53ba" map="21"/></interleave>
+    <interleave output="16"><part name="obj2" crc="24e0b51c" map="21"/></interleave>
+    <interleave output="16"><part name="obj3" crc="5274f02d" map="21"/></interleave>
+
+    <!-- oki 128KB @ 0x4A0000. Slot SDRAM da 256KB:
+         carichiamo solo i primi 128KB, secondo half resta non scritto. -->
+    <interleave output="16"><part name="pcm" crc="d2133b85" map="21"/></interleave>
+    <part repeat="0x20000">00</part>
+
+    <!-- audiocpu 64KB @ 0x4E0000 (Z80 fmsnd) — pattern interleave map=21.
+         File è 64KB. MAME layout interno (audiocpu region 128KB) ricostruito in RTL:
+           bank 0 (0x8000-0xFFFF Z80) → file[0x8000-0xFFFF]
+           bank 1 (0x8000-0xFFFF Z80) → file[0x0000-0x7FFF] alias -->
+    <interleave output="16"><part name="fmsnd" crc="50450faa" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260512000000</mratimestamp>
+</misterromdescription>

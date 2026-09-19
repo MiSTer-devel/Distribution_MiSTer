@@ -1,0 +1,89 @@
+<misterromdescription>
+  <name>Denjin Makai (set 2)</name>
+  <setname>denjinmka</setname>
+  <mameversion>0264</mameversion>
+  <rbf>DenjinMakai</rbf>
+  <year>1994</year>
+  <manufacturer>Winkysoft / Banpresto</manufacturer>
+  <category>Beat'em up</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF,FF,FF">
+    <!-- DSW denjinmk 1:1 MAME INPUT_PORTS(denjinmk) legionna.cpp.
+         Word 0 (bit 0-15) = DSW1 ($100740); word 1 = DSW2 ($10075C, "unused
+         according to the test mode" → resta FFFF). Active-low.
+         SW1:1-4 = Unknown in MAME: non esposti. -->
+    <dip bits="4"     ids="On,Off"                                                   name="Flip Screen"/>
+    <dip bits="5"     ids="No,Yes"                                                   name="Demo Sounds"/>
+    <dip bits="6"     ids="On,Off"                                                   name="Service Mode"/>
+    <dip bits="7"     ids="English,Japanese"                                         name="Language"/>
+    <dip bits="8,11"  ids="Free Play,4C 3C,4C 1C,3C 4C,3C 2C,3C 1C,3C 5C,2C 3C,2C 1C,1C 7C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,1C 1C" name="Coin A"/>
+    <dip bits="12,15" ids="Free Play,4C 3C,4C 1C,3C 4C,3C 2C,3C 1C,3C 5C,2C 3C,2C 1C,1C 7C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,1C 1C" name="Coin B"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="denjinmk.zip|denjinmka.zip" md5="None">
+    <!-- ============================================================
+         Layout Denjin Makai (offset byte nello stream ioctl):
+           MAIN  0x000000 (1MB)     CHAR  0x100000 (128KB)
+           BG    0x120000 (1MB)     FG    0x220000 (1MB)
+           MID   0x320000 (1MB)  <- REGIONE PROPRIA: denjinmk usa gfx_heatbrl,
+                                    il midground NON condivide la ROM del BG
+           SPR   0x420000 (5MB -> DDR3)
+           OKI   0x920000 (256KB)   AUDIO 0x9A0000 (128KB z80)
+           COPX  0x9C0000 (512KB)
+         ============================================================ -->
+
+    <!-- MAIN 68k @ 0x000000 (1MB pieno): ROM_LOAD32_BYTE.
+         MAME: byte0=rom1.025, byte1=rom2.024, byte2=rom3.026,
+         byte3=rom4.023 (set 2, sottocartella denjinmka/ nello zip merged). Convention famiglia: map 0010/0001/1000/0100. -->
+    <interleave output="32">
+      <part name="denjinmka/rom1.025" crc="44a648e8" map="0010"/>
+      <part name="denjinmka/rom2.024" crc="e5ee8fe0" map="0001"/>
+      <part name="denjinmka/rom3.026" crc="781b942e" map="1000"/>
+      <part name="denjinmka/rom4.023" crc="502a588b" map="0100"/>
+    </interleave>
+
+    <!-- CHAR (text 8x8) @ 0x100000 (128KB): denjin_6 pari, denjin_5 dispari. -->
+    <interleave output="16">
+      <part name="denjin_6.u0620" crc="e1f759b1" map="01"/>
+      <part name="denjin_5.u0615" crc="cc36af0d" map="10"/>
+    </interleave>
+
+    <!-- BACK (BG) @ 0x120000 (1MB): bg-1-ab.618 WORD_SWAP. -->
+    <interleave output="16"><part name="bg-1-ab.618" crc="eaad151a" map="21"/></interleave>
+
+    <!-- FORE (FG) @ 0x220000 (1MB): bg-3-ab.619 WORD_SWAP. -->
+    <interleave output="16"><part name="bg-3-ab.619" crc="de7366ee" map="21"/></interleave>
+
+    <!-- MID (MG) @ 0x320000 (1MB): bg-2-ab.617 WORD_SWAP, region "mid". -->
+    <interleave output="16"><part name="bg-2-ab.617" crc="40938f74" map="21"/></interleave>
+
+    <!-- SPRITE @ 0x420000 (5MB esatti -> DDR3), WORD_SWAP, banchi 0-9. -->
+    <interleave output="16"><part name="obj-0-3.748" crc="67c26a67" map="21"/></interleave>
+    <interleave output="16"><part name="obj-4-5.756" crc="01f8d4e6" map="21"/></interleave>
+    <interleave output="16"><part name="obj-6-7.743" crc="e5805757" map="21"/></interleave>
+    <interleave output="16"><part name="obj-8-9.757" crc="c8f7e1c9" map="21"/></interleave>
+
+    <!-- OKI (ADPCM) @ 0x920000 (256KB, NO banking): denjinmka/rom6.922 + pad. -->
+    <interleave output="16"><part name="denjinmka/rom6.922" crc="09e13213" map="21"/></interleave>
+    <part repeat="0x40000">00</part>
+
+    <!-- AUDIOCPU (Z80) @ 0x9A0000 (128KB region): denjinmka/rom5.016 raw 64KB.
+         MAME: ROM_LOAD 0x8000 + CONTINUE 0x10000 + COPY (banking nel core). -->
+    <interleave output="16"><part name="denjinmka/rom5.016" crc="7fe7e352" map="21"/></interleave>
+    <part repeat="0x10000">00</part>
+
+    <!-- COPX (SEI300 LUT) @ 0x9C0000 (512KB): copx-d2.313. -->
+    <interleave output="16"><part name="copx-d2.313" crc="7c52581b" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260727000000</mratimestamp>
+</misterromdescription>

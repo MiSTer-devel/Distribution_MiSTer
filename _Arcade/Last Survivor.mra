@@ -1,0 +1,83 @@
+<misterromdescription>
+  <name>Last Survivor</name>
+  <setname>lastsurv</setname>
+  <rbf>SegaXBoard</rbf>
+  <mameversion>0289</mameversion>
+  <year>1989</year>
+  <manufacturer>Sega</manufacturer>
+  <category>Shooter / Flight</category>
+  <rom index="0" zip="lastsurv.zip" md5="None">
+    <part>07 a1 08 00 70 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</part>
+    <!-- main -->
+      <interleave output="16">
+        <part name="epr-12046.ic58" crc="f94f3a1a" map="10"/>
+        <part name="epr-12047.ic63" crc="1b45c116" map="01"/>
+      </interleave>
+      <interleave output="16">
+        <part name="epr-12048.ic57" crc="648e38ca" map="10"/>
+        <part name="epr-12049.ic62" crc="6c5c4753" map="01"/>
+      </interleave>
+    <!-- sub -->
+      <interleave output="16">
+        <part name="epr-12050.ic20" crc="985a0f36" map="10"/>
+        <part name="epr-12051.ic29" crc="f967d5a8" map="01"/>
+      </interleave>
+      <interleave output="16">
+        <part name="epr-12052.ic21" crc="9f7a424d" map="10"/>
+        <part name="epr-12053.ic30" crc="efcf30f6" map="01"/>
+      </interleave>
+    <!-- z80 -->
+      <part name="epr-12054.ic17" crc="e9b39216"/>
+    <!-- road -->
+      <part repeat="65536">00</part>
+    <!-- pcm -->
+      <part name="epr-12058.ic11" crc="4671cb46"/>
+      <part name="epr-12059.ic12" crc="8c99aff4"/>
+      <part name="epr-12060.ic13" crc="7ed382b3"/>
+      <part repeat="131072">FF</part>
+    <!-- sprite -->
+      <interleave output="32">
+        <part name="mpr-12064.ic90" crc="84562a69" map="0001"/>
+        <part name="mpr-12063.ic94" crc="d163727c" map="0010"/>
+        <part name="mpr-12062.ic98" crc="6b57833b" map="0100"/>
+        <part name="mpr-12061.ic102" crc="8907d5ba" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-12068.ic91" crc="8b12d342" map="0001"/>
+        <part name="epr-12067.ic95" crc="1a1cdd89" map="0010"/>
+        <part name="epr-12066.ic99" crc="a91d16b5" map="0100"/>
+        <part name="epr-12065.ic103" crc="f4ce14c6" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-12072.ic92" crc="222064c8" map="0001"/>
+        <part name="epr-12071.ic96" crc="a329b78c" map="0010"/>
+        <part name="epr-12070.ic100" crc="97cc6706" map="0100"/>
+        <part name="epr-12069.ic104" crc="2c3ba66e" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-12076.ic93" crc="24f628e1" map="0001"/>
+        <part name="epr-12075.ic97" crc="69b3507f" map="0010"/>
+        <part name="epr-12074.ic101" crc="ee6cbb73" map="0100"/>
+        <part name="epr-12073.ic105" crc="167e6342" map="1000"/>
+      </interleave>
+      <part repeat="2097152">00</part>
+    <!-- tile -->
+      <part name="epr-12055.ic154" crc="150014a4"/>
+      <part name="epr-12056.ic153" crc="3cd4c306"/>
+      <part name="epr-12057.ic152" crc="37e91770"/>
+      <part repeat="65536">00</part>
+    <!-- key -->
+      <part name="317-0083.key" crc="dca0b9cc"/>
+  </rom>
+  <nvram index="3" size="32768"/>
+  <switches default="FF,BF" base="0">
+    <dip bits="0,3" name="Coin A" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="4,7" name="Coin B" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="8,9" name="I.D. No" ids="4,3,2,1"/>
+    <dip bits="10,11" name="Network" ids="Unused,On (4),On (2),Off"/>
+    <dip bits="12,13" name="Difficulty" ids="Hardest,Hard,Easy,Normal"/>
+    <dip bits="14" name="Demo Sounds" ids="On,Off"/>
+    <dip bits="15" name="Coin Chute" ids="Twin,Single"/>
+  </switches>
+  <buttons names="Attack,-,Start,Coin,Pause,Test,Service" default="A,B,Start,R,X,L,Select"/>
+</misterromdescription>

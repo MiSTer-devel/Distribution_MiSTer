@@ -1,0 +1,81 @@
+<misterromdescription>
+	<about author="Paul Priest" webpage="https://github.com/ppriest/Arcade-Fuuki_MiSTer" source="MAME fuukifg3.cpp"/>
+	<name>Asura Blade - Sword of Dynasty (Japan)</name>
+	<setname>asurabld</setname>
+	<mameversion>0289</mameversion>
+	<rbf>Fuuki</rbf>
+	<year>1998</year>
+	<manufacturer>Fuuki</manufacturer>
+	<category>Fight</category>
+	<rotation>horizontal</rotation>
+	<region>Japan</region>
+	<players>2</players>
+	<joystick>8-way</joystick>
+
+	<!-- Board select: bit 0 = FG-2 / FG-3, bit 1 = SYSTEM port wiring (gogomile / pbancho+asura). -->
+	<rom index="1"><part>03</part></rom>
+
+	<rom index="0" zip="asurabld.zip" md5="none" address="0x30000000">
+		<interleave output="32">
+			<part name="pgm3.u1" crc="053e9758" map="0001"/>
+			<part name="pgm2.u2" crc="16b656ca" map="0010"/>
+			<part name="pgm1.u3" crc="35104452" map="0100"/>
+			<part name="pgm0.u4" crc="68615497" map="1000"/>
+		</interleave>
+
+		<part name="srom.u7" crc="bb1deb89"/>
+
+		<interleave output="32">
+			<part name="bg1113.u23" crc="94338267" map="0012"/>
+			<part name="bg1012.u22" crc="d717a0a1" map="1200"/>
+		</interleave>
+
+		<interleave output="32">
+			<part name="bg2123.u24" crc="4acfc469" map="0012"/>
+			<part name="bg2022.u25" crc="ee312cd3" map="1200"/>
+		</interleave>
+
+		<interleave output="16">
+			<part name="map.u5" crc="e681155e" map="12"/>
+		</interleave>
+
+		<part repeat="0x400000">00</part>
+		<interleave output="16">
+			<part name="sp23.u14" crc="7df492eb" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="sp45.u15" crc="1890f42a" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="sp67.u16" crc="a48f1ef0" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="sp89.u17" crc="6b024362" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="spab.u18" crc="803d2d8c" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="spcd.u19" crc="42e5c26e" map="12"/>
+		</interleave>
+		<part repeat="0x400000">00</part>
+
+		<part name="pcm.u6" crc="ac72225a"/>
+	</rom>
+
+	<buttons names="Light,Medium,Heavy,-,Start,Coin,Pause" default="Y,B,A,Start,Select,R" count="3"/>
+
+	<switches default="3F,FF,FF,FF">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Blood Color" bits="1" ids="Green,Red"/>
+		<dip name="Demo Sounds" bits="2,3" ids="Both Off (dup),Both Off,Music Off,Both On"/>
+		<dip name="Timer" bits="4,5" ids="Slow,Fast,Very Fast,Medium"/>
+		<dip name="Coinage Mode" bits="6,7" ids="Joint,-,-,Split"/>
+		<!-- <dip name="Flip Screen" bits="16" ids="On,Off"/> -->
+		<dip name="Difficulty" bits="17,18,19" ids="Easiest,Hard,Easier,Hardest,Very Easy,Very Hard,Easy,Normal"/>
+		<dip name="Damage" bits="20,21" ids="150%,125%,75%,100%"/>
+		<dip name="Max Rounds" bits="22,23" ids="1,Error!!,5,3"/>
+		<dip name="Coin B" bits="24,25,26,27" ids="1C 1C (Free if both),2C 1C (dup),2C Start/1C Continue,1C 5C,1C 4C,1C 3C,1C 2C,Error!!,8C 1C,7C 1C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C"/>
+		<dip name="Coin A" bits="28,29,30,31" ids="1C 1C (Free if both),2C 1C (dup),2C Start/1C Continue,1C 5C,1C 4C,1C 3C,1C 2C,Error!!,8C 1C,7C 1C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C"/>
+	</switches>
+</misterromdescription>

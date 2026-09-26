@@ -1,0 +1,84 @@
+<misterromdescription>
+  <name>Guardians / Denjin Makai II</name>
+  <mratimestamp>202609250800</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>grdians</setname>
+  <rotation>horizontal</rotation>
+  <rbf>Guardians</rbf>
+  <about author="kandowontu and OpenAI Codex" webpage="https://github.com/kandowontu/Arcade-Guardians_MiSTer" />
+  <buttons names="Attack,Jump,Shot,Pause,Start,Coin,Service" default="A,B,X,Y,Start,Select,R" />
+  <switches default="ff,ff" base="8">
+    <dip bits="0,1" name="Difficulty" ids="Hardest,Hard,Easy,Normal" />
+    <dip bits="2" name="Bonus Life" ids="500000,300000" />
+    <dip bits="3" name="Title" ids="Denjin Makai II,Guardians" />
+    <dip bits="4,5" name="Lives" ids="4,3,1,2" />
+    <dip bits="6" name="Service Mode" ids="On,Off" />
+    <dip bits="7" name="Demo Sounds" ids="Off,On" />
+    <dip bits="8,9,10,11" name="Coin A" ids="Free Play,4C/3C,4C/1C,3C/4C,3C/2C,3C/1C,2C/5C,2C/3C,2C/1C,1C/7C,1C/6C,1C/5C,1C/4C,1C/3C,1C/2C,1C/1C" />
+    <dip bits="12,13,14,15" name="Coin B" ids="Free Play,4C/3C,4C/1C,3C/4C,3C/2C,3C/1C,2C/5C,2C/3C,2C/1C,1C/7C,1C/6C,1C/5C,1C/4C,1C/3C,1C/2C,1C/1C" />
+  </switches>
+  <!--
+    Standard MiSTer 16-byte cheat codes: flags, address, compare, replacement.
+    Addresses and values come from Pugsy's Guardians entry by pasky13.
+  -->
+  <cheats>
+    <cheat name="Infinite Credits">000000 10 002014F1 00000000 00000009</cheat>
+    <cheat name="Infinite Time">000000 10 00201312 00000000 0000009A</cheat>
+    <cheat name="P1 Infinite Lives">000000 10 00201629 00000000 0000000A</cheat>
+    <cheat name="P1 Infinite Energy">
+      000000 20 00203142 00000000 000002C0
+      000000 20 00203144 00000000 000002C0
+    </cheat>
+    <cheat name="P1 Infinite Power">
+      000000 20 00203146 00000000 000002C0
+      000000 20 00203148 00000000 000002C0
+    </cheat>
+    <cheat name="P1 Invincibility">000000 10 0020308F 00000000 00000002</cheat>
+    <cheat name="P1 Always Special">000000 20 0020314E 00000000 0000FFFF</cheat>
+    <cheat name="P2 Infinite Lives">000000 10 002016A9 00000000 00000004</cheat>
+    <cheat name="P2 Infinite Energy">
+      000000 20 00203342 00000000 000002C0
+      000000 20 00203344 00000000 000002C0
+    </cheat>
+    <cheat name="P2 Infinite Power">
+      000000 20 00203346 00000000 000002C0
+      000000 20 00203348 00000000 000002C0
+    </cheat>
+    <cheat name="P2 Invincibility">000000 10 0020328F 00000000 00000002</cheat>
+    <cheat name="P2 Always Special">000000 20 0020334E 00000000 0000FFFF</cheat>
+  </cheats>
+  <rom index="0" address="0x30000000" zip="grdians.zip" md5="580dde95d937dc00f9c32c3f7548ca7d">
+    <!-- 2 MiB TMP68301 program, byte-interleaved big-endian. -->
+    <interleave output="16">
+      <part name="u2.bin" crc="36adc6f2" map="01" />
+      <part name="u3.bin" crc="2704f416" map="10" />
+    </interleave>
+    <interleave output="16">
+      <part name="u4.bin" crc="bb52447b" map="01" />
+      <part name="u5.bin" crc="9c164a3b" map="10" />
+    </interleave>
+
+    <!-- 32 MiB DX-101 graphics region in its native 64-bit ROM-bus order. -->
+    <interleave output="64">
+      <part name="u16.bin" crc="6a65f265" map="00000021" />
+      <part name="u15.bin" crc="01672dcd" map="00002100" />
+      <part name="u18.bin" crc="967babf4" map="00210000" />
+      <part name="u17.bin" crc="0fad0629" map="21000000" />
+    </interleave>
+    <interleave output="64">
+      <part name="u20.bin" crc="a7226ab7" offset="0x200000" length="0x200000" map="00000021" />
+      <part name="u19.bin" crc="c0c998a0" offset="0x200000" length="0x200000" map="00002100" />
+      <part name="u22.bin" crc="6239997a" offset="0x200000" length="0x200000" map="00210000" />
+      <part name="u21.bin" crc="6f95e466" offset="0x200000" length="0x200000" map="21000000" />
+    </interleave>
+    <interleave output="64">
+      <part name="u20.bin" crc="a7226ab7" offset="0" length="0x200000" map="00000021" />
+      <part name="u19.bin" crc="c0c998a0" offset="0" length="0x200000" map="00002100" />
+      <part name="u22.bin" crc="6239997a" offset="0" length="0x200000" map="00210000" />
+      <part name="u21.bin" crc="6f95e466" offset="0" length="0x200000" map="21000000" />
+    </interleave>
+
+    <!-- 1 MiB X1-010 PCM sample ROM. -->
+    <part name="u32.bin" crc="cf0f3017" />
+  </rom>
+</misterromdescription>

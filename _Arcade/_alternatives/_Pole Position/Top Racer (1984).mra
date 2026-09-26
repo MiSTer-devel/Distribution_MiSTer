@@ -1,0 +1,126 @@
+<misterromdescription>
+    <name>Top Racer (1984)</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>yes</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Pole Position</series>
+    <year>1984</year>
+    <manufacturer>bootleg</manufacturer>
+    <category>Driving</category>
+
+    <setname>topracer</setname>
+    <parent>polepos</parent>
+    <mameversion>0289</mameversion>
+    <rbf>PolePosition</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <buttons names="Accelerate,Brake,Gear,Service Mode,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <rom index="0" md5="none" zip="topracer.zip|polepos.zip">
+        <!-- maincpu (Z80) 0x0000-0x2FFF -->
+        <part crc="94436b70" name="pp1_9b.6h"/>
+        <part crc="7174bcb7" name="136014.116"/>
+        <!-- sub1 (Z8002 #1), ROM_LOAD16_BYTE: even=HIGH=.8l, odd=LOW=.8m -->
+        <interleave output="16">
+            <part crc="6bd4ff6b" name="tr2b.bin" map="01"/>
+            <part crc="127f0750" name="tr1b.bin" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+        <!-- sub2 (Z8002 #2) -->
+        <interleave output="16">
+            <part crc="9d038ada" name="tr6b.bin" map="01"/>
+            <part crc="4e5f7b9c" name="tr5b.bin" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+    </rom>
+
+    <rom index="1" md5="none" zip="topracer.zip|polepos.zip">
+        <!-- chars / tiles / sprites / bigsprites(GAP) / road / scalelut -->
+        <part crc="b8217c96" name="tr28.bin"/>
+        <part crc="b8217c96" name="tr28.bin"/>
+        <part crc="c6e15c21" name="tr29.bin"/>
+        <part crc="c6e15c21" name="tr29.bin"/>
+        <part crc="9e1a9c3b" name="trus25.bin"/>
+        <part crc="3b39a176" name="trus26.bin"/>
+        <part crc="613ab0df" name="pp17.bin"/>
+        <part crc="f8e7f551" name="tr19.bin"/>
+        <part crc="17c798b0" name="tr21.bin"/>
+        <part repeat="8192">00</part>
+        <part crc="5fd933e3" name="pp18.bin"/>
+        <part crc="7053e219" name="tr20.bin"/>
+        <part crc="5fe9b365" name="tr22.bin"/>
+        <part repeat="8192">00</part>
+        <part crc="ee6b3315" name="136014.158"/>
+        <part crc="6d1e7042" name="136014.159"/>
+        <part crc="4e97f101" name="136014.134"/>
+        <part crc="a61bff15" name="136014.231"/>
+    </rom>
+
+    <rom index="2" md5="none" zip="topracer.zip|polepos.zip">
+        <part crc="f07ff2ad" name="136014.137"/>
+        <part crc="adbde7d7" name="136014.138"/>
+        <part crc="ddac786a" name="136014.139"/>
+        <part crc="5af3f710" name="7052-10.h15"/>
+        <part crc="8c90e36e" name="7052-11.j15"/>
+        <part crc="2d502464" name="136014.142"/>
+        <part crc="027aa62c" name="136014.143"/>
+        <part crc="1f8d0df3" name="136014.144"/>
+        <part crc="7afc7cfc" name="136014.145"/>
+        <part crc="2f1079ee" name="7122.e7"/>
+        <part crc="4330a51b" name="136014.135"/>
+        <part crc="4330a51b" name="136014.136"/>
+        <part crc="8568decc" name="136014.118"/>
+        <part crc="0e742cb1" name="7052-4.c14"/>
+    </rom>
+
+    <!-- Index 3: hiscore config -->
+    <rom index="3" md5="none">
+        <part>
+        01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+        00 00 30 00 07 F2 B0 95
+        </part>
+    </rom>
+
+    <!-- Index 4: nvram config -->
+    <rom index="4"></rom>
+    <nvram index="4" size="2034"></nvram>
+
+    <rom index="5" md5="none" zip="topracer.zip|polepos.zip">
+        <!-- engine sound, then 52xx voice padded to 0x8000 -->
+        <part crc="b5ad4d5f" name="136014.110"/>
+        <part crc="8fdd2f6f" name="136014.111"/>
+        <part crc="5b4cf05e" name="136014.106"/>
+        <part repeat="24576">00</part>
+    </rom>
+
+    <rom index="6" md5="none" zip="namco51.zip|namco52.zip|namco53.zip|namco54.zip">
+        <part crc="c2f57ef8" name="51xx.bin"/>
+        <part crc="b326fecb" name="53xx.bin"/>
+        <part crc="ee7357e0" name="54xx.bin"/>
+        <part crc="3257d11e" name="52xx.bin"/>
+    </rom>
+
+    <switches default="FF,6B" base="0">
+        <!-- DSWA -->
+        <dip name="Coin A"        bits="0,2"   ids="1C/5C,1C/6C,1C/3C,2C/1C,2C/3C,3C/1C,1C/2C,1C/1C"/>
+        <dip name="Coin B"        bits="3,4"   ids="2C/3C,1C/2C,2C/1C,1C/1C"/>
+        <dip name="Game Time"     bits="5,6"   ids="120 secs,100 secs,110 secs,90 secs"/>
+        <dip name="Racing Laps"   bits="7,7"   ids="4,3"/>
+        <!-- DSWB -->
+        <dip name="Extended Rank" bits="8,10"  ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Practice Rank" bits="11,13" ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Speed Unit"    bits="14,14" ids="On,Off"/>
+        <dip name="Demo Sounds"   bits="15,15" ids="On,Off"/>
+    </switches>
+
+    <remark>Top Racer (bootleg, 1984)</remark>
+    <mratimestamp>20260921000000</mratimestamp>
+</misterromdescription>

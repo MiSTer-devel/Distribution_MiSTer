@@ -1,0 +1,109 @@
+<misterromdescription>
+  <name>Darius II (Japan, rev 1)</name>
+  <setname>darius2</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Darius2NinjaWarriors</rbf>
+  <year>1989</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Shooter</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- DSWA (bits 0-7) — MAME darius2 input -->
+    <dip bits="0"   ids="On,Off"                       name="Difficulty Enhancement"/>
+    <dip bits="1"   ids="Fast,Normal"                  name="Auto Fire"/>
+    <dip bits="2"   ids="On,Off"                       name="Service Mode"/>
+    <dip bits="3"   ids="Off,On"                       name="Demo Sounds"/>
+    <dip bits="4,5" ids="2C/3C,2C/1C,1C/2C,1C/1C"      name="Coin A"/>
+    <dip bits="6,7" ids="2C/3C,2C/1C,1C/2C,1C/1C"      name="Coin B"/>
+    <!-- DSWB (bits 8-15) -->
+    <dip bits="8,9"   ids="Hardest,Hard,Easy,Medium"   name="Difficulty"/>
+    <dip bits="10,11" ids="every 1000k,every 900k,every 800k,every 700k" name="Bonus Life"/>
+    <dip bits="12,13" ids="6,5,4,3"                    name="Lives"/>
+    <dip bits="14"    ids="On,Off"                     name="Invulnerability (Cheat)"/>
+    <dip bits="15"    ids="No,Yes"                     name="Allow Continue"/>
+  </switches>
+
+  <!-- CONF_STR F directive for MiSTer ROM download -->
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <rom index="0" zip="darius2.zip" md5="None">
+
+    <!-- ==================== Main CPU 68000 (768KB) ==================== -->
+    <!-- 0x000000-0x0BFFFF: interleaved 16-bit pairs -->
+    <!-- MAME: even offset = HIGH byte (map="10"), odd offset = LOW byte (map="01") -->
+    <interleave output="16">
+      <part name="c07-32-1" crc="216c8f6a" map="10"/>
+      <part name="c07-29-1" crc="48de567f" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-31-1" crc="8279d2f8" map="10"/>
+      <part name="c07-30-1" crc="6122e400" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-27" crc="0a6f7b6c" map="10"/>
+      <part name="c07-25" crc="059f40ce" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-26" crc="1f411242" map="10"/>
+      <part name="c07-24" crc="486c9c20" map="01"/>
+    </interleave>
+
+    <!-- ==================== Sub CPU 68000 (384KB) ==================== -->
+    <!-- 0x0C0000-0x11FFFF: interleaved 16-bit pairs -->
+    <interleave output="16">
+      <part name="c07-35-1" crc="dd8c4723" map="10"/>
+      <part name="c07-38-1" crc="46afb85c" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-34-1" crc="296984b8" map="10"/>
+      <part name="c07-37-1" crc="8b7d461f" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-33-1" crc="2da03a3f" map="10"/>
+      <part name="c07-36-1" crc="02cf2b1c" map="01"/>
+    </interleave>
+
+    <!-- ==================== Audio Z80 ROM (128KB) ==================== -->
+    <!-- 0x120000-0x13FFFF -->
+    <part name="c07-28" crc="da304bc5"/>
+
+    <!-- ==================== Sprite ROM slot (2MB) ==================== -->
+    <!-- 0x140000-0x33FFFF: Darius 2 usa solo prima metà (1MB), pad vuoto.
+         map=12 per byte-swap word (plane mapping renderer "puro" MAME). -->
+    <interleave output="16">
+      <part name="c07-01" crc="3cf0f050" map="21"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-02" crc="75d16d4b" map="21"/>
+    </interleave>
+    <!-- Pad 1MB per riempire slot sprite 2MB -->
+    <part repeat="0x100000"> FF</part>
+
+    <!-- ==================== Tile SCN ROM (1MB) @ 0x340000 ==================== -->
+    <interleave output="16">
+      <part name="c07-03.12" crc="189bafce" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-04.11" crc="50421e81" map="12"/>
+    </interleave>
+
+    <!-- ==================== YM2610 ADPCM-A samples (1MB) @ 0x440000 ==================== -->
+    <part name="c07-10.95" crc="4bbe0ed9"/>
+    <part name="c07-11.96" crc="3c815699"/>
+    <!-- Pad 512KB per riempire slot ADPCM-A (1.5MB hardcoded nel loader audio_top).
+         Senza questo pad ADPCM-B a 0x540000 verrebbe interpretato come ADPCM-A. -->
+    <part repeat="0x80000"> FF</part>
+
+    <!-- ==================== YM2610 ADPCM-B / Delta-T (512KB) @ 0x5C0000 ==================== -->
+    <part name="c07-12.107" crc="e0b71258"/>
+
+  </rom>
+</misterromdescription>

@@ -1,0 +1,67 @@
+<misterromdescription>
+    <about author="alanswx and Videodr0me" webpage="https://github.com/MiSTer-devel/Arcade-SegaG80V_MiSTer"/>
+    <name>Space Fury (revision A)</name>
+    <setname>spacfurya</setname>
+	<rbf>SegaG80V</rbf>
+    <mameversion>0283</mameversion>
+    <rotation>horizontal</rotation>
+    <year>1981</year>
+    <manufacturer>Sega</manufacturer>
+    <category>Shooter</category>
+    <parent>spacfury</parent>
+    <players>2</players>
+    <joystick>2-way horizontal</joystick>
+    <num_buttons>2</num_buttons>
+    <!-- index 0: 48K program ROM at $0000, sin/cos PROM at $C000 -->
+    <rom index="0" zip="spacfurya.zip|spacfury.zip" md5="none">
+        <part name="969a.cpu-u25" crc="896a615c"/>
+        <part name="960a.prom-u1" crc="e1ea7964"/>
+        <part name="961a.prom-u2" crc="cdb04233"/>
+        <part name="962a.prom-u3" crc="5f03e632"/>
+        <part name="963a.prom-u4" crc="45a77b44"/>
+        <part name="964a.prom-u5" crc="ba008f8b"/>
+        <part name="965a.prom-u6" crc="78677d31"/>
+        <part name="966a.prom-u7" crc="a8a51105"/>
+        <part name="967a.prom-u8" crc="d60f667d"/>
+        <part name="968a.prom-u9" crc="aea85b6a"/>
+        <part repeat="28672">00</part>
+        <!-- $C000: sin/cos PROM, X-Y Timing board U39 -->
+        <part name="s-c.xyt-u39" crc="56484d19"/>
+        <!-- $C400: speech:cpu -->
+        <part name="808a.speech-u7" crc="5988c767"/>
+        <!-- $CC00: speech:data -->
+        <part name="970.speech-u6" crc="f3b47b36"/>
+        <part name="971.speech-u5" crc="e72bbe88"/>
+        <part name="972.speech-u4" crc="8b3da539"/>
+        <part repeat="4096">00</part>
+    </rom>
+
+    <!-- index 1: game identifier, decoded by rtl/sega_game_pkg.sv -->
+    <rom index="1">
+        <part>02</part>
+    </rom>
+
+    <!-- index 3: high-score RAM ranges and initialization guards -->
+    <rom index="3" md5="none">
+        <part>
+            00 00 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+            00 00 C9 24 3D 90 00 00
+            00 00 CF D2 1E 00 09 00
+        </part>
+    </rom>
+    <nvram index="4" size="91"/>
+
+    <!-- Two physical DIP banks plus a virtual self-test switch. -->
+    <switches default="8D,33,00">
+        <dip bits="0" ids="Cocktail,Upright" name="Cabinet"/>
+        <dip bits="1" ids="On,Off" name="Demo Sounds"/>
+        <dip bits="2,3" ids="2,3,4,5" name="Lives"/>
+        <dip bits="4,5" ids="Easy,Medium,Hard,Hardest" name="Difficulty"/>
+        <dip bits="6,7" ids="10000,20000,30000,40000" name="Bonus Life"/>
+        <dip bits="8,11" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin A"/>
+        <dip bits="12,15" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,1C/6Cr,2C/1Cr 5/3 6/4,2C/1Cr 4/3,1C/1Cr 5/6,1C/1Cr 4/5,1C/1Cr 2/3,1C/2Cr 5/11,1C/2Cr 4/9" name="Coin B"/>
+        <dip bits="16" ids="Trigger,Trigger" name="Self-Test"/>
+    </switches>
+
+    <buttons names="Fire,Thrust,-,-,Start 1,Start 2,Coin,Pause" default="A,B,Start,Select,R,L"/>
+</misterromdescription>

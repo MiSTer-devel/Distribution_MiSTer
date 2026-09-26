@@ -1,0 +1,126 @@
+<misterromdescription>
+    <name>Speed Up (Spanish bootleg)</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>yes</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Pole Position</series>
+    <year>1983</year>
+    <manufacturer>bootleg</manufacturer>
+    <category>Driving</category>
+
+    <setname>ppspeed</setname>
+    <parent>polepos</parent>
+    <mameversion>0289</mameversion>
+    <rbf>PolePosition</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <buttons names="Accelerate,Brake,Gear,Service Mode,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <rom index="0" md5="none" zip="ppspeed.zip|polepos.zip">
+        <!-- maincpu (Z80) 0x0000-0x2FFF -->
+        <part crc="538bd0cb" name="tr9b.bin"/>
+        <part crc="7174bcb7" name="tr10.bin"/>
+        <!-- sub1 (Z8002 #1), ROM_LOAD16_BYTE: even=HIGH=.8l, odd=LOW=.8m -->
+        <interleave output="16">
+            <part crc="6bd4ff6b" name="tr2b.bin" map="01"/>
+            <part crc="127f0750" name="tr1b.bin" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+        <!-- sub2 (Z8002 #2) -->
+        <interleave output="16">
+            <part crc="b3641d0c" name="tr6b.bin" map="01"/>
+            <part crc="4e5f7b9c" name="tr5b.bin" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+    </rom>
+
+    <rom index="1" md5="none" zip="ppspeed.zip|polepos.zip">
+        <!-- chars / tiles / sprites / bigsprites(GAP) / road / scalelut -->
+        <part crc="cd80b4c3" name="tr28.bin"/>
+        <part crc="cd80b4c3" name="tr28.bin"/>
+        <part crc="c6e15c21" name="tr29.bin"/>
+        <part crc="c6e15c21" name="tr29.bin"/>
+        <part crc="f44d33c1" name="tr25.bin"/>
+        <part crc="87e8482d" name="tr26.bin"/>
+        <part crc="613ab0df" name="tr17.bin"/>
+        <part crc="1ea04ccd" name="tr19.bin"/>
+        <part crc="bd7b4a62" name="tr21.bin"/>
+        <part repeat="8192">00</part>
+        <part crc="5fd933e3" name="tr18.bin"/>
+        <part crc="c572c6ed" name="tr20.bin"/>
+        <part crc="db1bcdd8" name="tr22.bin"/>
+        <part repeat="8192">00</part>
+        <part crc="ee6b3315" name="tr30.bin"/>
+        <part crc="6d1e7042" name="tr31.bin"/>
+        <part crc="4e97f101" name="tr32.bin"/>
+        <part crc="a61bff15" name="tr27.bin"/>
+    </rom>
+
+    <rom index="2" md5="none" zip="ppspeed.zip|polepos.zip">
+        <part crc="f07ff2ad" name="7052-7.k21"/>
+        <part crc="adbde7d7" name="7052-8.k20"/>
+        <part crc="ddac786a" name="7052-9.k19"/>
+        <part crc="5af3f710" name="7052-10.h15"/>
+        <part crc="8c90e36e" name="7052-11.j15"/>
+        <part crc="2d502464" name="7052-15.d1"/>
+        <part crc="027aa62c" name="7052-16.d2"/>
+        <part crc="1f8d0df3" name="7052-17.d3"/>
+        <part crc="7afc7cfc" name="7122.a19"/>
+        <part crc="2f1079ee" name="7122.e7"/>
+        <part crc="4330a51b" name="7051-13.l7"/>
+        <part crc="4330a51b" name="7051-14.l8"/>
+        <part crc="8568decc" name="7052-5.e9"/>
+        <part crc="0e742cb1" name="7052-4.c14"/>
+    </rom>
+
+    <!-- Index 3: hiscore config -->
+    <rom index="3" md5="none">
+        <part>
+        01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+        00 00 30 00 07 F2 B0 95
+        </part>
+    </rom>
+
+    <!-- Index 4: nvram config -->
+    <rom index="4"></rom>
+    <nvram index="4" size="2034"></nvram>
+
+    <rom index="5" md5="none" zip="ppspeed.zip|polepos.zip">
+        <!-- engine sound, then 52xx voice padded to 0x8000 -->
+        <part crc="b5ad4d5f" name="tr15.bin"/>
+        <part crc="8fdd2f6f" name="tr16.bin"/>
+        <part crc="5b4cf05e" name="tr11.b1"/>
+        <part repeat="24576">00</part>
+    </rom>
+
+    <rom index="6" md5="none" zip="namco51.zip|namco52.zip|namco53.zip|namco54.zip">
+        <part crc="c2f57ef8" name="51xx.bin"/>
+        <part crc="b326fecb" name="53xx.bin"/>
+        <part crc="ee7357e0" name="54xx.bin"/>
+        <part crc="3257d11e" name="52xx.bin"/>
+    </rom>
+
+    <switches default="FF,6B" base="0">
+        <!-- DSWA -->
+        <dip name="Coin A"        bits="0,2"   ids="1C/5C,1C/6C,1C/3C,2C/1C,2C/3C,3C/1C,1C/2C,1C/1C"/>
+        <dip name="Coin B"        bits="3,4"   ids="2C/3C,1C/2C,2C/1C,1C/1C"/>
+        <dip name="Game Time"     bits="5,6"   ids="120 secs,100 secs,110 secs,90 secs"/>
+        <dip name="Racing Laps"   bits="7,7"   ids="4,3"/>
+        <!-- DSWB -->
+        <dip name="Extended Rank" bits="8,10"  ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Practice Rank" bits="11,13" ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Speed Unit"    bits="14,14" ids="On,Off"/>
+        <dip name="Demo Sounds"   bits="15,15" ids="On,Off"/>
+    </switches>
+
+    <remark>Speed Up (bootleg, Spanish)</remark>
+    <mratimestamp>20260921000000</mratimestamp>
+</misterromdescription>

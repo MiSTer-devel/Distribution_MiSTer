@@ -1,0 +1,46 @@
+<misterromdescription>
+  <name>Star Soldier: Vanishing Earth</name>
+  <mratimestamp>20260717</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>starsldr</setname>
+  <year>1998</year>
+  <manufacturer>Hudson Soft / Seta</manufacturer>
+  <category>Shooter</category>
+  <rbf>Aleck64</rbf>
+
+  <buttons names="Button A,Button B,Start,-,Button C,-,-,Button D,-,-,Soft Reset,Coin,Service,Test,-,-" default="A,B,X,Y,Start,Select,R,L"/>
+
+  <!-- IN0 bits 31:16, shifted down to the core's 16-bit MRA DIP word. -->
+  <switches default="DF,7F">
+    <dip bits="15" name="Controller" ids="Joystick,3D"/>
+    <dip bits="13,14" name="Auto Level" ids="Fast 2,Fast 1,Slow,Normal"/>
+    <dip bits="11,12" name="Players" ids="1,2,4,3"/>
+    <dip bits="8,9,10" name="Coinage" ids="5C/1C,4C/1C,3C/1C,2C/1C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="7" name="DIP SW2 #8" ids="On,Off"/>
+    <dip bits="6" name="Language" ids="Japanese,English"/>
+    <dip bits="5" name="Demo Sounds" ids="On,Off"/>
+    <dip bits="4" name="Rapid" ids="Off,On"/>
+    <dip bits="2,3" name="Extend" ids="None,Every 70000000,Every 50000000,Every 30000000"/>
+    <dip bits="0,1" name="Difficulty" ids="Hard 2,Hard 1,Easy,Normal"/>
+  </switches>
+
+  <remark>
+    Requires starsldr.zip and the parent BIOS aleck64.zip in games/mame.
+    Uses two standard Aleck64 PIF gamepads. Controller defaults to the
+    factory digital Joystick setting; optional 3D mode uses the analog stick.
+  </remark>
+
+  <rom index="3" md5="51732053226742fa34292d18216cdb46">
+    <part>45 00</part>
+  </rom>
+  <rom index="0" zip="aleck64.zip" md5="4921d5f2165dee6e2496f4388c4c81da">
+    <part name="pifdata.bin" crc="5ec82be9"/>
+  </rom>
+  <rom index="1" address="0x32000000" zip="starsldr.zip" md5="none">
+    <interleave output="16">
+      <part name="nus-zhbj-0.u3" crc="a4edac93" map="12"/>
+    </interleave>
+    <patch offset="0x67c">00 00 00 00</patch>
+  </rom>
+  <nvram index="4" size="512"/>
+</misterromdescription>

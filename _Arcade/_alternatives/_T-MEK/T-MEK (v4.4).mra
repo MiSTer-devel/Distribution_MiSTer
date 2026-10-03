@@ -1,0 +1,94 @@
+<misterromdescription>
+	<name>T-MEK (v4.4)</name>
+	<mameversion>0289</mameversion>
+	<setname>tmek44</setname>
+	<rbf>PrimalRage</rbf>
+	<year>1994</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<mraauthor>Nortido</mraauthor>
+	<about author="Nortido" source="https://github.com/MiSTer-devel/Arcade-PrimalRage_MiSTer"/>
+	<rom index="0" zip="tmek44.zip|tmek.zip" md5="a25e219d00a8a5d88a70ab2581291ab9" address="0x38000000">
+		<!-- program ROM: 4 files of 128K, zero-filled to the fixed 2M program window -->
+		<interleave output="32">
+			<part name="0044b" crc="f7cc0590" map="0001"/>
+			<part name="0043b" crc="9fb8e072" map="0010"/>
+			<part name="0042b" crc="ce68a9b3" map="0100"/>
+			<part name="0041b" crc="b71ec759" map="1000"/>
+		</interleave>
+		<part repeat="0x180000">00</part>
+
+		<!-- tiles: 6 files of 512K, contiguous -->
+		<part name="0250" crc="56bd9f25"/>
+		<part name="0253a" crc="23e2f83d"/>
+		<part name="0251" crc="0d3b08f7"/>
+		<part name="0254a" crc="448aea87"/>
+		<part name="0252" crc="95a1c23b"/>
+		<part name="0255a" crc="f0fbb700"/>
+
+		<part name="0045a" crc="057a5304"/>
+
+		<!-- object ROM: 16M of byte pairs, zero-filled to the 32M stream slot so the boot ROM and sound ROM land at fixed offsets -->
+		<interleave output="16">
+			<part name="0301" crc="94524b5b" map="01"/>
+			<part name="0300" crc="8367ddac" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="0303" crc="3ac5b24f" map="01"/>
+			<part name="0302" crc="c03f1aa7" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="0305" crc="b012b8e9" map="01"/>
+			<part name="0304" crc="b053ef78" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="0307" crc="49c1a541" map="01"/>
+			<part name="0306" crc="d086f149" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="0309" crc="e095ecb3" map="01"/>
+			<part name="0308" crc="97033c8a" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="0311" crc="05afb2dc" map="01"/>
+			<part name="0310" crc="e056a0c3" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="0313" crc="a8cf049d" map="01"/>
+			<part name="0312" crc="cc224dae" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="0315" crc="28e97d06" map="01"/>
+			<part name="0314" crc="4f01db8d" map="10"/>
+		</interleave>
+		<part repeat="0x1000000">00</part>
+
+		<!-- C31 boot ROM, plain byte copy, no interleave -->
+		<part name="0078a" crc="314d736f"/>
+
+		<!-- sound ROM: CAGE region 0x400000-0xBFFFFF (8M), laid out dword for dword as the C31 sees it; 0077 is one 2M file split into two 1M halves by offset and length -->
+		<interleave output="32">
+			<part name="0077" crc="8f650f8b" length="0x100000" map="0021"/>
+			<part name="2501a" crc="98e51103" map="0100"/>
+			<part name="2500a" crc="49c0136c" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part name="0077" crc="8f650f8b" offset="0x100000" map="0021"/>
+			<part name="2503a" crc="4376f3eb" map="0100"/>
+			<part name="2502a" crc="a48e6a5f" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part name="0076" crc="74dffe2d" map="0021"/>
+			<part name="0074" crc="8dfc6ce0" map="2100"/>
+		</interleave>
+	</rom>
+
+	<!-- mod byte bit 1: 1 selects T-MEK; Primal Rage sets send bit 0 only -->
+	<rom index="1">
+		<part>02</part>
+	</rom>
+
+	<nvram index="4" size="2048"/>
+
+	<buttons names="Left Trigger,Left Thumb,Right Trigger,Right Thumb,Coin,Start" default="L,Y,R,A,Select,Start"/>
+</misterromdescription>

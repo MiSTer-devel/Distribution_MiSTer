@@ -1,0 +1,173 @@
+<misterromdescription>
+    <name>Skull &amp; Crossbones</name>
+    <setname>skullxbo</setname>
+    <rbf>SkullXBones</rbf>
+    <mameversion>0289</mameversion>
+    <mratimestamp>20261003000000</mratimestamp>
+    <year>1989</year>
+    <manufacturer>Atari Games</manufacturer>
+    <category>Fighter</category>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <platform>Atari Skull &amp; Crossbones (A046903-01)</platform>
+    <players>2</players>
+    <!-- MAME ROT0 and a 14.318 MHz dot clock over a 912 x 262 raster with
+         672 x 240 visible: a horizontal 15 kHz monitor, no rotation. -->
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+
+    <!-- MAME 0.289 calls this set "Skull & Crossbones (rev 5)": program revision 5.
+         All five sets (skullxbo, skullxbo4, skullxbo3, skullxbo2, skullxbo1)
+         are the SAME hardware and differ only in the four program ROMs at
+         228A 228C 213A 213C; the other 43 files are identical across every
+         set.  The four clones are under _alternatives/. -->
+
+    <!-- DOWNLOAD STREAM MAP (the core loader's address map):
+           start     size      region
+           0x000000  0x080000  maincpu
+           0x080000  0x0A0000  playfield
+           0x120000  0x190000  sprites
+           0x2B0000  0x008000  chars
+           0x2B8000  0x010000  jsa:cpu
+           0x2C8000  0x040000  jsa:oki1
+         total 0x308000 bytes (3178496).
+         Generated from MAME's skullxbo.cpp ROM_START(skullxbo).
+         The md5 below is what MiSTer Main computes: the MD5 of every part's
+         RAW bytes in document order, BEFORE interleaving (an interleaved
+         pair hashes as the map=01 file then the map=10 file).  It is not
+         the MD5 of the assembled stream.  On a mismatch Main does not send
+         the ROM at all. -->
+    <rom index="0" zip="skullxbo.zip" md5="757b965f08959c2178d9f0c5a77b5b47">
+        <!-- maincpu 0x000000 + 0x80000 : 68000 program space (512 KB), MAME LOAD16_BYTE.
+             Inside an interleave output="16", map="01" supplies the FIRST byte of
+             each output word (big endian D15:8) and map="10" the second (D7:0),
+             so the stream is byte interleaved exactly as the 68000 sees memory.
+             Schematic sheet 3 puts the UPPER byte (BD15:8) in the `A` column of
+             sockets and the LOWER byte (BD7:0) in the `C` column, which is
+             MAME's even/odd LOAD16_BYTE pair: 228A/213A/200A/185A load at EVEN
+             offsets and take map="01"; 228C/213C/200C/185C load at ODD offsets
+             and take map="10".  Sockets, in LS139 220F /ROM3:0 order:
+               /ROM0  0x000000  228A + 228C  27512 pair
+               /ROM1  0x020000  213A + 213C  27512 pair
+               /ROM2  0x040000  200A + 200C  27512 pair
+               /ROM3  0x060000  185A + 185C  27512 sockets; the 32 KB images
+                                             fill only 0x070000 to 0x07FFFF
+             The opposite mapping would byte-swap every word, so the 68000 would
+             read a garbage reset vector and run nonsense from its first
+             instruction, with no error anywhere. -->
+        <interleave output="16">
+            <part name="136072-5150.228a" crc="9546d88b" map="01"/>
+            <part name="136072-5151.228c" crc="b9ed8bd4" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136072-5152.213a" crc="c07e44fc" map="01"/>
+            <part name="136072-5153.213c" crc="fef8297f" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136072-1154.200a" crc="de4101a3" map="01"/>
+            <part name="136072-1155.200c" crc="78c0f6ad" map="10"/>
+        </interleave>
+        <!-- 0x060000 to 0x06FFFF: the lower half of the /ROM3 window (LS139 220F,
+             A18:17 = 11).  The 185A/185C ROM images are 32 KB each and fill only
+             0x070000 to 0x07FFFF.  0xFF is what an unprogrammed EPROM reads; the
+             program is not known to read this range.  Shipped as 0xFF x 65536. -->
+        <part repeat="65536">FF</part>
+        <interleave output="16">
+            <part name="136072-1156.185a" crc="cde16b55" map="01"/>
+            <part name="136072-1157.185c" crc="31c77376" map="10"/>
+        </interleave>
+        <!-- playfield 0x080000 + 0xA0000 : the ten playfield stamp 27512s, in MAME's load
+             order, which is the board's bank order: sockets 180P 193P 208P 221P
+             235P then 180R 193R 208R 221R 235R (banks 0 to 4 of the P column
+             then of the R column; bank 5 at 250P/250R is unpopulated and is not
+             part of the region).  A fetch reads one P and one R device for 16
+             bits = four 4 bpp pixels.
+             POLARITY: MAME declares this region ROMREGION_INVERT and complements
+             every byte after loading, because its gfx decoder wants active high
+             pens.  This MRA does not invert: the stream holds the raw bytes as
+             they sit on the chips, and the core inverts them where the board
+             does, in the SOS-1 shifter at 195N. -->
+        <part name="136072-2129.180p" crc="36b1a578"/>
+        <part name="136072-2131.193p" crc="7b7c04a1"/>
+        <part name="136072-2133.208p" crc="e03fe4d9"/>
+        <part name="136072-2135.221p" crc="7d497110"/>
+        <part name="136072-2137.235p" crc="f91e7872"/>
+        <part name="136072-2130.180r" crc="b25368cc"/>
+        <part name="136072-2132.193r" crc="112f2d20"/>
+        <part name="136072-2134.208r" crc="84884ed6"/>
+        <part name="136072-2136.221r" crc="bc028690"/>
+        <part name="136072-2138.235r" crc="60cec955"/>
+        <!-- sprites 0x120000 + 0x190000 : the 23 motion object stamp 27512s at MAME's
+             offsets.  MAME's region is five RGN_FRAC(1,5) planes of 0x50000,
+             one per MO bit plane; the last plane holds only three devices, so
+             0x170000 to 0x18FFFF is empty and ships as 0x00 (see the fill
+             below).  Raw bytes: MAME does not invert this region either. -->
+        <part name="136072-1102.13r" crc="90becdfa"/>
+        <part name="136072-1104.28r" crc="33609071"/>
+        <part name="136072-1106.41r" crc="71962e9f"/>
+        <part name="136072-1101.13p" crc="4d41701e"/>
+        <part name="136072-1103.28p" crc="3011da3b"/>
+        <part name="136072-1108.53r" crc="386c7edc"/>
+        <part name="136072-1110.67r" crc="a54d16e6"/>
+        <part name="136072-1112.81r" crc="669411f6"/>
+        <part name="136072-1107.53p" crc="caaeb57a"/>
+        <part name="136072-1109.67p" crc="61cb4e28"/>
+        <part name="136072-1114.95r" crc="e340d5a1"/>
+        <part name="136072-1116.109r" crc="f25b8aca"/>
+        <part name="136072-1118.123r" crc="8cf73585"/>
+        <part name="136072-1113.95p" crc="899b59af"/>
+        <part name="136072-1115.109p" crc="cf4fd19a"/>
+        <part name="136072-1120.137r" crc="fde7c03d"/>
+        <part name="136072-1122.151r" crc="6ff6a9f2"/>
+        <part name="136072-1124.165r" crc="f11909f1"/>
+        <part name="136072-1119.137p" crc="6f8003a1"/>
+        <part name="136072-1121.151p" crc="8ff0a1ec"/>
+        <part name="136072-1125.123n" crc="3aa7c756"/>
+        <part name="136072-1126.137n" crc="cb82c9aa"/>
+        <part name="136072-1128.151n" crc="dce32863"/>
+        <!-- 0x170000 to 0x18FFFF: MO plane 4 tail, empty sockets.  The board's
+             pull-downs read 0x00 here, as does MAME (ROMREGION_ERASE00).  Shipped as
+             0x00 x 131072. -->
+        <part repeat="131072">00</part>
+        <!-- chars 0x2B0000 + 0x8000 : the alphanumerics 27256 at 250K (sheet 5), 8x8 2 bpp
+             characters drawn 16x8 on screen.  Raw bytes. -->
+        <part name="136072-2141.250k" crc="60d6d6df"/>
+        <!-- jsa:cpu 0x2B8000 + 0x10000 : the JSA Audio II 6502 program, the 27512 at 1B on
+             the A047184-02 audio PCB.  The 6502 sees ROM 0x4000 to 0xFFFF at the
+             same addresses; its 0x3000 to 0x3FFF window shows one of the four
+             4 KB pages at ROM 0x0000 to 0x3FFF, picked by the BA13/BA12 bits of
+             the LS273 at 4D (write 0x2A04, /WRIO). -->
+        <part name="136072-1149.1b" crc="8d730e7a"/>
+        <!-- jsa:oki1 0x2C8000 + 0x40000 : the four MSM6295 sample 27512s, in MAME's load
+             order 7K 7J 7E 7D.  The MSM6295 addresses all 256 KB directly (18
+             address bits, no banking on the JSA II); each 27512 is one 64 KB
+             quarter. -->
+        <part name="136072-1145.7k" crc="d9475d58"/>
+        <part name="136072-1146.7j" crc="133e6aef"/>
+        <part name="136072-1147.7e" crc="ba4d556e"/>
+        <part name="136072-1148.7d" crc="c48df49a"/>
+    </rom>
+
+    <!-- NVRAM: the 28C16 EEPROM at 170A on index 2
+         (0x800 = 2048 bytes, seen by the 68000 as the ODD bytes of
+         0xFF6001 to 0xFF6FFF, write enabled only after a write to 0xFF0C00 and
+         re-locked by /WL after the write).  This element opens MiSTer Main's
+         index-2 save channel and adds the OSD "Save Settings" entry.
+         The EEPROM is not part of the index-0 download above.  With no saved
+         file it starts erased, like a new part, and the game writes its own
+         defaults on the first boot. -->
+    <nvram index="2" size="2048"/>
+
+    <!-- Cabinet controls: exactly the core's CONF_STR J1 list in
+         Arcade-SkullXBones.sv ("J1,Sword,Turn,Start,Coin;").  These names
+         REPLACE the core's J1 labels in the OSD mapping screen and set how many
+         buttons are mapped, so a shorter list shifts Coin onto another bit.
+         Each player has an 8-way joystick, SWORD (D8) and TURN (D9).  Start
+         (D10, the JAMMA start pin, which the manual calls AUX 2, development
+         only) is wired on the board and offered for mapping; the game is not
+         known to use it.  AUX 1 (D11, JAMMA button 3) is not offered and the
+         core holds it released.  The coin switches are read by the JSA II
+         6502 on /RDIO, one per pad. -->
+    <buttons names="Sword,Turn,Start,Coin" default="A,B,Start,Select"/>
+</misterromdescription>

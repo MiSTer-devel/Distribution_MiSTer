@@ -1,0 +1,85 @@
+<misterromdescription>
+	<about author="Paul Priest" webpage="https://github.com/ppriest/Arcade-Fuuki_MiSTer" source="MAME fuukifg3.cpp"/>
+	<name>Asura Buster - Eternal Warriors (Japan, set 1)</name>
+	<setname>asurabusj</setname>
+	<mameversion>0289</mameversion>
+	<rbf>Fuuki</rbf>
+	<year>2000</year>
+	<manufacturer>Fuuki</manufacturer>
+	<category>Fight</category>
+	<rotation>horizontal</rotation>
+	<region>Japan</region>
+	<players>2</players>
+	<joystick>8-way</joystick>
+
+	<!-- Board select: bit 0 = FG-2 / FG-3, bit 1 = SYSTEM port wiring (gogomile / pbancho+asura). -->
+	<rom index="1"><part>03</part></rom>
+
+	<rom index="0" zip="asurabusj.zip|asurabus.zip" md5="none" address="0x30000000">
+		<interleave output="32">
+			<part name="pgm3.u1" crc="2c6b5271" map="0001"/>
+			<part name="pgm2.u2" crc="8f8694ec" map="0010"/>
+			<part name="pgm1.u3" crc="0a040f0f" map="0100"/>
+			<part name="pgm0.u4" crc="9b71e9d8" map="1000"/>
+		</interleave>
+
+		<part name="srom.u7" crc="368da389"/>
+
+		<interleave output="32">
+			<part name="bg1113.u23" crc="5f8657e6" map="0012"/>
+			<part name="bg1012.u22" crc="e3fb9af0" map="1200"/>
+		</interleave>
+
+		<interleave output="32">
+			<part name="bg2123.u24" crc="c4ebb86b" map="0012"/>
+			<part name="bg2022.u25" crc="f46eda52" map="1200"/>
+		</interleave>
+
+		<interleave output="16">
+			<part name="map.u5" crc="bd179dc5" map="12"/>
+		</interleave>
+
+		<interleave output="16">
+			<part name="sp01.u13" crc="5edea463" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="sp23.u14" crc="91b1b0de" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="sp45.u15" crc="96c69aac" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="sp67.u16" crc="7c3d83bf" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="sp89.u17" crc="cb1e14f8" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="spab.u18" crc="e5a4608d" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="spcd.u19" crc="99bfbe32" map="12"/>
+		</interleave>
+		<interleave output="16">
+			<part name="spef.u20" crc="c9c799cc" map="12"/>
+		</interleave>
+
+		<part name="opm.u6" crc="31b05be4"/>
+	</rom>
+
+	<buttons names="Light,Medium,Heavy,-,Start,Coin,Pause" default="Y,B,A,Start,Select,R" count="3"/>
+
+	<switches default="3F,FF,FF,FF">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Blood Color" bits="1" ids="Green,Red"/>
+		<dip name="Demo Sounds" bits="2,3" ids="Both Off,Music Off,Sounds Off,Both On"/>
+		<dip name="Timer" bits="4,5" ids="Slow,Fast,Very Fast,Medium"/>
+		<dip name="Coinage Mode" bits="6,7" ids="Joint,-,-,Split"/>
+		<!-- <dip name="Flip Screen" bits="16" ids="On,Off"/> -->
+		<dip name="Difficulty" bits="17,18,19" ids="Easiest,Hard,Easier,Hardest,Very Easy,Very Hard,Easy,Normal"/>
+		<dip name="Damage" bits="20,21" ids="150%,125%,75%,100%"/>
+		<dip name="Max Rounds" bits="22,23" ids="1,Error!!,5,3"/>
+		<dip name="Coin B" bits="24,25,26,27" ids="1C 1C (Free if both),2C 1C (dup),2C Start/1C Continue,1C 5C,1C 4C,1C 3C,1C 2C,Error!!,8C 1C,7C 1C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C"/>
+		<dip name="Coin A" bits="28,29,30,31" ids="1C 1C (Free if both),2C 1C (dup),2C Start/1C Continue,1C 5C,1C 4C,1C 3C,1C 2C,Error!!,8C 1C,7C 1C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C"/>
+	</switches>
+</misterromdescription>

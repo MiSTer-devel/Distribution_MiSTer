@@ -1,0 +1,75 @@
+<misterromdescription>
+	<name>Pig Out: Dine Like a Swine! (rev 2?)</name>
+	<mameversion>0.257</mameversion>
+	<setname>pigout</setname>
+	<year>1990</year>
+	<manufacturer>Leland Corp.</manufacturer>
+	<category>Platform</category>
+	<rbf>Leland</rbf>
+	<rotation>horizontal</rotation>
+
+	<rom index="0" address="0x30000000" zip="pigout.zip" md5="None" type="merged">
+		<part>4C 01 03 02 01 10 00 00 00 00 00 00 00 00 00 00</part>
+
+		<part name="03-29020-0x.u58t" crc="8fe4b683" length="0x10000"/>
+		<part name="03-29021-0x.u59t" crc="ab907762" length="0x10000"/>
+		<part name="03-29019-01.u57t" crc="c22be0ff" length="0x10000"/>
+		<part repeat="0xD0000">00</part>
+
+		<part name="03-29000-01.u3"   crc="af213cb7" length="0x2000"/>
+		<part repeat="0xE000">00</part>
+		<part name="03-29001-01.u2t"  crc="b23164c6" length="0x10000"/>
+		<part name="03-29002-01.u3t"  crc="d93f105f" length="0x10000"/>
+		<part name="03-29003-01.u4t"  crc="b7c47bfe" length="0x10000"/>
+		<part name="03-29004-01.u5t"  crc="d9b9dfbf" length="0x10000"/>
+		<part name="03-29005-01.u6t"  crc="728c7c1a" length="0x10000"/>
+		<part name="03-29006-01.u7t"  crc="393bd990" length="0x10000"/>
+		<part name="03-29007-01.u8t"  crc="cb9ffaad" length="0x10000"/>
+		<part repeat="0x180000">00</part>
+
+		<part repeat="0x40000">00</part>
+		<interleave output="16">
+			<part name="03-29022-01.u13t" crc="9448c389" length="0x10000" map="01"/>
+			<part name="03-29025-01.u25t" crc="92cd2617" length="0x10000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="03-29023-01.u14t" crc="30678e93" length="0x10000" map="01"/>
+			<part name="03-29026-01.u26t" crc="ab57de8f" length="0x10000" map="10"/>
+		</interleave>
+		<part repeat="0x60000">00</part>
+		<interleave output="16">
+			<part name="03-29024-01.u15t" crc="1c60d58b" length="0x10000" map="01"/>
+			<part name="03-29027-01.u27t" crc="37a8156e" length="0x10000" map="10"/>
+		</interleave>
+
+		<part name="03-29016-01.u93" crc="f102a04d" length="0x8000"/>
+		<part name="03-29017-01.u94" crc="ec63c015" length="0x8000"/>
+		<part name="03-29018-01.u95" crc="ba6e797e" length="0x8000"/>
+		<part repeat="0x1E8000">00</part>
+
+		<part name="03-29011-01.u70" crc="7db4eaa1" length="0x4000"/>
+		<part name="03-29015-01.u92" crc="20fa57bb" length="0x4000"/>
+		<part name="03-29010-01.u69" crc="a16886f3" length="0x4000"/>
+		<part name="03-29014-01.u91" crc="482a3581" length="0x4000"/>
+		<part name="03-29009-01.u68" crc="7b62a3ed" length="0x4000"/>
+		<part name="03-29013-01.u90" crc="9615d710" length="0x4000"/>
+		<part name="03-29008-01.u67" crc="af85ce79" length="0x4000"/>
+		<part name="03-29012-01.u89" crc="6c874a05" length="0x4000"/>
+
+		<part repeat="0xE0000">00</part>
+		<part name="eeprom-pigout.bin" crc="9646fa72" length="0x80"/>
+	</rom>
+
+	<!--
+	  Buttons are ordered player controls, then coin, then start: Jump, Throw, Coin, Start.
+	  Coin is mappable because the game needs a coin input to leave attract mode.
+
+	  The operator menu is opened from the OSD ("Service Menu"), which presses P1 Start and
+	  Test for you; there is no Service button to map. Player 2 uses its own copies of these
+	  buttons. Re-run "Define joystick buttons" in the OSD after updating, since the order
+	  changed.
+	-->
+	<buttons names="Jump,Throw,Coin,Start"></buttons>
+
+	<nvram index="4" size="128"/>
+</misterromdescription>

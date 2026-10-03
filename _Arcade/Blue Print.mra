@@ -1,0 +1,74 @@
+<misterromdescription>
+    <n>Blue Print (Midway)</n>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series></series>
+    <year>1982</year>
+    <manufacturer>Zilec Electronics / Bally Midway</manufacturer>
+    <category>Maze</category>
+
+    <setname>blueprnt</setname>
+    <parent>blueprnt</parent>
+    <mameversion>0220</mameversion>
+    <rbf>BluePrint</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (ccw)</rotation>
+    <flip>no</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <button_names>Run</button_names>
+
+    <switches default="00,00">
+        <!-- DIP Switch 1 -->
+        <dip bits="4,5"   name="Bonus Life" ids="20K/100K+,40K/200K+,80K/400K+,120K/600K+"/>
+        <dip bits="6,7"   name="Lives" ids="2,3,4,5"/>
+        <!-- DIP Switch 2 -->
+        <dip bits="8,9"   name="Coinage" ids="2c/1cr,1c/1cr,1c/2cr,1c/3cr"/>
+        <dip bits="11"    name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="12,13" name="Difficulty" ids="Level 1,Level 2,Level 3,Level 4"/>
+    </switches>
+
+    <rom index="0" md5="none" zip="blueprnt.zip">
+        <!-- Main CPU ROMs (5× 4KB = 20KB) -->
+        <part crc="b20069a6" name="bp-1.1m"/>
+        <part crc="4a30302e" name="bp-2.1n"/>
+        <part crc="6866ca07" name="bp-3.1p"/>
+        <part crc="5d3cfac3" name="bp-4.1r"/>
+        <part crc="a556cac4" name="bp-5.1s"/>
+        <part repeat="0x1000">FF</part>  // BluePrint Doesn't Use 6th Rom Slot
+        <!-- Tile ROMs (2× 4KB = 8KB) -->
+        <part crc="ac2a61bc" name="bg-1.3c"/>
+        <part crc="81fe85d7" name="bg-2.3d"/>
+        <!-- Sprite ROMs (3× 4KB = 12KB, R/B/G bitplanes) -->
+        <part crc="a73b6483" name="red.17d"/>
+        <part crc="7d622550" name="blue.18d"/>
+        <part crc="09c7a518" name="green.20d"/>
+    </rom>
+    <rom index="1" md5="none" zip="blueprnt.zip">
+        <!-- Sound CPU ROMs (2× 4KB = 8KB) -->
+        <part crc="fd38777a" name="snd-1.3u"/>
+        <part crc="33d5bf5b" name="snd-2.3v"/>
+    </rom>
+	<rom index="2"></rom>
+	<rom index="3" md5="none">
+		<part>
+		01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+		00 00 01 00 00 40 00 00
+		</part>
+	</rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="40"></nvram>
+
+    <remark></remark>
+    <mratimestamp>20260213000000</mratimestamp>
+</misterromdescription>

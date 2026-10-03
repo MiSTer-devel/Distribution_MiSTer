@@ -1,0 +1,76 @@
+<misterromdescription>
+	<name>DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)</name>
+	<setname>ddpdojblkbl</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>vertical (ccw)</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|ddpdojblkbl.zip|ddpdojblk.zip|ddp3.zip">
+		<!-- REGION_BIOS_PROG_ROM  = 00 -->
+
+		<!-- REGION_BIOS_TILE_ROM  = 01 -->
+
+		<!-- REGION_BIOS_MUSIC_ROM = 02 -->
+
+		<!-- REGION_CART_PROG_ROM  = 03 -->
+
+		<!-- REGION_CART_TILE_ROM  = 04 -->
+
+		<!-- REGION_CART_MUSIC_ROM = 05 -->
+
+		<!-- REGION_CART_A_ROM     = 06 -->
+
+		<!-- REGION_CART_B_ROM     = 07 -->
+
+		<!-- SYSTEM INFO -->
+		<part>0b 00</part>
+
+		<!-- BIOS PROG -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+
+		<!-- BIOS TILE -->
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+
+		<!-- BIOS MUSIC -->
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG -->
+		<part>03 00400000 00100000</part>
+		<part name="ddp_doj_u1.bin" crc="eb4ab06a"/>
+
+		<!-- CART TILE -->
+		<part>04 00800000 00180000</part>
+		<part name="t04401w064.u19" crc="3a95f19c"/>
+
+		<!-- CART MUSIC -->
+		<part>05 00400000 00400000</part>
+		<part name="m04401b032.u17" crc="5a0dbd76"/>
+
+		<!-- A ROM -->
+		<part>06 01000000 00000000</part>
+		<part name="a04401w064.u7" crc="ed229794"/>
+		<part name="a04402w064.u8" crc="752167b0"/>
+
+		<!-- B ROM -->
+		<part>07 00800000 00000000</part>
+		<part name="b04401w064_corrupt.u1" crc="8cbff066"/>
+
+		<!-- IGS027A INTERNAL ARM ROM (16KB -> block RAM) -->
+		<part>09 00004000 00000000</part>
+		<part name="kovsh_v100_china.asic" crc="0f09a5c1"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

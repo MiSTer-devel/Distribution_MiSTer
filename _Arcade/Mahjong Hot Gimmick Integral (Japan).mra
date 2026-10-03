@@ -1,0 +1,101 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>hotgmcki</setname>
+	<mameversion>0155</mameversion>
+	<description>Mahjong Hot Gimmick Integral (Japan)</description>
+	<rotation>horizontal</rotation>
+	<year>2001</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="A,B,C,D,E,F,G,H,I,J,K,L,M,N,Chi,Pon,Kan,Reach,Ron,Start,Bet,Coin,Test,Service" />
+
+	<switches default="40">
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="hotgmcki.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="58ae45eb" name="0l.u2" map="125600" />
+			<part crc="d7bbb929" name="0h.u11" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="58ae45eb" name="0l.u2" map="125600" />
+			<part crc="d7bbb929" name="0h.u11" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="27576360" name="1l.u3" map="125600" />
+			<part crc="7439a63f" name="1h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="27576360" name="1l.u3" map="125600" />
+			<part crc="7439a63f" name="1h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="fda64e24" name="2l.u4" map="125600" />
+			<part crc="8be54ea6" name="2h.u13" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="fda64e24" name="2l.u4" map="125600" />
+			<part crc="8be54ea6" name="2h.u13" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="92507b3f" name="3l.u5" map="125600" />
+			<part crc="042bef5e" name="3h.u14" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="92507b3f" name="3l.u5" map="125600" />
+			<part crc="042bef5e" name="3h.u14" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="023b6d70" name="4l.u6" map="125600" />
+			<part crc="9be7e8b1" name="4h.u15" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="023b6d70" name="4l.u6" map="125600" />
+			<part crc="9be7e8b1" name="4h.u15" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="7aa54306" name="5l.u7" map="125600" />
+			<part crc="e6b48e52" name="5h.u16" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="7aa54306" name="5l.u7" map="125600" />
+			<part crc="e6b48e52" name="5h.u16" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="dfe675e9" name="6l.u8" map="125600" />
+			<part crc="45919576" name="6h.u17" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="dfe675e9" name="6l.u8" map="125600" />
+			<part crc="45919576" name="6h.u17" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="cd3af598" name="7l.u9" map="125600" />
+			<part crc="a3fd4ae5" name="7h.u18" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="cd3af598" name="7l.u9" map="125600" />
+			<part crc="a3fd4ae5" name="7h.u18" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="5f275f35" name="snd0.u10" map="12345678" />	
+		</interleave>
+		<interleave output="64">
+			<part crc="98608779" name="snd1.u19" map="12345678" />	
+		</interleave>
+
+		<interleave output="64">
+			<part crc="abc192dd" name="2.u22" map="216500" />
+			<part crc="8be896d0" name="1.u23" map="2165" />
+		</interleave>
+		<part repeat="0x100000">00</part>
+		<interleave output="64">
+			<part crc="9017ae8e" name="prog.u1" map="21436587" />
+		</interleave>
+		<part repeat="0x100">00</part>
+	</rom>
+	<rom index="2" md5="">
+		<part>12</part>
+	</rom>
+	<nvram index="4" size="256" />
+</misterromdescription>

@@ -1,0 +1,75 @@
+<misterromdescription>
+    <name>Mutant Night</name>
+    <setname>mnight</setname>
+    <parent>mnight</parent>
+    <year>1987</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Mutant Night</series>
+    <category>Platform</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Attack,Jump,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="CF,FF">
+        <dip bits="0" name="Flip Screen" ids="On,Off"/>
+        <dip bits="1" name="Bonus Life" ids="50k and every 80k,30k and every 50k"/>
+        <dip bits="2" name="Difficulty" ids="Difficult,Normal"/>
+        <dip bits="3" name="Infinite Lives" ids="On,Off"/>
+        <dip bits="4" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="5" name="Demo Sounds" ids="On,Off"/>
+        <dip bits="6,7" name="Lives" ids="5,4,2,3"/>
+        <dip bits="8" name="Service Mode" ids="On,Off"/>
+        <dip bits="9" name="Unused" ids="On,Off"/>
+        <dip bits="10" name="Unused" ids="On,Off"/>
+        <dip bits="11" name="Unused" ids="On,Off"/>
+        <dip bits="12" name="Unused" ids="On,Off"/>
+        <dip bits="13,15" name="Coinage" ids="5 Coins/1 Credit,4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/4 Credits,1 Coin/3 Credits,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    </switches>
+
+    <!-- Index 0: Main CPU. 0x8000 fixed, then banks -->
+    <rom index="0" md5="none" zip="mnight.zip">
+        <part name="1.j19" crc="56678d14"/>
+        <part name="2.j17" crc="2a73f88e"/>
+        <part name="3.j16" crc="c5e42bb4"/>
+        <part name="4.j14" crc="df6a4f7a"/>
+        <part name="5.j12" crc="9c391d1b"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU -->
+    <rom index="1" md5="none" zip="mnight.zip">
+        <part name="6.j7" crc="a0782a31"/>
+    </rom>
+
+    <!-- Index 2: FG char ROM -->
+    <rom index="2" md5="none" zip="mnight.zip">
+        <part name="13.b10" crc="8c177a19"/>
+    </rom>
+
+    <!-- Index 6: Sprite ROM -->
+    <rom index="6" md5="none" zip="mnight.zip">
+        <part name="9.e11" crc="4883059c"/>
+        <part name="8.e12" crc="02b91445"/>
+        <part name="7.e14" crc="9f08d160"/>
+    </rom>
+
+    <!-- Index 7: BG tile ROM 1 -->
+    <rom index="7" md5="none" zip="mnight.zip">
+        <part name="12.b20" crc="4d37e0f4"/>
+        <part name="11.b22" crc="b22cbbd3"/>
+        <part name="10.b23" crc="65714070"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>06</part></rom>
+
+    <remark>Mutant Night</remark>
+</misterromdescription>

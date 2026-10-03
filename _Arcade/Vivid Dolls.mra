@@ -1,0 +1,40 @@
+<misterromdescription>
+  <name>Vivid Dolls</name>
+  <mratimestamp>20260717</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>vivdolls</setname>
+  <year>1998</year>
+  <manufacturer>Visco</manufacturer>
+  <category>Puzzle</category>
+  <rbf>Aleck64</rbf>
+
+  <buttons names="Button 1,Button B,Start,Pan Left,Pan Right,Button Z,C Up,C Right,C Down,C Left,Soft Reset,Coin,Service,Test,-,-" default="A,Start,Select,R,L"/>
+
+  <switches default="FF,FF">
+    <dip bits="8,9,10" name="Coinage" ids="5C/1C,1C/4C,3C/1C,1C/2C,4C/1C,1C/3C,2C/1C,1C/1C"/>
+    <dip bits="7" name="Test Mode" ids="On,Off"/>
+    <dip bits="5" name="Qualify Area" ids="80%,70%"/>
+    <dip bits="4" name="Controls" ids="JAMMA,Joystick"/>
+    <dip bits="2,3" name="Lives" ids="1,3,2,4"/>
+    <dip bits="0,1" name="Difficulty" ids="Hardest,Easy,Hard,Normal"/>
+  </switches>
+
+  <remark>
+    Requires vivdolls.zip and the parent BIOS aleck64.zip in games/mame.
+    The default control DIP selects the standard PIF gamepad interface.
+  </remark>
+
+  <rom index="3" md5="316d74ab46ce480017d6db2d43358db4">
+    <part>5D 00</part>
+  </rom>
+  <rom index="0" zip="aleck64.zip" md5="4921d5f2165dee6e2496f4388c4c81da">
+    <part name="pifdata.bin" crc="5ec82be9"/>
+  </rom>
+  <rom index="1" address="0x32000000" zip="vivdolls.zip" md5="none">
+    <interleave output="16">
+      <part name="nus-zsaj-0.u3" crc="f3220e29" map="12"/>
+    </interleave>
+    <patch offset="0x67c">00 00 00 00</patch>
+  </rom>
+  <nvram index="4" size="512"/>
+</misterromdescription>

@@ -1,0 +1,89 @@
+<misterromdescription>
+  <name>Maze of Flott (Japan)</name>
+  <setname>mofflott</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TaitoAsuka</rbf>
+  <year>1989</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>vertical</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Button 1,Button 2,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches base="0" default="FE,FF">
+    <dip name="Cabinet"        bits="0"     ids="Upright,Cocktail"/>
+    <dip name="Flip Screen"    bits="1"     ids="On,Off"/>
+    <dip name="Service Mode"   bits="2"     ids="On,Off"/>
+    <dip name="Demo Sounds"    bits="3"     ids="Off,On"/>
+    <dip name="Coin A"         bits="4,5"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Coin B"         bits="6,7"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Difficulty"     bits="8,9"   ids="Hardest,Hard,Easy,Medium"/>
+    <dip name="Bonus Life"     bits="10,11" ids="None,100k Only,50k And Every 100k,20k And Every 50k"/>
+    <dip name="Lives"          bits="12,13" ids="2,4,5,3"/>
+    <dip name="Invulnerability" bits="14"   ids="On,Off"/>
+    <dip name="Number Of Keys" bits="15"    ids="B 14,A 16"/>
+  </switches>
+
+  <!-- Regione di configurazione, caricata PRIMA delle ROM.
+       byte 0 = game_id      : 0x02 = mofflott
+       byte 1 = link         : 0x01 accende il multiplayer (solo Cadash)
+       byte 2 = orientamento : 0x01 = set verticale (ROT270)
+       byte 3 = libero -->
+  <rom index="1">
+    <part>02 00 01 00</part>
+  </rom>
+
+  <!-- Unico dei tre set nuovi con l'ADPCM montato. Il TC0100SCN vuole
+         gli offset (1,0) come Cadash: lo sa il core dal game_id. -->
+
+  <rom index="0" zip="mofflott.zip" md5="None">
+
+    <!-- 0x000000 Main CPU 68000, 256 KB. Le due meta' entrano coi byte
+         SCAMBIATI rispetto a MAME: il core impacchetta la parola SDRAM come
+         {secondo byte, primo byte}, quindi la ROM dei byte PARI di MAME va
+         messa con map="10" e quella dei DISPARI con map="01". -->
+    <interleave output="16">
+      <part name="c17-09.bin" crc="05ee110f" map="10"/>
+      <part name="c17-08.bin" crc="d0aacffd" map="01"/>
+    </interleave>
+    <part repeat="0x40000"> FF</part>
+
+    <!-- 0x080000 Fix ROM, 512 KB. La legge il 68000 a parole, quindi stesso
+         ordine di byte del programma: interleave con map="12". -->
+    <interleave output="16">
+      <part name="c17-03.bin" crc="27047fc3" map="12"/>
+    </interleave>
+    <part repeat="0x20000"> FF</part>
+
+    <!-- 0x120000 Z80 audio, 64 KB, byte lineari come in MAME. -->
+    <part name="c17-07.bin" crc="cdb7bc2c"/>
+    <part repeat="0x10000"> FF</part>
+
+    <!-- 0x140000 Sprite PC090OJ, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="c17-02.bin" crc="8860a8db" map="12"/>
+    </interleave>
+
+    <!-- 0x1C0000 Estensione sprite, 128 KB. In MAME la meta' a 0x80000 sono i
+         byte PARI: qui map="01". -->
+    <interleave output="16">
+      <part name="c17-04.bin" crc="f4250410" map="01"/>
+      <part name="c17-05.bin" crc="57ac4741" map="10"/>
+    </interleave>
+
+    <part repeat="0x160000"> FF</part>
+
+    <!-- 0x340000 Tile TC0100SCN, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="c17-01.bin" crc="e9466d42" map="12"/>
+    </interleave>
+    <part repeat="0x80000"> FF</part>
+
+    <!-- 0x440000 ADPCM MSM5205, 64 KB, byte lineari. -->
+    <part name="c17-06.bin" crc="5c332125"/>
+
+  </rom>
+</misterromdescription>

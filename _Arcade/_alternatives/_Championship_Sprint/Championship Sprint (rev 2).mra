@@ -1,0 +1,119 @@
+<misterromdescription>
+	<name>Championship Sprint (rev 2)</name>
+	<setname>csprint2</setname>
+	<mameversion>0289</mameversion>
+	<mratimestamp>20260818000000</mratimestamp>
+	<year>1986</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<category>Arcade</category>
+	<rbf>atarisys2</rbf>
+	<mameinfo parent="csprint" cpp="atarisy2" input="csprint"/>
+	<display type="raster" rotate="0"/>
+
+	<!-- ALTERNATIVE: MAME clone of csprint. It inherits the parent's stream
+	     layout, slapstic type, game id and TMS5220 flag; the manifest generator
+	     re-parses this set's own ROM_REGIONs and fails if any of them differs,
+	     so the inheritance is checked rather than assumed.
+	     -->
+
+	<!-- Button order MUST match the core's CONF_STR J1 (atarisys2.sv):
+	     MiSTer assigns these names to joystick_0[4],[5],[6]... IN ORDER, and an MRA
+	     name list overrides the OSD labels, so a mismatch silently drives the wrong
+	     core bit. -->
+	<buttons names="Gas,-,Coin,Service Credit,Start,-" default="A,R,L,X"/>
+
+	<!-- Game descriptor, 4 bytes (rtl/rom/sys2_rom_layout.vh):
+	       [0] slapstic type  109
+	       [1] game id        3
+	       [2] flags          bit0 = TMS5220 populated -> 0x00
+	       [3] reserved       0
+	     The core validates all four AND checks the slapstic type against the game id,
+	     holding the T-11 in reset if they disagree. A pre-v2 MRA carrying only the
+	     single slapstic byte is rejected on that path. -->
+	<rom index="1">
+		<part>6D 03 00 00</part>
+	</rom>
+
+	<!-- Fixed stream contract. Generated from the ROM manifest; the layout it
+	     targets is rtl/rom/sys2_rom_layout.vh. -->
+	<!-- zip list: csprint2.zip first, then csprint.zip for the files this set shares with its
+	     parent, which a split romset does not duplicate. -->
+	<rom index="0" zip="csprint2.zip|csprint.zip" md5="none">
+		<!-- maincpu: stream 0x000000-0x08ffff, region 0x90000 -->
+		<part repeat="32768">FF</part>
+		<interleave output="16">
+			<part name="136045-2126.7l" crc="0ff83de8" map="01"/>
+			<part name="136045-1127.7n" crc="e3e37258" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136045-1125.6f" crc="650623d2" map="01"/>
+			<part name="136045-1122.6n" crc="ca1b1cbf" map="10"/>
+		</interleave>
+		<part repeat="196608">FF</part>
+		<interleave output="16">
+			<part name="136045-1124.6k" crc="47efca1f" map="01"/>
+			<part name="136045-1121.6r" crc="6ca404bb" map="10"/>
+		</interleave>
+		<part repeat="65536">FF</part>
+		<interleave output="16">
+			<part name="136045-1123.6l" crc="0a4d216a" map="01"/>
+			<part name="136045-1120.6s" crc="103f3fde" map="10"/>
+		</interleave>
+		<part repeat="65536">FF</part>
+
+		<!-- audiocpu: stream 0x090000-0x09ffff, region 0x10000 -->
+		<part repeat="32768">FF</part>
+		<part name="136045-1118.2bc" crc="eba41b2f"/>
+		<part name="136045-1119.2d" crc="9e49043a"/>
+
+		<!-- tiles: stream 0x0a0000-0x11ffff, region 0x80000 -->
+		<!-- The two RGN_FRAC(1,2) plane halves of MAME's region (split at 0x40000) are
+		     byte-interleaved here, so one 16-bit word is {high-plane byte,
+		     low-plane byte}. That is the pair both tile readers want, which lets
+		     the loader stay a straight byte-through map. -->
+		<interleave output="16">
+			<part name="136045-1105.6a" crc="3773bfbb" map="01"/>
+			<part name="136045-1107.6c" crc="e35e354e" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136045-1106.6b" crc="13a24886" map="01"/>
+			<part name="136045-1108.6de" crc="361db8b7" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136045-1101.7a" crc="5a55f931" offset="0x8000" length="0x8000" map="01"/>
+			<part name="136045-1104.7de" crc="d1f8fe7b" offset="0x8000" length="0x8000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136045-1102.7b" crc="37548a60" map="01"/>
+			<part name="136045-1103.7c" crc="8f8c9692" map="10"/>
+		</interleave>
+		<part repeat="131072">FF</part>
+		<interleave output="16">
+			<part name="136045-1101.7a" crc="5a55f931" offset="0x0" length="0x8000" map="01"/>
+			<part name="136045-1104.7de" crc="d1f8fe7b" offset="0x0" length="0x8000" map="10"/>
+		</interleave>
+		<part repeat="65536">FF</part>
+
+		<!-- sprites: stream 0x120000-0x21ffff, region 0x100000 -->
+		<part name="136045-1112.6l" crc="f869b0fc"/>
+		<part name="136045-1111.6k" crc="abcbc114"/>
+		<part name="136045-1110.6hj" crc="9e91e734"/>
+		<part name="136045-1109.6fh" crc="3a051f36"/>
+		<part name="136045-1116.6rs" crc="b15c1b90"/>
+		<part name="136045-1115.6pr" crc="1dcdd5aa"/>
+		<part name="136045-1114.6n" crc="fb5677d9"/>
+		<part name="136045-1113.6m" crc="35e70a8d"/>
+		<part repeat="786432">FF</part>
+
+		<!-- chars: stream 0x220000-0x223fff, region 0x4000 -->
+		<part name="136045-1117.6t" crc="82da786d"/>
+
+		<!-- eeprom: stream 0x224000-0x2241ff, region 0x200 -->
+		<part name="csprint-eeprom.bin" crc="ce1c7319"/>
+	</rom>
+
+	<!-- 2804 EEPROM save-back: settings and high scores persist across power
+	     cycles. Restored after the factory default in the stream above. -->
+	<nvram index="2" size="512"/>
+</misterromdescription>

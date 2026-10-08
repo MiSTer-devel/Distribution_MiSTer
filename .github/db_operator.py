@@ -575,6 +575,7 @@ class Tags:
             first_level = Path(path.parts[1]).stem.lower()
             if first_level == 'update':
                 self._append(result, self._use_term('downloader'))
+                self._append(result, self._use_term('essential'))
             elif 'fast_usb_polling' in first_level:
                 self._append(result, self._use_term('fast_usb_polling'))
             elif first_level != '.config':
@@ -583,6 +584,8 @@ class Tags:
                 second_level = path.parts[2].lower()
                 self._append(result, self._use_term(second_level))
                 self._append(result, self._use_term(stem))
+                if first_level == '.config' and second_level == 'downloader' and path.name.lower() in ['downloader_latest.zip', 'downloader_bin', 'cacert.pem']:
+                    self._append(result, self._use_term('essential'))
 
         return result
 

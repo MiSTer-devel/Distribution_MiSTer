@@ -34,7 +34,7 @@ ALL_TAGS_GO_HERE
 - `handheld2p`: All 2 Player versions for Handheld cores.
 - `filters_video`: All video filters (`gamma` & `filters` & `shadow_masks`).
 - `all_filters`: All video & audio filters (`filters_video` & `filters_audio`).
-- `essential`: Menu core & MiSTer firmware.
+- `essential`: Menu core, MiSTer firmware & Downloader (`update.sh`, its builds & certificates).
 - `readme`: All README files.
 - `docs`: All documentation files & folders, including README files.
 - `extra-utilities`: All extra utilities that are installed in games folders of some computer cores.

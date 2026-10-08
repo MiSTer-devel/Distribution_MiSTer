@@ -514,11 +514,15 @@ class Tags:
             elif broken_error is not None and not self._broken_mras_ignore:
                 raise broken_error
 
-        if stem in ['menu', 'mister']:
+        if stem == 'menu':
             self._append(result, self._use_term('essential'))
 
         if stem == 'mister':
-            self._append(result, self._use_term('misterfirmware'))
+            if len(path.parts) == 1:
+                self._append(result, self._use_term('essential'))
+                self._append(result, self._use_term('misterfirmware'))
+            else:
+                self._append(result, self._use_term('customfirmware'))
         
         if stem == 'yc' and suffix == '.txt':
             self._append(result, self._use_term('yctxt'))

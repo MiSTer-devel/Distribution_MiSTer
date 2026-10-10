@@ -1,0 +1,55 @@
+<misterromdescription>
+    <name>Fantasy</name>
+    <setname>fantasyu</setname>
+    <rbf>SNK6502</rbf>
+    <mameversion>0261</mameversion>
+    <year>1981</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="03" base="16">
+        <dip name="Cabinet" bits="0" ids="Cocktail,Upright"/>
+        <dip name="Coinage" bits="1,3" ids="1C/1C,2C/1C,1C/3C,1C/1C,1C/2C,1C/1C,1C/6C,1C/1C"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5,3"/>
+        <dip name="Coinage Bonus" bits="6" ids="1C/1C,2C/1C"/>
+        <dip name="Unused" bits="7" ids="Off,On"/>
+    </switches>
+
+    <buttons names="Fire,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <rom index="0" zip="fantasyu.zip" md5="none">
+        <part repeat="0x3000">00</part>
+        <part crc="22cb2249" name="ic12.cpu"/>
+        <part crc="0e2880b6" name="ic07.cpu"/>
+        <part crc="4c331317" name="ic08.cpu"/>
+        <part crc="6ac1dbfc" name="ic09.cpu"/>
+        <part crc="c796a406" name="ic10.cpu"/>
+        <part crc="6f1f0698" name="ic14.cpu"/>
+        <part crc="5534d57e" name="ic15.cpu"/>
+        <part crc="6c2aeb6e" name="ic16.cpu"/>
+        <part crc="f6aa5de1" name="ic17.cpu"/>
+        <part repeat="0x3000">00</part>
+        <part crc="6f1f0698" name="ic14.cpu"/>
+        <part crc="86a801c3" name="fs10ic50.bin"/>
+        <part crc="9dfff71c" name="fs11ic51.bin"/>
+        <part crc="361a5e99" name="fantasy.ic7"/>
+        <part crc="33d974f7" name="fantasy.ic6"/>
+        <part crc="48094ec5" name="fs_b_51.bin"/>
+        <part crc="1d0316e8" name="fs_a_52.bin"/>
+        <part crc="49fd4ae8" name="fs_c_53.bin"/>
+        <part repeat="0x7C0">00</part>
+        <part crc="a7ef4cc6" name="fs_d_7.bin"/>
+        <part crc="19b8fb3e" name="fs_e_8.bin"/>
+        <part crc="3a352e1f" name="fs_f_11.bin"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 3 (GID_FANTASY) -->
+    <rom index="1">
+        <part>03</part>
+    </rom>
+
+</misterromdescription>

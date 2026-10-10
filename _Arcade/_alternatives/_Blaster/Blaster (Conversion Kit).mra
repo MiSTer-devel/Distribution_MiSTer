@@ -1,0 +1,52 @@
+<misterromdescription>
+	<name>Blaster (Conversion Kit)</name>
+	<year>1983</year>
+	<manufacturer>Williams</manufacturer>
+	<category>Shooter</category>
+	<setname>blasterkit</setname>
+	<parent>blaster</parent>
+	<mameversion>0257</mameversion>
+	<rbf>robotron</rbf>
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<players>1</players>
+	<special_controls>optical stick</special_controls>
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,Start,Select,R,-,-,C" names="Fire,Thrust,-,-,-,-,Start 1P,Start 2P,Coin,Advance,Auto Up,Pause"></buttons>
+	<switches default="00">
+		<dip bits="0" name="Auto Up / Manual Down" ids="Manual Down,Auto Up"/>
+	</switches>
+	<rom index="1"><part>08</part></rom>
+	<rom index="0" md5="49b99c7804bd5b2f0d56b6ab6e350623" zip="blasterkit.zip|blaster.zip">
+		<part repeat="16384">00</part>
+		<part crc="b7df4914" name="blastkit_rom_11.ic25"></part>
+		<part crc="8b1e26ab" name="blastkit_rom_12.ic26"></part>
+		<part crc="577d1e9a" name="blastkit_rom_17.ic41"></part>
+		<part crc="414b2abf" name="blastkit_rom_16.ic39"></part>
+		<part crc="9c64db76" name="blastkit_rom_13.ic27"></part>
+		<part crc="c33a3145" name="proto5_blaster_3021_rom_18.sb13"></part>
+		<part repeat="1024">F0</part>
+		<part crc="e6631c23" name="decoder_rom_4.ic42"></part>
+		<part crc="83faf25e" name="video_decoder_rom_6.ic23"></part>
+		<part repeat="18432">00</part>
+		<part crc="bac50bc4" name="blaster.col"></part>
+		<part repeat="55296">00</part>
+		<part crc="1ad146a4" name="proto5_blaster_3021_rom_15.ic38"></part>
+		<part crc="f110bbb0" name="proto5_blaster_3021_rom_8.ic20"></part>
+		<part crc="5c5b0f8a" name="proto5_blaster_3021_rom_9.ic22"></part>
+		<part crc="d47eb67f" name="proto5_blaster_3021_rom_10.ic24"></part>
+		<part crc="47fc007e" name="proto5_blaster_3021_rom_6.ic13"></part>
+		<part crc="15c1b94d" name="proto5_blaster_3021_rom_5.ic11"></part>
+		<part crc="aea6b846" name="proto5_blaster_3021_rom_14.ic35"></part>
+		<part crc="6fcc2153" name="blastkit_rom_7.ic15"></part>
+		<part crc="8d0ea9e7" name="proto5_blaster_3021_rom_1.ic1"></part>
+		<part crc="03c4012c" name="proto5_blaster_3021_rom_2.ic3"></part>
+		<part crc="f80e9ff5" name="blastkit_rom_4.ic7"></part>
+		<part crc="20e851f9" name="blastkit_rom_3.ic6"></part>
+		<part repeat="65536">00</part>
+	</rom>
+	<rom index="2"></rom>
+	<rom index="3"></rom>
+	<rom index="4"></rom>
+	<nvram index="4" size="1024"></nvram>
+</misterromdescription>

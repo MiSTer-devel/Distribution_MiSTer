@@ -1,0 +1,107 @@
+<misterromdescription>
+	<name>Primal Rage (version 2.3, Dec 1994)</name>
+	<mameversion>0289</mameversion>
+	<setname>primrageo</setname>
+	<rbf>PrimalRage</rbf>
+	<year>1994</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<mraauthor>Nortido</mraauthor>
+	<about author="Nortido" source="https://github.com/MiSTer-devel/Arcade-PrimalRage_MiSTer"/>
+	<rom index="0" zip="primrageo.zip|primrage.zip" md5="fc288f346f67928aad4effcaf54cbbc6" address="0x38000000">
+		<!-- map: one hex digit per output byte, right = byte 0 (lowest address, MiSTer reads the string from the right); the set bit picks which part fills that byte -->
+		<interleave output="32">
+			<part name="136102-1044b.29l" crc="35c9c34b" map="0001"/>
+			<part name="136102-1043b.28l" crc="86322829" map="0010"/>
+			<part name="136102-1042b.27l" crc="750e8095" map="0100"/>
+			<part name="136102-1041b.25l" crc="6a90d283" map="1000"/>
+		</interleave>
+
+		<part name="136102-0050a.25n" crc="66896e8f"/>
+		<part repeat="0x80000">00</part>
+		<part name="136102-0051a.27n" crc="fb5b3e7b"/>
+		<part repeat="0x80000">00</part>
+		<part name="136102-0052a.28n" crc="cbe38670"/>
+		<part repeat="0x80000">00</part>
+
+		<part name="136102-1045b.23p" crc="1d3260bf"/>
+
+		<interleave output="16">
+			<part name="136102-1101a.2w" crc="bb7ee624" map="01"/>
+			<part name="136102-1100a.2v" crc="6e9c80b5" map="10"/>
+		</interleave>
+		<part repeat="0x700000">00</part>
+
+		<interleave output="16">
+			<part name="136102-0333.moh1.0" crc="3320448e" map="01"/>
+			<part name="136102-0332.mol1.0" crc="610cfcb4" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0335.moh1.1" crc="e4f6e87a" map="01"/>
+			<part name="136102-0334.mol1.1" crc="be3acb6f" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0337.moh1.2" crc="73fdd050" map="01"/>
+			<part name="136102-0336.mol1.2" crc="a78a8525" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0339.moh1.3" crc="e0cd1393" map="01"/>
+			<part name="136102-0338.mol1.3" crc="fa19cae6" map="10"/>
+		</interleave>
+
+		<interleave output="16">
+			<part name="136102-0317.moh0.0" crc="9e3b831a" map="01"/>
+			<part name="136102-0316.mol0.0" crc="9301c672" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0319.moh0.1" crc="42f22e4b" map="01"/>
+			<part name="136102-0318.mol0.1" crc="8523db5d" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0321.moh0.2" crc="3b7d498a" map="01"/>
+			<part name="136102-0320.mol0.2" crc="21369d13" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0323.moh0.3" crc="603f3bb6" map="01"/>
+			<part name="136102-0322.mol0.3" crc="05e9f407" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0325.moh0.4" crc="f43321e3" map="01"/>
+			<part name="136102-0324.mol0.4" crc="3c37769f" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0327.moh0.5" crc="9f4806d5" map="01"/>
+			<part name="136102-0326.mol0.5" crc="63d4ccea" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0329.moh0.6" crc="eff3d2cd" map="01"/>
+			<part name="136102-0328.mol0.6" crc="a08d73e1" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136102-0331.moh0.7" crc="c6a64dad" map="01"/>
+			<part name="136102-0330.mol0.7" crc="7bf6bb8f" map="10"/>
+		</interleave>
+
+		<!-- C31 boot ROM, plain byte copy, no interleave -->
+		<part name="136102-1078a.11a" crc="0656435f"/>
+
+		<!-- sound ROM: MAME ROM_REGION32_LE("cage") is 16 MB but only
+		     0x400000-0x7fffff is populated (ROM_LOAD32_WORD at those
+		     offsets); the stream carries just that 4 MB window, which
+		     the loader routes to DDR3 0x36000000 (region offset 0x400000
+		     is the DDR3 base, not the MAME region's own byte 0) -->
+		<interleave output="32">
+			<part name="136102-0075" crc="b685a88e" map="0021"/>
+			<part name="136102-0077" crc="3283cea8" map="2100"/>
+		</interleave>
+	</rom>
+
+	<!-- mod byte: 0 selects the primrageo input layout (no dedicated start button) -->
+	<rom index="1">
+		<part>00</part>
+	</rom>
+
+	<nvram index="4" size="2048"/>
+
+	<buttons names="High Quick,High Fierce,Low Quick,Low Fierce,Coin" default="Y,X,B,A,Select"/>
+</misterromdescription>

@@ -1,0 +1,61 @@
+<misterromdescription>
+	<n>The Tin Star (A10, 4 PCB version)</n>
+	<mameversion>0245</mameversion>
+	<setname>tinstar</setname>
+	<parent>tinstar</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1983</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Action</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>horizontal</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Fire,Dynamite,Coin A,Start 1P,Coin B,Start 2P,Service,Pause,Gun Right,Gun Left,Gun Down,Gun Up"
+	         default="A,B,Select,Start,X,Y,L,R,Rright,Rleft,Rdown,Rup"/>
+	<switches default="00,37,00,FD,00,00,00,00">
+		<dip bits="8,9" name="Bonus Life Range?" ids="70000-140000,30000-60000,50000-100000,10000-30000"/>
+		<dip bits="10" name="Free Play" ids="On,Off"/>
+		<dip bits="11,12" name="Lives" ids="5,4,3,2"/>
+		<dip bits="14" name="Flip Screen" ids="Off,On"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="25" name="Star Sound" ids="On,Off"/>
+		<dip bits="26,27" name="Start Round Difficulty" ids="Round4,Round2,Round3,Round1"/>
+		<dip bits="28" name="Coinage Display" ids="InsertCoin,Coins/Credits"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="tinstar.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="19faf0b3" name="a10-01.bin"/>
+		<part crc="99bb26ff" name="a10-02.bin"/>
+		<part crc="3169e175" name="a10-03.bin"/>
+		<part crc="6641233c" name="a10-04.bin"/>
+		<!-- Main CPU - Pass 2 (duplicate) [0x8000/0x8000] -->
+		<part crc="19faf0b3" name="a10-01.bin"/>
+		<part crc="99bb26ff" name="a10-02.bin"/>
+		<part crc="3169e175" name="a10-03.bin"/>
+		<part crc="6641233c" name="a10-04.bin"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="6bb1bba9" name="a10-05.bin"/>
+		<part crc="0abff1a1" name="a10-06.bin"/>
+		<part crc="d1bec7a8" name="a10-07.bin"/>
+		<part crc="15c6eb41" name="a10-08.bin"/>
+		<!-- Audio CPU ROMs [0x3000/0x4000] -->
+		<part crc="771f1a6a" name="a10-29.bin"/>
+		<part crc="beeed8f3" name="a10-10.bin"/>
+		<!-- Padding audio: 0x1000 -->
+		<part repeat="0x1000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+		<!-- MCU ROM [0x800] -->
+		<part crc="889eefc9" name="a10-12"/>
+	</rom>
+	<rom index="1">
+		<part>4</part>
+	</rom>
+</misterromdescription>

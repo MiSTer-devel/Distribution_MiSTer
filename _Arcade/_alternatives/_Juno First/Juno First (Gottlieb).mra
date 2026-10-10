@@ -1,0 +1,89 @@
+<misterromdescription>
+	<n>Juno First (Gottlieb)</n>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1983</year>
+	<manufacturer>Konami (Gottlieb license)</manufacturer>
+	<category>Shooter</category>
+
+	<setname>junofrstg</setname>
+	<parent>junofrst</parent>
+	<mameversion>0220</mameversion>
+	<rbf>JunoFirst</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>4-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Warp</button_names>
+
+	<switches default="FF,73">
+		<!-- DSW1: Coinage (bits 0-7) -->
+		<dip bits="0,3"   name="Credits A" ids="Free Play,4c/1cr,4c/3cr,3c/4cr,3c/2cr,2c/5cr,3c/1cr,2c/3cr,2c/1cr,1c/6cr,1c/7cr,1c/5cr,1c/4cr,1c/3cr,1c/2cr,1c/1cr"/>
+		<dip bits="4,7"   name="Credits B" ids="No Coin B,4c/3cr,4c/1cr,3c/4cr,3c/2cr,2c/5cr,3c/1cr,2c/3cr,2c/1cr,1c/7cr,1c/6cr,1c/5cr,1c/4cr,1c/3cr,1c/2cr,1c/1cr"/>
+		<!-- DSW2: Game settings (bits 8-15) -->
+		<dip bits="8,9"   name="Lives" ids="256 (Cheat),5,4,3"/>
+		<dip bits="10"    name="Cabinet" ids="Cocktail,Upright"/>
+		<dip bits="12,14" name="Difficulty" ids="8 (Hardest),7,6,5,4,3,2,1 (Easiest)"/>
+		<dip bits="15"    name="Demo Sounds" ids="Off,On"/>
+	</switches>
+
+	<!-- Index 0: Main CPU board ROMs
+	     Gottlieb set differs in: jfg_a.9b, jfg_b.10b, jfg_c.10a (program)
+	                              jfgc1.4a, jfgc4.7a (banked)
+	     All other ROMs shared with parent set.
+	-->
+	<rom index="0" md5="none" zip="junofrst.zip|junofrstg.zip">
+		<!-- Program ROMs (0x00000-0x05FFF) -->
+		<part crc="8f77d1c5" name="jfg_a.9b"/>
+		<part crc="cd645673" name="jfg_b.10b"/>
+		<part crc="47852761" name="jfg_c.10a"/>
+		<!-- Banked code+graphics ROMs (0x06000-0x11FFF) -->
+		<part crc="90a05ae6" name="jfgc1.4a"/>
+		<part crc="cb372372" name="jfc2_a5.bin"/>
+		<part crc="879d194b" name="jfc3_a6.bin"/>
+		<part crc="e8864a43" name="jfgc4.7a"/>
+		<part crc="0539f328" name="jfc5_a8.bin"/>
+		<part crc="1da2ad6e" name="jfc6_a9.bin"/>
+		<!-- Blitter sprite ROMs (0x12000-0x17FFF) -->
+		<part crc="aeacf6db" name="jfs3_c7.bin"/>
+		<part crc="206d954c" name="jfs4_d7.bin"/>
+		<part crc="1eb87a6e" name="jfs5_e7.bin"/>
+	</rom>
+
+	<!-- Index 1: Z80 sound ROM (4KB) - shared with parent -->
+	<rom index="1" md5="none" zip="junofrst.zip|junofrstg.zip">
+		<part crc="235a2893" name="jfs1_j3.bin"/>
+	</rom>
+
+	<!-- Index 2: i8039 MCU ROM (4KB) - shared with parent -->
+	<rom index="2" md5="none" zip="junofrst.zip|junofrstg.zip">
+		<part crc="d0fa5d5f" name="jfs2_p4.bin"/>
+	</rom>
+
+	<!-- Index 3: Hiscore data -->
+    <!-- Juno First Stores in Work Ram : 8100->819F -->
+	<rom index="3" md5="none">
+		<part>
+		01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+		00 00 81 00 00 A0 01 3F
+		</part>
+	</rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="160"></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20260223000000</mratimestamp>
+</misterromdescription>

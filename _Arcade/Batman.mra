@@ -1,0 +1,77 @@
+<misterromdescription>
+    <name>Batman</name>
+    <setname>batman</setname>
+    <rbf>Batman</rbf>
+    <mameversion>0289</mameversion>
+    <mratimestamp>20260922210000</mratimestamp>
+    <year>1991</year>
+    <manufacturer>Atari Games</manufacturer>
+    <category>Platform</category>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <platform>Atari Batman (A048987-01)</platform>
+    <players>1</players>
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+
+    <about>
+        Batman for MiSTer - Atari Games, game PCB A048987-01 with the JSA III
+        sound board. MAME has a single Batman set, `batman`.
+        All ROMs load on ioctl index 0 as one stream, in the order below; the
+        core splits it between SDRAM and block RAM itself. The last part is
+        the factory EEPROM image from the MAME set: it is used only on a first
+        boot, before a save file exists, so the game starts with its default
+        settings and a sensible volume. The EEPROM is saved on index 2.
+    </about>
+
+    <rom index="0" zip="batman.zip" md5="5b3596ccfd5e0dad451b021b2be52e8f">
+        <!-- 68000 program, 768 KB, byte interleaved (even / odd sockets) -->
+        <interleave output="16">
+            <part name="136085-2030.10r" crc="7cf4e5bf" map="01"/>
+            <part name="136085-2031.7r" crc="7d7f3fc4" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136085-2032.91r" crc="d80afb20" map="01"/>
+            <part name="136085-2033.6r" crc="97efa2b8" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136085-2034.9r" crc="05388c62" map="01"/>
+            <part name="136085-2035.5r" crc="e77c92dd" map="10"/>
+        </interleave>
+        <!-- alphanumerics, 128 KB -->
+        <part name="136085-2009.10m" crc="a82d4923"/>
+        <!-- playfield tiles, 1 MB (raw bytes, not inverted) -->
+        <part name="136085-1018.15r" crc="4c14f1e5"/>
+        <part name="136085-1022.16r" crc="7476a15d"/>
+        <part name="136085-1019.15m" crc="2046d9ec"/>
+        <part name="136085-1023.16m" crc="75cac686"/>
+        <part name="136085-1020.15f" crc="cc4f4b94"/>
+        <part name="136085-1024.16f" crc="d60d35e0"/>
+        <part name="136085-1021.15c" crc="9c8ef9ba"/>
+        <part name="136085-1025.16c" crc="5d30bcd1"/>
+        <!-- motion objects, 1 MB (raw bytes, not inverted) -->
+        <part name="136085-1010.13r" crc="466e1365"/>
+        <part name="136085-1014.14r" crc="ef53475a"/>
+        <part name="136085-1011.13m" crc="8cda5efc"/>
+        <part name="136085-1015.14m" crc="043e7f8b"/>
+        <part name="136085-1012.13f" crc="b017f2c3"/>
+        <part name="136085-1016.14f" crc="70aa2360"/>
+        <part name="136085-1013.13c" crc="68b64975"/>
+        <part name="136085-1017.14c" crc="e4af157b"/>
+        <!-- JSA III 6502 program, 64 KB -->
+        <part name="136085-1040.12c" crc="080db83c"/>
+        <!-- MSM6295 ADPCM samples, 512 KB -->
+        <part name="136085-1041.19e" crc="d97d5dbb"/>
+        <part name="136085-1042.17e" crc="8c496986"/>
+        <part name="136085-1043.15e" crc="51812d3b"/>
+        <part name="136085-1044.12e" crc="5e2d7f31"/>
+        <!-- factory EEPROM image, 2 KB (first boot only) -->
+        <part name="batman-eeprom.bin" crc="c859b535"/>
+    </rom>
+
+    <!-- 28C16 EEPROM (settings and high scores) -->
+    <nvram index="2" size="2048"/>
+
+    <buttons names="Fire,Jump,Start,Coin" default="A,B,Start,Select"/>
+</misterromdescription>

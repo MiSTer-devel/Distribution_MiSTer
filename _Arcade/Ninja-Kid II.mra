@@ -1,0 +1,83 @@
+<misterromdescription>
+    <name>Ninja-Kid II</name>
+    <setname>ninjakd2</setname>
+    <parent>ninjakd2</parent>
+    <year>1987</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Ninja-Kid II</series>
+    <category>Platform</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Attack,Jump,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="6F,FD">
+        <dip bits="0" name="Flip Screen" ids="On,Off"/>
+        <dip bits="1,2" name="Bonus Life" ids="None,50000 and every 50000,20000 and every 50000,30000 and every 50000"/>
+        <dip bits="3" name="Allow Continue" ids="No,Yes"/>
+        <dip bits="4" name="Demo Sounds" ids="On,Off"/>
+        <dip bits="5" name="Difficulty" ids="Hard,Normal"/>
+        <dip bits="6" name="Lives" ids="4,3"/>
+        <dip bits="7" name="Language" ids="English,Japanese"/>
+        <dip bits="8" name="Service Mode" ids="On,Off"/>
+        <dip bits="9" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="10" name="Credit Service" ids="Off,On"/>
+        <dip bits="11,12" name="Coin B" ids="2 Coins/1 Credit,1 Coin/3 Credits,1 Coin/2 Credits,1 Coin/1 Credit"/>
+        <dip bits="13,15" name="Coin A" ids="5 Coins/1 Credit,4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/4 Credits,1 Coin/3 Credits,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    </switches>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>00</part></rom>
+
+    <!-- Index 0: Main CPU. 0x8000 fixed, then banks -->
+    <rom index="0" md5="none" zip="ninjakd2.zip">
+        <part name="1.3s" crc="3cdbb906"/>
+        <part name="2.3q" crc="b5ce9a1a"/>
+        <part name="3.3r" crc="ad275654"/>
+        <part name="4.3p" crc="e7692a77"/>
+        <part name="5.3m" crc="5dac9426"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU -->
+    <rom index="1" md5="none" zip="ninjakd2.zip">
+        <part name="6.3h" crc="d3a18a79"/>
+    </rom>
+
+    <!-- Index 12: MC8123 key. Opcode table then data table, 2K each -->
+    <rom index="12" md5="none" zip="ninjakd2.zip">
+        <part name="ninjakd2.key" crc="ec25318f" offset="0x0000" length="0x800"/>
+        <part name="ninjakd2.key" crc="ec25318f" offset="0x1000" length="0x800"/>
+    </rom>
+
+    <!-- Index 2: FG char ROM -->
+    <rom index="2" md5="none" zip="ninjakd2.zip">
+        <part name="12.5n" crc="db5657a9"/>
+    </rom>
+
+    <!-- Index 6: Sprite ROM -->
+    <rom index="6" md5="none" zip="ninjakd2.zip">
+        <part name="8.6l" crc="1b79c50a"/>
+        <part name="7.6n" crc="0be5cd13"/>
+    </rom>
+
+    <!-- Index 7: BG tile ROM 1 -->
+    <rom index="7" md5="none" zip="ninjakd2.zip">
+        <part name="11.2n" crc="41a714b3"/>
+        <part name="10.2r" crc="c913c4ab"/>
+    </rom>
+
+    <!-- Index 10: PCM samples -->
+    <rom index="10" md5="none" zip="ninjakd2.zip">
+        <part name="9.6c" crc="c1d2d170"/>
+    </rom>
+
+    <remark>Ninja-Kid II / NinjaKun Ashura no Shou (set 1)</remark>
+</misterromdescription>

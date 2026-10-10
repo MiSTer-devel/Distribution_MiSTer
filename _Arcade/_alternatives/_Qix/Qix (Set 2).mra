@@ -1,0 +1,58 @@
+<misterromdescription>
+    <name>Qix (Set 2)</name>
+    <setname>qixb</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1981</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <buttons names="Draw Fast,Draw Slow,Test Advance,-,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Select,Start,R,L"/>
+
+    <!--
+        ROM LOADING ORDER (directly maps to ioctl_addr):
+        $00000-$03FFF : maincpu  (16KB at $C000-$FFFF)
+        $04000-$07FFF : videocpu (16KB at $C000-$FFFF)
+        $08000-$087FF : audiocpu (2KB at $F800-$FFFF)
+
+        Total: 34KB ($8800 bytes)
+    -->
+
+    <rom index="0" zip="qix.zip|qixb.zip" md5="none" type="merged">
+        <!-- Data CPU ROMs: 4x 4KB, loaded at $A000-$FFFF -->
+        <!-- ioctl_addr $00000-$05FFF -->
+	<part repeat="0x1000">00</part>  // Qix (Set 2) Doesn't Use 1st Rom Slot
+	<part repeat="0x1000">00</part>  // Qix (Set 2) Doesn't Use 2nd Rom Slot
+        <part name="lk14.bin" crc="6d164986"/>
+        <part name="lk15.bin" crc="16c6ce0f"/>
+        <part name="lk16.bin" crc="698b1f9c"/>
+        <part name="lk17.bin" crc="7e3adde6"/>
+
+        <!-- Video CPU ROMs: 4x 4KB, loaded at $A000-$FFFF -->
+        <!-- ioctl_addr $04000-$07FFF -->
+	<part repeat="0x1000">00</part>  // Qix (Set 2) Doesn't Use 1st Rom Slot
+	<part repeat="0x1000">00</part>  // Qix (Set 2) Doesn't Use 2nd Rom Slot
+        <part name="lk10.bin" crc="7eac67d0"/>
+        <part name="lk11.bin" crc="90ccbb6a"/>
+        <part name="lk12.bin" crc="be9b9f7d"/>
+        <part name="lk13.bin" crc="51c9853b"/>
+
+        <!-- Audio CPU ROM: 1x 2KB, loaded at $F800-$FFFF -->
+        <!-- ioctl_addr $08000-$087FF -->
+	<part repeat="0x2800">00</part>  <!-- 10KB pad for $D000-$F7FF -->
+        <part name="qq27.u27" crc="f3782bd0"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 0x00 (QIX) -->
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <!-- High Score / NVRAM -->
+	<nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

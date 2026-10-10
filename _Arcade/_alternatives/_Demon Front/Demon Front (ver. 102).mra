@@ -1,0 +1,76 @@
+<misterromdescription>
+	<name>Demon Front (ver. 102)</name>
+	<setname>dmnfrnt102</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|dmnfrnt.zip|dmnfrnt102.zip">
+		<!-- SYSTEM INFO (game = GAME_DMNFRNT = 19) -->
+		<part>13 00</part>
+
+		<!-- BIOS PROG / TILE / MUSIC -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG (ROM_LOAD16_WORD_SWAP, plaintext) -->
+		<part>03 00200000 00100000</part>
+		<part name="v102_16m.u5" crc="3d4d481a"/>
+
+		<!-- CART TILE -->
+		<part>04 00800000 00180000</part>
+		<part name="igs_t04501w064.u29" crc="900eaaac"/>
+
+		<!-- CART MUSIC (ICS @0x400000) -->
+		<part>05 00800000 00400000</part>
+		<part name="igs_w04501b064.u5" crc="3ab58137"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 01800000 00000000</part>
+		<part name="igs_a04501w064.u3" crc="9741bea6"/>
+		<part name="igs_a04502w064.u4" crc="e104f405"/>
+		<part name="igs_a04503w064.u6" crc="bfd5cfe3"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 00a00000 00000000</part>
+		<part name="igs_b04501w064.u9" crc="29320b7d"/>
+		<part name="igs_b04502w016.u11" crc="578c00e9"/>
+
+		<!-- IGS027A INTERNAL ARM ROM (undumped; synthesized 16KB dummy stub, inline).
+		     Reset stub (ARM) at 0x00 seeds the shared RAM the real internal ROM
+		     would (shared[0x158]=0x0005 in both chips), then jumps to the external
+		     ARM ROM at 0x08000000 (which holds the game):
+		     MOV r0,#0x38000000 ; MOV r1,#5 ; STR r1,[r0,#0x158]
+		     MOV r2,#0x40000000 ; MOV r3,#0 ; STR r3,[r2,#0x18]   (ram_sel=0)
+		     STR r1,[r0,#0x158] ; MOV r3,#1 ; STR r3,[r2,#0x18]   (ram_sel=1)
+		     MOV sp,#0x10000000 ; ORR sp,sp,#0x400 ; MOV r0,#0x08000000 ; BX r0
+		     rest = BX lr (e12fff1e) fill. -->
+		<part>09 00004000 00000000</part>
+		<part>
+			38 04 A0 E3 05 10 A0 E3 58 11 80 E5 40 24 A0 E3
+			00 30 A0 E3 18 30 82 E5 58 11 80 E5 01 30 A0 E3
+			18 30 82 E5 10 D4 A0 E3 04 DC 8D E3 80 06 A0 E3
+			10 FF 2F E1
+		</part>
+		<part repeat="4083">1E FF 2F E1</part>
+
+		<!-- IGS027A EXTERNAL ARM ROM (encrypted; decrypted at load) -->
+		<part>0a 00400000 00000000</part>
+		<part name="v101_32m.u26" crc="93965281"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

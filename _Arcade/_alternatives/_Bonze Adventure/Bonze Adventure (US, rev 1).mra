@@ -1,0 +1,115 @@
+<misterromdescription>
+  <name>Bonze Adventure (US, rev 1)</name>
+  <setname>bonzeadvu</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TaitoAsuka</rbf>
+  <year>1988</year>
+  <manufacturer>Taito America Corporation</manufacturer>
+  <category>Platform</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches base="0" default="FE,BF">
+    <dip name="Cabinet"        bits="0"     ids="Upright,Cocktail"/>
+    <dip name="Flip Screen"    bits="1"     ids="On,Off"/>
+    <dip name="Service Mode"   bits="2"     ids="On,Off"/>
+    <dip name="Demo Sounds"    bits="3"     ids="Off,On"/>
+    <dip name="Coin A"         bits="4,5"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Coin B"         bits="6,7"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Difficulty"     bits="8,9"   ids="Hardest,Hard,Easy,Medium"/>
+    <dip name="Bonus Life"     bits="10,11" ids="80k 250k,60k 200k,40k 100k,50k 150k"/>
+    <dip name="Lives"          bits="12,13" ids="5,4,2,3"/>
+    <dip name="Allow Continue" bits="14"    ids="Yes,No"/>
+    <dip name="Unused"         bits="15"    ids="On,Off"/>
+  </switches>
+
+  <!-- Regione di configurazione, caricata PRIMA delle ROM.
+       byte 0 = game_id      : 0x05 = Bonze Adventure
+       byte 1 = link         : 0x01 accende il multiplayer (solo Cadash)
+       byte 2 = orientamento : 0x00 = set orizzontale (ROT0)
+       byte 3 = libero -->
+  <rom index="1">
+    <part>05 00 00 00</part>
+  </rom>
+
+  <!-- Bonze e' il set piu' diverso di tutto il driver. Non ha il TC0220IOC: i
+       DIP si leggono diretti a 390000 e 3B0000, e gli INGRESSI passano dentro
+       il C-Chip. Il sonoro e' YM2610 invece di YM2151 piu' MSM5205, e la
+       comunicazione col sonoro e' un TC0140SYT.
+
+       Il C-Chip (TC0030CMD) e' un modulo con quattro die: un uPD78C11 con 4 KB
+       di ROM mascherata, la EPROM da 8 KB del gioco, 8 KB di SRAM condivisa col
+       68000 a finestre bancate da 1 KB, e un ASIC. Ci vogliono tutte e due le
+       ROM, ed entrambe stanno in fondo a questa immagine.
+
+       La ROM mascherata da 4 KB e' la stessa per tutti i giochi col C-Chip e
+       gira in due modi: MAME la elenca dentro il set di Bonze, ma molti set
+       la tengono in un cchip.zip a parte. Per questo qui sopra ci sono DUE
+       zip: si cerca prima in bonzeadv.zip e poi in cchip.zip, cosi' funziona
+       in tutti e due i casi senza che nessuno debba spostare file. -->
+
+  <rom index="0" zip="bonzeadvu.zip|bonzeadv.zip|cchip.zip" md5="None">
+
+    <!-- 0x000000 Main CPU 68000, 256 KB in due coppie da 128 KB. Le meta'
+         entrano coi byte SCAMBIATI rispetto a MAME: il core impacchetta la
+         parola SDRAM come {secondo byte, primo byte}, quindi la ROM dei byte
+         PARI di MAME va con map="10" e quella dei DISPARI con map="01". -->
+    <interleave output="16">
+      <part name="b41-09-1.17" crc="af821fbc" map="10"/>
+      <part name="b41-11-1.26" crc="823fff00" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="b41-10.16" crc="4ca94d77" map="10"/>
+      <part name="b41-14.25" crc="37def16a" map="01"/>
+    </interleave>
+    <part repeat="0x40000"> FF</part>
+
+    <!-- 0x080000 Fix ROM, 512 KB. Qui, a differenza di ogni altro set del
+         driver, MAME la carica con ROM_LOAD16_WORD_SWAP invece che WORD: la sua
+         regione ha gia' i byte scambiati rispetto al file. La nostra immagine
+         vuole la regione di MAME scambiata di nuovo, cioe' il file com'e':
+         quindi <part> semplice, SENZA interleave. -->
+    <part name="b41-01.15" crc="5d072fa4"/>
+    <part repeat="0x20000"> FF</part>
+
+    <!-- 0x120000 Z80 audio, 64 KB, byte lineari come in MAME. -->
+    <part name="b41-13.20" crc="9e464254"/>
+    <part repeat="0x10000"> FF</part>
+
+    <!-- 0x140000 Sprite PC090OJ, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="b41-02.7" crc="29f205d9" map="12"/>
+    </interleave>
+
+    <!-- 0x1C0000 Nessuna estensione sprite su questo set: 128 KB di FF. -->
+    <part repeat="0x20000"> FF</part>
+    <part repeat="0x160000"> FF</part>
+
+    <!-- 0x340000 Tile TC0100SCN, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="b41-03.1" crc="736d35d0" map="12"/>
+    </interleave>
+    <part repeat="0x80000"> FF</part>
+
+    <!-- 0x440000 ADPCM-A del YM2610, 1,5 MB: Bonze non ne ha (la scheda monta
+         solo il canale B). Resta riempita di FF perche' l'ADPCM-B deve cadere
+         all'offset che il caricatore si aspetta. -->
+    <part repeat="0x180000"> FF</part>
+
+    <!-- 0x5C0000 ADPCM-B del YM2610, 512 KB, byte lineari.
+         Il core la copia in DDRAM a 0x300000 (DDR_ADPCMB_OFF). -->
+    <part name="b41-04.48" crc="c668638f"/>
+
+    <!-- 0x640000 ROM del C-Chip, 12 KB in un'unica regione: prima i 4 KB di
+         ROM mascherata interna del uPD78C11 (la stessa per tutti i giochi col
+         C-Chip), poi gli 8 KB della EPROM specifica di Bonze. Il modulo le
+         vuole proprio cosi': maschera a 0x0000, EPROM a 0x1000. -->
+    <part name="cchip_upd78c11.bin" crc="43021521"/>
+    <part name="cchip_b41-05.43" crc="75c52553"/>
+
+  </rom>
+</misterromdescription>

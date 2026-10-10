@@ -1,0 +1,98 @@
+<misterromdescription>
+    <name>Blasteroids (German, rev 2)</name>
+    <setname>blstroidg</setname>
+    <rbf>Blasteroids</rbf>
+    <mameversion>0288</mameversion>
+    <mratimestamp>20260906000000</mratimestamp>
+    <year>1987</year>
+    <manufacturer>Atari Games</manufacturer>
+    <region>Germany</region>
+    <players>2</players>
+    <!-- MAME ROT0: an upright horizontal monitor, no rotation in the core. -->
+    <rotation>horizontal</rotation>
+
+    <!-- DOWNLOAD STREAM MAP: the core loader's address map, which must match
+         rtl/mem/blstroid_rom_loader.sv:
+           0x000000  0x040000  maincpu
+           0x040000  0x010000  jsa:cpu
+           0x050000  0x040000  tiles
+           0x090000  0x100000  sprites
+           0x190000  0x000200  EEPROM
+         total 0x190200 bytes.
+         ROM names and CRCs follow MAME's blstroid.cpp ROM_START(blstroidg). -->
+    <rom index="0" zip="blstroidg.zip|blstroid.zip" md5="none">
+        <!-- maincpu 0x000000 + 0x40000 : 68000 program (256 KB), MAME LOAD16_BYTE.
+             Inside an interleave output="16", map="01" supplies the FIRST byte of
+             each output word (big endian D15:8) and map="10" the second (D7:0), so
+             the MAME even ROM (6C at 0x000000, 4C at 0x020000) takes map="01" and
+             the odd ROM (6B, 4B) takes map="10".  This is the order fx68k needs;
+             the opposite mapping byte-swaps every opcode and the 68000 runs
+             nonsense from its first instruction. -->
+        <interleave output="16">
+            <part name="136057-2223.6c" crc="cc82108b" map="01"/>
+            <part name="136057-2221.6b" crc="84822e68" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136057-2224.4c" crc="849249d4" map="01"/>
+            <part name="136057-2222.4b" crc="bdeaba0d" map="10"/>
+        </interleave>
+        <!-- jsa:cpu 0x040000 + 0x10000 : 6502 sound program, Atari Stand-Alone Audio PCB
+             "JSA I" with the YM2151 only (POKEY and TMS5220 are not populated). -->
+        <part name="136057-1135.2k" crc="baa8b5fe"/>
+        <!-- tiles 0x050000 + 0x40000 : playfield stamp ROMs 1L/1M/3L/3M, 8x8x4 packed MSB.
+             The core doubles each ROM pixel horizontally, giving the 16x8 stamp the
+             schematic draws; 13 bit stamp code selects one of 8192 stamps. -->
+        <part name="136057-1101.1l" crc="3c2daa5b"/>
+        <part name="136057-1102.1m" crc="f84f0b97"/>
+        <part name="136057-1103.3l" crc="ae5274f0"/>
+        <part name="136057-1104.3m" crc="4bb72060"/>
+        <!-- sprites 0x090000 + 0x100000 : motion object stamp ROMs, 1 MB in TWO 512 KB
+             HALVES.  MAME's molayout takes alternating pixel pairs from the two
+             halves, which is the board's M row / N row pair of ROM banks:
+               0x000000 to 0x07FFFF  M row: 5M 67M 8M 10M 11M 13M 14M 16M
+               0x080000 to 0x0FFFFF  N row: 5N 67N 8N 10N 11N 13N 14N 16N
+             Both halves are addressed with the SAME stamp address; the two nibbles
+             they return are adjacent pixels of the 16 pixel wide stamp, which is how
+             a motion object gets full 640 wide horizontal resolution while the
+             playfield only gets 320.  Reversing the two halves mirrors every sprite
+             in 2 pixel pairs, so the order is load bearing. -->
+        <part name="136057-1105.5m" crc="50e0823f"/>
+        <part name="136057-1107.67m" crc="729de7a9"/>
+        <part name="136057-1109.8m" crc="090e42ab"/>
+        <part name="136057-1111.10m" crc="1ff79e67"/>
+        <part name="136057-1113.11m" crc="4be1d504"/>
+        <part name="136057-1115.13m" crc="e4409310"/>
+        <part name="136057-1117.14m" crc="7aaca15e"/>
+        <part name="136057-1119.16m" crc="33690379"/>
+        <part name="136057-1106.5n" crc="2720ee71"/>
+        <part name="136057-1108.67n" crc="2faecd15"/>
+        <part name="136057-1110.8n" crc="a15e79e1"/>
+        <part name="136057-1112.10n" crc="4d5fc284"/>
+        <part name="136057-1114.11n" crc="a70fc6e6"/>
+        <part name="136057-1116.13n" crc="f423b4f8"/>
+        <part name="136057-1118.14n" crc="56fa3d16"/>
+        <part name="136057-1120.16n" crc="f257f738"/>
+        <!-- Xicor X2804 EEPROM 0x200 at the stream tail, shipped erased (0xFF)
+             like the Toobin' and Xybots MRAs: the game writes its own defaults
+             into a blank part via the self test. -->
+        <part repeat="512">FF</part>
+    </rom>
+
+    <!-- Saved settings and bookkeeping are restored over the erased image above and
+         add the OSD "Save Settings" entry.  Blasteroids has NO DIP switches: every
+         option lives in this 2804 EEPROM and is set from the self test. -->
+    <nvram index="2" size="512"/>
+
+    <!-- Control names follow sheet 12's input map and operator manual TM-316:
+         the Switch Test screen lists "Spare, Xform, Thrust, Fire" per player,
+         which is FF9C01 D0 Fire, D1 Thrust, D2 Transform (Xform), D3 Spare
+         (FF9C03 for player 2).
+         There is no Start button: blstroid.cpp defines four buttons per player
+         and no IPT_START1/IPT_START2.  TM-316 describes a "continuous buy-in
+         feature allowing players to join in at any time": a player joins by
+         coining up.  The Whirly-Gig knob is an analog spinner on the LETA
+         connector, not a button, so it does not appear here.
+         The order must match the J1 list in Arcade-Blasteroids.sv exactly, since
+         names= overrides the core's own labels in the OSD mapping screen. -->
+    <buttons names="Fire,Thrust,Transform,Spare,Coin" default="A,B,X,Y,Select"/>
+</misterromdescription>

@@ -1,0 +1,90 @@
+<misterromdescription>
+  <name>U.N. Defense Force: Earth Joker (US / Japan, set 3)</name>
+  <setname>earthjkrb</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TaitoAsuka</rbf>
+  <year>1993</year>
+  <manufacturer>Visco</manufacturer>
+  <category>Action</category>
+  <rotation>vertical</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches base="0" default="FF,F3">
+    <dip name="Unused"         bits="0"     ids="On,Off"/>
+    <dip name="Flip Screen"    bits="1"     ids="On,Off"/>
+    <dip name="Service Mode"   bits="2"     ids="On,Off"/>
+    <dip name="Demo Sounds"    bits="3"     ids="Off,On"/>
+    <dip name="Coin A"         bits="4,5"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Coin B"         bits="6,7"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Difficulty"     bits="8,9"   ids="Hardest,Hard,Easy,Medium"/>
+    <dip name="Bonus Life"     bits="10,11" ids="100k and 300k,200k only,100k only,None"/>
+    <dip name="Lives"          bits="12,13" ids="1,4,3,2"/>
+    <dip name="Copyright"      bits="14"    ids="Visco (distributed by Romstar),Visco"/>
+    <dip name="Unused"         bits="15"    ids="On,Off"/>
+  </switches>
+
+  <!-- Regione di configurazione, caricata PRIMA delle ROM.
+       byte 0 = game_id      : 0x06 = Earth Joker
+       byte 1 = link         : 0x01 accende il multiplayer (solo Cadash)
+       byte 2 = orientamento : 0x01 = set verticale (ROT270)
+       byte 3 = libero -->
+  <rom index="1">
+    <part>06 00 01 00</part>
+  </rom>
+
+  <!-- Vicinissimo al set 2: 42 byte diversi nel programma. Le etichette
+         sono numerate come nel prototipo ma con 3 e 4 scambiate, percio' qui
+         4 sta a ic23 e 3 a ic8. Nessun patch. -->
+
+  <rom index="0" zip="earthjkr.zip" md5="None">
+
+    <!-- 0x000000 Main CPU 68000, 256 KB. Le due meta' entrano coi byte
+         SCAMBIATI rispetto a MAME: il core impacchetta la parola SDRAM come
+         {secondo byte, primo byte}, quindi la ROM dei byte PARI di MAME va
+         messa con map="10" e quella dei DISPARI con map="01". -->
+    <interleave output="16">
+      <part name="4.ic23" crc="250f09f8" map="10"/>
+      <part name="3.ic8" crc="88fc1c5d" map="01"/>
+    </interleave>
+    <part repeat="0x40000"> FF</part>
+
+    <!-- 0x080000 Fix ROM, 512 KB. La legge il 68000 a parole, quindi stesso
+         ordine di byte del programma: interleave con map="12". -->
+    <interleave output="16">
+      <part name="ej_30e.ic30" crc="49d1f77f" map="12"/>
+    </interleave>
+    <part repeat="0x20000"> FF</part>
+
+    <!-- 0x120000 Z80 audio, 64 KB, byte lineari come in MAME. -->
+    <part name="ej_2.ic27" crc="42ba2566"/>
+    <part repeat="0x10000"> FF</part>
+
+    <!-- 0x140000 Sprite PC090OJ, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="ej_obj-0.ic6" crc="5f21ac47" map="12"/>
+    </interleave>
+
+    <!-- 0x1C0000 Estensione sprite, 128 KB. In MAME la meta' a 0x80000 sono i
+         byte PARI: qui map="01". -->
+    <interleave output="16">
+      <part name="ej_0.ic4" crc="b612086f" map="01"/>
+      <part name="ej_1.ic5" crc="cb4891db" map="10"/>
+    </interleave>
+    <part repeat="0x160000"> FF</part>
+
+    <!-- 0x340000 Tile TC0100SCN, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="ej_chr-0.ic3" crc="ac675297" map="12"/>
+    </interleave>
+    <part repeat="0x80000"> FF</part>
+
+    <!-- 0x440000 ADPCM MSM5205, 64 KB. -->
+    <!-- Zoccolo vuoto su questo set: 64 KB di FF, come ROMREGION_ERASEFF. -->
+    <part repeat="0x10000"> FF</part>
+
+  </rom>
+</misterromdescription>

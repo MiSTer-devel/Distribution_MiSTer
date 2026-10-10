@@ -1,0 +1,54 @@
+<misterromdescription>
+    <name>Off the Wall (Cocktail)</name>
+    <setname>offtwallc</setname>
+    <rbf>OffTheWall</rbf>
+    <mameversion>0289</mameversion>
+    <mratimestamp>20261001000000</mratimestamp>
+    <year>1991</year>
+    <manufacturer>Atari Games</manufacturer>
+    <category>Ball &amp; Paddle</category>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <platform>Atari Off the Wall (A049727) + JSA III</platform>
+    <players>2</players>
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+
+    <about>
+        Off the Wall (2-player cocktail). All ROMs load on index 0 as one stream, in the
+        order below. The last part is the factory EEPROM image from the MAME
+        set; it is used only until a save file exists. The EEPROM is saved on
+        index 2.
+    </about>
+
+    <rom index="0" zip="offtwallc.zip|offtwall.zip" md5="9cba99c855f808b3445962ef76c49394">
+        <!-- 68000 program, 256 KB: 17E is the high byte -->
+        <interleave output="16">
+            <part name="090-2612.rom" crc="fc891a3f" map="01"/>
+            <part name="090-2613.rom" crc="805d79d4" map="10"/>
+        </interleave>
+        <!-- JSA III 6502 program, 64 KB -->
+        <part name="136090-1020.12c" crc="488112a5"/>
+        <!-- graphics, 768 KB: the lower bank is the low byte of each word -->
+        <interleave output="16">
+            <part name="090-1614.rom" crc="307ed447" map="01"/>
+            <part name="090-1615.rom" crc="ac3642c7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="090-1616.rom" crc="a5bd3d9b" map="01"/>
+            <part name="090-1617.rom" crc="15208a89" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="090-1618.rom" crc="c7d9df5d" map="01"/>
+            <part name="090-1619.rom" crc="8a5d79b3" map="10"/>
+        </interleave>
+        <!-- factory EEPROM image, 2 KB -->
+        <part name="offtwall-eeprom.17l" crc="5eaf2d5b"/>
+    </rom>
+
+    <!-- 28C16 EEPROM: settings, statistics and high scores -->
+    <nvram index="2" size="2048"/>
+
+    <buttons names="Action,Start,Coin" default="A,Start,Select"/>
+</misterromdescription>

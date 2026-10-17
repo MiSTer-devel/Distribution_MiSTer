@@ -1,0 +1,57 @@
+<misterromdescription>
+    <n>Vanguard</n>
+    <setname>vanguarda</setname>
+    <parent>vanguard</parent>
+    <rbf>SNK6502</rbf>
+    <mameversion>0289</mameversion>
+    <year>1981</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="03" base="16">
+        <dip name="Cabinet" bits="0" ids="Cocktail,Upright"/>
+        <dip name="Coinage" bits="1,3" ids="1C/1C,2C/1C,1C/3C,1C/1C,1C/2C,1C/1C,1C/6C,1C/1C"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5,3"/>
+        <dip name="Coinage Bonus" bits="6" ids="1C/1C,2C/1C"/>
+        <dip name="Unused" bits="7" ids="Off,On"/>
+    </switches>
+
+    <buttons names="Fire Right,Fire Down,Fire Up,Fire Left,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <rom index="0" zip="vanguarda.zip|vanguard.zip" md5="none">
+        <part repeat="0x4000">00</part>
+        <part crc="6a29e354" name="1.rom1"/>
+        <part crc="302bba54" name="2.rom2"/>
+        <part crc="424755f6" name="3.rom3"/>
+        <part crc="54603274" name="4.rom4"/>
+        <part crc="fc403426" name="5.rom5"/>
+        <part crc="0d5b47d0" name="6.rom6"/>
+        <part crc="8549b8f8" name="7.rom7"/>
+        <part crc="1c557ab4" name="8.rom8"/>
+        <part repeat="0x3000">00</part>
+        <part crc="fc403426" name="5.rom5"/>
+        <part crc="e7d4315b" name="sk5_ic50.bin"/>
+        <part repeat="0x800">00</part>
+        <part crc="96e87858" name="sk5_ic51.bin"/>
+        <part repeat="0x800">00</part>
+        <part crc="ad782a73" name="sk5_ic7.bin"/>
+        <part crc="7dc9d450" name="sk5_ic6.bin"/>
+        <part crc="d2a64006" name="sk4_ic51.bin"/>
+        <part crc="cc4a0b6f" name="sk4_ic52.bin"/>
+        <part repeat="0xFC0">00</part>
+        <part crc="2b7cbae9" name="sk6_ic07.bin"/>
+        <part crc="3b7e9d7c" name="sk6_ic08.bin"/>
+        <part crc="c36df041" name="sk6_ic11.bin"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 2 (GID_VANGUARD) -->
+    <rom index="1">
+        <part>02</part>
+    </rom>
+
+    <remark>Vanguard (SNK)</remark>
+</misterromdescription>

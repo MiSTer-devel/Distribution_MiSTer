@@ -1,0 +1,108 @@
+<misterromdescription>
+    <name>Atomic Robo-Kid</name>
+    <setname>robokid</setname>
+    <parent>robokid</parent>
+    <year>1988</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Atomic Robo-Kid</series>
+    <category>Platform</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Attack,Jump,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="CF,FF">
+        <dip bits="0" name="Flip Screen" ids="On,Off"/>
+        <dip bits="1" name="Bonus Life" ids="None,50000 and every 100000"/>
+        <dip bits="2" name="Difficulty" ids="Hard,Normal"/>
+        <dip bits="3" name="Free Play" ids="On,Off"/>
+        <dip bits="4" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="5" name="Demo Sounds" ids="On,Off"/>
+        <dip bits="6,7" name="Lives" ids="5,4,2,3"/>
+        <dip bits="8" name="Service Mode" ids="On,Off"/>
+        <dip bits="9" name="Unused" ids="On,Off"/>
+        <dip bits="10" name="Unused" ids="On,Off"/>
+        <dip bits="11" name="Unused" ids="On,Off"/>
+        <dip bits="12" name="Unused" ids="On,Off"/>
+        <dip bits="13,15" name="Coinage" ids="5 Coins/1 Credit,4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/4 Credits,1 Coin/3 Credits,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    </switches>
+
+    <!-- Index 0: Main CPU. 0x8000 fixed, then banks -->
+    <rom index="0" md5="none" zip="robokid.zip">
+        <part name="robokid1.18j" crc="378c21fc" length="0x8000"/>
+        <part name="robokid1.18j" crc="378c21fc"/>
+        <part name="robokid2.18k" crc="ddef8c5a"/>
+        <part name="robokid3.15k" crc="05295ec3"/>
+        <part name="robokid4.12k" crc="3bc3977f"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU -->
+    <rom index="1" md5="none" zip="robokid.zip">
+        <part name="robokid.k7" crc="f490a2e9"/>
+    </rom>
+
+    <!-- Index 2: FG char ROM -->
+    <rom index="2" md5="none" zip="robokid.zip">
+        <part name="robokid.b9" crc="fac59c3f"/>
+    </rom>
+
+    <!-- Index 6: Sprite ROM -->
+    <rom index="6" md5="none" zip="robokid.zip">
+        <part name="robokid.15f" crc="ba61f5ab"/>
+        <part name="robokid.16f" crc="d9b399ce"/>
+        <part name="robokid.17f" crc="afe432b9"/>
+        <part name="robokid.18f" crc="a0aa2a84"/>
+    </rom>
+
+    <!-- Index 7: BG tile ROM 1 -->
+    <rom index="7" md5="none" zip="robokid.zip">
+        <part name="robokid.19c" crc="02220421"/>
+        <part name="robokid.20c" crc="02d59bc2"/>
+        <part name="robokid.17d" crc="2fa29b99"/>
+        <part name="robokid.18d" crc="ae15ce02"/>
+        <part name="robokid.19d" crc="784b089e"/>
+        <part name="robokid.20d" crc="b0b395ed"/>
+        <part name="robokid.19f" crc="0f9071c6"/>
+        <part repeat="0x10000">00</part>
+    </rom>
+
+    <!-- Index 8: BG tile ROM 2 -->
+    <rom index="8" md5="none" zip="robokid.zip">
+        <part name="robokid.12c" crc="0ab45f94"/>
+        <part name="robokid.14c" crc="029bbd4a"/>
+        <part name="robokid.15c" crc="7de67ebb"/>
+        <part name="robokid.16c" crc="53c0e582"/>
+        <part name="robokid.17c" crc="0cae5a1e"/>
+        <part name="robokid.18c" crc="56ac7c8a"/>
+        <part name="robokid.15d" crc="cd632a4d"/>
+        <part name="robokid.16d" crc="18d92b2b"/>
+    </rom>
+
+    <!-- Index 9: BG tile ROM 3 -->
+    <rom index="9" md5="none" zip="robokid.zip">
+        <part name="robokid.12a" crc="e64d1c10"/>
+        <part name="robokid.14a" crc="8f9371e4"/>
+        <part name="robokid.15a" crc="469204e7"/>
+        <part name="robokid.16a" crc="4e340815"/>
+        <part name="robokid.17a" crc="f0863106"/>
+        <part name="robokid.18a" crc="fdff7441"/>
+        <part repeat="0x20000">00</part>
+    </rom>
+
+    <!-- Index 11: Main CPU PROM -->
+    <rom index="11" md5="none" zip="robokid.zip">
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>09</part></rom>
+
+    <remark>Atomic Robo-kid (World, Type-2)</remark>
+</misterromdescription>

@@ -1,0 +1,90 @@
+<misterromdescription>
+	<name>Knights of Valour 2 (ver. 106, 102, 100HK)</name>
+	<setname>kov2106</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|kov2.zip|kov2106.zip">
+		<!-- REGION_BIOS_PROG_ROM  = 00 -->
+
+		<!-- REGION_BIOS_TILE_ROM  = 01 -->
+
+		<!-- REGION_BIOS_MUSIC_ROM = 02 -->
+
+		<!-- REGION_CART_PROG_ROM  = 03 -->
+
+		<!-- REGION_CART_TILE_ROM  = 04 -->
+
+		<!-- REGION_CART_MUSIC_ROM = 05 -->
+
+		<!-- REGION_CART_A_ROM     = 06 -->
+
+		<!-- REGION_CART_B_ROM     = 07 -->
+
+		<!-- REGION_IGS022_ROM     = 08 -->
+
+		<!-- REGION_IGS027_IROM    = 09 -->
+
+		<!-- REGION_CART_ARM_ROM   = 0a (external ARM ROM, encrypted; RTL-decrypted) -->
+
+		<!-- SYSTEM INFO (game = GAME_KOV2 = 13) -->
+		<part>0d 00</part>
+
+		<!-- BIOS PROG -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+
+		<!-- BIOS TILE -->
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+
+		<!-- BIOS MUSIC -->
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG (ROM_LOAD16_WORD_SWAP, plaintext) -->
+		<part>03 00400000 00100000</part>
+		<part name="v106_u18.u18" crc="40051ad9"/>
+
+		<!-- CART TILE -->
+		<part>04 00800000 00180000</part>
+		<part name="pgm_t1200.u27" crc="d7e26609"/>
+
+		<!-- CART MUSIC -->
+		<part>05 00800000 00800000</part>
+		<part name="pgm_m1200.u3" crc="b0d88720"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 02200000 00000000</part>
+		<part name="pgm_a1200.u1" crc="ceeb81d8"/>
+		<part name="pgm_a1201.u4" crc="21063ca7"/>
+		<part name="pgm_a1202.u6" crc="4bb92fae"/>
+		<part name="pgm_a1203.u8" crc="e73cb627"/>
+		<part name="pgm_a1204.u10" crc="14b4b5bb"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 01000000 00000000</part>
+		<part name="pgm_b1200.u5" crc="bed7d994"/>
+		<part name="pgm_b1201.u7" crc="f251eb57"/>
+
+		<!-- IGS027A INTERNAL ARM ROM (16KB -> block RAM) -->
+		<part>09 00004000 00000000</part>
+		<part name="kov2_v100_hongkong.asic" crc="e0d7679f"/>
+
+		<!-- IGS027A EXTERNAL ARM ROM (2MB, encrypted; decrypted at read time in RTL) -->
+		<part>0a 00200000 00000000</part>
+		<part name="v102_u19.u19" crc="462e2980"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

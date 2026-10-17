@@ -1,0 +1,80 @@
+<misterromdescription>
+  <name>SD Gundam Psycho Salamander no Kyoui</name>
+  <setname>sdgndmps</setname>
+  <mameversion>0264</mameversion>
+  <rbf>SDGundamPS</rbf>
+  <year>1991</year>
+  <manufacturer>Banpresto / Bandai</manufacturer>
+  <category>Shoot</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>1</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Fire,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,CF">
+    <!-- DSW0 (low byte = SW2): bit 0-3 Coin B, bit 4-7 Coin A. Default 0xFF = 1C_1C/1C_1C -->
+    <dip bits="0,3"   ids="4C 1C,5C 3C,2C 1C,3C 2C,1C 4C,1C 6C,2C 5C,1C 2C,4C 3C,1C 7C,3C 1C,1C 3C,3C 4C,1C 5C,2C 3C,1C 1C" name="Coin B"/>
+    <dip bits="4,7"   ids="Free Play,4C 1C,2C 1C,3C 2C,1C 4C,1C 6C,2C 5C,1C 2C,4C 3C,1C 7C,3C 1C,1C 3C,3C 4C,1C 5C,2C 3C,1C 1C" name="Coin A"/>
+    <!-- DSW1 (high byte = SW1): bit 8-9 Lives, bit 10-11 Difficulty, bit 12 Demo, bit 13 Continue, bit 14-15 unused -->
+    <dip bits="8,9"   ids="6,4,2,3" name="Lives"/>
+    <dip bits="10,11" ids="Very Difficult,Difficult,Easy,Normal" name="Difficulty"/>
+    <dip bits="12"    ids="On,Off" name="Demo Sounds"/>
+    <dip bits="13"    ids="Yes,No"  name="Allow Continue"/>
+    <!-- Service Mode (virtuale, esposto da OSD invece che dal bottone HW SERVICE1).
+         Off=normale gioco, On=service menu/test input/dip/sound -->
+    <dip bits="14"    ids="Off,On"  name="Service Mode"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="sdgndmps.zip" md5="None">
+    <!-- maincpu 512KB @ 0x000000 (interleaved word from 4× 128KB ROMs) -->
+    <interleave output="16">
+      <part name="911-a01.25" crc="3362915d" map="10"/>
+      <part name="911-a02.29" crc="fbc78285" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="911-a03.27" crc="6c24b4f2" map="10"/>
+      <part name="911-a04.28" crc="6ff9d716" map="01"/>
+    </interleave>
+
+    <!-- txtiles 128KB @ 0x080000 — file order SWAPPED (a07 prima, a08 dopo)
+         per matchare la convention MAME planes 2,3 in primo file, 0,1 in secondo. -->
+    <interleave output="16"><part name="911-a07.73" crc="6f40d4a9" map="21"/></interleave>
+    <interleave output="16"><part name="911-a08.66" crc="e7e04823" map="21"/></interleave>
+
+    <!-- bgtiles 512KB @ 0x0A0000 -->
+    <interleave output="16"><part name="911-a12.63" crc="8976bbb6" map="21"/></interleave>
+
+    <!-- fgtiles 512KB @ 0x120000 -->
+    <interleave output="16"><part name="911-a11.65" crc="3f3b7810" map="21"/></interleave>
+
+    <!-- mgtiles 1024KB @ 0x1A0000 -->
+    <interleave output="16"><part name="911-a13.64" crc="f38a584a" map="21"/></interleave>
+
+    <!-- sprites 2048KB @ 0x2A0000 -->
+    <interleave output="16"><part name="911-a10.73" crc="80e341fb" map="21"/></interleave>
+    <interleave output="16"><part name="911-a09.74" crc="98f34519" map="21"/></interleave>
+
+    <!-- oki 256KB @ 0x4A0000
+         map="21" duplicate: byte → entrambi i byte della word SDRAM (=256KB raw → 256KB word SDRAM)
+         Bridge OKI legge byte_lsb selezionato (high/low di word) — entrambi uguali, quindi funziona. -->
+    <interleave output="16"><part name="911-a06.97" crc="12c79440" map="21"/></interleave>
+
+    <!-- audiocpu 64KB @ 0x4E0000 (Z80 program) — pattern interleave map=21
+         (stessa modalità dei tile, evita "garbage primo boot" causato da
+         cambio modalità di caricamento HPS quando si usava <part> raw).
+         File è 64KB. MAME layout interno (audiocpu region 128KB) ricostruito in RTL:
+           bank 0 (0x8000-0xFFFF Z80) → file[0x8000-0xFFFF]
+           bank 1 (0x8000-0xFFFF Z80) → file[0x0000-0x7FFF] alias -->
+    <interleave output="16"><part name="911-a05.010" crc="90455406" map="21"/></interleave>
+
+    <!-- prom priority 512B @ 0x4F0000 (oltre i 64KB del Z80) -->
+    <interleave output="16"><part name="bnd-007.88" crc="96f7646e" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260505000000</mratimestamp>
+</misterromdescription>

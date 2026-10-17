@@ -1,0 +1,159 @@
+<misterromdescription>
+	<name>720 Degrees (rev 1)</name>
+	<setname>720r1</setname>
+	<mameversion>0289</mameversion>
+	<mratimestamp>20260818000000</mratimestamp>
+	<year>1986</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<category>Arcade</category>
+	<rbf>atarisys2</rbf>
+	<mameinfo parent="720" cpp="atarisy2" input="720"/>
+	<display type="raster" rotate="0"/>
+
+	<!-- ALTERNATIVE: MAME clone of 720. It inherits the parent's stream
+	     layout, slapstic type, game id and TMS5220 flag; the manifest generator
+	     re-parses this set's own ROM_REGIONs and fails if any of them differs,
+	     so the inheritance is checked rather than assumed.
+	     -->
+
+	<!-- Button order MUST match the core's CONF_STR J1 (atarisys2.sv):
+	     MiSTer assigns these names to joystick_0[4],[5],[6]... IN ORDER, and an MRA
+	     name list overrides the OSD labels, so a mismatch silently drives the wrong
+	     core bit. -->
+	<buttons names="Jump,Kick,Coin,Service Credit,-,-" default="A,B,R,L"/>
+
+	<!-- Game descriptor, 4 bytes (rtl/rom/sys2_rom_layout.vh):
+	       [0] slapstic type  107
+	       [1] game id        1
+	       [2] flags          bit0 = TMS5220 populated -> 0x01
+	       [3] reserved       0
+	     The core validates all four AND checks the slapstic type against the game id,
+	     holding the T-11 in reset if they disagree. A pre-v2 MRA carrying only the
+	     single slapstic byte is rejected on that path. -->
+	<rom index="1">
+		<part>6B 01 01 00</part>
+	</rom>
+
+	<!-- Fixed stream contract. Generated from the ROM manifest; the layout it
+	     targets is rtl/rom/sys2_rom_layout.vh. -->
+	<!-- zip list: 720r1.zip first, then 720.zip for the files this set shares with its
+	     parent, which a split romset does not duplicate. -->
+	<rom index="0" zip="720r1.zip|720.zip" md5="none">
+		<!-- maincpu: stream 0x000000-0x08ffff, region 0x90000 -->
+		<part repeat="32768">FF</part>
+		<interleave output="16">
+			<part name="136047-1126.7lm" crc="f0ef298a" map="01"/>
+			<part name="136047-1127.7mn" crc="57e49398" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136047-1128.6fh" crc="2884dcff" map="01"/>
+			<part name="136047-1131.6mn" crc="94c8195e" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136047-1129.6hj" crc="eabf0b01" map="01"/>
+			<part name="136047-1132.6p" crc="a24f333e" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136047-1130.6k" crc="93fba845" map="01"/>
+			<part name="136047-1133.6r" crc="53c177be" map="10"/>
+		</interleave>
+		<part repeat="131072">FF</part>
+
+		<!-- audiocpu: stream 0x090000-0x09ffff, region 0x10000 -->
+		<part repeat="16384">FF</part>
+		<part name="136047-1134.2a" crc="09a418c2"/>
+		<part name="136047-1135.2b" crc="b1f157d0"/>
+		<part name="136047-1136.2cd" crc="dad40e6d"/>
+
+		<!-- tiles: stream 0x0a0000-0x11ffff, region 0x80000 -->
+		<!-- The two RGN_FRAC(1,2) plane halves of MAME's region (split at 0x20000) are
+		     byte-interleaved here, so one 16-bit word is {high-plane byte,
+		     low-plane byte}. That is the pair both tile readers want, which lets
+		     the loader stay a straight byte-through map. -->
+		<interleave output="16">
+			<part name="136047-1121.6a" crc="7adb5f9a" map="01"/>
+			<part name="136047-1117.6c" crc="5a55f149" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136047-1122.6b" crc="41b60141" map="01"/>
+			<part name="136047-1118.6d" crc="9bb2429e" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136047-1123.7a" crc="501881d5" map="01"/>
+			<part name="136047-1119.7d" crc="8f7b20e5" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136047-1124.7b" crc="096f2574" map="01"/>
+			<part name="136047-1120.7c" crc="46af6d35" map="10"/>
+		</interleave>
+		<part repeat="262144">FF</part>
+
+		<!-- sprites: stream 0x120000-0x21ffff, region 0x100000 -->
+		<part name="136047-1109.6t" crc="0a46b693" offset="0x8000" length="0x8000"/>
+		<part name="136047-1110.6sr" crc="457d7e38" offset="0x8000" length="0x8000"/>
+		<part name="136047-1111.6p" crc="ffad0a5b" offset="0x8000" length="0x8000"/>
+		<part name="136047-1112.6n" crc="06664580" offset="0x8000" length="0x8000"/>
+		<part name="136047-1109.6t" crc="0a46b693" offset="0x0" length="0x8000"/>
+		<part name="136047-1110.6sr" crc="457d7e38" offset="0x0" length="0x8000"/>
+		<part name="136047-1111.6p" crc="ffad0a5b" offset="0x0" length="0x8000"/>
+		<part name="136047-1112.6n" crc="06664580" offset="0x0" length="0x8000"/>
+		<part name="136047-1113.6m" crc="7445dc0f" offset="0x8000" length="0x8000"/>
+		<part name="136047-1114.6l" crc="23eaceb0" offset="0x8000" length="0x8000"/>
+		<part name="136047-1115.6kj" crc="0cc8de53" offset="0x8000" length="0x8000"/>
+		<part name="136047-1116.6jh" crc="2d8f1369" offset="0x8000" length="0x8000"/>
+		<part name="136047-1113.6m" crc="7445dc0f" offset="0x0" length="0x8000"/>
+		<part name="136047-1114.6l" crc="23eaceb0" offset="0x0" length="0x8000"/>
+		<part name="136047-1115.6kj" crc="0cc8de53" offset="0x0" length="0x8000"/>
+		<part name="136047-1116.6jh" crc="2d8f1369" offset="0x0" length="0x8000"/>
+		<part name="136047-1101.5t" crc="2ac77b80" offset="0x8000" length="0x8000"/>
+		<part name="136047-1102.5sr" crc="f19c3b06" offset="0x8000" length="0x8000"/>
+		<part name="136047-1103.5p" crc="78f9ab90" offset="0x8000" length="0x8000"/>
+		<part name="136047-1104.5n" crc="77ce4a7f" offset="0x8000" length="0x8000"/>
+		<part name="136047-1101.5t" crc="2ac77b80" offset="0x0" length="0x8000"/>
+		<part name="136047-1102.5sr" crc="f19c3b06" offset="0x0" length="0x8000"/>
+		<part name="136047-1103.5p" crc="78f9ab90" offset="0x0" length="0x8000"/>
+		<part name="136047-1104.5n" crc="77ce4a7f" offset="0x0" length="0x8000"/>
+		<part name="136047-1105.5m" crc="bef5a025" offset="0x8000" length="0x8000"/>
+		<part name="136047-1106.5l" crc="92a159c8" offset="0x8000" length="0x8000"/>
+		<part name="136047-1107.5kj" crc="0a94a3ef" offset="0x8000" length="0x8000"/>
+		<part name="136047-1108.5jh" crc="9815eda6" offset="0x8000" length="0x8000"/>
+		<part name="136047-1105.5m" crc="bef5a025" offset="0x0" length="0x8000"/>
+		<part name="136047-1106.5l" crc="92a159c8" offset="0x0" length="0x8000"/>
+		<part name="136047-1107.5kj" crc="0a94a3ef" offset="0x0" length="0x8000"/>
+		<part name="136047-1108.5jh" crc="9815eda6" offset="0x0" length="0x8000"/>
+
+		<!-- chars: stream 0x220000-0x223fff, region 0x4000 -->
+		<part name="136047-1125.4t" crc="6b7e2328"/>
+
+		<!-- eeprom: stream 0x224000-0x2241ff, region 0x200.
+		     NOT taken from 720.zip. MAME commit 6effbd5 (2026-07-19, "720: fix factory reset
+		     eeprom (see broken hiscore table)") replaced the shipped default image
+		     cfe1c24e -> 5d2acf11. EEPROM defaults are romset data, not source, so those bytes
+		     cannot be tracked here, and pinning a new CRC would make this MRA build only
+		     against an updated zip. So the seed is inlined instead, exactly as Paperboy's is.
+		     THE DEFECT IS PROVEN, NOT INHERITED FROM THE COMMIT MESSAGE: the factory image's
+		     TOP SKATERS overall-score table renders with positions 9-15 outranking 1-8 (top
+		     entry 6281384 against a 9961472 further down), because the table sits TWO BYTES
+		     EARLY, so every entry is read straddled across two real ones. Measured:
+		     new[0x160:0x200] == factory[0x15E:0x1FE], 160 of 160 bytes.
+		     These bytes are the GAME'S OWN, not hand-built: 720's self-test "Reset Saved
+		     Information" screen was driven in MAME per TM-294 page 3-8 (Jump to set RESET
+		     HIGH SCORE TABLE to YES, Kick to apply; the game answered ERASE SUCCESSFUL), and
+		     the result renders the correct descending 20000..13000 table with the developers'
+		     ONE/TWO/THR.. and PDP-11-mnemonic initials. RESET ACCOUNTING DATA was left NO, so
+		     bytes 0x000-0x15F are untouched factory data. -->
+		<part>FF D0 07 00 D7 00 00 00 D7 00 00 00 00 D0 07 00</part>
+		<part repeat="334">FF</part>
+		<part>00 4E 00 4E 20 39 A4 00 4C 2C 4E CE 00 4A 38 4C F1 00 48 44 15 D1 00 46 50 15 15 00</part>
+		<part>44 5C 49 17 00 42 68 48 95 00 40 74 11 06 00 3E 80 35 0D 00 3C 8C 4C 8D 00 3A 98 00</part>
+		<part>00 00 38 A4 04 21 00 36 B0 08 42 00 34 BC 0C 63 00 32 C8 10 84 00 30 D4 14 A5 00 2E</part>
+		<part>E0 18 C6 00 2C EC 1C E7 00 2A F8 21 08 00 29 04 25 29 0F 00 63 0E CA 81 0E 06 20 0D</part>
+		<part>89 62 0D 0C 82 0C A1 A2 0C 09 71 0B A5 8F 0B 46 72 0A B4 86 0A 05 02 09 85 12 09 09</part>
+		<part>CC 08 B5 CF 08 02 4B 07 82 51 07 04 90 06 84 42 06 05 73 05 84 52</part>
+	</rom>
+
+	<!-- 2804 EEPROM save-back: settings and high scores persist across power
+	     cycles. Restored after the factory default in the stream above. -->
+	<nvram index="2" size="512"/>
+</misterromdescription>

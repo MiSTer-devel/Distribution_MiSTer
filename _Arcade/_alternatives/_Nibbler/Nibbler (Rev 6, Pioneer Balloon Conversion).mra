@@ -1,0 +1,54 @@
+<misterromdescription>
+    <name>Nibbler (Rev 6, Pioneer Balloon Conversion)</name>
+    <setname>nibblerp</setname>
+    <parent>nibbler</parent>
+    <rbf>SNK6502</rbf>
+    <mameversion>0289</mameversion>
+    <year>1982</year>
+    <manufacturer>Rock-Ola</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <switches default="00" base="16">
+        <dip name="Lives" bits="0,1" ids="2,3,4,5"/>
+        <dip name="Pause at Corners" bits="2" ids="On,Off"/>
+        <dip name="Cabinet" bits="3" ids="Upright,Cocktail"/>
+        <dip name="Service Mode" bits="4" ids="Off,On"/>
+        <dip name="Free Play" bits="5" ids="Off,On"/>
+        <dip name="Coinage" bits="6,7" ids="1C/1C,2C/1C,2C/1C 4C/3,1C/1C 2C/3"/>
+    </switches>
+
+    <buttons names="-,-,-,-,Coin,Start 1P,Start 2P,Pause" default="Select,Start,R,L"/>
+
+    <rom index="0" zip="nibblerp.zip|nibbler.zip" md5="none">
+        <part repeat="0x3000">00</part>
+        <part crc="ac6a802b" name="ic12"/>
+        <part crc="35971364" name="ic7"/>
+        <part crc="6b33b806" name="ic8"/>
+        <part crc="91a4f98d" name="ic9"/>
+        <part crc="a151d934" name="ic10"/>
+        <part crc="063f05cc" name="ic14"/>
+        <part crc="7205fb8d" name="g-0960-54.ic15"/>
+        <part crc="4bb39815" name="g-0960-55.ic16"/>
+        <part crc="ed680f19" name="g-0960-56.ic17"/>
+        <part repeat="0x3000">00</part>
+        <part crc="063f05cc" name="ic14"/>
+        <part crc="01d4d0c2" name="g-0960-57.ic50"/>
+        <part crc="feff7faf" name="g-0960-58.ic51"/>
+        <part crc="a5709ff3" name="g-0708-05.ic7"/>
+        <part crc="dacd592d" name="g-0708-04.ic6"/>
+        <part crc="0345f8b7" name="sk7_ic51.bin"/>
+        <part crc="87d67dee" name="g-0959-44.ic52"/>
+        <part crc="33189917" name="g-0959-45.ic53"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 5 (GID_NIBBLER) -->
+    <rom index="1">
+        <part>05</part>
+    </rom>
+
+    <remark>Nibbler (Rock-Ola, Pioneer Balloon conversion)</remark>
+</misterromdescription>

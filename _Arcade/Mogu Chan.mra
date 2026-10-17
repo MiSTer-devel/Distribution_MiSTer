@@ -1,0 +1,70 @@
+<misterromdescription>
+	<name>Mogu Chan</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Mogu Chan</series>
+	<year>1982</year>
+	<manufacturer>Orca (Eastern Commerce Inc. license)</manufacturer>
+	<category>Shooter</category>
+
+	<setname>moguchan</setname>
+	<parent>moguchan</parent>
+	<mameversion>0289</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Button 2</button_names>
+
+	<switches default="00,40">
+		<!-- DSW1 (6082) -->
+		<dip bits="8,9"   name="Lives" ids="3,4,5,6"/>
+		<dip bits="10,12" name="Coinage" ids="1C/1C,1C/2C,1C/3C,1C/4C,1C/6C,2C/1C,2C/1C 3C/2C,Free Play"/>
+		<dip bits="13"    name="Bonus Life" ids="20000 50000,40000 70000"/>
+		<dip bits="14"    name="Cabinet" ids="Cocktail,Upright"/>
+		<dip bits="15"    name="Unknown" ids="Off,On"/>
+	</switches>
+
+	<!-- Index 0: Zodiack board main ROM (C000-CFFF stored at 5000), audio ROM, empty Vastar video regions, then the Orca
+	     OVG-40c video board -->
+	<rom index="0" md5="none" zip="moguchan.zip">
+		<part crc="85d0cb7e" name="2.5r"/>
+		<part crc="359ef951" name="4.5m"/>
+		<part crc="c8776f77" name="3.5np"/>
+		<part repeat="0x5000"> 00 </part>
+		<part crc="1a88d35f" name="1.7hj"/>
+		<part repeat="0x1000"> 00 </part>
+		<part repeat="0xA400"> 00 </part>
+		<part crc="1b7febd8" name="5.4r"/>
+		<part crc="c8060ffe" name="6.7p"/>
+		<part crc="bfca00f4" name="7.7m"/>
+		<part repeat="0x800"> 00 </part>
+		<part crc="e83daab3" name="moguchan.2a"/>
+		<part crc="9abfdf40" name="moguchan.2b"/>
+	</rom>
+
+	<!-- Index 1: core_config (bit1 OVG-40c video, bit2 Zodiack CPU board, bit3 percuss, bit4 horizontal ROT180), then the IN0 / IN1 / DSW0 input map, one control id
+	     per bit (rtl top level: 1-4 P1 U/D/L/R, 5 P1 button 1, 9-12 P2 U/D/L/R, 13 P2 button 1, 17 / 18 coin 1 / 2,
+	     19 / 20 start 1 / 2, 0 none) -->
+	<rom index="1">
+		<part>
+		0E
+		13 14 0B 0C 09 02 0A 00
+		00 11 00 04 01 0D 05 03
+		</part>
+	</rom>
+
+	<remark>Mogu Chan (Orca, Eastern Commerce license; MAME: wrong colours)</remark>
+	<mratimestamp>20261010000000</mratimestamp>
+</misterromdescription>

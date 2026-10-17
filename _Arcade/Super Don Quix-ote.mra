@@ -1,0 +1,65 @@
+<misterromdescription>
+    <name>Super Don Quix-ote</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Super Don Quix-ote</series>
+    <year>1984</year>
+    <manufacturer>Universal</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">superdq</setname>
+    <parent>superdq</parent>
+    <mameversion>0270</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>2</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Action,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <!-- Two DIP banks read at ports 0x02 (SW1) and 0x03 (SW2).  Values taken from
+         the factory tables in the operator manual (superdon_m.pdf p.4) and
+         cross-checked against MAME universal/superdq.cpp: manual switch N is
+         port bit 8-N, and a switch in the OFF position reads as 1.
+         Defaults below are the manual's factory settings (all switches OFF). -->
+    <switches default="FF,FF">
+        <!-- SW1 (byte 0) -->
+        <dip bits="0,1"  name="Difficulty"       ids="Difficult,Hard,Normal,Easy"/>
+        <dip bits="2"    name="Demo Sounds"      ids="Off,On"/>
+        <dip bits="3"    name="Extra Life"       ids="No Extra Life,One per 100000"/>
+        <dip bits="4,5"  name="Lives"            ids="2,5,4,3"/>
+        <dip bits="6"    name="Infinite Lives"   ids="On,Off"/>
+        <dip bits="7"    name="Free Play"        ids="On,Off"/>
+        <!-- SW2 (byte 1).  Manual: switches 1-4 are not in use, keep them OFF. -->
+        <dip bits="8,9"  name="Coin Right"       ids="2 Coins/1 Credit,1 Coin/3 Credits,1 Coin/2 Credits,1 Coin/1 Credit"/>
+        <dip bits="10,11" name="Coin Left"       ids="2 Coins/1 Credit,1 Coin/3 Credits,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    </switches>
+
+    <!-- GAME-ID byte 0: 06 = Super Don Quix-ote. -->
+    <!-- POST-SEEK-FRAMES byte 1: extra film ticks before seek commits. -->
+    <rom index="1">
+        <part>06 03</part>
+    </rom>
+
+    <!-- Index 0, packed to match rtl/superdon/SuperDon.sv:
+         0x0000 Z80 program (16K), 0x4000 character generator (8K),
+         0x6000 colour PROM (32 bytes). -->
+    <rom index="0" md5="none" zip="superdq.zip">
+        <part crc="96b931e2" name="sdq-prog.bin"/>
+        <part crc="5fb0e440" name="sdq-char.bin"/>
+        <part crc="96701569" name="sdq-cprm.bin"/>
+    </rom>
+
+    <remark>Super Don Quix-ote (Universal) - Pioneer LD-V1000 - long scenes set</remark>
+    <mratimestamp>20260909000000</mratimestamp>
+</misterromdescription>

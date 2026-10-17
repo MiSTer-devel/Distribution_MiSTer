@@ -1,0 +1,58 @@
+<misterromdescription>
+    <name>Satan Of Saturn (Set 2)</name>
+    <setname>satansata</setname>
+    <parent>satansat</parent>
+    <rbf>SNK6502</rbf>
+    <mameversion>0289</mameversion>
+    <year>1981</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>2-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="15" base="16">
+        <dip name="Cabinet" bits="0" ids="Cocktail,Upright"/>
+        <dip name="Coinage (SW1:2)" bits="1" ids="1C/1C,1C/2C"/>
+        <dip name="Bonus Life" bits="2" ids="10000,5000"/>
+        <dip name="Coinage 2C/1C (SW1:4)" bits="3" ids="Off,On"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5,3"/>
+        <dip name="Unused SW1:7" bits="6" ids="Off,On"/>
+        <dip name="RAM Test" bits="7" ids="Off,On"/>
+    </switches>
+
+    <buttons names="Fire,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <rom index="0" zip="satansata.zip|satansat.zip" md5="none">
+        <part repeat="0x4000">00</part>
+        <part crc="549dd13a" name="ic7.bin"/>
+        <part crc="04972fa8" name="ic8.bin"/>
+        <part crc="9caf9057" name="ic9.bin"/>
+        <part crc="e1bdcfe1" name="ic10.bin"/>
+        <part crc="d454de19" name="ic13.bin"/>
+        <part crc="7fbd5d30" name="ic14.bin"/>
+        <part crc="93ea2df9" name="ic15.bin"/>
+        <part crc="9ec5fe09" name="ic16.bin"/>
+        <part crc="21092f1f" name="ic22.bin"/>
+        <part crc="8f1b313a" name="ic23.bin"/>
+        <part crc="e74f98e0" name="ic24.bin"/>
+        <part repeat="0x6000">00</part>
+        <part crc="9ec5fe09" name="ic16.bin"/>
+        <part crc="e837c62b" name="ic73.bin"/>
+        <part repeat="0x800">00</part>
+        <part crc="83f61623" name="ic75.bin"/>
+        <part repeat="0x800">00</part>
+        <part crc="5dd6933a" name="zarz138.03"/>
+        <part repeat="0x20">00</part>
+        <part crc="8cb95a6b" name="ic53.bin"/>
+        <part crc="580934d2" name="ic54.bin"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 1 (GID_SATANSAT) -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+    <remark>Satan of Saturn (SNK)</remark>
+</misterromdescription>

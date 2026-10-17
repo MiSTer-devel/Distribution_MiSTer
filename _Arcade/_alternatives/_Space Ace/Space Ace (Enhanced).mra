@@ -1,0 +1,68 @@
+<misterromdescription>
+    <name>Space Ace (Enhanced)</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version>v1.0</version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Space Ace</series>
+    <year>1983</year>
+    <manufacturer>Cinematronics</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">spaceace</setname>
+    <parent>spaceace</parent>
+    <mameversion>0270</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Fire/Energize,Cadet,Captain,Space Ace,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <!-- Source: the SAE 1.0 author's own DIP chart (readme.txt in sae.zip, Dave Hallock,
+         2002-04-09).  SAE REMAPS EVERY SWITCH to match Dragon's Lair, so the stock Space Ace
+         layout does NOT apply here.  The chart numbers the banks 0-7, not 1-8: A0-A7 = dsw[7:0]
+         (AY port A), B0-B7 = dsw[15:8] (AY port B).  A switch ON reads as 0.
+         Defaults below are the chart's own RECOMMENDED settings. -->
+    <switches default="66,98">
+        <dip bits="0"  name="Coinage" ids="2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="4"  name="Free Play" ids="Off,On"/>
+        <dip bits="5"  name="Lives" ids="3,5"/>
+        <dip bits="10" name="Unlimited Lives" ids="Off,On"/>
+        <dip bits="3"  name="Playtest" ids="Off,On"/>
+        <dip bits="7"  name="Diagnostics" ids="Off,On"/>
+        <dip bits="9"  name="Attract Sound" ids="On,Off"/>
+        <dip bits="8"  name="- Attract Sound Reps" ids="All,Every 8"/>
+        <dip bits="15" name="Difficulty" ids="Hard (Replay Scene),Normal"/>
+        <dip bits="13,14" name="Skill Level" ids="Normal (Panel Buttons),Always Captain,Always Space Ace,Always Cadet"/>
+        <dip bits="11" name="LD Player" ids="LD-PR7820,LD-V1000"/>
+    </switches>
+
+    <!-- GAME-ID byte 0: 01 = Space Ace, enabling the LED band's skill field (SAE uses it). -->
+    <!-- POST-SEEK-FRAMES byte 1: 01, matching the Dragon's Lair (Enhanced) set.
+         Overridable at runtime now via Behaviour Options > Segment Tail. -->
+    <rom index="1">
+        <part>01 01</part>
+    </rom>
+
+    <!-- Index 0: Main Z80 program ROMs. 5x 8KB @ 0x0000-0x9FFF, filling the full region.
+         CRCs read from the archive directory of sae.zip. -->
+    <rom index="0" md5="none" zip="sae.zip">
+        <part crc="cbc5e425" name="sae10_u1.bin"/>
+        <part crc="71a26f47" name="sae10_u2.bin"/>
+        <part crc="bac5cdd8" name="sae10_u3.bin"/>
+        <part crc="e18380f9" name="sae10_u4.bin"/>
+        <part crc="8a536cb0" name="sae10_u5.bin"/>
+    </rom>
+
+    <remark>Space Ace Enhancement ROM set v1.0 by Dave Hallock</remark>
+    <mratimestamp>20260905000000</mratimestamp>
+</misterromdescription>

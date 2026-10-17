@@ -1,0 +1,110 @@
+<misterromdescription>
+  <name>Darius (World)</name>
+  <setname>darius</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Darius</rbf>
+  <year>1987</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Shooter</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- SW1 (bits 0-7) — active LOW: bit=1=OFF (default) -->
+    <dip bits="0"   ids="On,Off" name="Unknown (SW1:1)"/>
+    <dip bits="1"   ids="On,Off" name="Autofire"/>
+    <dip bits="2"   ids="On,Off" name="Service Mode"/>
+    <dip bits="3"   ids="Off,On" name="Demo Sounds"/>
+    <dip bits="4,5" ids="4C/1C,3C/1C,2C/1C,1C/1C" name="Coin A"/>
+    <dip bits="6,7" ids="1C/6C,1C/4C,1C/3C,1C/2C" name="Coin B"/>
+    <!-- SW2 (bits 8-15) -->
+    <dip bits="8,9"   ids="Hardest,Hard,Easy,Medium" name="Difficulty"/>
+    <dip bits="10,11" ids="None,800K,400K,600K" name="Bonus Life"/>
+    <dip bits="12,13" ids="6,5,4,3" name="Lives"/>
+    <dip bits="14"    ids="On,Off" name="Unknown (SW2:7)"/>
+    <dip bits="15"    ids="Off,On" name="Allow Continue"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="darius.zip" md5="None">
+    <!-- ===== Tile ROM (pc080sn) 384KB @ SDRAM 0x000000 ===== -->
+    <interleave output="16">
+      <part name="a96_48.24" crc="39c9b3aa" map="10"/>
+      <part name="a96_51.47" crc="1bf8f0d3" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_49.25" crc="37a7d88a" map="10"/>
+      <part name="a96_52.48" crc="2d9b2128" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_50.26" crc="75d738e4" map="10"/>
+      <part name="a96_53.49" crc="0173484c" map="01"/>
+    </interleave>
+
+    <!-- ===== Main CPU ROM 384KB @ SDRAM 0x060000 ===== -->
+    <interleave output="16">
+      <part name="a96_59-1.186" crc="11aab4eb" map="10"/>
+      <part name="a96_58-1.152" crc="5f71e697" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_61-2.187" crc="4736aa9b" map="10"/>
+      <part name="a96_66-2.153" crc="4ede5f56" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_31.188" crc="e9bb5d89" map="10"/>
+      <part name="a96_30.154" crc="9eb5e127" map="01"/>
+    </interleave>
+
+    <!-- ===== Sub CPU ROM 256KB @ SDRAM 0x0C0000 ===== -->
+    <interleave output="16">
+      <part name="a96_33-1.190" crc="ff186048" map="10"/>
+      <part name="a96_32-1.157" crc="d9719de8" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_35-1.191" crc="b3280193" map="10"/>
+      <part name="a96_34-1.158" crc="ca3b2573" map="01"/>
+    </interleave>
+
+    <!-- ===== Sprite ROM 768KB @ SDRAM 0x100000 ===== -->
+    <!-- ROM_LOAD32_BYTE: 4 files interleaved into 32-bit words -->
+    <interleave output="32">
+      <part name="a96_47.201" crc="8df9286a" map="1000"/>
+      <part name="a96_46.180" crc="fec35418" map="0100"/>
+      <part name="a96_45.200" crc="616cdd8b" map="0010"/>
+      <part name="a96_44.179" crc="bbc18878" map="0001"/>
+    </interleave>
+    <interleave output="32">
+      <part name="a96_43.199" crc="c7cad469" map="1000"/>
+      <part name="a96_42.178" crc="7f55ee0f" map="0100"/>
+      <part name="a96_41.198" crc="97128a3a" map="0010"/>
+      <part name="a96_40.177" crc="b699a51e" map="0001"/>
+    </interleave>
+    <interleave output="32">
+      <part name="a96_65.197" crc="14eee326" map="1000"/>
+      <part name="a96_64.176" crc="814c676f" map="0100"/>
+      <part name="a96_63.196" crc="fa19cfff" map="0010"/>
+      <part name="a96_62.175" crc="9179862c" map="0001"/>
+    </interleave>
+
+    <!-- ===== Text ROM 32KB @ SDRAM 0x1C0000 ===== -->
+    <interleave output="16">
+      <part name="a96_54.143" crc="51c02ae2" map="10"/>
+      <part name="a96_55.144" crc="771e4d98" map="01"/>
+    </interleave>
+
+    <!-- ===== Audio Z80 ROM 64KB @ SDRAM 0x1C8000 ===== -->
+    <part name="a96_57.33" crc="33ceb730"/>
+
+    <!-- ===== ADPCM Z80 ROM 64KB @ SDRAM 0x1D8000 ===== -->
+    <part name="a96_56.18" crc="292ef55c"/>
+  </rom>
+  <rom index="2"></rom>
+
+  <mratimestamp>20260324000000</mratimestamp>
+</misterromdescription>

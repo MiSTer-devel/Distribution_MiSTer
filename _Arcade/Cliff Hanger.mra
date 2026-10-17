@@ -1,0 +1,80 @@
+<misterromdescription>
+    <name>Cliff Hanger</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Cliff Hanger</series>
+    <year>1983</year>
+    <manufacturer>Stern</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">cliffhgr</setname>
+    <parent>cliffhgr</parent>
+    <mameversion>0270</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>2</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>2</num_buttons>
+    <buttons names="Hand,Foot,-,-,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <!-- Five switch bytes = MAME BANK0..BANK4 (stern/cliffhgr.cpp), read through
+         port 0x62 with the bank selected by port 0x60.  BANK0 is not DIPs on the
+         real board: it is the two service pushbuttons on the CPU PCB, exposed
+         here as switches because a MiSTer cabinet has no such buttons.
+         BANK5/BANK6 are the controls and are not switches. -->
+    <switches default="FF,C7,FF,3F,FF">
+        <!-- BANK0 (byte 0) -->
+        <dip bits="6"     name="Service 2 (SW2)"     ids="On,Off"/>
+        <dip bits="7"     name="Service 1 (SW1)"     ids="On,Off"/>
+        <!-- BANK1 (byte 1) -->
+        <dip bits="8,9"   name="Lives"               ids="6,5,4,3"/>
+        <dip bits="10"    name="No Hanging Scene"    ids="On,Off"/>
+        <dip bits="11"    name="Regular Length Scenes" ids="On,Off"/>
+        <dip bits="12"    name="Score/Lives Overlay" ids="On,Off"/>
+        <dip bits="13"    name="Action/Stick Hints"  ids="On,Off"/>
+        <dip bits="14,15" name="Should Have Hint"    ids="After 3rd Mistake,After 2nd Mistake,After 1st Mistake,Never"/>
+        <!-- BANK2 (byte 2) -->
+        <dip bits="16,17" name="Coin A"              ids="4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="20,21" name="Coin B"              ids="4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <!-- BANK3 (byte 3) -->
+        <dip bits="24"    name="Service Index"       ids="On,Off"/>
+        <dip bits="25"    name="Switch Test"         ids="On,Off"/>
+        <dip bits="26"    name="Free Play"           ids="On,Off"/>
+        <dip bits="27"    name="Player Immortality"  ids="On,Off"/>
+        <dip bits="28"    name="Disc Test"           ids="On,Off"/>
+        <dip bits="29"    name="Demo Sounds"         ids="Off,On"/>
+        <dip bits="30"    name="Short Scenes"        ids="Off,On"/>
+        <dip bits="31"    name="Allow Continue"      ids="On,Off"/>
+        <!-- BANK4 (byte 4) -->
+        <dip bits="32,35" name="Move Difficulty"     ids="15 (Hardest),14,13,12,11,10,9,8,7,6,5,4,3,2,1,0 (Easiest)"/>
+        <dip bits="36,39" name="Hint Difficulty"     ids="15 (Least Hints),14,13,12,11,10,9,8,7,6,5,4,3,2,1,0 (Most Hints)"/>
+    </switches>
+
+    <!-- GAME-ID byte 0: 03 = Cliff Hanger. -->
+    <!-- POST-SEEK-FRAMES byte 1: extra film ticks before seek commits. 0=instant, 5≈208ms. -->
+    <rom index="1">
+        <part>03 03</part>
+    </rom>
+
+    <!-- Index 0: Main Z80 program ROMs, 5x 8KB @ 0x0000-0x9FFF (MAME stern/cliffhgr.cpp). -->
+    <rom index="0" md5="none" zip="cliffhgr.zip">
+        <part crc="a86ec38f" name="cliff_u1.bin"/>
+        <part crc="b8d33b6b" name="cliff_u2.bin"/>
+        <part crc="75a64cd2" name="cliff_u3.bin"/>
+        <part crc="906b2af1" name="cliff_u4.bin"/>
+        <part crc="5922e710" name="cliff_u5.bin"/>
+    </rom>
+
+    <remark>Cliff Hanger (Stern) - Pioneer PR-8210</remark>
+    <mratimestamp>20260907000000</mratimestamp>
+</misterromdescription>

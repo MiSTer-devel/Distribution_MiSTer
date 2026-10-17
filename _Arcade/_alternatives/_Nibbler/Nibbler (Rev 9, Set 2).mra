@@ -1,0 +1,54 @@
+<misterromdescription>
+    <name>Nibbler (Rev 9, Set 2)</name>
+    <setname>nibblera</setname>
+    <parent>nibbler</parent>
+    <rbf>SNK6502</rbf>
+    <mameversion>0289</mameversion>
+    <year>1982</year>
+    <manufacturer>Rock-Ola</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <switches default="00" base="16">
+        <dip name="Lives" bits="0,1" ids="3,4,5,6"/>
+        <dip name="Difficulty" bits="2" ids="Easy,Hard"/>
+        <dip name="Cabinet" bits="3" ids="Upright,Cocktail"/>
+        <dip name="Service Mode" bits="4" ids="Off,On"/>
+        <dip name="Free Play" bits="5" ids="Off,On"/>
+        <dip name="Coinage" bits="6,7" ids="1C/1C,2C/1C,2C/1C 4C/3,1C/1C 2C/3"/>
+    </switches>
+
+    <buttons names="-,-,-,-,Coin,Start 1P,Start 2P,Pause" default="Select,Start,R,L"/>
+
+    <rom index="0" zip="nibblera.zip|nibbler.zip" md5="none">
+        <part repeat="0x3000">00</part>
+        <part crc="e569937b" name="2732.ic12"/>
+        <part crc="7f9d715c" name="2732.ic07"/>
+        <part crc="e46eb1c9" name="2732.ic08"/>
+        <part crc="a599df10" name="2732.ic09"/>
+        <part crc="746e94cd" name="2732.ic10"/>
+        <part crc="48ec4af0" name="2732.ic14"/>
+        <part crc="7205fb8d" name="2732.ic15"/>
+        <part crc="4bb39815" name="2732.ic16"/>
+        <part crc="ed680f19" name="2732.ic17"/>
+        <part repeat="0x3000">00</part>
+        <part crc="48ec4af0" name="2732.ic14"/>
+        <part crc="01d4d0c2" name="2732.ic50"/>
+        <part crc="feff7faf" name="2732.ic51"/>
+        <part crc="a5709ff3" name="g-0708-05.ic7"/>
+        <part crc="dacd592d" name="g-0708-04.ic6"/>
+        <part repeat="0x800">FF</part>
+        <part crc="cabe6c34" name="2716.ic52"/>
+        <part crc="33189917" name="2716.ic53"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 5 (GID_NIBBLER) -->
+    <rom index="1">
+        <part>05</part>
+    </rom>
+
+    <remark>Nibbler (Rock-Ola)</remark>
+</misterromdescription>

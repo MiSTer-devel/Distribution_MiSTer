@@ -1,0 +1,148 @@
+<misterromdescription>
+	<name>APB - All Points Bulletin (rev 2)</name>
+	<setname>apb2</setname>
+	<mameversion>0289</mameversion>
+	<mratimestamp>20260818000000</mratimestamp>
+	<year>1987</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>vertical</rotation>
+	<category>Arcade</category>
+	<rbf>atarisys2</rbf>
+	<mameinfo parent="apb" cpp="atarisy2" input="apb"/>
+	<display type="raster" rotate="0"/>
+
+	<!-- ALTERNATIVE: MAME clone of apb. It inherits the parent's stream
+	     layout, slapstic type, game id and TMS5220 flag; the manifest generator
+	     re-parses this set's own ROM_REGIONs and fails if any of them differs,
+	     so the inheritance is checked rather than assumed.
+	     -->
+
+	<!-- Button order MUST match the core's CONF_STR J1 (atarisys2.sv):
+	     MiSTer assigns these names to joystick_0[4],[5],[6]... IN ORDER, and an MRA
+	     name list overrides the OSD labels, so a mismatch silently drives the wrong
+	     core bit. -->
+	<buttons names="Siren,Gas,Coin,Service Credit,-,Fire" default="A,B,R,L,Y"/>
+
+	<!-- Game descriptor, 4 bytes (rtl/rom/sys2_rom_layout.vh):
+	       [0] slapstic type  110
+	       [1] game id        4
+	       [2] flags          bit0 = TMS5220 populated -> 0x01
+	       [3] reserved       0
+	     The core validates all four AND checks the slapstic type against the game id,
+	     holding the T-11 in reset if they disagree. A pre-v2 MRA carrying only the
+	     single slapstic byte is rejected on that path. -->
+	<rom index="1">
+		<part>6E 04 01 00</part>
+	</rom>
+
+	<!-- Fixed stream contract. Generated from the ROM manifest; the layout it
+	     targets is rtl/rom/sys2_rom_layout.vh. -->
+	<!-- zip list: apb2.zip first, then apb.zip for the files this set shares with its
+	     parent, which a split romset does not duplicate. -->
+	<rom index="0" zip="apb2.zip|apb.zip" md5="none">
+		<!-- maincpu: stream 0x000000-0x08ffff, region 0x90000 -->
+		<part repeat="32768">FF</part>
+		<interleave output="16">
+			<part name="136051-2126.7l" crc="8edf4726" map="01"/>
+			<part name="136051-2127.7n" crc="e2b2aff2" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136051-2128.6f" crc="61a81436" map="01"/>
+			<part name="136051-2129.6n" crc="24500ed6" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136051-1130.6j" crc="f64c752e" map="01"/>
+			<part name="136051-1131.6p" crc="0a506e04" map="10"/>
+		</interleave>
+		<part repeat="131072">FF</part>
+		<interleave output="16">
+			<part name="136051-1132.6l" crc="6d0e7a4e" map="01"/>
+			<part name="136051-1133.6s" crc="af88d429" map="10"/>
+		</interleave>
+
+		<!-- audiocpu: stream 0x090000-0x09ffff, region 0x10000 -->
+		<part repeat="16384">FF</part>
+		<part name="136051-1134.2a" crc="a65748b9"/>
+		<part name="136051-1135.2bc" crc="e9692cea"/>
+		<part name="136051-1136.2d" crc="92fc7657"/>
+
+		<!-- tiles: stream 0x0a0000-0x11ffff, region 0x80000 -->
+		<!-- The two RGN_FRAC(1,2) plane halves of MAME's region (split at 0x40000) are
+		     byte-interleaved here, so one 16-bit word is {high-plane byte,
+		     low-plane byte}. That is the pair both tile readers want, which lets
+		     the loader stay a straight byte-through map. -->
+		<interleave output="16">
+			<part name="136051-1118.6a" crc="93752c49" map="01"/>
+			<part name="136051-1117.6cd" crc="cfc3f8a3" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136051-1120.6bc" crc="043086f8" offset="0x8000" length="0x8000" map="01"/>
+			<part name="136051-1119.6de" crc="68850612" offset="0x8000" length="0x8000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136051-1122.7a" crc="5ee79481" offset="0x8000" length="0x8000" map="01"/>
+			<part name="136051-1121.7de" crc="c7977062" offset="0x8000" length="0x8000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136051-1124.7bc" crc="27760395" offset="0x8000" length="0x8000" map="01"/>
+			<part name="136051-1123.7cd" crc="3c96c848" offset="0x8000" length="0x8000" map="10"/>
+		</interleave>
+		<part repeat="65536">FF</part>
+		<interleave output="16">
+			<part name="136051-1120.6bc" crc="043086f8" offset="0x0" length="0x8000" map="01"/>
+			<part name="136051-1119.6de" crc="68850612" offset="0x0" length="0x8000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136051-1122.7a" crc="5ee79481" offset="0x0" length="0x8000" map="01"/>
+			<part name="136051-1121.7de" crc="c7977062" offset="0x0" length="0x8000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="136051-1124.7bc" crc="27760395" offset="0x0" length="0x8000" map="01"/>
+			<part name="136051-1123.7cd" crc="3c96c848" offset="0x0" length="0x8000" map="10"/>
+		</interleave>
+
+		<!-- sprites: stream 0x120000-0x21ffff, region 0x100000 -->
+		<part name="136051-1105.6t" crc="9b78a88e" offset="0x8000" length="0x8000"/>
+		<part name="136051-1106.6rs" crc="4787ff58" offset="0x8000" length="0x8000"/>
+		<part name="136051-1107.6pr" crc="0e85f2ac" offset="0x8000" length="0x8000"/>
+		<part name="136051-1108.6n" crc="70ff9308" offset="0x8000" length="0x8000"/>
+		<part name="136051-1105.6t" crc="9b78a88e" offset="0x0" length="0x8000"/>
+		<part name="136051-1106.6rs" crc="4787ff58" offset="0x0" length="0x8000"/>
+		<part name="136051-1107.6pr" crc="0e85f2ac" offset="0x0" length="0x8000"/>
+		<part name="136051-1108.6n" crc="70ff9308" offset="0x0" length="0x8000"/>
+		<part name="136051-1113.6m" crc="4a445356" offset="0x8000" length="0x8000"/>
+		<part name="136051-1114.6kl" crc="b9b27f3c" offset="0x8000" length="0x8000"/>
+		<part name="136051-1115.6jk" crc="a7671dd8" offset="0x8000" length="0x8000"/>
+		<part name="136051-1116.6h" crc="879fc7de" offset="0x8000" length="0x8000"/>
+		<part name="136051-1113.6m" crc="4a445356" offset="0x0" length="0x8000"/>
+		<part name="136051-1114.6kl" crc="b9b27f3c" offset="0x0" length="0x8000"/>
+		<part name="136051-1115.6jk" crc="a7671dd8" offset="0x0" length="0x8000"/>
+		<part name="136051-1116.6h" crc="879fc7de" offset="0x0" length="0x8000"/>
+		<part name="136051-1101.5t" crc="0ef13513" offset="0x8000" length="0x8000"/>
+		<part name="136051-1102.5rs" crc="401e06fd" offset="0x8000" length="0x8000"/>
+		<part name="136051-1103.5pr" crc="50d820e8" offset="0x8000" length="0x8000"/>
+		<part name="136051-1104.5n" crc="912d878f" offset="0x8000" length="0x8000"/>
+		<part name="136051-1101.5t" crc="0ef13513" offset="0x0" length="0x8000"/>
+		<part name="136051-1102.5rs" crc="401e06fd" offset="0x0" length="0x8000"/>
+		<part name="136051-1103.5pr" crc="50d820e8" offset="0x0" length="0x8000"/>
+		<part name="136051-1104.5n" crc="912d878f" offset="0x0" length="0x8000"/>
+		<part name="136051-1109.5m" crc="6716a408" offset="0x8000" length="0x8000"/>
+		<part name="136051-1110.5kl" crc="7e184981" offset="0x8000" length="0x8000"/>
+		<part name="136051-1111.5jk" crc="353a14fd" offset="0x8000" length="0x8000"/>
+		<part name="136051-1112.5h" crc="3af7c50f" offset="0x8000" length="0x8000"/>
+		<part name="136051-1109.5m" crc="6716a408" offset="0x0" length="0x8000"/>
+		<part name="136051-1110.5kl" crc="7e184981" offset="0x0" length="0x8000"/>
+		<part name="136051-1111.5jk" crc="353a14fd" offset="0x0" length="0x8000"/>
+		<part name="136051-1112.5h" crc="3af7c50f" offset="0x0" length="0x8000"/>
+
+		<!-- chars: stream 0x220000-0x223fff, region 0x4000 -->
+		<part name="136051-1125.4t" crc="05a0341c"/>
+
+		<!-- eeprom: stream 0x224000-0x2241ff, region 0x200 -->
+		<part repeat="512">FF</part>
+	</rom>
+
+	<!-- 2804 EEPROM save-back: settings and high scores persist across power
+	     cycles. Restored after the factory default in the stream above. -->
+	<nvram index="2" size="512"/>
+</misterromdescription>

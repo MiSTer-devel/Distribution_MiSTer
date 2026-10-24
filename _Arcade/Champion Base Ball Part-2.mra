@@ -1,0 +1,95 @@
+<misterromdescription>
+    <name>Champion Base Ball Part-2</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Champion Base Ball</series>
+    <year>1983</year>
+    <manufacturer>Alpha Denshi Co. (Sega license)</manufacturer>
+    <category>Sports</category>
+
+    <setname>champbb2</setname>
+    <parent>champbb2</parent>
+    <mameversion>0270</mameversion>
+    <rbf>ChampionBaseball</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>3</num_buttons>
+    <buttons names="Throw,Steal,Changes,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Select,Start,R,L"/>
+
+    <switches default="26">
+        <dip bits="0,1" name="Coinage" ids="A 1C/3C B 1C/6C,A 1C/2C B 1C/6C,A 1C/1C B 2C/1C,A 2C/1C B 3C/2C"/>
+        <dip bits="2"   name="Flip Screen" ids="On,Off"/>
+        <dip bits="3"   name="Demo Sounds" ids="On,Off"/>
+        <dip bits="4"   name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="5"   name="Difficulty" ids="Hard,Easy"/>
+    </switches>
+
+    <!-- Index 0: Main CPU ROMs (0x8000) - champbb2 is the ONLY set with a non-contiguous region -->
+    <rom index="0" md5="none" zip="champbb2.zip">
+        <part crc="528e3c78" name="epr5932"/>
+        <part crc="17b6057e" name="epr5929"/>
+        <part crc="b6570a90" name="epr5930"/>
+        <part repeat="0x1800">00</part>
+        <part crc="0592434d" name="epr5931"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU ROMs (0x6000) -->
+    <rom index="1" md5="none" zip="champbb2.zip">
+        <part crc="26ab3e16" name="epr5933"/>
+        <part crc="7c01715f" name="epr5934"/>
+        <part crc="3c911786" name="epr5935"/>
+    </rom>
+
+    <!-- Index 2: GFX (0x4000) -->
+    <rom index="2" md5="none" zip="champbb2.zip">
+        <part crc="c4a4df75" name="epr5936" offset="0x0000" length="0x1000"/>
+        <part crc="5c80ec42" name="epr5937" offset="0x0000" length="0x1000"/>
+        <part crc="c4a4df75" name="epr5936" offset="0x1000" length="0x1000"/>
+        <part crc="5c80ec42" name="epr5937" offset="0x1000" length="0x1000"/>
+    </rom>
+
+    <!-- Index 6: ALPHA-8201 MCU ROM (0x2000) -->
+    <rom index="6" md5="none" zip="champbb2.zip">
+        <part crc="edabac6c" name="alpha-8302_44801b35.bin"/>
+    </rom>
+
+    <!-- Index 7: PROMs (0x120) -->
+    <rom index="7" md5="none" zip="champbb2.zip">
+        <part crc="f5ce825e" name="pr5957"/>
+        <part crc="872dd450" name="pr5956"/>
+    </rom>
+
+    <!-- Index 5: game-select byte: 
+           0x00 champbas    0x01 champbasj   0x02 champbasja  0x03 champbasjb
+           0x04 champbb2    0x05 champbb2j   0x06 tbasebal    0x07 talbot
+           0x08 exctsccr    0x09 exctscc2    0x0A exctsccrb                   -->
+    <rom index="5"><part>04</part></rom>
+
+    <!-- Index 3: HiScore data - not working
+    <rom index="3" md5="none">
+        <part>
+        00 00 FF FF 00 FF 00 10 00 10 00 08 FF FF 00 00
+        00 00 8C 30 00 2F 40 00
+        00 00 8C 5C 00 01 05 05
+        </part>
+    </rom>
+    -->
+
+    <!-- Index 4: hiscore data. 0x2F + 0x01 = 48 bytes -->
+    <rom index="4"></rom>
+    <nvram index="4" size="48"></nvram>
+
+    <remark>Champion Base Ball Part-2 (Alpha Denshi, Sega license)</remark>
+    <mratimestamp>20260824000000</mratimestamp>
+</misterromdescription>

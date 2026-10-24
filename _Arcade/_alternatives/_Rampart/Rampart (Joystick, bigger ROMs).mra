@@ -1,0 +1,60 @@
+<misterromdescription>
+    <name>Rampart (Joystick, bigger ROMs)</name>
+    <setname>rampart2p</setname>
+    <parent>rampart</parent>
+    <rbf>Rampart</rbf>
+    <mameversion>0289</mameversion>
+    <mratimestamp>20260922000000</mratimestamp>
+    <year>1990</year>
+    <manufacturer>Atari Games</manufacturer>
+    <category>Strategy</category>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <platform>Atari Rampart (136082)</platform>
+    <players>3</players>
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+
+    <about>
+        Rampart for MiSTer - Atari Games 1990, board 136082 with the
+        136082-1056 address decoder GAL at 12C and three joysticks.
+        All ROMs load on ioctl index 0 as one 0x460802-byte stream that
+        the core writes to SDRAM unchanged. Program ROMs are grouped by the
+        socket pair the 12C GAL selects; the last two bytes name the GAL
+        variant and the control panel. The factory EEPROM image is used only
+        before a save file exists. The EEPROM is saved on index 2.
+    </about>
+
+    <rom index="0" zip="rampart2p.zip|rampart.zip" md5="3c0d4e99dfeee818d4b65a70f839f5e7">
+        <!-- 0x000000  10C Y0: socket pair 136082-2051.13kl (even, D15:8) + 136082-2050.13h (odd, D7:0), 256 KB, MAME maincpu 0x00000 -->
+        <interleave output="16">
+            <part name="136082-2051.13kl" crc="d4e26d0f" map="01"/>
+            <part name="136082-2050.13h" crc="ed2a49bd" map="10"/>
+        </interleave>
+        <part repeat="0xC0000">FF</part>
+        <!-- 0x100000  10C Y1: socket pair 136082-1033.13l (even, D15:8) + 136082-1032.13j (odd, D7:0), 1024 KB, MAME maincpu 0x00000 -->
+        <interleave output="16">
+            <part name="136082-1033.13l" crc="5c36795f" map="01"/>
+            <part name="136082-1032.13j" crc="ec7bc38c" map="10"/>
+        </interleave>
+        <!-- 0x200000  10C Y2: not selected by this board's 12C GAL, empty -->
+        <part repeat="0x100000">FF</part>
+        <!-- 0x300000  10C Y3: not selected by this board's 12C GAL, empty -->
+        <part repeat="0x100000">FF</part>
+        <!-- 0x400000  motion-object graphics ROM, raw bytes (not inverted) -->
+        <part name="136082-1019.2n" crc="efa38bef"/>
+        <!-- 0x420000  MSM6295 ADPCM ROMs -->
+        <part name="136082-1007.2d" crc="c96a0fc3"/>
+        <part name="136082-1008.1d" crc="518218d9"/>
+        <!-- 0x460000  factory EEPROM image, used on a first boot only -->
+        <part name="rampart-eeprom.bin" crc="0be57615"/>
+        <!-- 0x460800  config: 12C GAL 136082-1056, joystick panel -->
+        <part>56 01</part>
+    </rom>
+
+    <!-- 2816 EEPROM (settings and high scores) -->
+    <nvram index="2" size="2048"/>
+
+    <buttons names="Fire,Rotate,Coin" default="A,B,Select"/>
+</misterromdescription>

@@ -1,0 +1,66 @@
+<misterromdescription>
+	<name>Tempest</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Rev 3</version>
+	<alternative></alternative>
+	<platform>Tempest</platform>
+	<series></series>
+	<year>1981</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Shooter - Tube</category>
+
+	<setname>tempest</setname>
+	<parent>tempest</parent>
+	<mameversion>0287</mameversion>
+	<rbf>Tempest</rbf>
+	<about>Atari Tempest with a hardware-level AVG, math box, spinner controls, and a high-resolution vector framebuffer.</about>
+
+	<resolution>31kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>2</players>
+	<joystick></joystick>
+	<special_controls>spinner</special_controls>
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,Start,Select,R,L,X" names="Fire,Superzapper,Start 1,Start 2,Coin,Pause,Coin Right"></buttons>
+
+	<switches default="00,00,17">
+		<dip bits="0,1" ids="1 Coin 1 Credit,2 Coins 1 Credit,Free Play,1 Coin 2 Credits" name="Coinage"></dip>
+		<dip bits="2,3" ids="x1,x4,x5,x6" name="Right Coin"></dip>
+		<dip bits="4" ids="x1,x2" name="Left Coin"></dip>
+		<dip bits="5,7" ids="None,1 each 2,1 each 4 + Demo,2 each 4 + Demo,1 each 5,1 each 3,Freeze,Freeze" name="Bonus Coins"></dip>
+		<dip bits="8" ids="1 Credit,2 Credits" name="Minimum"></dip>
+		<dip bits="9,10" ids="English,French,German,Spanish" name="Language"></dip>
+		<dip bits="11,13" ids="20000,10000,30000,40000,50000,60000,70000,None" name="Bonus Life"></dip>
+		<dip bits="14,15" ids="3,4,5,2" name="Lives"></dip>
+		<dip bits="16,17" ids="Medium 2,Hard,Easy,Medium 1" name="Difficulty"></dip>
+		<dip bits="18" ids="Tied to High Score,1 3 5 7 9" name="Rating"></dip>
+		<dip bits="20" ids="Cocktail,Upright" name="Cabinet"></dip>
+		<dip bits="21" ids="Off,On" name="Service Mode"></dip>
+		<dip bits="22" ids="Off,On" name="Diagnostic Step"></dip>
+	</switches>
+
+	<rom index="0" md5="none" type="merged|nonmerged" zip="tempest.zip">
+		<part crc="1d0cc503" name="136002-133.d1"></part>
+		<part crc="c88e3524" name="136002-134.f1"></part>
+		<part crc="a4b2ce3f" name="136002-235.j1"></part>
+		<part crc="65a9a9f9" name="136002-136.lm1"></part>
+		<part crc="de4e9e34" name="136002-237.p1"></part>
+		<part crc="9995256d" name="136002-138.np3"></part>
+		<part crc="5903af03" name="136002-125.d7"></part>
+		<part crc="276eadd5" name="136002-127.e1"></part>
+		<part crc="823b61ae" name="136002-128.f1"></part>
+		<part crc="09f5a4d5" name="136002-129.h1"></part>
+		<part crc="8119b847" name="136002-130.j1"></part>
+		<part crc="b31f6e24" name="136002-131.k1"></part>
+		<part crc="2af82e87" name="136002-132.l1"></part>
+		<part crc="8b04f921" name="136002-126.a1"></part>
+	</rom>
+
+	<nvram index="4" size="64"></nvram>
+	<remark>Spinner, mouse, analog stick, and digital left/right controls are supported.</remark>
+	<mratimestamp>20260720000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,70 @@
+<misterromdescription>
+	<n>Wild Western (set 1)</n>
+	<mameversion>0245</mameversion>
+	<setname>wwestern</setname>
+	<parent>wwestern</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1982</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Shooter</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>vertical (ccw)</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Fire,Mount,Coin A,Start 1P,Coin B,Start 2P,Service,Pause,Gun Right,Gun Left,Gun Down,Gun Up"
+	         default="A,B,Select,Start,X,Y,L,R,Rright,Rleft,Rdown,Rup"/>
+	<switches default="00,7B,00,FF,00,00,00,00">
+		<dip bits="8,9" name="Bonus Life" ids="70000,50000,30000,10000"/>
+		<dip bits="10" name="High Score Table" ids="Yes,No"/>
+		<dip bits="11,12" name="Lives" ids="6,5,4,3"/>
+		<dip bits="14" name="Flip Screen" ids="On,Off"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="13" name="Service Mode" ids="On,Off"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="wwestern.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x7000/0x8000] -->
+		<part crc="bfe10753" name="ww01.bin"/>
+		<part crc="20579e90" name="ww02d.bin"/>
+		<part crc="0e65be37" name="ww03d.bin"/>
+		<part crc="b3565a31" name="ww04d.bin"/>
+		<part crc="089f3d89" name="ww05d.bin"/>
+		<part crc="c81c9736" name="ww06d.bin"/>
+		<part crc="1937cc17" name="ww07.bin"/>
+		<!-- Padding pass 1: 0x1000 -->
+		<part repeat="0x1000"> 00 </part>
+		<!-- Main CPU - Pass 2 (duplicate) [0x7000/0x8000] -->
+		<part crc="bfe10753" name="ww01.bin"/>
+		<part crc="20579e90" name="ww02d.bin"/>
+		<part crc="0e65be37" name="ww03d.bin"/>
+		<part crc="b3565a31" name="ww04d.bin"/>
+		<part crc="089f3d89" name="ww05d.bin"/>
+		<part crc="c81c9736" name="ww06d.bin"/>
+		<part crc="1937cc17" name="ww07.bin"/>
+		<!-- Padding pass 2: 0x1000 -->
+		<part repeat="0x1000"> 00 </part>
+		<!-- GFX ROMs [0x6000/0x8000] -->
+		<part crc="041a5a1c" name="ww08.bin"/>
+		<part crc="07982ac5" name="ww09.bin"/>
+		<part crc="f32ae203" name="ww10.bin"/>
+		<part crc="7ff1431f" name="ww11.bin"/>
+		<part crc="be1b563a" name="ww12.bin"/>
+		<part crc="092cd9e5" name="ww13.bin"/>
+		<!-- Padding GFX: 0x2000 -->
+		<part repeat="0x2000"> 00 </part>
+		<!-- Audio CPU ROMs [0x1000/0x4000] -->
+		<part crc="23776870" name="ww14.bin"/>
+		<!-- Padding audio: 0x3000 -->
+		<part repeat="0x3000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="93447d2b" name="ww17"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+	</rom>
+	<rom index="1">
+		<part>1</part>
+	</rom>
+</misterromdescription>

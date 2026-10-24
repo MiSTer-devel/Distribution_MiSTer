@@ -1,0 +1,102 @@
+<misterromdescription>
+  <name>Darius Extra Version (Japan)</name>
+  <setname>dariuse</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Darius</rbf>
+  <year>1986</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Shooter</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- SW1 (bits 0-7) — active LOW: bit=1=OFF (default) -->
+    <dip bits="0"   ids="On,Off" name="Unknown (SW1:1)"/>
+    <dip bits="1"   ids="On,Off" name="Autofire"/>
+    <dip bits="2"   ids="On,Off" name="Service Mode"/>
+    <dip bits="3"   ids="Off,On" name="Demo Sounds"/>
+    <dip bits="4,5" ids="2C/3C,1C/2C,2C/1C,1C/1C" name="Coin A"/>
+    <dip bits="6,7" ids="2C/3C,1C/2C,2C/1C,1C/1C" name="Coin B"/>
+    <!-- SW2 (bits 8-15) -->
+    <dip bits="8,9"   ids="Hardest,Hard,Easy,Medium" name="Difficulty"/>
+    <dip bits="10,11" ids="None,800K,400K,600K" name="Bonus Life"/>
+    <dip bits="12,13" ids="6,5,4,3" name="Lives"/>
+    <dip bits="14"    ids="On,Off" name="Unknown (SW2:7)"/>
+    <dip bits="15"    ids="Off,On" name="Allow Continue"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="darius.zip|dariuse.zip" md5="None">
+    <!-- Tile ROM -->
+    <interleave output="16">
+      <part name="a96_48.24" crc="39c9b3aa" map="10"/>
+      <part name="a96_51.47" crc="1bf8f0d3" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_49.25" crc="37a7d88a" map="10"/>
+      <part name="a96_52.48" crc="2d9b2128" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_50.26" crc="75d738e4" map="10"/>
+      <part name="a96_53.49" crc="0173484c" map="01"/>
+    </interleave>
+
+    <!-- Main CPU ROM (128KB + middle empty + 128KB data) -->
+    <interleave output="16">
+      <part name="a96_68.185" crc="ed721127" map="10"/>
+      <part name="a96_67.152" crc="b99aea8c" map="01"/>
+    </interleave>
+    <part repeat="0x20000">FF</part>
+    <interleave output="16">
+      <part name="a96_70.187" crc="54590b31" map="10"/>
+      <part name="a96_30.154" crc="9eb5e127" map="01"/>
+    </interleave>
+
+    <!-- Sub CPU ROM (extra version has different sub CPU) -->
+    <interleave output="16">
+      <part name="a96_72.190" crc="248ca2cc" map="10"/>
+      <part name="a96_71.157" crc="65dd0403" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="a96_74.191" crc="0ea31f60" map="10"/>
+      <part name="a96_73.158" crc="27036a4d" map="01"/>
+    </interleave>
+
+    <!-- Sprite ROM (Extra Version uses a96_36-39 for chunk 3, same as dariusj/dariuso) -->
+    <interleave output="32">
+      <part name="a96_47.201" crc="8df9286a" map="1000"/>
+      <part name="a96_46.180" crc="fec35418" map="0100"/>
+      <part name="a96_45.200" crc="616cdd8b" map="0010"/>
+      <part name="a96_44.179" crc="bbc18878" map="0001"/>
+    </interleave>
+    <interleave output="32">
+      <part name="a96_43.199" crc="c7cad469" map="1000"/>
+      <part name="a96_42.178" crc="7f55ee0f" map="0100"/>
+      <part name="a96_41.198" crc="97128a3a" map="0010"/>
+      <part name="a96_40.177" crc="b699a51e" map="0001"/>
+    </interleave>
+    <interleave output="32">
+      <part name="a96_39.197" crc="ea30920f" map="1000"/>
+      <part name="a96_38.176" crc="e4f3e3a7" map="0100"/>
+      <part name="a96_37.196" crc="b48137c8" map="0010"/>
+      <part name="a96_36.175" crc="af598141" map="0001"/>
+    </interleave>
+
+    <!-- Text ROM -->
+    <interleave output="16">
+      <part name="a96_54.143" crc="51c02ae2" map="10"/>
+      <part name="a96_55.144" crc="771e4d98" map="01"/>
+    </interleave>
+
+    <part name="a96_57.33" crc="33ceb730"/>
+    <part name="a96_56.18" crc="292ef55c"/>
+  </rom>
+  <rom index="2"></rom>
+  <mratimestamp>20260331000000</mratimestamp>
+</misterromdescription>

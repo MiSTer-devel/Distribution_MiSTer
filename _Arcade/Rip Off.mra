@@ -1,0 +1,34 @@
+<misterromdescription>
+	<mameversion>0289</mameversion>
+	<name>Rip Off</name>
+	<setname>ripoff</setname>
+	<year>1980</year>
+	<manufacturer>Cinematronics</manufacturer>
+	<category>Shooter</category>
+	<rbf>StarCastle</rbf>
+	<rotation>horizontal</rotation>
+	<players>2</players>
+	<joystick>2-way horizontal</joystick>
+	<num_buttons>2</num_buttons>
+	<buttons names="Fire,Thrust,Start 1,Start 2,Coin,Pause" default="A,B,Start,Select,R,L"/>
+	<switches default="D3">
+		<dip name="Fuel Cells" bits="0,1" ids="4,8,12,16" values="1,3,0,2"/>
+		<dip name="Coinage" bits="2,3" ids="1 Coin 1 Credit,2 Coins 1 Credit,4 Coins 3 Credits,2 Coins 3 Credits" values="0,1,3,2"/>
+		<dip name="Demo Sounds" bits="4" ids="Off,On" values="0,1"/>
+		<dip name="Scores" bits="5" ids="Individual,Combined" values="0,1"/>
+		<dip name="Service Mode" bits="6" ids="Off,On" values="1,0"/>
+	</switches>
+	<rom index="1">
+		<part>02</part>
+	</rom>
+	<rom index="0" zip="ripoff.zip" type="merged|nonmerged" md5="none">
+		<interleave output="16">
+			<part name="ripoff.t7" crc="40c2c5b8" map="01"/>
+			<part name="ripoff.p7" crc="a9208afb" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="ripoff.u7" crc="29c13701" map="01"/>
+			<part name="ripoff.r7" crc="150bd4c8" map="10"/>
+		</interleave>
+	</rom>
+</misterromdescription>

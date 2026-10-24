@@ -1,0 +1,67 @@
+<misterromdescription>
+	<name>Sky Wolf (Set 3)</name>
+	<region>World</region>
+	<year>1987</year>
+	<manufacturer>bootleg</manufacturer>
+	<category>Shooter</category>
+
+	<setname>skywolf3</setname>
+	<parent>airwolf</parent>
+	<rbf>Kyugo</rbf>
+	<mameversion>0289</mameversion>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Machine Gun,Missile</button_names>
+
+	<switches default="BB,FF">
+		<!-- DSW1 -->
+		<dip bits="0,1"      name="Lives"          ids="7,6,5,4"/>
+		<dip bits="2"        name="Allow Continue" ids="Yes,No"/>
+		<dip bits="3"        name="Slow Motion"    ids="On,Off"/>
+		<dip bits="4"        name="Invulnerability" ids="On,Off"/>
+		<dip bits="5"        name="Sound Test"     ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"        ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"         ids="On,Off"/>
+		<!-- DSW2 -->
+		<dip bits="8,10"     name="Coin A"         ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"         ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: variant | rot_flip (bit 3) | landscape (bit 4). MAME machine config "srdmissn" = the parent's. -->
+	<rom index="1">
+		<part>13</part>
+	</rom>
+
+	<!-- Index 0: main 32K, sub 32K, FG 4K, BG planes 3x 16K (8K + pad, in MAME's "plane N" order), sprite planes
+	     3x 32K, PROMs R / G / B, char lookup, timing (rtl/ram_rom/rom_loader.sv) -->
+	<rom index="0" md5="none" zip="skywolf3.zip|airwolf.zip">
+		<part crc="74a86ec8" name="1.bin" offset="0x4000" length="0x4000"/>
+		<part crc="f02143de" name="2.bin" offset="0x4000" length="0x4000"/>
+		<part crc="787cdd0a" name="3.bin" offset="0x4000" length="0x4000"/>
+		<part crc="07a2c814" name="4.bin" offset="0x4000" length="0x4000"/>
+		<part crc="b86d3dac" name="8.bin" offset="0x7000" length="0x1000"/>
+		<part crc="1a3710ab" name="10.bin" offset="0x6000" length="0x2000"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="fc7bbf7a" name="11.bin" offset="0x6000" length="0x2000"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="a184349a" name="9.bin" offset="0x6000" length="0x2000"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="086612e8" name="7.bin"/>
+		<part crc="3a9beabd" name="6.bin"/>
+		<part crc="bd83658e" name="5.bin"/>
+		<part crc="6a94b2a3" name="82s129-1.bin"/>
+		<part crc="ec0923d3" name="82s129-2.bin"/>
+		<part crc="ade97052" name="82s129-3.bin"/>
+		<part crc="190a55ad" name="74s288-2.bin"/>
+		<part crc="5ddb2d15" name="74s288-1.bin"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+	<remark>Sky Wolf (Airwolf bootleg)</remark>
+</misterromdescription>

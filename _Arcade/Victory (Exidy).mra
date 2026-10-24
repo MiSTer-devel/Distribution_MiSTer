@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<misterromdescription>
+	<name>Victory (Exidy)</name>
+	<setname>victory</setname>
+	<mratimestamp>20261005</mratimestamp>
+	<mameversion>0257</mameversion>
+	<year>1982</year>
+	<manufacturer>Exidy</manufacturer>
+	<category>Shooter</category>
+	<rbf>Victory</rbf>
+	<rotation>horizontal</rotation>
+
+	<remark>Game video, pause, CRT controls and automatic NVRAM saving. Dimming starts after 10 seconds paused. First boot without a save: press a button at CMOS RAM RESET.</remark>
+	<romstruct>00000-0BFFF: main CPU; 0C000-0FFFF: sound CPU; 10000-101DF: PROMs.</romstruct>
+	<rom index="0" zip="victory.zip" md5="178640c1a7170a72a65fd516311829b9" type="split">
+		<part name="vic3.j2" crc="4b614440" length="0x1000" />
+		<part name="vic3.k2" crc="9f9eb12b" length="0x1000" />
+		<part name="vic3.kl2" crc="a0db4bf9" length="0x1000" />
+		<part name="vic3.l2" crc="69855b46" length="0x1000" />
+		<part name="vic3.m2" crc="1ddbe9d4" length="0x1000" />
+		<part name="vic3.n2" crc="dbb53f1f" length="0x1000" />
+		<part name="vic3.p2" crc="9959e1c4" length="0x1000" />
+		<part name="vic3.t2" crc="8f1b997a" length="0x1000" />
+		<part name="vic3.j1" crc="27e9e87b" length="0x1000" />
+		<part name="vic3.k1" crc="418d9b80" length="0x1000" />
+		<part name="vic3.kl1" crc="2b7e626f" length="0x1000" />
+		<part name="vic3.l1" crc="7bb8e1f5" length="0x1000" />
+		<part name="vic1.7bc" crc="d4927560" length="0x1000" />
+		<part name="vic1.7c" crc="059efab5" length="0x1000" />
+		<part name="vic1.7d" crc="82c4767c" length="0x1000" />
+		<part name="vic1.7e" crc="a19be034" length="0x1000" />
+		<part name="hsc17l" crc="b2c75dee" length="0x100" />
+		<part name="hsc13e" crc="a107c4f5" length="0x20" />
+		<part name="hsc16a" crc="5f06ad26" length="0x20" />
+		<part name="hsc19b" crc="86165f1e" length="0x20" />
+		<part name="hsc19c" crc="fd27a57a" length="0x20" />
+		<part name="hsc19d" crc="09c4dbf6" length="0x20" />
+		<part name="hsc19e" crc="ce1464f4" length="0x20" />
+		<part name="3j" crc="5fb6b158" length="0x20" />
+	</rom>
+	<buttons names="Thrust,Fire,Shields,Doomsday,Start 1,Start 2,Coin,Service,Pause,Coin 2" default="A,B,X,Y,Start,Select,L,R" />
+	<nvram index="4" size="2048" />
+</misterromdescription>

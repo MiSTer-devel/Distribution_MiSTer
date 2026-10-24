@@ -1,0 +1,121 @@
+# RCA Studio II for MiSTer
+
+MiSTer FPGA core for the RCA Studio II, RCA Studio III/Conic MPT-02 family, and Toshiba Visicom COM-100.
+
+Supported hardware includes:
+* RCA Studio II
+* RCA Studio III (unreleased)
+* Academy Apollo 80
+* Conic M-1200
+* Hanimex MPT-02
+* Mustang 9016
+* Sheen M-1200
+* Soundic Victory (MPT-02)
+* Toshiba Visicom COM-100
+* Trevi M-1200
+
+## Features
+
+* 100% software compatibility across all machines including all known homebrew and demos
+* [OpenStudio2](https://github.com/meauxdal/OpenStudio2), a custom interpreter for original CHIP-8 programs with dedicated RAM, written specifically for MiSTer
+* Detailed NE555 beeper pitch modeling based on hardware captures
+* Refined Toshiba Visicom COM-100 palette based on hardware captures
+* Keypad-to-Joystick automapping for all known games
+* Custom palette support for all supported machines
+
+## Install
+
+Copy [Studio-II_20261016.rbf](releases/Studio-II_20261016.rbf) to e.g. /media/fat/_Console/ on MiSTer. See the [October 16 release notes](docs/release-notes-20261016.md).
+
+Put the 4 BIOS files below in /media/fat/games/Studio-II/. CHIP-8 games will work even if no BIOS is present. A few games run bare-metal and do not require a BIOS. 
+
+| Machine | MiSTer filename | Common filename | Size | MD5 |
+|---|---|---|---:|---|
+| Studio II | boot0.rom | [BIOS] RCA Studio II (USA).bin | 2 KB | B37205BF19B197682F00619D05DA194B |
+| Studio III PAL | boot1.rom | studio3_pal.bin | 4 KB | A6B94E449BC9EC58A30E1F75D590C558 |
+| Studio III NTSC | boot2.rom | studio3_ntsc.bin | 4 KB | 849A484AA4B2784ECE5C35C39D9D51A8 |
+| Visicom | boot3.rom | visicom.rom | 2 KB | AEEC6FE3934481E20EB7DB6D5FF56A54 |
+
+## Use
+
+* Select Machine (Studio II, Studio III PAL, Studio III NTSC, Visicom) first, then Apply and Reset to actually switch
+* Use Load Software to load an .st2 or .bin file for the selected machine
+* Use Load CHIP-8 to select a .ch8 original CHIP-8 game on a Studio machine. OpenStudio2 is bundled; no separate interpreter or machine BIOS is required. Load CHIP-8 is disabled on Visicom
+
+Studio II and III titles that use the BIOS are cross-compatible, but Visicom games only work on Visicom. Studio III games with color play in monochrome on Studio II
+
+## Keypad and CLEAR
+
+Keypad A and B are called "Keyboards" in RCA documentation. Keypad is used instead to avoid confusion. 
+
+The keypads are mapped to the MiSTer keyboard like this:
+
+```text
+   Keypad A (left)        Keypad B (right)
+    1  2  3                7  8  9
+    Q  W  E                U  I  O
+    A  S  D                J  K  L
+       X                      ,
+```
+
+| Studio II Key | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Keypad A | 1 | 2 | 3 | Q | W | E | A | S | D | X |
+| Keypad B | 7 | 8 | 9 | U | I | O | J | K | L | , |
+
+Clear is mapped to F3 on the MiSTer keyboard. Clear initializes (resets) the game or firmware you have running. It's a physical button on the hardware.
+
+## CHIP-8
+
+The bundled OpenStudio2 CHIP-8 interpreter uses separate 4 KB CHIP-8 RAM. Programs load at $0200 and may be up to 3584 bytes ($E00). CHIP-8X, Super-Chip, and XO-CHIP are not supported. Marcel van Tongeren's [Studio II CHIP-8 interpreter](https://github.com/etxmato/emma_02/blob/master/data/StudioII/chip8.bin) can also be loaded (768 bytes; MD5 9F037435B6721BE9EE91DC93293E52CE).
+
+CHIP-8 uses the COSMAC VIP keypad:
+
+```text
+    MiSTer keyboard       CHIP-8
+       1 2 3 4            1 2 3 C
+       Q W E R            4 5 6 D
+       A S D F            7 8 9 E
+       Z X C V            A 0 B F
+```
+
+This keyboard layout is active only while a CHIP-8 program is loaded. Direct
+keypad bindings and Numstick continue to use keypad A for 0–9 and keypad B
+1–6 for A–F.
+
+The CHIP-8 gamepad profile maps D-pad Up/Left/Down/Right to 5/7/8/9, Start to 1, Fire to F, and Extra to 0. There are probably better mappings. Please create an issue if you have a suggestion.
+
+Marcel van Tongeren's chip8.bin interpreter has additional memory limitations. See Marcel van Tongeren's [informational page](https://emma02.hobby-site.com/studio_chip8.html) for more info.
+
+CHIP-8 cannot be used on Visicom (no CHIP-8 interpreter).
+
+## Audio & Video Options
+
+* Beeper pitch adjusts the Studio II and Visicom beeper tuning. 
+* CDP1863 pitch toggles Studio III NTSC's original pitch and the (less piercing) Studio III PAL pitch.
+* Studio II and Visicom custom palettes use 16-byte MiSTer Game Boy .gbp files. Studio II uses first and last .gbp colors for white/black respectively. Also works with CHIP-8.
+* Studio III custom palettes use a headerless .pal file. Eight sequential RGB888 entries (24 bytes); trailing bytes are ignored.
+
+## System Options
+
+* Load Firmware/ROM allows you to load a custom BIOS or bare-metal image.
+* CHIP-8 Interpreter allows you to load a different CHIP-8 interpreter. The override remains until the core is reloaded. Load a .ch8 program afterward to enter CHIP-8 mode
+* Clear, Reset, Unload Software, and Unload Software and Reset are also in System. Reset and Close OSD is available at the top level
+
+## Controller profiles
+
+Mapping: Auto selects a controller profile from the cartridge CRC, falling back to 8-way for unknown games. Resident games select their profiles automatically based on start key. Manual mode allows direct profile selection. Game-specific controls are listed in [docs/how-to-play.md](docs/how-to-play.md).
+
+## Numstick (on-screen keypad)
+
+Numstick assigns an onscreen number pad overlay to keypad A or B. Hold the right stick in one of 8 directions to input the corresponding number. Nudge and release the right stick to select 5. Use the left stick for 0.
+
+## Studio IV
+
+Studio IV is not supported.
+
+## Project information
+
+Original core by Jason Coombes; MiSTer integration and Pixie work by Flandango; later contributions by Alan Steremberg and Elle Ball. See [CREDITS.md](CREDITS.md).
+
+GPL-2.0-or-later; see file headers and [LICENSE](LICENSE). OpenStudio2 is licensed under [MIT](rom/openstudio2-LICENSE.txt).

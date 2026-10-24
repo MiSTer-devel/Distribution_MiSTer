@@ -1,0 +1,50 @@
+<misterromdescription>
+    <name>Raiders5</name>
+    <setname>raiders5</setname>
+    <parent>raiders5</parent>
+    <year>1985</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Raiders5</series>
+    <category>Maze</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>4-way</joystick>
+    <num_buttons>1</num_buttons>
+    <buttons names="Fire,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <switches default="FF,FE">
+        <dip bits="0,2" name="Coinage" ids="4 Coins/2 Credits,3 Coins/2 Credits,2 Coins/2 Credits,1 Coin/2 Credits,4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="3" name="High Score Names" ids="3 Letters,8 Letters"/>
+        <dip bits="4" name="Allow Continue" ids="No,Yes"/>
+        <dip bits="6" name="Free Play" ids="On,Off"/>
+        <dip bits="7" name="Unlimited Lives (Free Play)" ids="On,Off"/>
+        <dip bits="8" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="9,10" name="Lives" ids="2,5,4,3"/>
+        <dip bits="11" name="1st Bonus" ids="40000,30000"/>
+        <dip bits="12,13" name="2nd Bonus" ids="None,Every 90000,Every 70000,Every 50000"/>
+        <dip bits="14" name="Exercise" ids="Off,On"/>
+        <dip bits="15" name="Difficulty" ids="Hard,Normal"/>
+    </switches>
+
+    <!-- Index 0: program 0000-7FFF (CPU 2 runs from 4000-7FFF), gfx1 at 0x8000, gfx2 at 0x10000, file by file
+         (MAME's lineswap is decoded in the core) -->
+    <rom index="0" md5="none" zip="raiders5.zip">
+        <part name="raiders5.1" crc="47cea11f"/>
+        <part name="raiders5.2" crc="eb2ff410"/>
+        <part name="raiders3.11f" crc="30041d58"/>
+        <part name="raiders4.11g" crc="e441931c"/>
+        <part name="raiders5.11n" crc="c0895090"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>17</part></rom>
+
+    <remark>Raiders5 (UPL)</remark>
+</misterromdescription>

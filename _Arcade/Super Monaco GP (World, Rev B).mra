@@ -1,0 +1,82 @@
+<misterromdescription>
+  <name>Super Monaco GP (World, Rev B)</name>
+  <setname>smgp</setname>
+  <rbf>SegaXBoard</rbf>
+  <mameversion>0289</mameversion>
+  <year>1989</year>
+  <manufacturer>Sega</manufacturer>
+  <category>Shooter / Flight</category>
+  <rom index="0" zip="smgp.zip" md5="None">
+    <part>03 3d 08 00 70 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</part>
+    <!-- main -->
+      <interleave output="16">
+        <part name="epr-12563b.58" crc="baf1f333" map="10"/>
+        <part name="epr-12564b.63" crc="b5191af0" map="01"/>
+      </interleave>
+      <part repeat="262144">00</part>
+    <!-- sub -->
+      <interleave output="16">
+        <part name="epr-12576a.20" crc="2c9599c1" map="10"/>
+        <part name="epr-12577a.29" crc="abf9a50b" map="01"/>
+      </interleave>
+      <part repeat="262144">00</part>
+    <!-- z80 -->
+      <part name="epr-12436.17" crc="16ec5f0a"/>
+    <!-- road -->
+      <part repeat="65536">00</part>
+    <!-- pcm -->
+      <part name="mpr-12437.11" crc="a1c7e712"/>
+      <part name="mpr-12438.12" crc="6573d46b"/>
+      <part name="mpr-12439.13" crc="13bf6de5"/>
+      <part repeat="131072">FF</part>
+    <!-- sprite -->
+      <interleave output="32">
+        <part name="mpr-12425.90" crc="14bf2a15" map="0001"/>
+        <part name="mpr-12426.94" crc="28b60dc0" map="0010"/>
+        <part name="mpr-12427.98" crc="0a367928" map="0100"/>
+        <part name="mpr-12428.102" crc="efa80ad5" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="mpr-12421.91" crc="25f46140" map="0001"/>
+        <part name="mpr-12422.95" crc="cb51c8f6" map="0010"/>
+        <part name="mpr-12423.99" crc="0be9818e" map="0100"/>
+        <part name="mpr-12424.103" crc="0ce00dfc" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="mpr-12417.92" crc="a806eabf" map="0001"/>
+        <part name="mpr-12418.96" crc="ed1a0f2b" map="0010"/>
+        <part name="mpr-12419.100" crc="ce4568cb" map="0100"/>
+        <part name="mpr-12420.104" crc="679442eb" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-12609.93" crc="a867812f" map="0001"/>
+        <part name="epr-12610.97" crc="53b99417" map="0010"/>
+        <part name="epr-12611.101" crc="bd5c6ab0" map="0100"/>
+        <part name="epr-12612.105" crc="ac86e890" map="1000"/>
+      </interleave>
+      <part repeat="2097152">00</part>
+    <!-- tile -->
+      <part name="epr-12429.154" crc="5851e614"/>
+      <part name="epr-12430.153" crc="05e00134"/>
+      <part name="epr-12431.152" crc="35572f4a"/>
+      <part repeat="65536">00</part>
+    <!-- key -->
+      <part name="317-0126a.key" crc="2abc1982"/>
+    <!-- z80b -->
+      <part name="epr-12535.8" crc="80453597"/>
+    <!-- pcm2 -->
+      <part name="mpr-12437.20" crc="a1c7e712"/>
+      <part name="mpr-12438.21" crc="6573d46b"/>
+      <part name="mpr-12439.22" crc="13bf6de5"/>
+      <part repeat="131072">00</part>
+  </rom>
+  <nvram index="3" size="32768"/>
+  <switches default="FF,7F" base="0">
+    <dip bits="0,3" name="Coin A" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="4,7" name="Coin B" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="8,10" name="Machine ID" ids="8,7,6,5,4,3,2,1"/>
+    <dip bits="11,13" name="Number of Machines" ids="8,7,6,5,4,3,2,1"/>
+    <dip bits="14,15" name="Cabinet" ids="Unused,Upright,Cockpit,Deluxe"/>
+  </switches>
+  <buttons names="Gas,Brake,Shift Down,Shift Up,Start,Coin,Pause,Test,Service" default="Y,L2,A,B,Start,R,X,L,Select"/>
+</misterromdescription>

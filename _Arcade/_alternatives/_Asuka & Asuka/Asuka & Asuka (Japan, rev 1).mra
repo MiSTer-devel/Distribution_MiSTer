@@ -1,0 +1,89 @@
+<misterromdescription>
+  <name>Asuka &amp; Asuka (Japan, rev 1)</name>
+  <setname>asukaj</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TaitoAsuka</rbf>
+  <year>1988</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>vertical</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches base="0" default="FF,BF">
+    <dip name="Unused"         bits="0"     ids="On,Off"/>
+    <dip name="Flip Screen"    bits="1"     ids="On,Off"/>
+    <dip name="Service Mode"   bits="2"     ids="On,Off"/>
+    <dip name="Demo Sounds"    bits="3"     ids="Off,On"/>
+    <dip name="Coin A"         bits="4,5"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Coin B"         bits="6,7"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Difficulty"     bits="8,9"   ids="Hardest,Hard,Easy,Medium"/>
+    <dip name="Bonus Points"   bits="10,11" ids="2500,2000,1500,500"/>
+    <dip name="Lives"          bits="12,13" ids="4,1,2,3"/>
+    <dip name="Allow Continue" bits="14,15" ids="No,Yes,Up To Level 3,Up To Level 2"/>
+  </switches>
+
+  <!-- Regione di configurazione, caricata PRIMA delle ROM.
+       byte 0 = game_id      : 0x01 = asukaj
+       byte 1 = link         : 0x01 accende il multiplayer (solo Cadash)
+       byte 2 = orientamento : 0x01 = set verticale (ROT270)
+       byte 3 = libero -->
+  <rom index="1">
+    <part>01 00 01 00</part>
+  </rom>
+
+  <!-- Revisione 1 del set giapponese: dal Japan cambia solo il programma,
+         b68-09-1/b68-08-1 al posto di b68-09/b68-08. Nello zip stanno nella
+         cartella asukaj/, mentre quella chiamata asukaja/ tiene la revisione 0. -->
+
+  <rom index="0" zip="asuka.zip" md5="None">
+
+    <!-- 0x000000 Main CPU 68000, 256 KB. Le due meta' entrano coi byte
+         SCAMBIATI rispetto a MAME: il core impacchetta la parola SDRAM come
+         {secondo byte, primo byte}, quindi la ROM dei byte PARI di MAME va
+         messa con map="10" e quella dei DISPARI con map="01". -->
+    <interleave output="16">
+      <part name="b68-09-1.ic23" crc="d61be555" map="10"/>
+      <part name="b68-08-1.ic8" crc="e916f17b" map="01"/>
+    </interleave>
+    <part repeat="0x40000"> FF</part>
+
+    <!-- 0x080000 Fix ROM, 512 KB. La legge il 68000 a parole, quindi stesso
+         ordine di byte del programma: interleave con map="12". -->
+    <interleave output="16">
+      <part name="b68-03.ic30" crc="d3a59b10" map="12"/>
+    </interleave>
+    <part repeat="0x20000"> FF</part>
+
+    <!-- 0x120000 Z80 audio, 64 KB, byte lineari come in MAME. -->
+    <part name="b68-11.ic27" crc="c378b508"/>
+    <part repeat="0x10000"> FF</part>
+
+    <!-- 0x140000 Sprite PC090OJ, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="b68-02.ic6" crc="f5018cd3" map="12"/>
+    </interleave>
+
+    <!-- 0x1C0000 Estensione sprite, 128 KB. In MAME la meta' a 0x80000 sono i
+         byte PARI: qui map="01". -->
+    <interleave output="16">
+      <part name="b68-06.ic4" crc="f517e64d" map="01"/>
+      <part name="b68-07.ic5" crc="c113acc8" map="10"/>
+    </interleave>
+
+    <part repeat="0x160000"> FF</part>
+
+    <!-- 0x340000 Tile TC0100SCN, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="b68-01.ic3" crc="89f32c94" map="12"/>
+    </interleave>
+    <part repeat="0x80000"> FF</part>
+
+    <!-- 0x440000 ADPCM MSM5205, 64 KB, byte lineari. -->
+    <part name="b68-10.ic24" crc="387aaf40"/>
+
+  </rom>
+</misterromdescription>

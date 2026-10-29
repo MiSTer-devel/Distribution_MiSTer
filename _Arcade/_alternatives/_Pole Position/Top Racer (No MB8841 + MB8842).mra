@@ -1,0 +1,133 @@
+<misterromdescription>
+    <name>Top Racer (No MB8841 + MB8842)</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>yes</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Pole Position</series>
+    <year>1982</year>
+    <manufacturer>bootleg</manufacturer>
+    <category>Driving</category>
+
+    <setname>topracern</setname>
+    <parent>polepos</parent>
+    <mameversion>0289</mameversion>
+    <rbf>PolePosition</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <buttons names="Accelerate,Brake,Gear,Service Mode,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <rom index="0" md5="none" zip="topracern.zip|polepos.zip">
+        <!-- maincpu (Z80) 0x0000-0x2FFF -->
+        <part crc="caab829a" name="a5.bin"/>
+        <part crc="148f5000" name="a6.bin"/>
+        <!-- sub1 (Z8002 #1), ROM_LOAD16_BYTE: even=HIGH=.8l, odd=LOW=.8m -->
+        <interleave output="16">
+            <part crc="6bd4ff6b" name="a2.bin" map="01"/>
+            <part crc="127f0750" name="a1.bin" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+        <!-- sub2 (Z8002 #2) -->
+        <interleave output="16">
+            <part crc="932bb5a7" name="pole-d" map="01"/>
+            <part crc="4e5f7b9c" name="a3.bin" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+    </rom>
+
+    <rom index="1" md5="none" zip="topracern.zip|polepos.zip">
+        <!-- chars / tiles / sprites / bigsprites(GAP) / road / scalelut -->
+        <part crc="b8217c96" name="13.bin"/>
+        <part crc="b8217c96" name="13.bin"/>
+        <part crc="c6e15c21" name="12.bin"/>
+        <part crc="c6e15c21" name="12.bin"/>
+        <part crc="301117d2" name="5.bin"/>
+        <part crc="3c9db014" name="6.bin"/>
+        <part crc="613ab0df" name="1.bin"/>
+        <part crc="f8e7f551" name="2.bin"/>
+        <part crc="17c798b0" name="3.bin"/>
+        <part repeat="8192">00</part>
+        <part crc="5fd933e3" name="7.bin"/>
+        <part crc="7053e219" name="8.bin"/>
+        <part crc="5fe9b365" name="9.bin"/>
+        <part repeat="8192">00</part>
+        <part crc="ee6b3315" name="11.bin"/>
+        <part crc="6d1e7042" name="10.bin"/>
+        <part crc="4e97f101" name="14.bin"/>
+        <part crc="a61bff15" name="15.bin"/>
+    </rom>
+
+    <rom index="2" md5="none" zip="topracern.zip|polepos.zip">
+        <part crc="f07ff2ad" name="24s10.5"/>
+        <part crc="adbde7d7" name="24s10.4"/>
+        <part crc="ddac786a" name="24s10.3"/>
+        <part crc="5af3f710" name="24s10.2"/>
+        <part crc="8c90e36e" name="24s10.1"/>
+        <part crc="2d502464" name="24s10.8"/>
+        <part crc="027aa62c" name="24s10.7"/>
+        <part crc="1f8d0df3" name="24s10.6"/>
+        <part crc="7afc7cfc" name="7643.1"/>
+        <part crc="2f1079ee" name="7643.2"/>
+        <part crc="4330a51b" name="7603.1"/>
+        <part crc="4330a51b" name="7603.2"/>
+        <part crc="8568decc" name="136014.118"/>
+        <part crc="0e742cb1" name="7052-4.c14"/>
+    </rom>
+
+    <!-- Index 3: hiscore config -->
+    <rom index="3" md5="none">
+        <part>
+        01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+        00 00 30 00 07 F2 B0 95
+        </part>
+    </rom>
+
+    <!-- Index 7: mod byte. bit0 = IC25 protection custom (machine
+         polepos2). Absent on PP1 and on polepos2b, which has real
+         ROM at sub1 0x4000-0x5FFF instead of the custom.
+         bit1 = bootleg I/O board (machine topracern / polepos2bi). -->
+    <rom index="7">
+        <part>02</part>
+    </rom>
+
+    <!-- Index 4: nvram config -->
+    <rom index="4"></rom>
+    <nvram index="4" size="2034"></nvram>
+
+    <rom index="5" md5="none" zip="topracern.zip|polepos.zip">
+        <!-- engine sound, then 52xx voice padded to 0x8000 -->
+        <part crc="b5ad4d5f" name="a.bin"/>
+        <part crc="8fdd2f6f" name="b.bin"/>
+        <part repeat="32768">00</part>
+    </rom>
+
+    <rom index="6" md5="none" zip="namco51.zip|namco52.zip|namco53.zip|namco54.zip">
+        <part crc="c2f57ef8" name="51xx.bin"/>
+        <part crc="b326fecb" name="53xx.bin"/>
+        <part crc="ee7357e0" name="54xx.bin"/>
+        <part crc="3257d11e" name="52xx.bin"/>
+    </rom>
+
+    <switches default="FF,7F" base="0">
+        <!-- DSWA -->
+        <dip name="Coin A"        bits="0,2"   ids="1C/5C,1C/6C,1C/3C,2C/1C,2C/3C,3C/1C,1C/2C,1C/1C"/>
+        <dip name="Coin B"        bits="3,4"   ids="2C/3C,1C/2C,2C/1C,1C/1C"/>
+        <dip name="Game Time"     bits="5,6"   ids="120 secs,100 secs,110 secs,90 secs"/>
+        <dip name="Racing Laps"   bits="7,7"   ids="4,3"/>
+        <!-- DSWB -->
+        <dip name="Extended Rank" bits="8,10"  ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Practice Rank" bits="11,13" ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Unknown"       bits="14,14" ids="On,Off"/>
+        <dip name="Demo Sounds"   bits="15,15" ids="On,Off"/>
+    </switches>
+
+    <remark>Top Racer (Bootleg, No MB8841 + MB8842)</remark>
+    <mratimestamp>20260921000000</mratimestamp>
+</misterromdescription>

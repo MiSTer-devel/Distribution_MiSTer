@@ -1,0 +1,59 @@
+# Basic Master Jr. tape list
+#
+# This file lives at /media/fat/games/BasicMasterJr/boot1.rom. MiSTer loads it
+# when the core starts, so reload the core after editing it. It is plain text,
+# despite the name.
+#
+# The tape doesn't record where a program starts. The core assumes it starts
+# where its first block loads. This list corrects that and adds a note to the
+# start hint ("TYPE G 2500 <space>" plus a second line).
+#
+# One program per line, fields separated by spaces:
+#
+#   NAME  LOAD  START  [END]  [| NOTE]
+#
+#   NAME   the 6-character name in the tape header, as L or LOAD prints it
+#   LOAD   the address the first block loads at (hex), or - for any
+#   START  the address to start it with G (hex), or - to keep LOAD
+#   END    optional: the last address the file loads (hex), to match
+#          only one version of a program
+#   NOTE   after a |, up to 22 characters, shown under the start command;
+#          upper case and ASCII only (the machine has no lower case)
+#
+# For a tape with machine code then a BASIC program, the line is for the
+# BASIC one (its LOAD is 0600). Lines starting with # or ; are comments.
+# The first matching line wins.
+
+# Machine code that doesn't start at its load address
+CAR     2000  2500  | S GO NM STEER CTRL GAS
+CF      0C00  0F00  | S START ,. MOVE Z FIRE
+ALS     2500  34BC  | S START JK MOVE Z FIRE
+
+# zu2
+GALAXY  -     -     | V N MOVE CTRL FAST
+DENDAI  1000  -     | OK PROMPT: TRY PR.6*7
+LIFE2   3000  -     | @*# PLACE  RETURN RUNS
+
+# Magazine type-ins (BASIC)
+HELMET  -     -     | S START ,. MOVE
+GORILA  -     -     | S START
+WINE    -     -     | Y TO PLAY
+DRINKC  -     -     | S START
+KUROKA  -     -     | ALT UP  CAPS DOWN
+OPA     -     -     | S START IJKM SPC CAST
+WILWSP  -     -     | ,. MOVE
+MISSIL  -     -     | SPACE START ,. MOVE
+KONG    -     -     | IJKM MOVE A S JUMP
+URU     -     -     | S START IJKM MOVE
+GU      -     -     | S START ,. SPACE FIRE
+TOBI    -     -     | Y PLAY SPACE JUMP
+JUMPS   -     -     | RETURN START Z JUMP
+SH      -     -     | A Z UP DOWN
+TR      -     -     | SEXD MOVE M FIRE
+DW      -     -     | IJKM MOVE
+SMO     -     -     | O K M THROWS
+BF      -     -     | S START ,. SPACE FIRE
+PAL     -     -     | S START ,. MOVE Z FIRE
+FC      -     -     | WZ MOVE SPACE TONGUE
+MT      -     -     | SPACE START Z FIRE
+UB      -     -     | ,. MOVE Z MISSILE

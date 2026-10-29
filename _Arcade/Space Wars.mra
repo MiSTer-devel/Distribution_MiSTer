@@ -1,0 +1,26 @@
+<misterromdescription>
+	<mameversion>0289</mameversion>
+	<name>Space Wars</name>
+	<setname>spacewar</setname>
+	<year>1977</year>
+	<manufacturer>Cinematronics</manufacturer>
+	<category>Shooter</category>
+	<rbf>StarCastle</rbf>
+	<rotation>horizontal</rotation>
+	<players>2</players>
+	<joystick>2-way horizontal</joystick>
+	<num_buttons>3</num_buttons>
+	<buttons names="Fire,Thrust,-,-,Coin,Pause,Hyperspace,Reset Playfield,Option 0,Option 1,Option 2,Option 3,Option 4,Option 5,Option 6,Option 7,Option 8,Option 9" default="A,B,,,R,L,X,Y,Select,Start"/>
+	<switches default="FC">
+		<dip name="Time" bits="0,1" ids="0:45/coin,1:00/coin,1:30/coin,2:00/coin" values="3,0,1,2"/>
+	</switches>
+	<rom index="1">
+		<part>06</part>
+	</rom>
+	<rom index="0" zip="spacewar.zip" type="merged|nonmerged" md5="none">
+		<interleave output="16">
+			<part name="spacewar.1l" crc="edf0fd53" map="01"/>
+			<part name="spacewar.2r" crc="4f21328b" map="10"/>
+		</interleave>
+	</rom>
+</misterromdescription>

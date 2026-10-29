@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<misterromdescription>
+	<name>Agent Super Bond (Super Cobra conversion, not encrypted)</name>
+	<region />
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version />
+	<alternative />
+	<platform />
+	<series />
+	<year>1984</year>
+	<manufacturer>Video Village</manufacturer>
+	<category>Shooter - Multidirectional</category>
+	<setname>superbona</setname>
+	<parent>superbon</parent>
+	<mameversion>0239</mameversion>
+	<rbf>scramble</rbf>
+	<about />
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>yes</flip>
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls />
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,Start,Select,R,L" names="Zap,Hold,-,-,Start 1P,Start 2P,Coin,Pause" />
+	<switches default="FF,FD,F3">
+		<dip bits="8,9" ids="Invulnerable,3,5,Free Play" name="Lives" />
+		<dip bits="17,18" ids="1c/2cr,1c/1cr,1c/3cr,1c/4cr" name="Coinage" />
+		<dip bits="19" ids="On,Off" name="Demo Sounds" />
+	</switches>
+	<rom index="1">
+		<part>14</part>
+	</rom>
+	<rom index="0" md5="f65f589945276dc75b001d59182aba4d" type="merged|nonmerged|split" zip="superbon.zip|superbona.zip">
+		<part crc="5a8f69b5" name="2c" />
+		<part crc="5a126243" name="2e" />
+		<part crc="bb66c2d5" name="2f" />
+		<part crc="74f4f04d" name="2h" />
+		<part crc="78effb08" name="2j" />
+		<part crc="e9dcecbd" name="2l" />
+		<part crc="3ed0337e" name="2m" />
+		<part crc="3ed0337e" name="2m" />
+		<part crc="b899be2a" name="5c" />
+		<part crc="f2ebd14c" name="5d" />
+		<part crc="b899be2a" name="5c" />
+		<part crc="f2ebd14c" name="5d" />
+		<part crc="08e093ee" name="5h" repeat="4" />
+		<part crc="d26f3fdc" name="5f" repeat="4" />
+		<part crc="9b87f90d" name="82s123.6e" />
+	</rom>
+	<remark>The supplied palette PROM is provisional; the original has not been dumped. Colors follow the existing MAME reference.</remark>
+	<mratimestamp />
+</misterromdescription>

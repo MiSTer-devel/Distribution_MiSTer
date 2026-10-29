@@ -1,0 +1,57 @@
+<misterromdescription>
+    <name>Fantasy (Japan)</name>
+    <setname>fantasyj</setname>
+    <parent>fantasyu</parent>
+    <rbf>SNK6502</rbf>
+    <mameversion>0289</mameversion>
+    <year>1981</year>
+    <manufacturer>SNK</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="03" base="16">
+        <dip name="Cabinet" bits="0" ids="Cocktail,Upright"/>
+        <dip name="Coinage" bits="1,3" ids="1C/1C,2C/1C,1C/3C,1C/1C,1C/2C,1C/1C,1C/6C,1C/1C"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5,3"/>
+        <dip name="Coinage Bonus" bits="6" ids="1C/1C,2C/1C"/>
+        <dip name="Allow Continue" bits="7" ids="Yes,No"/>
+    </switches>
+
+    <buttons names="Fire,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <rom index="0" zip="fantasyj.zip|fantasyu.zip" md5="none">
+        <part repeat="0x3000">00</part>
+        <part crc="dd1eac89" name="fs5jic12.bin"/>
+        <part crc="7b8115ae" name="fs1jic7.bin"/>
+        <part crc="61531dd1" name="fs2jic8.bin"/>
+        <part crc="36a12617" name="fs3jic9.bin"/>
+        <part crc="dbf7c347" name="fs4jic10.bin"/>
+        <part crc="bf59a33a" name="fs6jic14.bin"/>
+        <part crc="cc18428e" name="fs7jic15.bin"/>
+        <part crc="ae5bf727" name="fs8jic16.bin"/>
+        <part crc="fa6903e2" name="fs9jic17.bin"/>
+        <part repeat="0x3000">00</part>
+        <part crc="bf59a33a" name="fs6jic14.bin"/>
+        <part crc="86a801c3" name="fs10ic50.bin"/>
+        <part crc="9dfff71c" name="fs11ic51.bin"/>
+        <part crc="1aa9285a" name="prom-8.bpr"/>
+        <part crc="7a6f7dc3" name="prom-7.bpr"/>
+        <part crc="48094ec5" name="fs_b_51.bin"/>
+        <part crc="1d0316e8" name="fs_a_52.bin"/>
+        <part crc="49fd4ae8" name="fs_c_53.bin"/>
+        <part repeat="0x7C0">00</part>
+        <part crc="a7ef4cc6" name="fs_d_7.bin"/>
+        <part crc="19b8fb3e" name="fs_e_8.bin"/>
+        <part crc="3a352e1f" name="fs_f_11.bin"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 3 (GID_FANTASY) -->
+    <rom index="1">
+        <part>03</part>
+    </rom>
+
+    <remark>Fantasy (SNK)</remark>
+</misterromdescription>

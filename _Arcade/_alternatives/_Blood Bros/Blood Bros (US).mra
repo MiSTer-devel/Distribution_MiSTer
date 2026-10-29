@@ -1,0 +1,60 @@
+<misterromdescription>
+  <name>Blood Bros (US)</name>
+  <setname>bloodbrou</setname>
+  <mameversion>0264</mameversion>
+  <rbf>BloodBros</rbf>
+  <year>1990</year>
+  <manufacturer>TAD Corporation (Fabtek license)</manufacturer>
+  <category>Shoot</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>3</num_buttons>
+  <buttons default="A,B,X,Start" names="Fire,Roll,Dynamite,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <dip bits="0,2" ids="5C 1C,4C 1C,3C 1C,2C 1C,1C 4C,1C 3C,1C 2C,1C 1C" name="Coin A"/>
+    <dip bits="3,5" ids="5C 1C,4C 1C,3C 1C,2C 1C,1C 4C,1C 3C,1C 2C,1C 1C" name="Coin B"/>
+    <dip bits="6"   ids="On,Off" name="Coin Mode"/>
+    <dip bits="7"   ids="Off,On" name="Service Mode"/>
+    <dip bits="8,9" ids="3,4,2,1" name="Lives"/>
+    <dip bits="10,11" ids="2,3,1,4" name="Bullets per Round"/>
+    <dip bits="12,13" ids="Hard,Hardest,Easy,Normal" name="Difficulty"/>
+    <dip bits="14"  ids="On,Off" name="Demo Sounds"/>
+    <dip bits="15"  ids="No,Yes" name="Allow Continue"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="bloodbro.zip|bloodbrou.zip" md5="None">
+    <!-- maincpu 512KB @ 0x000000 (US: 1u + 2u per low 256KB) -->
+    <interleave output="16">
+      <part name="1u.u022.8n" crc="f2cb95c1" map="10"/>
+      <part name="2u.u021.7n" crc="45186bd3" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="3.u024.8l" crc="18d3c460" map="10"/>
+      <part name="4.u023.7l" crc="fd951c2c" map="01"/>
+    </interleave>
+
+    <interleave output="16"><part name="bb_06.u063.6d" crc="7092e35b" map="21"/></interleave>
+    <interleave output="16"><part name="bb_05.u061.6f" crc="04ba6d19" map="21"/></interleave>
+
+    <interleave output="16"><part name="blood_bros_bk__=c=1990_tad_corp.u064.4d" crc="1aa87ee6" map="21"/></interleave>
+
+    <part repeat="0x100000">00</part>
+
+    <interleave output="16"><part name="blood_bros_obj__=c=1990_tad_corp.u078.2n" crc="d27c3952" map="21"/></interleave>
+
+    <part repeat="0x100000">00</part>
+
+    <interleave output="16"><part name="bb_08.u095.5a" crc="deb1b975" map="21"/></interleave>
+    <part repeat="0x20000">00</part>
+
+    <interleave output="16"><part name="bb_07.u1016.6a" crc="411b94e8" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260516000000</mratimestamp>
+</misterromdescription>

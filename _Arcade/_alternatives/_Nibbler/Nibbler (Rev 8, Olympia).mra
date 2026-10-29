@@ -1,0 +1,54 @@
+<misterromdescription>
+    <name>Nibbler (Rev 8, Olympia)</name>
+    <setname>nibblero</setname>
+    <parent>nibbler</parent>
+    <rbf>SNK6502</rbf>
+    <mameversion>0289</mameversion>
+    <year>1983</year>
+    <manufacturer>Rock-Ola (Olympia license)</manufacturer>
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <switches default="00" base="16">
+        <dip name="Lives" bits="0,1" ids="2,3,4,5"/>
+        <dip name="Difficulty" bits="2" ids="Easy,Hard"/>
+        <dip name="Cabinet" bits="3" ids="Upright,Cocktail"/>
+        <dip name="Service Mode" bits="4" ids="Off,On"/>
+        <dip name="Free Play" bits="5" ids="Off,On"/>
+        <dip name="Coinage" bits="6,7" ids="1C/1C,2C/1C,2C/1C 4C/3,1C/1C 2C/3"/>
+    </switches>
+
+    <buttons names="-,-,-,-,Coin,Start 1P,Start 2P,Pause" default="Select,Start,R,L"/>
+
+    <rom index="0" zip="nibblero.zip|nibbler.zip" md5="none">
+        <part repeat="0x3000">00</part>
+        <part crc="1093f525" name="50-144g.012"/>
+        <part crc="848651dd" name="50-140g.007"/>
+        <part crc="b50fd79c" name="50-141.008"/>
+        <part crc="a599df10" name="nibblero.ic9"/>
+        <part crc="a6b5abe5" name="nibblero.ic10"/>
+        <part crc="29ea246a" name="50-145.014"/>
+        <part crc="7205fb8d" name="g-0960-54.ic15"/>
+        <part crc="4bb39815" name="g-0960-55.ic16"/>
+        <part crc="ed680f19" name="g-0960-56.ic17"/>
+        <part repeat="0x3000">00</part>
+        <part crc="29ea246a" name="50-145.014"/>
+        <part crc="01d4d0c2" name="g-0960-57.ic50"/>
+        <part crc="feff7faf" name="g-0960-58.ic51"/>
+        <part crc="a5709ff3" name="g-0708-05.ic7"/>
+        <part crc="dacd592d" name="g-0708-04.ic6"/>
+        <part repeat="0x800">FF</part>
+        <part crc="87d67dee" name="g-0959-44.ic52"/>
+        <part crc="33189917" name="g-0959-45.ic53"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 5 (GID_NIBBLER) -->
+    <rom index="1">
+        <part>05</part>
+    </rom>
+
+    <remark>Nibbler (Rock-Ola, Olympia license)</remark>
+</misterromdescription>

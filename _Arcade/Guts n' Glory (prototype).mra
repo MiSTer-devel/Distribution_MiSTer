@@ -1,0 +1,137 @@
+<misterromdescription>
+	<name>Guts n' Glory (prototype)</name>
+	<setname>guts</setname>
+	
+	<mameversion>0254</mameversion>
+	<year>1989</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<category>Arcade</category>
+	<rbf>Escape</rbf>
+	<mameinfo parent="guts" cpp="eprom" input="guts"/>
+	<display type="raster" rotate="0"/>
+	<!-- GAMESEL-167: index-1 byte 02 (game_sel 2'b10) = Guts n' Glory
+	     (single 68000, JSA-II, FFxxxx video map, own tile ROM region).
+	     Controls: analogue stick + three buttons per player; the core places
+	     them on D9 / D8 / D11 as MAME's guts ports read them, so the names
+	     here are in MAME's order. Start is the self-test step/continue
+	     switch, as on every game - the board has no Start switch, the game
+	     starts from a button. Coin goes through the sound board, as on
+	     Escape. Pause on the left shoulder as on the Escape MRA.
+	     The names map onto the core's J1 positions in order (Jump, Fire,
+	     Duck, Bomb, Start, Coin, Pause = joystick bits 4..10), so the
+	     unused Bomb slot is a "-" placeholder (hidden from Define buttons).
+	     MRABTN-177: without it, Start, Coin and Pause each landed one bit
+	     low - Coin pressed Start and Pause inserted a coin.
+	     STARTHIDE-179: Start is hidden too. The core's Start drives
+	     260000 bit 0, which Guts never reads (traced in MAME 0.289 through
+	     boot, attract, a coined game and the whole self-test); the game
+	     starts from its D8 button, which its own switch test calls
+	     "Left START" (MAME's Button 2). -->
+	<buttons names="Button 1,Button 2,Button 3,-,-,Coin,Pause" default="B,A,X,Y,Start,Select,L"/>
+
+	<!--
+	  ROM STREAM LAYOUT (Guts n' Glory on Escape hardware, KLAX_GUTS.md)
+
+	    0x000000  0x040000  maincpu   68000 program (two pairs)
+	    0x040000  0x0C0000  filler
+	    0x100000  0x010000  jsa:cpu   6502 program
+	    0x110000  0x004000  chars     alphanumerics
+	    0x114000  0x00C000  filler
+	    0x120000  0x100000  sprites   four interleaved bit-planes (repacked by the loader)
+	    0x220000  0x020000  filler
+	    0x240000  0x020000  jsa:oki1  ADPCM (raw)
+	    0x260000  0x020000  filler
+	    0x280000  0x100000  tiles     playfield, four interleaved bit-planes (repacked)
+	-->
+	<rom index="0" zip="guts.zip" md5="none">
+		<interleave output="16">
+			<part crc="3afca24a" map="01" name="guts-hi0.50a"/>
+			<part crc="ce86cf23" map="10" name="guts-lo0.40a"/>
+		</interleave>
+		<interleave output="16">
+			<part crc="a231f65d" map="01" name="guts-hi1.50b"/>
+			<part crc="dbdd4910" map="10" name="guts-lo1.40b"/>
+		</interleave>
+		<part repeat="786432">00</part>
+
+		<!-- ============ JSA-II 6502 0x100000 ============================= -->
+		<part crc="9fe065d7" name="guts-snd.10c"/>
+
+		<!-- ============ alphanumerics 0x110000 ========================== -->
+		<part crc="ee965058" name="guts-alpha.bin"/>
+		<part repeat="49152">00</part>
+
+		<!-- ============ motion-object graphics 0x120000 (1 MB) ========== -->
+		<!-- slice 0: region 0x00000 / 0x40000 / 0x80000 / 0xC0000 -->
+		<interleave output="32">
+			<part crc="b8d8d8da" map="0001" name="guts-mo0.bin"/>
+			<part crc="04cae4fb" map="0010" name="guts-mo4.bin"/>
+			<part crc="aa273234" map="0100" name="guts-mo8.bin"/>
+			<part crc="1764c272" map="1000" name="guts-moc.bin"/>
+		</interleave>
+		<!-- slice 1: region 0x10000 / 0x50000 / 0x90000 / 0xD0000 -->
+		<interleave output="32">
+			<part crc="d01b5a7f" map="0001" name="guts-mo1.bin"/>
+			<part crc="c65322ec" map="0010" name="guts-mo5.bin"/>
+			<part crc="e85a12ef" map="0100" name="guts-mo9.bin"/>
+			<part crc="8220f2f6" map="1000" name="guts-mod.bin"/>
+		</interleave>
+		<!-- slice 2: region 0x20000 / 0x60000 / 0xA0000 / 0xE0000 -->
+		<interleave output="32">
+			<part crc="4577b807" map="0001" name="guts-mo2.bin"/>
+			<part crc="92602a5f" map="0010" name="guts-mo6.bin"/>
+			<part crc="da1cc76f" map="0100" name="guts-moa.bin"/>
+			<part crc="ee372eac" map="1000" name="guts-moe.bin"/>
+		</interleave>
+		<!-- slice 3: region 0x30000 / 0x70000 / 0xB0000 / 0xF0000 -->
+		<interleave output="32">
+			<part crc="4ab03c84" map="0001" name="guts-mo3.bin"/>
+			<part crc="71a1911d" map="0010" name="guts-mo7.bin"/>
+			<part crc="246e7955" map="0100" name="guts-mob.bin"/>
+			<part crc="028ec56e" map="1000" name="guts-mof.bin"/>
+		</interleave>
+
+		<part repeat="131072">00</part>
+
+		<!-- ============ OKI6295 ADPCM 0x240000 ========================== -->
+		<part crc="92e9c35d" name="guts-adpcm0.1f"/>
+		<part crc="0afddd3a" name="guts-adpcm1.1e"/>
+		<part repeat="131072">00</part>
+
+		<!-- ============ playfield tiles 0x280000 (1 MB) ================= -->
+		<!-- slice 0: region 0x00000 / 0x40000 / 0x80000 / 0xC0000 -->
+		<interleave output="32">
+			<part crc="1669fdb3" map="0001" name="guts-pf0.bin"/>
+			<part crc="577f25a6" map="0010" name="guts-pf4.bin"/>
+			<part crc="2f078b09" map="0100" name="guts-pf8.bin"/>
+			<part crc="7c571ee8" map="1000" name="guts-pfc.bin"/>
+		</interleave>
+		<!-- slice 1: region 0x10000 / 0x50000 / 0x90000 / 0xD0000 -->
+		<interleave output="32">
+			<part crc="135c41bd" map="0001" name="guts-pf1.bin"/>
+			<part crc="43cbc0e3" map="0010" name="guts-pf5.bin"/>
+			<part crc="7cb7302d" map="0100" name="guts-pf9.bin"/>
+			<part crc="979af5b2" map="1000" name="guts-pfd.bin"/>
+		</interleave>
+		<!-- slice 2: region 0x20000 / 0x60000 / 0xA0000 / 0xE0000 -->
+		<interleave output="32">
+			<part crc="c0408d39" map="0001" name="guts-pf2.bin"/>
+			<part crc="03c096f4" map="0010" name="guts-pf6.bin"/>
+			<part crc="a3919dae" map="0100" name="guts-pfa.bin"/>
+			<part crc="bf384e4d" map="1000" name="guts-pfe.bin"/>
+		</interleave>
+		<!-- slice 3: chips guts-pf3, guts-pf7, guts-pfb, guts-pff absent from the dump (MAME leaves them zero) -->
+		<part repeat="262144">00</part>
+
+	</rom>
+	<rom index="1">
+		<part>02</part>
+	</rom>
+	<!-- NVRAM-170/171: the board's 2804 EEPROM (512 bytes: high scores,
+	     operator settings). Main loads the saved file after the ROMs. It is
+	     saved by the OSD's Save NVRAM, by Main's Save settings, or - with
+	     Autosave NVRAM on (default Off, the Arcade-Cave convention) - when
+	     the OSD opens after the game changed it. One file per MRA name. -->
+	<nvram index="4" size="512"/>
+</misterromdescription>

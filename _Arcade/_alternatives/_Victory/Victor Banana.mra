@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<misterromdescription>
+	<name>Victor Banana</name>
+	<setname>victorba</setname>
+	<mratimestamp>20261005</mratimestamp>
+	<mameversion>0257</mameversion>
+	<year>1982</year>
+	<manufacturer>Exidy</manufacturer>
+	<category>Shooter</category>
+	<rbf>Victory</rbf>
+	<rotation>horizontal</rotation>
+	<remark>Modification kit for "Victory". Split sets require victorba.zip and victory.zip. Game video, pause, CRT controls and automatic NVRAM saving. Dimming starts after 10 seconds paused. First boot without a save: press a button at CMOS RAM RESET.</remark>
+	<romstruct>00000-0BFFF: main CPU; 0C000-0FFFF: sound CPU; 10000-101DF: PROMs.</romstruct>
+	<rom index="0" zip="victorba.zip|victory.zip" md5="61bdccde8bb516557bd82dfb4ec8e0ff" type="split">
+		<part name="j2.rom" crc="dd788e93" length="0x1000" />
+		<part name="k2.rom" crc="f47bf046" length="0x1000" />
+		<part name="kl2.rom" crc="baef885e" length="0x1000" />
+		<part name="l2.rom" crc="739e4799" length="0x1000" />
+		<part name="m2.rom" crc="a88185e6" length="0x1000" />
+		<part name="n2.rom" crc="6724eb01" length="0x1000" />
+		<part name="p2.rom" crc="2cf34ad7" length="0x1000" />
+		<part name="t2.rom" crc="89bb0359" length="0x1000" />
+		<part name="j1.rom" crc="5e415084" length="0x1000" />
+		<part name="k1.rom" crc="3f327dff" length="0x1000" />
+		<part name="kl1.rom" crc="6c82ebca" length="0x1000" />
+		<part name="l1.rom" crc="03b89d8a" length="0x1000" />
+		<part name="vic1.7bc" crc="d4927560" length="0x1000" />
+		<part name="vic1.7c" crc="059efab5" length="0x1000" />
+		<part name="vic1.7d" crc="82c4767c" length="0x1000" />
+		<part name="vic1.7e" crc="a19be034" length="0x1000" />
+		<part name="hsc17l" crc="b2c75dee" length="0x100" />
+		<part name="hsc13e" crc="a107c4f5" length="0x20" />
+		<part name="hsc16a" crc="5f06ad26" length="0x20" />
+		<part name="hsc19b" crc="86165f1e" length="0x20" />
+		<part name="hsc19c" crc="fd27a57a" length="0x20" />
+		<part name="hsc19d" crc="09c4dbf6" length="0x20" />
+		<part name="hsc19e" crc="ce1464f4" length="0x20" />
+		<part name="3j" crc="5fb6b158" length="0x20" />
+	</rom>
+	<buttons names="Thrust,Fire,Shields,Doomsday,Start 1,Start 2,Coin,Service,Pause,Coin 2" default="A,B,X,Y,Start,Select,L,R" />
+	<nvram index="4" size="2048" />
+</misterromdescription>

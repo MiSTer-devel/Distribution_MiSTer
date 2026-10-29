@@ -1,0 +1,80 @@
+<misterromdescription>
+	<name>The Bounty</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>The Bounty</series>
+	<year>1982</year>
+	<manufacturer>Orca</manufacturer>
+	<category>Shooter</category>
+
+	<setname>bounty</setname>
+	<parent>bounty</parent>
+	<mameversion>0289</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Button 2</button_names>
+
+	<switches default="00,40">
+		<!-- DSW0 (6081); bit 6 is button 2 -->
+		<dip bits="0"     name="Unknown" ids="Off,On"/>
+		<dip bits="1"     name="Unknown" ids="Off,On"/>
+		<dip bits="2"     name="Unknown" ids="Off,On"/>
+		<dip bits="3"     name="Unknown" ids="Off,On"/>
+		<dip bits="4"     name="Unknown" ids="Off,On"/>
+		<dip bits="5"     name="Unknown" ids="Off,On"/>
+		<dip bits="7"     name="Unknown" ids="Off,On"/>
+		<!-- DSW1 (6082) -->
+		<dip bits="8,9"   name="Lives" ids="3,4,5,6"/>
+		<dip bits="10,11" name="Coinage" ids="1C/1C,1C/2C,2C/1C,Free Play"/>
+		<dip bits="12,13" name="Bonus Life" ids="20k 100k,40k 100k,20k 200k,40k 200k"/>
+		<dip bits="14"    name="Cabinet" ids="Cocktail,Upright"/>
+		<dip bits="15"    name="Unknown" ids="Off,On"/>
+	</switches>
+
+	<!-- Index 0: Zodiack board main ROM (C000-CFFF stored at 5000), audio ROM, empty Vastar video regions, then the Orca
+	     OVG-40c video board -->
+	<rom index="0" md5="none" zip="bounty.zip">
+		<part crc="f495b19d" name="1.4f"/>
+		<part crc="fa3086c3" name="3.4k"/>
+		<part crc="52ab5314" name="2.4h"/>
+		<part crc="5c9d3f07" name="4.4m"/>
+		<part repeat="0x4000"> 00 </part>
+		<part crc="45e369b8" name="7.4n"/>
+		<part crc="4f52c87d" name="8.4r"/>
+		<part repeat="0xA400"> 00 </part>
+		<part crc="4b4acde5" name="9.4r"/>
+		<part crc="a5ce2a24" name="5.7m"/>
+		<part crc="43183301" name="6.7p"/>
+		<part repeat="0x800"> 00 </part>
+		<part crc="0de11a46" name="mb7051.2a"/>
+		<part crc="465e31d4" name="mb7051.2b"/>
+	</rom>
+
+	<!-- Index 1: core_config (bit1 OVG-40c video, bit2 Zodiack CPU board, bit3 percuss, bit4 horizontal ROT180), then the IN0 / IN1 / DSW0 input map, one control id
+	     per bit (rtl top level: 1-4 P1 U/D/L/R, 5 P1 button 1, 9-12 P2 U/D/L/R, 13 P2 button 1, 17 / 18 coin 1 / 2,
+	     19 / 20 start 1 / 2, 0 none) -->
+	<rom index="1">
+		<part>
+		1E
+		13 14 0B 0C 09 02 0A 0E
+		00 11 00 04 01 0D 05 03
+		00 00 00 00 00 00 06 00
+		</part>
+	</rom>
+
+	<remark>The Bounty (Orca)</remark>
+	<mratimestamp>20261010000000</mratimestamp>
+</misterromdescription>

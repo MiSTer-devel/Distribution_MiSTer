@@ -1,0 +1,65 @@
+<misterromdescription>
+	<name>Dragon World 3 EX (ver. 101CN)</name>
+	<setname>dwex101cn</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|dwex101cn.zip|dwex.zip">
+		<!-- SYSTEM INFO (game = GAME_DRGW3 = 10; dwex is drgw3-class hardware) -->
+		<part>0a 00</part>
+
+		<!-- BIOS PROG -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+
+		<!-- BIOS TILE -->
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+
+		<!-- BIOS MUSIC -->
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG (two ROM_LOAD16_BYTE: u13=even/high, u12=odd/low).
+		     Interleave output bytes = [u12(map01), u13(map10)]; the region's
+		     SWAP16 encoding then yields the [u13,u12] layout the core expects. -->
+		<part>03 00100000 00100000</part>
+		<interleave output="16">
+			<part name="dwex_v101cn.u13" crc="66172511" map="10"/>
+			<part name="dwex_v101cn.u12" crc="4f951f42" map="01"/>
+		</interleave>
+
+		<!-- CART TILE -->
+		<part>04 00200000 00180000</part>
+		<part name="pgm_t0400.u18" crc="9ecc950d"/>
+
+		<!-- CART MUSIC -->
+		<part>05 00200000 00400000</part>
+		<part name="pgm_m0400.u1" crc="42d54fd5"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 00600000 00000000</part>
+		<part name="pgm_a0400.u9" crc="dd7bfd40"/>
+		<part name="pgm_a0401.u10" crc="d36c06a4"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 00400000 00000000</part>
+		<part name="pgm_b0400.u13" crc="4bb87cc0"/>
+
+		<!-- IGS022 PROTECTION DATA (64KB -> block RAM) -->
+		<part>08 00010000 00000000</part>
+		<part name="dwiii_data_u15.u15" crc="03dc4fdf"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

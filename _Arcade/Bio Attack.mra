@@ -1,0 +1,66 @@
+<misterromdescription>
+	<n>Bio Attack</n>
+	<mameversion>0245</mameversion>
+	<setname>bioatack</setname>
+	<parent>bioatack</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1983</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Shooter</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>vertical (ccw)</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Fire,-,Coin A,Start 1P,Coin B,Start 2P,Service,Pause"
+	         default="A,Select,Start,X,Y,L,R"/>
+	<switches default="00,3F,00,FF,00,00,00,00">
+		<dip bits="8,9" name="Bonus Life" ids="20000,15000,10000,5000"/>
+		<dip bits="11,12" name="Lives" ids="6,5,4,3"/>
+		<dip bits="14" name="Flip Screen" ids="Off,On"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="bioatack.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="e5abc211" name="aa8-01.69"/>
+		<part crc="b5bfde00" name="aa8-02.68"/>
+		<part crc="e4e46e69" name="aa8-03.67"/>
+		<part crc="86e0af8c" name="aa8-04.66"/>
+		<part crc="c6248608" name="aa8-05.65"/>
+		<part crc="685a0383" name="aa8-06.64"/>
+		<part crc="9d58e2b7" name="aa8-07.55"/>
+		<part crc="dec5271f" name="aa8-08.54"/>
+		<!-- Main CPU - Pass 2 (duplicate) [0x8000/0x8000] -->
+		<part crc="e5abc211" name="aa8-01.69"/>
+		<part crc="b5bfde00" name="aa8-02.68"/>
+		<part crc="e4e46e69" name="aa8-03.67"/>
+		<part crc="86e0af8c" name="aa8-04.66"/>
+		<part crc="c6248608" name="aa8-05.65"/>
+		<part crc="685a0383" name="aa8-06.64"/>
+		<part crc="9d58e2b7" name="aa8-07.55"/>
+		<part crc="dec5271f" name="aa8-08.54"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="1fee5fd6" name="aa8-09.1"/>
+		<part crc="e0133423" name="aa8-10.2"/>
+		<part crc="0f5715c6" name="aa8-11.3"/>
+		<part crc="71126dd0" name="aa8-12.4"/>
+		<part crc="adcdd2f0" name="aa8-13.5"/>
+		<part crc="2fe18680" name="aa8-14.6"/>
+		<part crc="ff5aad4b" name="aa8-15.7"/>
+		<part crc="ceba4036" name="aa8-16.8"/>
+		<!-- Audio CPU ROMs [0x1000/0x4000] -->
+		<part crc="36eb95b5" name="aa8-17.70"/>
+		<!-- Padding audio: 0x3000 -->
+		<part repeat="0x3000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+	</rom>
+	<rom index="1">
+		<part>1</part>
+	</rom>
+</misterromdescription>

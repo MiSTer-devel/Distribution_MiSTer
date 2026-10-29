@@ -1,0 +1,78 @@
+<!--          FPGA arcade hardware by Jotego
+
+              This core is available for hardware compatible with MiST and MiSTer
+              Other FPGA systems may be supported by the time you read this.
+              This work is not mantained by the MiSTer project. Please contact the
+              core author for issues and updates.
+
+              (c) Jose Tejada, 2026. Please support this research
+              Patreon: https://patreon.com/jotego
+
+              The author does not endorse or participate in illegal distribution
+              of copyrighted material. This work can be used with compatible
+              software. This software can be homebrew projects or legally
+              obtained memory dumps of compatible games.
+
+              This file license is GNU GPLv2.
+              You can read the whole license file in
+              https://opensource.org/licenses/gpl-2.0.php
+
+-->
+
+<misterromdescription>
+    <about author="andrea bogazzi" webpage="https://patreon.com/jotego" twitter="@topapate" source="https://jotego/jtcores"/>
+    <rotation>horizontal</rotation>
+    <name>Cannon Dancer (Japan)</name>
+    <setname>candance</setname>
+    <mameversion>0288</mameversion>
+    <year>1996</year>
+    <manufacturer>Mitchell (Atlus license)</manufacturer>
+    <players>2</players>
+    <rbf>Deco156Simple</rbf>
+    <joystick>8</joystick>
+    <region>World</region>
+    <rom index="0" zip="candance.zip|osman.zip" md5="None">
+        <!-- 
+  0[0]: jm         Joe & Mac Returns
+  0[1]: cr         Chain Reaction
+  0[2]: md         Magical Drop
+  0[3]: mdp        Magical Drop Plus
+  0[4]: cn         Charlie Ninja
+  0[5]: hv         Heavy Smash -->
+        <part>
+            00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00
+        </part>
+        <!-- maincpu - starts at 0x0 - length 0x100000 (20 bits) -->
+        <interleave output="16">
+            <part name="sa00-0.1e" crc="ec6b3257" map="12"/>
+        </interleave>
+        <part repeat="0x80000"> FF</part>
+        <!-- JTFRAME_BA1_START -->
+        <!-- tiles - starts at 0x100000 - length 0x200000 (21 bits) -->
+        <part name="mcf-00.9a" crc="247712dc"/>
+        <!-- PCM1_START -->
+        <!-- JTFRAME_BA2_START -->
+        <!-- oki1 - starts at 0x300000 - length 0x80000 (19 bits) -->
+        <part name="sa01-0.13h" crc="cea8368e"/>
+        <part repeat="0x40000"> FF</part>
+        <!-- PCM2_START -->
+        <!-- oki2 - starts at 0x380000 - length 0x200000 (21 bits) -->
+        <part name="mcf-05.12f" crc="f007d376"/>
+        <!-- JTFRAME_BA3_START -->
+        <!-- sprites - starts at 0x580000 - length 0x800000 (23 bits) -->
+        <part name="mcf-04.14h" crc="4fa55577"/>
+        <part name="mcf-03.14d" crc="faf1d51d"/>
+        <part name="mcf-02.14a" crc="21251b33"/>
+        <part name="mcf-01.13a" crc="83881e25"/>
+        <!-- Total 0xD80000 bytes - 13824 kBytes -->
+    </rom>
+    <rom index="2" zip="candance.zip|osman.zip">
+        <part name="eeprom-candance.bin" crc="0a0a8f6b"/>
+    </rom>
+    <nvram index="2" size="128"/>
+    <rom index="1">
+        <part>00 80</part>
+    </rom>
+    <buttons names="Attack,Jump,Special,Start,Coin,Core credits" default="A,B,X,Start,Select,-" count="3"/>
+</misterromdescription>

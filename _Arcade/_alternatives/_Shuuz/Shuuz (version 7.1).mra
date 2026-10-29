@@ -1,0 +1,65 @@
+<misterromdescription>
+    <name>Shuuz (version 7.1)</name>
+    <setname>shuuz2</setname>
+    <rbf>Shuuz</rbf>
+    <mameversion>0289</mameversion>
+    <mratimestamp>20261001000000</mratimestamp>
+    <year>1990</year>
+    <manufacturer>Atari Games</manufacturer>
+    <category>Sports</category>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <platform>Atari Shuuz (A047365)</platform>
+    <players>4</players>
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+
+    <about>
+        Shuuz (version 7.1). All ROMs load on index 0 as one stream, in the
+        order below. The EEPROM is saved on index 2; it starts blank and
+        the game fills it in.
+    </about>
+
+    <rom index="0" zip="shuuz2.zip|shuuz.zip" md5="dd6d8a3ffbba70cd8a3ceec587c3da71">
+        <!-- 68000 program, 256 KB: 23P is the high byte -->
+        <interleave output="16">
+            <part name="136083-23p.rom" crc="98aec4e7" map="01"/>
+            <part name="136083-13p.rom" crc="dd9d5d5c" map="10"/>
+        </interleave>
+        <!-- playfield graphics, 512 KB: low byte first -->
+        <interleave output="16">
+            <part name="136083-2031.87x" crc="72e9db63" map="01"/>
+            <part name="136083-2030.43x" crc="8ecf1ed8" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136083-2033.65x" crc="8f552498" map="01"/>
+            <part name="136083-2032.20x" crc="5af184e6" map="10"/>
+        </interleave>
+        <!-- motion object graphics, 1 MB: low byte first -->
+        <interleave output="16">
+            <part name="136083-1021.87u" crc="8388910c" map="01"/>
+            <part name="136083-1020.43u" crc="d21ad039" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136083-1023.65u" crc="71353112" map="01"/>
+            <part name="136083-1022.20u" crc="0c10bc90" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136083-1025.87m" crc="f7b20a64" map="01"/>
+            <part name="136083-1024.43m" crc="adb09347" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136083-1027.65m" crc="55d54952" map="01"/>
+            <part name="136083-1026.20m" crc="9b20e13d" map="10"/>
+        </interleave>
+        <!-- MSM6295 samples, 256 KB -->
+        <part name="136083-1040.75b" crc="0896702b"/>
+        <part name="136083-1041.65b" crc="b3b07ce9"/>
+    </rom>
+
+    <!-- 28C16 EEPROM: settings, statistics and high scores -->
+    <nvram index="2" size="2048"/>
+
+    <buttons names="Left Button,Right Button,Coin" default="A,B,Select"/>
+</misterromdescription>

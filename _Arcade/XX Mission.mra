@@ -1,0 +1,69 @@
+<misterromdescription>
+    <name>XX Mission</name>
+    <setname>xxmissio</setname>
+    <parent>xxmissio</parent>
+    <year>1986</year>
+    <manufacturer>UPL</manufacturer>
+    <series>XX Mission</series>
+    <category>Shooter</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (cw)</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Shoot 1,Shoot 2,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="D7,EF">
+        <dip bits="0,1" name="Coinage" ids="3 Coins/1 Credit,1 Coin/2 Credits,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="2" name="Flip Screen" ids="On,Off"/>
+        <dip bits="3" name="Demo Sounds" ids="On,Off"/>
+        <dip bits="4" name="Difficulty" ids="Hard,Normal"/>
+        <dip bits="5" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="6" name="Endless Game (Cheat)" ids="On,Off"/>
+        <dip bits="7" name="Service Mode" ids="On,Off"/>
+        <dip bits="8,9" name="Lives" ids="5,2,4,3"/>
+        <dip bits="10" name="First Bonus" ids="40000,30000"/>
+        <dip bits="11,12" name="Bonus Every" ids="None,70000,90000,50000"/>
+    </switches>
+
+    <!-- Index 0: main 0000-7FFF, then the bank image: sub banks 0-5 at 0x00000, chars / sprites at 0x20000, file by
+         file (MAME's ROM_LOAD16_BYTE pairing is decoded in the core) -->
+    <rom index="0" md5="none" zip="xxmissio.zip">
+        <part name="xx1.4l" crc="86e07709"/>
+        <part name="xx3.6a" crc="16fdacab"/>
+        <part name="xx4.6b" crc="274bd4d2"/>
+        <part name="xx5.6d" crc="c5f35535"/>
+        <part repeat="0x8000">FF</part>
+        <part name="xx8.8f" crc="a9587cc6"/>
+        <part name="xx6.8j" crc="dc954d01"/>
+        <part name="xx9.8e" crc="854e0e5f"/>
+        <part name="xx7.8h" crc="abe9cd68"/>
+    </rom>
+
+    <!-- Index 1: sub CPU 0000-3FFF -->
+    <rom index="1" md5="none" zip="xxmissio.zip">
+        <part name="xx2.4b" crc="13fa7049"/>
+    </rom>
+
+    <!-- Index 2: SDRAM clock-phase calibration reference only (the char region is not read on this board) -->
+    <rom index="2" md5="none" zip="xxmissio.zip">
+        <part name="xx10.4c" crc="d27d7834"/>
+    </rom>
+
+    <!-- Index 7: bg tiles, file by file -->
+    <rom index="7" md5="none" zip="xxmissio.zip">
+        <part name="xx10.4c" crc="d27d7834"/>
+        <part name="xx11.4b" crc="d9dd827c"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>1A</part></rom>
+
+    <remark>XX Mission (UPL)</remark>
+</misterromdescription>

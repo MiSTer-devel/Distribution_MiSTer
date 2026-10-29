@@ -1,0 +1,59 @@
+<misterromdescription>
+    <name>Satan Of Saturn (Inder S.A., Bootleg)</name>
+    <setname>satansatind</setname>
+    <parent>satansat</parent>
+    <rbf>SNK6502</rbf>
+    <mameversion>0289</mameversion>
+    <year>1981</year>
+    <manufacturer>bootleg (Inder S.A.)</manufacturer>
+    <players>1</players>
+    <joystick>2-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <switches default="15" base="16">
+        <dip name="Cabinet" bits="0" ids="Cocktail,Upright"/>
+        <dip name="Coinage (SW1:2)" bits="1" ids="1C/1C,1C/2C"/>
+        <dip name="Bonus Life" bits="2" ids="10000,5000"/>
+        <dip name="Coinage 2C/1C (SW1:4)" bits="3" ids="Off,On"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5,3"/>
+        <dip name="Unused SW1:7" bits="6" ids="Off,On"/>
+        <dip name="RAM Test" bits="7" ids="Off,On"/>
+    </switches>
+
+    <buttons names="Fire,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <rom index="0" zip="satansatind.zip|satansat.zip" md5="none">
+        <part repeat="0x4000">00</part>
+        <part crc="7f16f8fe" name="ss01.rom"/>
+        <part crc="04972fa8" name="ss02.rom"/>
+        <part crc="6e0077e8" name="ss03.rom"/>
+        <part crc="f9e33359" name="ss04.rom"/>
+        <part crc="f771e007" name="ss05.rom"/>
+        <part crc="e5b02850" name="ss06.rom"/>
+        <part crc="93ea2df9" name="ss07.rom"/>
+        <part crc="e67ec873" name="ss08.rom"/>
+        <part crc="22c44650" name="ss09.rom"/>
+        <part crc="8f1b313a" name="ss10.rom"/>
+        <part crc="3cbcbddb" name="ss11.rom"/>
+        <part crc="20bd6ee4" name="ss16.rom"/>
+        <part repeat="0x5800">00</part>
+        <part crc="e67ec873" name="ss08.rom"/>
+        <part crc="5dfcd508" name="ss14.rom"/>
+        <part repeat="0x800">00</part>
+        <part crc="363d0500" name="ss15.rom"/>
+        <part repeat="0x800">00</part>
+        <part crc="5dd6933a" name="zarz138.03"/>
+        <part repeat="0x20">00</part>
+        <part crc="dee01f24" name="ss12.rom"/>
+        <part crc="580934d2" name="ss13.rom"/>
+    </rom>
+
+    <!-- ROM index 1: game_id = 1 (GID_SATANSAT) -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+    <remark>Satan of Saturn (Inder S.A. bootleg)</remark>
+</misterromdescription>

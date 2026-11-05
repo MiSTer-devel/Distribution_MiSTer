@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      BASE_FILES_URL: https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/%s/
+      BASE_FILES_URL: https://github.com/Starmann/Distribution_MiSTer_Action_fix/%s/
       DB_JSON_NAME: db.json
       DB_ID: distribution_mister
-      DB_URL: https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/main/db.json.zip
+      DB_URL: https://raw.githubusercontent.com/Starmann/Distribution_MiSTer_Action_fix/main/db.json.zip
       ZIPS_CONFIG: ./.github/zips_config.json
       LINUX_GITHUB_REPOSITORY: MiSTer-devel/SD-Installer-Win64_MiSTer
       BROKEN_MRAS_IGNORE: true
@@ -28,7 +28,7 @@ jobs:
 
     - uses: actions/setup-python@v6
       with:
-        python-version: '3.9'
+        python-version: '3.15.2'
 
     - name: Install 7-Zip
       run: |

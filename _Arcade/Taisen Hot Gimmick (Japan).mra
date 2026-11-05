@@ -1,0 +1,54 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>hotgmck</setname>
+	<mameversion>0121</mameversion>
+	<description>Taisen Hot Gimmick (Japan)</description>
+	<rotation>horizontal</rotation>
+	<year>1997</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="A,B,C,D,E,F,G,H,I,J,K,L,M,N,Chi,Pon,Kan,Reach,Ron,Start,Bet,Coin,Test,Service" />
+
+	<switches default="40">
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="hotgmck.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="91f9ba60" name="0l.bin" map="125600" />
+			<part crc="bfa800b7" name="0h.bin" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="4b670809" name="1l.bin" map="125600" />
+			<part crc="ab513a4d" name="1h.bin" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="1a7d51e9" name="2l.bin" map="125600" />
+			<part crc="bf866222" name="2h.bin" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="a8a646f7" name="3l.bin" map="125600" />
+			<part crc="8c32becd" name="3h.bin" map="1256" />
+		</interleave>
+		<part repeat="0x2000000">00</part>
+		<interleave output="64">
+			<part crc="c090d51a" name="snd0.bin" map="12345678" />	
+		</interleave>
+		<interleave output="64">
+			<part crc="c24243b5" name="snd1.bin" map="12345678" />	
+		</interleave>
+
+		<interleave output="64">
+			<part crc="5db3649f" name="1-u22.bin" map="216500" />
+			<part crc="23ed4aa5" name="2-u23.bin" map="2165" />
+		</interleave>
+		<part repeat="0x100000">00</part>
+		<interleave output="64">
+			<part crc="500f6b1b" name="prog.bin" map="21436587" />
+		</interleave>
+		<part repeat="0x100">00</part>
+	</rom>
+	<rom index="2" md5="">
+		<part>42</part>
+	</rom>
+	<nvram index="4" size="256" />
+</misterromdescription>

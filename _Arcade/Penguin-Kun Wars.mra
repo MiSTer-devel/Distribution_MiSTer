@@ -1,0 +1,55 @@
+<misterromdescription>
+    <name>Penguin-Kun Wars</name>
+    <setname>pkunwar</setname>
+    <parent>pkunwar</parent>
+    <year>1985</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Penguin-Kun Wars</series>
+    <category>Sports</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (simultaneous)</players>
+    <joystick>2-way horizontal</joystick>
+    <num_buttons>1</num_buttons>
+    <buttons names="Hit,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <switches default="FB,FF">
+        <dip bits="0,1" name="Coinage" ids="3 Coins/1 Credit,1 Coin/2 Credits,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="2" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="3" name="Demo Sounds" ids="Off,On"/>
+        <dip bits="4,5" name="Difficulty" ids="Hardest,Easy,Hard,Medium"/>
+        <dip bits="6" name="Flip Screen" ids="On,Off"/>
+        <dip bits="7" name="Free Play" ids="On,Off"/>
+    </switches>
+
+    <!-- Index 0: program 0000-7FFF, then gfx1 at 0x8000 file by file (MAME's lineswap is decoded in the core) -->
+    <rom index="0" md5="none" zip="pkunwar.zip">
+        <part name="pkwar.01r" crc="ce2d2c7b"/>
+        <part name="pkwar.02r" crc="abc1f661"/>
+        <part name="pkwar.01y" crc="428d3b92"/>
+        <part name="pkwar.02y" crc="ce1da7bc"/>
+        <part name="pkwar.03y" crc="63204400"/>
+        <part name="pkwar.04y" crc="061dfca8"/>
+    </rom>
+
+    <!-- Index 1: program E000-FFFF -->
+    <rom index="1" md5="none" zip="pkunwar.zip">
+        <part name="pkwar.03r" crc="56faebea"/>
+    </rom>
+
+    <!-- Index 11: palette PROM -->
+    <rom index="11" md5="none" zip="pkunwar.zip">
+        <part name="pkwar.col" crc="af0fc5e2"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>13</part></rom>
+
+    <remark>Penguin-Kun Wars (UPL)</remark>
+</misterromdescription>

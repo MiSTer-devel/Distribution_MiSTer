@@ -1,0 +1,27 @@
+<misterromdescription>
+    <name>Tank Cocktail</name>
+    <setname>tankc</setname>
+    <parent>tank</parent>
+    <rbf>Tank</rbf>
+    <mameversion>0289</mameversion>
+    <about>Tank cocktail table (Kee Games / Atari, 1974, TM-036). Same Panzer
+Board #1/#2 (A003110/A003112) and ROM as the upright (MAME: tank, "Tank/Tank
+Cocktail"); the face-up XM501 monitor is turned 90 degrees between the two
+players, and harness 004032 drives one speaker per tank (WH TANK / BK TANK).
+Rotation is HDMI-only; switch Monitor to CCW if your mounting is the other way.</about>
+    <year>1974</year>
+    <manufacturer>Kee Games (Atari)</manufacturer>
+    <category>Shooter / Maze</category>
+    <players>2 (simultaneous, cocktail)</players>
+    <joystick>2 x 2-way (twin sticks per player)</joystick>
+    <rotation>Vertical (CW)</rotation>
+
+    <rom index="0" zip="tank.zip" md5="a18a083787ddf84ac6e8a0d1be67b906">
+        <part name="90-2006.k10" crc="87f5c365"/>
+    </rom>
+
+    <!-- Byte 0 [1:0] = monitor orientation: default Cocktail CW -->
+    <switches default="01">
+        <dip bits="0,1" name="Monitor" ids="Upright,Cocktail CW,Cocktail CCW"/>
+    </switches>
+</misterromdescription>

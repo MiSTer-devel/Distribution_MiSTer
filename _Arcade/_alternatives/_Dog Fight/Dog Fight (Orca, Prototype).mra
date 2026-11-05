@@ -1,0 +1,75 @@
+<misterromdescription>
+	<name>Dog Fight (Orca, Prototype)</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Dog Fight</series>
+	<year>1983</year>
+	<manufacturer>Orca</manufacturer>
+	<category>Shooter</category>
+
+	<setname>dogfightp</setname>
+	<parent>dogfight</parent>
+	<mameversion>0289</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>4-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="FF,FF">
+		<!-- DSW1 (AY port A) — Coinage -->
+		<dip bits="0,3"  name="Credits A" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<dip bits="4,7"  name="Credits B" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<!-- DSW2 (AY port B) -->
+		<dip bits="8,9"   name="Lives" ids="6,5,4,3"/>
+		<dip bits="10,11" name="Bonus Life" ids="20k/60k,40k/120k,20k/every 60k,40k/every 120k"/>
+		<dip bits="12"    name="Unknown" ids="Off,On"/>
+		<dip bits="13,14" name="Difficulty" ids="Hardest,Hard,Normal,Easy"/>
+		<dip bits="15"    name="Cabinet" ids="Upright,Cocktail"/>
+	</switches>
+
+	<!-- Index 0: Vastar CPU board ROMs, empty Vastar video regions, then the Orca OVG-40c video board -->
+	<rom index="0" md5="none" zip="dogfightp.zip|dogfight.zip">
+		<!-- Main CPU 6x 4KB (0x00000-0x05FFF), pad to 0x08000 -->
+		<part crc="03f21fc8" name="1.4f"/>
+		<part crc="5f93c5fc" name="4.4k"/>
+		<part crc="1739b24e" name="2.4h"/>
+		<part crc="8f3fda8d" name="5.4l"/>
+		<part crc="5bdf8ddc" name="3.4j"/>
+		<part crc="7c445c30" name="6.4n"/>
+		<part repeat="0x2000"> 00 </part>
+		<!-- Sub CPU 4KB (0x08000-0x08FFF), pad to 0x0A000 -->
+		<part crc="61c14b5d" name="7.2f"/>
+		<part repeat="0x1000"> 00 </part>
+		<!-- Vastar video ROMs / PROMs: not on this board (0x0A000-0x143FF) -->
+		<part repeat="0xA400"> 00 </part>
+		<!-- OVG-40c gfx as MAME's "videopcb" region (0x14400-0x173FF): 0000 bg chars, 0800 sprites / fg chars -->
+		<!-- 8.4r is a 2732 (4KB); MAME loads only its first 2KB -->
+		<part crc="c62f2ea1" name="8.4r" offset="0x0000" length="0x0800"/>
+		<part crc="ffe05fee" name="9.7m"/>
+		<part crc="2cb51793" name="10.7p"/>
+		<part repeat="0x800"> 00 </part>
+		<!-- OVG-40c colour PROMs (0x17400-0x1743F) -->
+		<part crc="aa839a24" name="blue.2a.82s123"/>
+		<part crc="596ae457" name="pink.2b.82s123"/>
+	</rom>
+
+	<!-- core_config byte: bit0 = rot_flip (0), bit1 = OVG-40c video board -->
+	<rom index="1">
+		<part>02</part>
+	</rom>
+
+	<remark>Dog Fight (Orca prototype on Vastar hardware)</remark>
+	<mratimestamp>20261010000000</mratimestamp>
+</misterromdescription>

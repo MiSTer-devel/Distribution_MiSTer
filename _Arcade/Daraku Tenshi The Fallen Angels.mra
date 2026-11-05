@@ -1,0 +1,69 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>daraku</setname>
+	<mameversion>0136</mameversion>
+	<description>The Fallen Angels (World) / Daraku Tenshi: The Fallen Angels (Japan)</description>
+	<rotation>horizontal</rotation>
+	<year>1998</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="Button 1,Button 2,Button 3,Button 4,Start,Coin,Test,Service" />
+
+	<switches default="41">
+		<dip bits="0,1,2,3" name="Region" ids="Japan,World"/>
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="daraku.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="565d8427" name="0l.u4" map="125600" />
+			<part crc="9a602630" name="0h.u13" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="ac5ce8e1" name="1l.u3" map="125600" />
+			<part crc="b0a59f7b" name="1h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="2daa03b2" name="2l.u2" map="125600" />
+			<part crc="e98e185a" name="2h.u20" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="1d372aa1" name="3l.u1" map="125600" />
+			<part crc="597f3f15" name="3h.u19" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="e3d58cd8" name="4l.u10" map="125600" />
+			<part crc="aebc9cd0" name="4h.u31" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="eab5a50b" name="5l.u9" map="125600" />
+			<part crc="f157474f" name="5h.u30" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="9f008d1b" name="6l.u8" map="125600" />
+			<part crc="acd2d0e3" name="6h.u37" map="1256" />
+		</interleave>
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="ef2c781d" name="sound.u32" map="12345678" />
+		</interleave>
+
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="7a9cf601" name="3_prog_h.u17" map="216500" />
+			<part crc="660b4609" name="4_prog_l.u18" map="2165" />
+		</interleave>
+		<part repeat="0x100000">00</part>
+		<interleave output="64">
+			<part crc="3742e990" name="prog.u16" map="21436587" />
+		</interleave>
+		<part repeat="0x100000">00</part>
+		<interleave output="64">
+			<part crc="a9715297" name="eeprom-daraku.bin" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" >
+		<part>30</part>
+	</rom>
+
+	<nvram index="4" size="256" />
+</misterromdescription>

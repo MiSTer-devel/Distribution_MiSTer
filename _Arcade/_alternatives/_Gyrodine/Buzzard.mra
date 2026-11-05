@@ -1,0 +1,77 @@
+<misterromdescription>
+	<name>Buzzard</name>
+	<region>World</region>
+	<year>1984</year>
+	<manufacturer>Crux</manufacturer>
+	<category>Shooter</category>
+
+	<setname>buzzard</setname>
+	<parent>gyrodine</parent>
+	<rbf>Kyugo</rbf>
+	<mameversion>0289</mameversion>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="BF,FF">
+		<!-- DSW1 (AY1 port A, read & inverted by sub) -->
+		<dip bits="0,1"      name="Lives"       ids="6,5,4,3"/>
+		<dip bits="4"        name="Difficulty"  ids="Hard,Easy"/>
+		<dip bits="5"        name="Bonus Life"  ids="40k/70k,20k/50k"/>
+		<dip bits="6"        name="Cabinet"     ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"      ids="On,Off"/>
+		<!-- DSW2 (AY1 port B) -->
+		<dip bits="8,10"     name="Coin A"      ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"      ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: variant | rot_flip (bit 3) | landscape (bit 4). MAME machine config "gyrodine" = the parent's. -->
+	<rom index="1">
+		<part>00</part>
+	</rom>
+
+	<!-- Index 0: main 32K, sub 32K, FG 4K, BG planes 3x 16K (8K + pad, in MAME's "plane N" order), sprite planes
+	     3x 32K, PROMs R / G / B, char lookup, timing (rtl/ram_rom/rom_loader.sv) -->
+	<rom index="0" md5="none" zip="buzzard.zip|gyrodine.zip">
+		<part crc="85ddea38" name="rom2"/>
+		<part crc="4e9323bd" name="a21.03"/>
+		<part crc="57e659d4" name="a21.04"/>
+		<part crc="1e7293f3" name="a21.05"/>
+		<part crc="b2ce0aa2" name="a21.01"/>
+		<part repeat="0x6000"> 00 </part>
+		<part crc="65d728d0" name="buzl01.bin"/>
+		<part crc="a57df1c9" name="a21.08"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="63623ba3" name="a21.07"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="4cc969a9" name="a21.06"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="9c5c4d5b" name="a21.14"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="d36b5aad" name="a21.13"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="f387aea2" name="a21.12"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="87967d7d" name="a21.11"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="59640ab4" name="a21.10"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="22ad88d8" name="a21.09"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="cc25fb56" name="a21.16"/>
+		<part crc="ca054448" name="a21.17"/>
+		<part crc="23c0c449" name="a21.18"/>
+		<part crc="efc4985e" name="a21.20"/>
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+	<remark>Buzzard (Crux)</remark>
+</misterromdescription>

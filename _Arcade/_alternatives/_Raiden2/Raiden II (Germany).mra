@@ -1,0 +1,123 @@
+<misterromdescription>
+  <name>Raiden II (Germany)</name>
+  <setname>raiden2g</setname>
+  <mameversion>0288</mameversion>
+  <rbf>Raiden2</rbf>
+  <year>1993</year>
+  <manufacturer>Seibu Kaihatsu (Tuning license)</manufacturer>
+  <category>Shoot</category>
+  <rotation>vertical (ccw)</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Fire,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- ============================================================
+         1:1 con MAME raiden2.cpp INPUT_PORTS_START(raiden2), porta "DSW"
+         letta dalla CPU a $00740 (word, active-low).
+         SW1 = byte basso (bit 0..7), SW2 = byte alto (bit 8..15).
+         Default $FFFF = 1C 1C / 1C 1C, Starting Coin Normal, Flip Off,
+         Normal, 3 vite, 200k/500k, Demo On, Test Off.
+         ============================================================ -->
+    <dip bits="0,2"   ids="Free Play,4C 1C,3C 1C,1C 4C,2C 1C,1C 3C,1C 2C,1C 1C" name="Coin A"/>
+    <dip bits="3,5"   ids="Free Play,4C 1C,3C 1C,1C 4C,2C 1C,1C 3C,1C 2C,1C 1C" name="Coin B"/>
+    <dip bits="6"     ids="X 2,Normal"                          name="Starting Coin"/>
+    <dip bits="7"     ids="On,Off"                              name="Flip Screen"/>
+    <dip bits="8,9"   ids="Very Hard,Hard,Easy,Normal"          name="Difficulty"/>
+    <dip bits="10,11" ids="1,4,2,3"                             name="Lives"/>
+    <dip bits="12,13" ids="No Extend,1M/3M,400k/1M,200k/500k"   name="Bonus Life"/>
+    <dip bits="14"    ids="Off,On"                              name="Demo Sounds"/>
+    <dip bits="15"    ids="On,Off"                              name="Test Mode"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="raiden2g.zip|raiden2.zip" md5="None">
+    <!-- ============================================================
+         Layout dello stream ioctl (offset byte) e destinazione nel core.
+         La finestra indirizzabile del controller SDRAM (rtl/sdram.sv:
+         row=a[13:1], col=a[22:14]) e' 22 bit di word = 8 MB per banco, e
+         il download quadruplica ogni word nei 4 banchi: lo spazio utile
+         UNICO e' 8 MB. Percio' in SDRAM ci va solo cio' che serve ai
+         percorsi SDRAM, e tutto il resto va in BRAM o DDR3.
+
+           $000000  MAIN V30     1 MB    -> SDRAM word $000000
+           $100000  CHARS      128 KB    -> BRAM text renderer
+           $120000  TILES        4 MB    -> SDRAM word $090000 (BG+MG+FG)
+           $520000  OKI1       256 KB    -> SDRAM word $290000 (porta 3)
+           $560000  AUDIO Z80   64 KB    -> BRAM audio
+           $570000  (padding fino a $600000)
+           $600000  SPRITES      8 MB    -> DDR3 $0000000 (con decrypt)
+           $E00000  OKI2       256 KB    -> DDR3 $0800000
+
+         Occupazione SDRAM = word $2B0000 = 5.5 MB su 8 MB. Il gate del
+         download in sdram_bridge.sv e' ioctl_addr < $560000.
+
+         NON caricate: copx-d2 (in MAME il device raiden2cop NON legge
+         nessuna region "copx": il microcodice lo carica la CPU) e le PAL.
+
+         NOTA sui nomi dei due file bg-: questa MRA usa i nomi come stanno
+         nello zip di riferimento (bg-1 = .u0714, bg-2 = .u075). MAME 0.288
+         ha invertito le sigle di locazione (bg-1 = .u075, bg-2 = .u0714)
+         mantenendo gli stessi CRC. Se il set e' di MAME recente, scambiare
+         le due sigle qui sotto; i CRC restano quelli indicati.
+         ============================================================ -->
+
+    <!-- MAIN V30 @ $000000 (1 MB): ROM_LOAD16_BYTE.
+         prg0 = byte pari (LSB su V30 little-endian) -> map="01"
+         prg1 = byte dispari (MSB)                   -> map="10" -->
+    <interleave output="16">
+      <part name="prg0.u0211" crc="09475ec4" map="01"/>
+      <part name="prg1g.u0212" crc="41001d2e" map="10"/>
+    </interleave>
+
+    <!-- CHARS (text 8x8) @ $100000 (128 KB): file singolo, byte-pack lineare.
+         charlayout raiden2: planes {8,12,0,4} = quello legionna {0,4,8,12}
+         con i due byte della word scambiati; la compensazione e' nel
+         decoder (Raiden2_text_renderer.sv), non qui. -->
+    <part name="seibu7.u0724" crc="c9ec9469"/>
+
+    <!-- TILES @ $120000 (4 MB): region "tiles" unica, indicizzata da tutti
+         e tre i layer 16x16 (back/mid/fore) con tile = (code & 0xfff) |
+         (bank << 12) -> 15 bit -> 0x8000 tile x 128 byte = 4 MB esatti. -->
+    <part name="raiden_2_seibu_bg-1.u075" crc="e61ad38e"/>
+    <part name="raiden_2_seibu_bg-2.u0714"  crc="a694a4bb"/>
+
+    <!-- OKI1 (ADPCM) @ $520000 (256 KB): nessun banking (raiden2_sound_map
+         non ha registri di bank per gli OKI). -->
+    <part name="seibu6.u1017" crc="fb0fca23"/>
+
+    <!-- AUDIO Z80 @ $560000 (64 KB raw).
+         MAME: ROM_LOAD 0x8000 + ROM_CONTINUE(0x10000) + ROM_COPY(0x18000).
+         Il banking seibu (bank_w a $401A) e' ricostruito nel core: bank 0 =
+         seconda meta' del file, bank 1 = alias della prima. Serve quindi il
+         file crudo da 64 KB, non la region da 128 KB ricomposta. -->
+    <part name="snd.u1110" crc="f51a28f9"/>
+
+    <!-- padding $570000 -> $600000 -->
+    <part repeat="0x90000">00</part>
+
+    <!-- SPRITES @ $600000 (8 MB -> DDR3, decifrati durante il download).
+         ROM_REGION32_LE con ROM_LOAD32_WORD a offset 0 e 2: obj-1/obj-3
+         danno i byte 0,1 di ogni dword, obj-2/obj-4 i byte 2,3.
+         raiden2_decrypt_sprites lavora su word da 32 bit della region,
+         indice = offset byte >> 2. -->
+    <interleave output="32">
+      <part name="raiden_2_seibu_obj-1.u0811" crc="ff08ef0b" map="0021"/>
+      <part name="raiden_2_seibu_obj-2.u082"  crc="638eb771" map="2100"/>
+    </interleave>
+    <interleave output="32">
+      <part name="raiden_2_seibu_obj-3.u0837" crc="897a0322" map="0021"/>
+      <part name="raiden_2_seibu_obj-4.u0836" crc="b676e188" map="2100"/>
+    </interleave>
+
+    <!-- OKI2 (ADPCM) @ $E00000 (256 KB -> DDR3): la SDRAM non ha una quarta
+         porta libera (la 2 la usa il COP3 per i descrittori in ROM). -->
+    <part name="raiden_2_pcm.u1018" crc="8cf0d17e"/>
+  </rom>
+
+  <mratimestamp>20260810000000</mratimestamp>
+</misterromdescription>

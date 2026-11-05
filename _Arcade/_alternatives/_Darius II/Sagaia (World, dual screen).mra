@@ -1,0 +1,93 @@
+<misterromdescription>
+  <name>Sagaia (World, dual screen)</name>
+  <setname>sagaia</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Darius2WarriorBlade</rbf>
+  <year>1989</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Shooter</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <!--
+    Sagaia World — Darius II export version (MAME sagaia set).
+    Runs on warriorb.cpp hardware: single 68000, 2 TC0100SCN, TC0220IOC, YM2610.
+    Main CPU ROM = different from darius2d (English text + World coinage).
+    Audio Z80 ROM = c07_41.69 (different from darius2d c07_17.69).
+  -->
+
+  <switches default="FF,FF">
+    <!-- DSWA (bits 0-7) — MAME sagaia input, coinage WORLD -->
+    <dip bits="0"     ids="On,Off"                     name="Difficulty Enhancement"/>
+    <dip bits="1"     ids="Fast,Normal"                name="Auto Fire"/>
+    <dip bits="2"     ids="On,Off"                     name="Service Mode"/>
+    <dip bits="3"     ids="Off,On"                     name="Demo Sounds"/>
+    <dip bits="4,5"   ids="4C/1C,3C/1C,2C/1C,1C/1C"    name="Coin A"/>
+    <dip bits="6,7"   ids="1C/6C,1C/4C,1C/3C,1C/2C"    name="Coin B"/>
+    <!-- DSWB (bits 8-15) — identico a darius2d -->
+    <dip bits="8,9"   ids="Hardest,Hard,Easy,Medium"   name="Difficulty"/>
+    <dip bits="10,11" ids="every 1000k,every 900k,every 800k,every 700k" name="Bonus Life"/>
+    <dip bits="12,13" ids="6,5,4,3"                    name="Lives"/>
+    <dip bits="14"    ids="On,Off"                     name="Invulnerability (Cheat)"/>
+    <dip bits="15"    ids="No,Yes"                     name="Allow Continue"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <rom index="0" zip="sagaia.zip|darius2.zip" md5="None">
+
+    <!-- ==================== Main CPU 68000 ==================== -->
+    <interleave output="16">
+      <part name="c07_44.74" crc="d0ca72d8" map="10"/>
+      <part name="c07_43.73" crc="a34ea5ba" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07_45.76" crc="8a043c14" map="10"/>
+      <part name="c07_42.71" crc="b6cb642f" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-09.75" crc="cc69c2ce" map="21"/>
+    </interleave>
+
+    <!-- ==================== Audio Z80 ==================== -->
+    <part name="c07_41.69" crc="b50256ea"/>
+
+    <!-- ==================== Sprite ROMs ==================== -->
+    <interleave output="64">
+      <part name="c07-05.24" crc="fb6d0550" map="00000021"/>
+      <part name="c07-06.27" crc="5eebbcd6" map="00002100"/>
+      <part name="c07-07.26" crc="fd9f9e74" map="00210000"/>
+      <part name="c07-08.25" crc="a07dc846" map="21000000"/>
+    </interleave>
+
+    <!-- ==================== Tile SCN ROM #1 ==================== -->
+    <interleave output="16">
+      <part name="c07-03.12" crc="189bafce" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-04.11" crc="50421e81" map="12"/>
+    </interleave>
+
+    <!-- ==================== Tile SCN ROM #2 (identical content) ==================== -->
+    <interleave output="16">
+      <part name="c07-03.12" crc="189bafce" map="12"/>
+    </interleave>
+    <interleave output="16">
+      <part name="c07-04.11" crc="50421e81" map="12"/>
+    </interleave>
+
+    <!-- ==================== YM2610 ADPCM-A ==================== -->
+    <part name="c07-10.95" crc="4bbe0ed9"/>
+    <part name="c07-11.96" crc="3c815699"/>
+
+    <!-- ==================== YM2610 ADPCM-B / Delta-T ==================== -->
+    <part name="c07-12.107" crc="e0b71258"/>
+
+  </rom>
+</misterromdescription>

@@ -1,0 +1,50 @@
+<misterromdescription>
+    <name>Dragon's Lair II - Time Warp</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version>3.19</version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Dragon's Lair</series>
+    <year>1991</year>
+    <manufacturer>Leland</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">dlair2</setname>
+    <parent>dlair2</parent>
+    <mameversion>0270</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Sword,-,-,Service,Coin,Start 1P,Start 2P,Pause" default="A,Y,Select,Start,R,L"/>
+
+    <!-- NO SWITCHES DEFINED ON PURPOSE.
+         MAME's cinematronics/dlair2.cpp is a skeleton: every PORT_DIPNAME in it is
+         an explicitly "dummy" placeholder and its disc is NO_DUMP, so there is no
+         authoritative DIP map to copy.  Daphne game/lair2.cpp is the place to
+         derive them from when the board is actually implemented.  A guessed
+         switch block would be worse than none. -->
+
+    <!-- GAME-ID byte 0: 04 = Dragon's Lair II. -->
+    <!-- POST-SEEK-FRAMES byte 1: extra film ticks before seek commits. 0=instant, 5≈208ms. -->
+    <rom index="1">
+        <part>04 00</part>
+    </rom>
+
+    <!-- Index 0: single 64KB IPL ROM (MAME cinematronics/dlair2.cpp). -->
+    <rom index="0" md5="none" zip="dlair2.zip">
+        <part crc="e9453a1b" name="dl2_319.bin"/>
+    </rom>
+
+    <remark>Dragon's Lair II - Time Warp (Leland)</remark>
+    <mratimestamp>20261015000000</mratimestamp>
+</misterromdescription>

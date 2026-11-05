@@ -1,0 +1,88 @@
+<misterromdescription>
+    <name>Thayer's Quest</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version>Set 1</version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Thayer's Quest</series>
+    <year>1984</year>
+    <manufacturer>RDI Video Systems</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">thayers</setname>
+    <parent>thayers</parent>
+    <mameversion>0289</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <joystick></joystick>
+    <special_controls>keypad</special_controls>
+    <num_buttons>4</num_buttons>
+    <!-- The real panel is a keypad, not a stick: 22 item keys plus the large numbered choice
+         keys (manual 3.8).  A gamepad cannot cover it, so the four face buttons are mapped to
+         the numbered choice keys - what the player presses for nearly every on-screen decision -
+         and the two start slots, which Thayer's has no equivalent of (it is time-per-coin, no
+         start button), carry ITEMS and DROP ITEM.  The full keypad wants PS/2 (ps2_key is
+         already wired in the top level). -->
+    <buttons names="Choice 1,Choice 2,Choice 3,Choice 4,Coin,Items,Drop Item,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <!-- Source: Thayer's Quest Operation Manual (RDI, 1984-08-31) 3.3 "Game Option Settings",
+         p17-18, cross-checked against Daphne game/thayers.cpp.
+         Daphne set_bank(): "dip switches are active low" - banks[n] = value ^ 0xFF - so a
+         switch pushed ON reads back as a 0 at the CPU.  The values below are CPU-visible,
+         matching how the DL/SA MRAs feed dsw straight through.
+           Bank A -> dsw[7:0],  read at Z80 I/O port 0xF2.
+           Bank B -> dsw[15:8], read at Z80 I/O port 0xF1, but the hardware only returns the
+           low nibble (B1-B4); the top nibble of that port is coin 1/2 and the LD-V1000
+           status/command strobes, which the RTL must drive.  B5 is therefore NOT CPU-readable
+           even though the manual pairs it with B4 ("B4 and B5 must BOTH be off or on") - it is
+           a hardware-side selection, so only B4 is exposed here.
+         Defaults are the manual's suggested settings (80 seconds is the only bolded row). -->
+    <switches default="FD,0F">
+        <dip bits="0,2" name="Time Per Coin" ids="Free Play,30 Seconds,45 Seconds,60 Seconds,70 Seconds,80 Seconds,95 Seconds,110 Seconds"/>
+        <dip bits="3"  name="Coins To Start" ids="2 Coins,1 Coin"/>
+        <dip bits="4"  name="Lives" ids="5,3"/>
+        <dip bits="5"  name="Attract Mode Audio" ids="Muted,Enabled"/>
+        <dip bits="6"  name="- Attract Audio Rate" ids="One Out of 8 Times,Always On"/>
+        <dip bits="8"  name="Self Diagnostics" ids="On,Off"/>
+        <dip bits="11" name="LD Player" ids="PR-7820,LD-V1000"/>
+    </switches>
+
+    <!-- GAME-ID byte 0: 00 = Dragon's Lair, 01 = Space Ace, 02 = Thayer's Quest. -->
+    <!-- POST-SEEK-FRAMES byte 1: extra film ticks before seek commits. 0=instant, 5 = 208ms. -->
+    <rom index="1">
+        <part>02 03</part>
+    </rom>
+
+    <!-- Index 0: Main Z80 program, laid out to match Daphne's m_cpumem so the Z80 address bus
+         indexes it directly (game/thayers.cpp tq_roms).  Thayer's is NOT contiguous like DL/SA:
+           0x0000-0x7FFF  ROM  tq_u33.bin (32KB)
+           0x8000-0xBFFF  ...  work RAM on the real board; padded here to keep the offsets
+           0xC000-0xDFFF  ROM  tq_u1.bin  (8KB) -->
+    <rom index="0" md5="none" zip="thayers.zip">
+        <part crc="82df5d89" name="tq_u33.bin"/>
+        <part repeat="0x4000">00</part>
+        <part crc="e8e7f566" name="tq_u1.bin"/>
+    </rom>
+
+    <!-- Index 2: COP421 keyboard-matrix MCU ROM (1KB).  Separate address space from the Z80
+         (Daphne loads it to coprom[], not m_cpumem), so it gets its own ioctl index. -->
+    <rom index="2" md5="none" zip="thayers.zip">
+        <part crc="6748e6b3" name="tq_cop.bin"/>
+    </rom>
+
+    <!-- Index 5: Pioneer LD-V1000 player firmware (the player's own Z80 ROM). Without it the core uses the HLE. -->
+    <rom index="5" md5="none" zip="ldv1000.zip">
+        <part crc="31ec4687" name="z03_1001_vyw-053_v1-0.bin"/>
+    </rom>
+
+    <remark>Thayer's Quest (RDI Video Systems) - conversion kit for Dragon's Lair / Space Ace cabinets</remark>
+    <mratimestamp>20260905000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,75 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>tgm2p</setname>
+	<mameversion>0127</mameversion>
+	<description>Tetris: The Absolute - The Grand Master 2 Plus</description>
+	<rotation>horizontal</rotation>
+	<year>2000</year>
+	<manufacturer>Arika</manufacturer>
+	<buttons names="Button 1,Button 2,Button 3,Start,Coin,Test,Service" />
+
+	<switches default="41">
+		<dip bits="0,1,2,3" name="Region" ids="Japan,International Ver B,International Ver A"/>
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="tgm2p.zip|tgm2.zip" address="0x30000000">
+		<part repeat="0xC00000">00</part>
+		<interleave output="64">
+			<part crc="d77cff9c" name="81ts_3l.u6" map="125600" />
+			<part crc="f012b583" name="82ts_3h.u14" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="078cafc3" name="83ts_4l.u7" map="125600" />
+			<part crc="1f91446b" name="84ts_4h.u15" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="40fbd259" name="85ts_5l.u8" map="125600" />
+			<part crc="186c935f" name="86ts_5h.u16" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="c17dc48a" name="87ts_6l.u1" map="125600" />
+			<part crc="e4dba5da" name="88ts_6h.u2" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="dab1b2c5" name="89ts_7l.u19" map="125600" />
+			<part crc="aae696b3" name="90ts_7h.u20" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="e953ace1" name="91ts_8l.u28" map="125600" />
+			<part crc="9da3b976" name="92ts_8h.u29" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="233087fe" name="93ts_9l.u41" map="125600" />
+			<part crc="9da831c7" name="94ts_9h.u42" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="303a5240" name="95ts_10l.u58" map="125600" />
+			<part crc="2240ebf6" name="96ts_10h.u59" map="1256" />
+		</interleave>
+		<part repeat="0x1000000">00</part>
+		<interleave output="64">
+			<part crc="9155eca6" name="97ts_snd.u52" map="12345678" />
+		</interleave>
+
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="38bc626c" name="2b.u21" map="216500" />
+			<part crc="7599fb19" name="1b.u22" map="2165" />
+		</interleave>
+		<part repeat="0x300000">00</part>
+		<interleave output="64">
+			<part crc="b2328b40" name="tgm2p.default.nv" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="" >
+		<part>21</part>
+	</rom>
+
+	<rom index="3" md5="none">
+		<part>
+			00 07 94 54 00 68 54 00
+		</part>
+	</rom>
+	<nvram index="4" size="360" />
+</misterromdescription>

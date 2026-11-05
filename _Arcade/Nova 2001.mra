@@ -1,0 +1,54 @@
+<misterromdescription>
+    <name>Nova 2001</name>
+    <setname>nova2001</setname>
+    <parent>nova2001</parent>
+    <year>1983</year>
+    <manufacturer>UPL</manufacturer>
+    <series>Nova 2001</series>
+    <category>Shooter</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Fire,Game Pause,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="FE,F8">
+        <dip bits="0" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="1" name="Lives" ids="4,3"/>
+        <dip bits="2" name="1st Bonus Life" ids="30K,20K"/>
+        <dip bits="3,4" name="Extra Bonus Life" ids="None,90K,70K,60K"/>
+        <dip bits="5,6" name="Coinage" ids="2 Coins/2 Credits,1 Coin/2 Credits,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="7" name="Free Play" ids="On,Off"/>
+        <dip bits="8,9" name="Difficulty" ids="Easy,Hardest,Hard,Medium"/>
+        <dip bits="10" name="Demo Sounds" ids="On,Off"/>
+        <dip bits="11" name="High Score Names" ids="3 Letters,8 Letters"/>
+        <dip bits="15" name="Service Mode" ids="On,Off"/>
+    </switches>
+
+    <!-- Index 0: program 0000-6FFF (6000-7FFF mirrored in the core), then gfx1 at 0x8000 file by file
+         (the ROM_LOAD16_BYTE interleave is decoded in the core), then the palette PROM at 0x10000 -->
+    <rom index="0" md5="none" zip="nova2001.zip">
+        <part name="1.6c" crc="368cffc0"/>
+        <part name="2.6d" crc="bc4e442b"/>
+        <part name="3.6f" crc="b2849038"/>
+        <part name="4.6g" crc="6b5bb12d"/>
+        <part repeat="0x1000">FF</part>
+        <part name="5.12s" crc="54198941"/>
+        <part name="6.12p" crc="cbd90dca"/>
+        <part name="7.12n" crc="9ebd8806"/>
+        <part name="8.12l" crc="d1b18389"/>
+        <part name="nova2001.clr" crc="a2fac5cd"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>10</part></rom>
+
+    <remark>Nova 2001 (UPL)</remark>
+</misterromdescription>

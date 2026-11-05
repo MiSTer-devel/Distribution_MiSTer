@@ -1,0 +1,70 @@
+<misterromdescription>
+	<name>Zodiack</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Zodiack</series>
+	<year>1983</year>
+	<manufacturer>Orca (Esco Trading Co., Inc. license)</manufacturer>
+	<category>Shooter</category>
+
+	<setname>zodiack</setname>
+	<parent>zodiack</parent>
+	<mameversion>0289</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Not Used</button_names>
+
+	<switches default="00,40">
+		<!-- DSW1 (6082) -->
+		<dip bits="8,9"   name="Lives" ids="3,4,5,6"/>
+		<dip bits="10,12" name="Coinage" ids="1C/1C,1C/2C,1C/3C,1C/4C,1C/6C,2C/1C,2C/1C 3C/2C,Free Play"/>
+		<dip bits="13"    name="Bonus Life" ids="20000 50000,40000 70000"/>
+		<dip bits="14"    name="Cabinet" ids="Cocktail,Upright"/>
+		<dip bits="15"    name="Unknown" ids="Off,On"/>
+	</switches>
+
+	<!-- Index 0: Zodiack board main ROM (C000-CFFF stored at 5000), audio ROM, empty Vastar video regions, then the Orca
+	     OVG-40c video board -->
+	<rom index="0" md5="none" zip="zodiack.zip">
+		<part crc="a2125e99" name="ovg30c.2"/>
+		<part crc="aee2b77f" name="ovg30c.3"/>
+		<part crc="1debb278" name="ovg30c.6"/>
+		<part repeat="0x3800"> 00 </part>
+		<part crc="2d3c3baf" name="ovg20c.1"/>
+		<part repeat="0x1000"> 00 </part>
+		<part repeat="0xA400"> 00 </part>
+		<part crc="ed9d3be7" name="ovg40c.7"/>
+		<part crc="88269c94" name="orca40c.8"/>
+		<part crc="a3bd40c9" name="orca40c.9"/>
+		<part repeat="0x800"> 00 </part>
+		<part crc="703821b8" name="ovg40c.2a"/>
+		<part crc="21f77ec7" name="ovg40c.2b"/>
+	</rom>
+
+	<!-- Index 1: core_config (bit1 OVG-40c video, bit2 Zodiack CPU board), then the IN0 / IN1 input map, one control id
+	     per bit (rtl top level: 1-4 P1 U/D/L/R, 5 P1 button 1, 9-12 P2 U/D/L/R, 13 P2 button 1, 17 / 18 coin 1 / 2,
+	     19 / 20 start 1 / 2, 0 none) -->
+	<rom index="1">
+		<part>
+		06
+		13 14 0C 0B 09 02 0A 00
+		00 11 00 04 01 0D 05 03
+		</part>
+	</rom>
+
+	<remark>Zodiack (Orca, Esco Trading Co. license)</remark>
+	<mratimestamp>20261010000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,97 @@
+<misterromdescription>
+  <name>Olympic Soccer '92 (set 2)</name>
+  <setname>olysoc92a</setname>
+  <mameversion>0264</mameversion>
+  <rbf>SeibuCupSoccer</rbf>
+  <year>1992</year>
+  <manufacturer>Seibu Kaihatsu</manufacturer>
+  <category>Sports</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>4</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shoot/Tackle,Pass,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF,FF,FF">
+    <!-- DSW cupsoc 1:1 MAME INPUT_PORTS(cupsoc) legionna.cpp.
+         Word 0 = DSW1 ($100740), word 1 = DSW2 ($10075C). Active-low. -->
+    <dip bits="0,2"   ids="4C 1C,3C 1C,2C 1C,1C 6C,1C 4C,1C 3C,1C 2C,1C 1C"   name="Coin 1"/>
+    <dip bits="3,5"   ids="4C 1C,3C 1C,2C 1C,1C 6C,1C 4C,1C 3C,1C 2C,1C 1C"   name="Coin 2"/>
+    <dip bits="6"     ids="x2,Normal"                                          name="Starting Coin"/>
+    <dip bits="7"     ids="On,Off"                                             name="Flip Screen"/>
+    <dip bits="8,9"   ids="3:00,2:30,1:30,2:00"                                name="Time vs CPU (1P)"/>
+    <dip bits="10,11" ids="2:00,3:00,2:00,2:30"                                name="Time P vs P (2P)"/>
+    <dip bits="12,13" ids="2:30,3:30,2:30,3:00"                                name="Time P vs P (3P)"/>
+    <dip bits="14,15" ids="3:00,4:00,3:00,3:30"                                name="Time P vs P (4P)"/>
+    <dip bits="16,17" ids="Very Hard,Hard,Easy,Normal"                         name="Difficulty"/>
+    <dip bits="18,19" ids="4P 1 Coin,4P Linked,4P 4 Coin,2 Players" name="Cabinet Setting"/>
+    <dip bits="20"    ids="No,Yes"                                             name="Demo Sounds"/>
+    <dip bits="21"    ids="On,Off"                                             name="Service Mode"/>
+  </switches>
+
+  <!-- Variante del set: scaricata PRIMA dei ROM, il core la usa per
+       applicare al volo la stessa modifica che MAME fa in init. -->
+  <rom index="1">
+    <part>00</part>
+  </rom>
+  <rom index="0" zip="cupsoc.zip" md5="None">
+    <!-- ============================================================
+         Layout Seibu Cup Soccer (offset byte nello stream ioctl).
+         Stesse posizioni di Grainbow: le region qui sono piu' piccole,
+         quindi il resto e' padding (nessuna modifica al bridge SDRAM).
+           MAIN  0x000000 (1MB)     CHAR  0x100000 (128KB)
+           BACK  0x120000 (1MB, BG+MG condivisa: MG = seconda meta')
+           FORE  0x220000 (512KB + pad)
+           SPR   0x320000 (1MB + pad -> DDR3)
+           OKI   0x920000 (256KB)   AUDIO 0x9A0000 (64KB z80)
+           COPX  0x9C0000 (512KB, copx-d1 — diversa dal resto famiglia)
+         ============================================================ -->
+
+    <!-- MAIN 68k @ 0x000000 (1MB): ROM_LOAD32_BYTE.
+         MAME: byte0=scc_01, byte1=scc_02, byte2=scc_03, byte3=scc_04. -->
+    <interleave output="32">
+      <part name="olysoc92a/1.u025" crc="5191e895" map="0010" length="0x3FFFF"/>
+      <part name="olysoc92a/2.u024" crc="6c566f43" map="0001" length="0x3FFFF"/>
+      <part name="olysoc92a/3.u026" crc="e75bc773" map="1000" length="0x3FFFF"/>
+      <part name="olysoc92a/4.u023" crc="6c2b037e" map="0100" length="0x3FFFF"/>
+    </interleave>
+
+    <!-- Ultimi 4 byte del MAIN a mano = init_olysoc92 di MAME.
+         I quattro ROM sono tagliati di 1 byte: 4 x 0x3FFFF + 4 = 1 MB esatto. -->
+    <part>30 32 2E 02</part>
+
+    <!-- CHAR (text 8x8) @ 0x100000 (128KB): scc_06 pari, scc_05 dispari. -->
+    <interleave output="16">
+      <part name="cupsocs/6_7x.bin" crc="7981366e" map="01"/>
+      <part name="cupsocs/5_7y.bin" crc="26cbfaf0" map="10"/>
+    </interleave>
+
+    <!-- BACK @ 0x120000 (1MB): back-1.4y WORD_SWAP.
+         Contiene DUE set di tile (MBK+LBK): BG usa la prima meta', MG la
+         seconda (+0x1000), come nella famiglia (common_video_start false). -->
+    <interleave output="16"><part name="back-1.4y" crc="3dfea0ec" map="21"/></interleave>
+
+    <!-- FORE @ 0x220000 (512KB): back-2.6y WORD_SWAP + pad fino a 0x320000. -->
+    <interleave output="16"><part name="back-2.6y" crc="e07712af" map="21"/></interleave>
+    <part repeat="0x80000">00</part>
+
+    <!-- SPRITE @ 0x320000 (1MB -> DDR3): obj.8c WORD_SWAP + pad a 0x920000. -->
+    <interleave output="16"><part name="obj.8c" crc="e2377895" map="21"/></interleave>
+    <part repeat="0x500000">00</part>
+
+    <!-- OKI (ADPCM) @ 0x920000 (256KB): seibu8.7a + pad a 0x9A0000. -->
+    <interleave output="16"><part name="seibu8.7a" crc="6f594808" map="21"/></interleave>
+    <part repeat="0x40000">00</part>
+
+    <!-- AUDIOCPU (Z80) @ 0x9A0000: seibu7.8a raw 64KB.
+         MAME: ROM_LOAD 0x8000 + CONTINUE 0x10000 + COPY (banking nel core). -->
+    <interleave output="16"><part name="seibu7.8a" crc="f63329f9" map="21"/></interleave>
+    <part repeat="0x10000">00</part>
+
+    <!-- COPX (SEI300 LUT) @ 0x9C0000 (512KB): copx-d1.bin. -->
+    <interleave output="16"><part name="copx-d1.bin" crc="029bc402" map="21"/></interleave>
+  </rom>
+
+  <mratimestamp>20260909000000</mratimestamp>
+</misterromdescription>

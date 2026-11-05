@@ -62,6 +62,7 @@ def build_database(source_dir: str):
     finder = Finder('.')
     finder.ignore('./.git')
     finder.ignore('./.github')
+    finder.ignore('./.venv')
     for ignore_entry in vars.finder_ignore.split():
         finder.ignore(ignore_entry)
     internal_files = finder.find_all()

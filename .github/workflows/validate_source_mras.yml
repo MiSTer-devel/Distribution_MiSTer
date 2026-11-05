@@ -28,6 +28,7 @@ jobs:
       with:
         python-version: '3.9'
         activate-environment: true
+        enable-cache: false
 
     - name: Set Git User
       run: |

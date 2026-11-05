@@ -30,6 +30,7 @@ jobs:
       with:
         python-version: '3.9'
         activate-environment: true
+        enable-cache: false
 
     - name: Install 7-Zip
       run: |

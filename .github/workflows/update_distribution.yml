@@ -26,9 +26,10 @@ jobs:
       with:
         ref: develop
 
-    - uses: actions/setup-python@v6
+    - uses: astral-sh/setup-uv@v7
       with:
         python-version: '3.9'
+        activate-environment: true
 
     - name: Install 7-Zip
       run: |

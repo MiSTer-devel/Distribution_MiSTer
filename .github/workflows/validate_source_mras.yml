@@ -24,9 +24,10 @@ jobs:
     - name: Install apt-get utilities
       run: sudo apt-get install sharutils
 
-    - uses: actions/setup-python@v6
+    - uses: astral-sh/setup-uv@v7
       with:
         python-version: '3.9'
+        activate-environment: true
 
     - name: Set Git User
       run: |

@@ -1,0 +1,50 @@
+<misterromdescription>
+    <name>Space Dungeon</name>
+    <setname>sdungeon</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1981</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Shooter</category>
+
+    <buttons names="-,-,Test Advance,-,Coin,Start 1P,Start 2P,Pause,R Right,R Left,R Down,R Up,Test Next Line,Test Slew Up,Test Slew Down" default=",Select,Start,R,L,A,Y,B,X"/>
+
+    <!-- Index 0: ROM -->
+    <rom index="0" zip="sdungeon.zip" md5="none">
+        <part name="sd14.u14" crc="7024b55a"/>
+        <part name="sd15.u15" crc="a3ac9040"/>
+        <part name="sd16.u16" crc="cc20b580"/>
+        <part name="sd17.u17" crc="4663e4b8"/>
+        <part name="sd18.u18" crc="7ef1ffc0"/>
+        <part name="sd19.u19" crc="7b20b7ac"/>
+
+        <part name="sd05.u5"  crc="0b2bf48e"/>
+        <part name="sd06.u6"  crc="f86db512"/>
+        <part name="sd07.u7"  crc="7b796831"/>
+        <part name="sd08.u8"  crc="5fbe7068"/>
+        <part name="sd09.u9"  crc="89bc51ea"/>
+        <part name="sd10.u10" crc="754de734"/>
+
+        <part repeat="0x2000">00</part>
+        <part name="sd26.u26" crc="3df8630d"/>
+        <part name="sd27.u27" crc="0386f351"/>
+    </rom>
+
+    <!-- Index 1: Config -->
+    <rom index="1">
+        <part>02</part>
+    </rom>
+
+    <!-- Index 2: ROM -->
+    <rom index="2" zip="sdungeon.zip" md5="none">
+        <part name="sd101" crc="e255af9a"/>
+    </rom>
+
+    <!-- Index 4: NVRAM -->
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

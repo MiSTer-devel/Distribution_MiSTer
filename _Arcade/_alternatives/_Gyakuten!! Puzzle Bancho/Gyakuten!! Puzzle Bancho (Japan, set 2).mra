@@ -1,0 +1,62 @@
+<misterromdescription>
+	<about author="Paul Priest" webpage="https://github.com/ppriest/Arcade-Fuuki_MiSTer" source="MAME fuukifg2.cpp"/>
+	<name>Gyakuten!! Puzzle Bancho (Japan, set 2)</name>
+	<setname>pbanchoa</setname>
+	<mameversion>0289</mameversion>
+	<rbf>Fuuki</rbf>
+	<year>1996</year>
+	<manufacturer>Fuuki</manufacturer>
+	<category>Puzzle</category>
+	<rotation>horizontal</rotation>
+	<region>Japan</region>
+	<players>2</players>
+	<joystick>8-way</joystick>
+
+	<!-- Board select: bit 0 = FG-2 / FG-3, bit 1 = SYSTEM port wiring (gogomile / pbancho+asura). -->
+	<rom index="1"><part>02</part></rom>
+
+	<rom index="0" zip="pbanchoa.zip|pbancho.zip" md5="none" address="0x30000000">
+		<interleave output="16">
+			<part name="no1.rom2" crc="1b4fd178" map="01"/>
+			<part name="no2.rom1" crc="9cf510a5" map="10"/>
+		</interleave>
+
+		<part repeat="0x100000">FF</part>
+		<part name="no4.rom23" crc="dfbfdb81"/>
+
+		<part repeat="0x60000">FF</part>
+		<interleave output="16">
+			<part name="60.rom3" crc="a50a3c1b" map="12"/>
+		</interleave>
+
+		<interleave output="32">
+			<part name="59.rom15" crc="b83dcb70" map="0012"/>
+			<part name="61.rom11" crc="7f1213b9" map="1200"/>
+		</interleave>
+
+		<part repeat="0x400000">FF</part>
+		<interleave output="16">
+			<part name="60.rom3" crc="a50a3c1b" map="12"/>
+		</interleave>
+
+		<interleave output="16">
+			<part name="58.rom20" crc="4dad0a2e" map="12"/>
+		</interleave>
+
+		<part name="n03.rom25" crc="a7bfb5ea"/>
+	</rom>
+
+	<buttons names="Rotate,-,-,-,Start,Coin,Pause" default="Y,Start,Select,R" count="1"/>
+
+	<switches default="FF,FF">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Demo Music" bits="1" ids="Off,On"/>
+		<dip name="Difficulty" bits="2,3,4" ids="Normal (dup),Hardest,Easiest,Normal (dup),Easy,Normal (dup),Hard,Normal"/>
+		<dip name="Lives (Vs Mode)" bits="5,6" ids="1,2 (dup),3,2"/>
+		<dip name="? Senin Mode ?" bits="7" ids="On,Off"/>
+		<!-- <dip name="Flip Screen" bits="8" ids="On,Off"/> -->
+		<dip name="Allow Versus Mode" bits="9" ids="No,Yes"/>
+		<dip name="Coin A" bits="10,11,12" ids="Free Play,2C 1C,1C 3C,4C 1C,1C 2C,3C 1C,1C 4C,1C 1C"/>
+		<dip name="Coin B" bits="13,14,15" ids="Free Play,2C 1C,1C 3C,4C 1C,1C 2C,3C 1C,1C 4C,1C 1C"/>
+	</switches>
+</misterromdescription>

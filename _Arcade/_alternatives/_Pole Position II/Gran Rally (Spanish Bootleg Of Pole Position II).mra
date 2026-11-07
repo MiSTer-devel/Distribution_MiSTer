@@ -1,0 +1,135 @@
+<misterromdescription>
+    <name>Gran Rally (Spanish Bootleg Of Pole Position II)</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>yes</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Pole Position</series>
+    <year>1984</year>
+    <manufacturer>bootleg (Niemer)</manufacturer>
+    <category>Driving</category>
+
+    <setname>grally</setname>
+    <parent>polepos2</parent>
+    <mameversion>0289</mameversion>
+    <rbf>PolePosition</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <buttons names="Accelerate,Brake,Gear,Service Mode,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <rom index="0" md5="none" zip="grally.zip|polepos2.zip">
+        <!-- maincpu (Z80) 0x0000-0x2FFF -->
+        <part crc="1a6412a1" name="gr_niemer_bboard-5p-2764.17f"/>
+        <part crc="e7362148" name="gr_niemer_bboard-6p-2732.16f"/>
+        <!-- sub1 (Z8002 #1), ROM_LOAD16_BYTE: even=HIGH=.8l, odd=LOW=.8m -->
+        <interleave output="16">
+            <part crc="2856d5b1" name="gr_niemer_bboard-2p-2764.21f" map="01"/>
+            <part crc="41da3c28" name="gr_niemer_bboard-1p-2764.23f" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+        <!-- sub2 (Z8002 #2) -->
+        <interleave output="16">
+            <part crc="fe9baeb6" name="gr_niemer_bboard-4p-27128.18f" map="01"/>
+            <part crc="6c823932" name="gr_niemer_bboard-3p-27128.20f" map="10"/>
+        </interleave>
+    </rom>
+
+    <rom index="1" md5="none" zip="grally.zip|polepos2.zip">
+        <!-- chars / tiles / sprites / bigsprites(GAP) / road / scalelut -->
+        <part crc="4b0a3fe9" name="gr_niemer_cboard-12f-2764.2j"/>
+        <part crc="ec3ec6e6" name="gr_niemer_cboard-15f-2764.2l"/>
+        <part crc="1c72041a" name="gr_niemer_cboard-6f-2764.5a"/>
+        <part crc="1b38b257" name="gr_niemer_cboard-5f-2764.6a"/>
+        <part crc="613ab0df" name="gr_niemer_cboard-10f-2764.1a"/>
+        <part crc="2d11fc01" name="gr_niemer_cboard-9f-2764.2a"/>
+        <part crc="17c798b0" name="gr_niemer_cboard-8f-2764.3a"/>
+        <part crc="ed6a8052" name="gr_niemer_cboard-7f-2764.4a"/>
+        <part crc="5fd933e3" name="gr_niemer_cboard-4f-2764.7a"/>
+        <part crc="94a7155d" name="gr_niemer_cboard-3f-2764.8a"/>
+        <part crc="5fe9b365" name="gr_niemer_cboard-2f-2764.9a"/>
+        <part crc="1f553db8" name="gr_niemer_cboard-1fr-2764.10a"/>
+        <part crc="ee6b3315" name="gr_niemer_cboard-14f-2764.8m"/>
+        <part crc="6d1e7042" name="gr_niemer_cboard-13f-2764.9m"/>
+        <part crc="4e97f101" name="gr_niemer_cboard-16f-2732.8r"/>
+        <part crc="a61bff15" name="gr_niemer_cboard-11f-2732.9c"/>
+    </rom>
+
+    <rom index="2" md5="none" zip="grally.zip|polepos2.zip">
+        <part crc="16d69c31" name="gr-niemer-cboard-f1-82s129.2u"/>
+        <part crc="07340311" name="gr-niemer-cboard-f2-82s129.2t"/>
+        <part crc="1efc84d7" name="gr-niemer-cboard-f3-82s129.2s"/>
+        <part crc="064d51a0" name="gr-niemer-cboard-f4-82s129.2p"/>
+        <part crc="7880c5af" name="gr-niemer-cboard-f5-82s129.2n"/>
+        <part crc="2d502464" name="gr-niemer-cboard-f8-82s129.13f"/>
+        <part crc="027aa62c" name="gr-niemer-cboard-f9-82s129.13e"/>
+        <part crc="1f8d0df3" name="gr-niemer-cboard-f10-82s129.13d"/>
+        <part crc="8b270902" name="gr-niemer-cboard-f6-82s137.5p"/>
+        <part crc="a079ed19" name="gr-niemer-cboard-f7-82s137.7h"/>
+        <part crc="4330a51b" name="gr-niemer-cboard-82s123.15s"/>
+        <part crc="4330a51b" name="gr-niemer-cboard-82s123.15t"/>
+        <part crc="8568decc" name="gr_niemer_bboard-fus2p-82s129.9e"/>
+        <part crc="0e742cb1" name="gr_niemer_bboard-fus1p-82s129.14c"/>
+    </rom>
+
+    <!-- Index 3: hiscore config -->
+    <rom index="3" md5="none">
+        <part>
+        01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+        00 00 30 00 07 F2 B0 95
+        </part>
+    </rom>
+
+    <!-- Index 7: mod byte. bit0 = IC25 protection custom (machine
+         polepos2). Absent on PP1 and on polepos2b, which has real
+         ROM at sub1 0x4000-0x5FFF instead of the custom.
+         bit1 = bootleg I/O board (machine topracern / polepos2bi).
+         bit2 = bootleg speech board, sound Z80 + TMS5220 (polepos2bi). -->
+    <rom index="7">
+        <part>06</part>
+    </rom>
+
+    <!-- Index 4: nvram config -->
+    <rom index="4"></rom>
+    <nvram index="4" size="2034"></nvram>
+
+    <rom index="5" md5="none" zip="grally.zip|polepos2.zip">
+        <!-- engine sound, then 52xx voice padded to 0x8000 -->
+        <part crc="b5ad4d5f" name="gr_niemer_bboard-8p-2764.8a"/>
+        <part crc="8fdd2f6f" name="gr_niemer_bboard-7p-2764.9a"/>
+        <!-- 52xx slot: bootleg speech-board Z80 program (soundz80bl), padded to 0x8000 -->
+        <part crc="47226cda" name="gr_niemer_aboard-sp1-2764.11"/>
+        <part repeat="24576">00</part>
+    </rom>
+
+    <rom index="6" md5="none" zip="namco51.zip|namco52.zip|namco53.zip|namco54.zip">
+        <part crc="c2f57ef8" name="51xx.bin"/>
+        <part crc="b326fecb" name="53xx.bin"/>
+        <part crc="ee7357e0" name="54xx.bin"/>
+        <part crc="3257d11e" name="52xx.bin"/>
+    </rom>
+
+    <switches default="DF,15" base="0">
+        <!-- DSWA -->
+        <dip name="Coin A"        bits="0,2"   ids="1C/5C,1C/6C,1C/3C,2C/1C,2C/3C,3C/1C,1C/2C,1C/1C"/>
+        <dip name="Coin B"        bits="3,4"   ids="2C/3C,1C/2C,2C/1C,1C/1C"/>
+        <dip name="Speed Unit"    bits="5,5"   ids="km/h,mph"/>
+        <dip name="Demo Sounds"   bits="6,6"   ids="Off,On"/>
+        <dip name="Speed"         bits="7,7"   ids="High,Average"/>
+        <!-- DSWB -->
+        <dip name="Extended Rank" bits="8,9"   ids="A,B,C,D"/>
+        <dip name="Practice Rank" bits="10,11" ids="A,B,C,D"/>
+        <dip name="Goal"          bits="12,13" ids="3,4,5,6"/>
+        <dip name="Game Time"     bits="14,14" ids="90 secs,120 secs"/>
+        <dip name="Freeze"        bits="15,15" ids="Off,On"/>
+    </switches>
+
+    <remark>Gran Rally (Spanish bootleg of Pole Position II)</remark>
+    <mratimestamp>20260921000000</mratimestamp>
+</misterromdescription>

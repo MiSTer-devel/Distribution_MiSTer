@@ -1,0 +1,48 @@
+<misterromdescription>
+    <about author="YourName"></about>
+    <name>Pinball Action</name>
+    <setname>pbaction</setname>
+    <rbf>PinballAction</rbf>
+    <mameversion>0.288</mameversion>
+    <year>1985</year>
+    <manufacturer>Tehkan</manufacturer>
+    <category>Pinball</category>
+    <region>World</region>
+
+    <!-- Main CPU ROM (40KB)  -> ioctl_index 0x00 -->
+    <rom index="0" zip="pbaction.zip" md5="None">
+        <part name="b-p7.bin" crc="8d6dcaae"/>
+        <part name="b-n7.bin" crc="d54d5402"/>
+        <part name="b-l7.bin" crc="e7412d68"/>
+    </rom>
+
+    <!-- Audio CPU ROM (8KB)  -> ioctl_index 0x01 -->
+    <rom index="1" zip="pbaction.zip" md5="None">
+        <part name="a-e3.bin" crc="0e53a91f"/>
+    </rom>
+
+    <!-- FG chars (24KB, 3 planes 8KB each)  -> ioctl_index 0x02 -->
+    <rom index="2" zip="pbaction.zip" md5="None">
+        <part name="a-s6.bin" crc="9a74a8e1"/>
+        <part name="a-s7.bin" crc="5ca6ad3c"/>
+        <part name="a-s8.bin" crc="9f00b757"/>
+    </rom>
+
+    <!-- BG chars (64KB, 4 planes 16KB each)  -> ioctl_index 0x03 -->
+    <rom index="3" zip="pbaction.zip" md5="None">
+        <part name="a-j5.bin" crc="21efe866"/>
+        <part name="a-j6.bin" crc="7f984c80"/>
+        <part name="a-j7.bin" crc="df69e51b"/>
+        <part name="a-j8.bin" crc="0094cb8b"/>
+    </rom>
+
+    <!-- Sprites (24KB, 3 planes 8KB each)  -> ioctl_index 0x04 -->
+    <rom index="4" zip="pbaction.zip" md5="None">
+        <part name="b-c7.bin" crc="d1795ef5"/>
+        <part name="b-d7.bin" crc="f28df203"/>
+        <part name="b-f7.bin" crc="af6e9817"/>
+    </rom>
+
+    <!-- Joystick mapping shown in OSD -->
+    <buttons names="Flipper L,Flipper R,Nudge,Launch,Start 1P,Start 2P,Coin,Pause" default="A,B,X,Y,Start,Select,R,L"/>
+</misterromdescription>

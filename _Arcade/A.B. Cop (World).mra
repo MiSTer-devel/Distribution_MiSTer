@@ -1,0 +1,80 @@
+<misterromdescription>
+  <name>A.B. Cop (World)</name>
+  <setname>abcop</setname>
+  <rbf>SegaXBoard</rbf>
+  <mameversion>0289</mameversion>
+  <year>1990</year>
+  <manufacturer>Sega</manufacturer>
+  <category>Shooter / Flight</category>
+  <rom index="0" zip="abcop.zip" md5="None">
+    <part>05 25 08 00 70 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</part>
+    <!-- main -->
+      <interleave output="16">
+        <part name="epr-13568b.ic58" crc="f88db35b" map="10"/>
+        <part name="epr-13556b.ic63" crc="337bf32e" map="01"/>
+      </interleave>
+      <interleave output="16">
+        <part name="epr-13559.ic57" crc="4588bf19" map="10"/>
+        <part name="epr-13558.ic62" crc="11259ed4" map="01"/>
+      </interleave>
+    <!-- sub -->
+      <interleave output="16">
+        <part name="epr-13566.ic20" crc="22e52f32" map="10"/>
+        <part name="epr-13565.ic29" crc="a21784bd" map="01"/>
+      </interleave>
+      <part repeat="262144">00</part>
+    <!-- z80 -->
+      <part name="epr-13560.ic17" crc="83050925"/>
+    <!-- road -->
+      <part name="opr-13564.ic40" crc="e70ba138"/>
+    <!-- pcm -->
+      <part name="opr-13563.ic11" crc="4083e74f"/>
+      <part name="opr-13562.ic12" crc="3cc3968f"/>
+      <part name="opr-13561.ic13" crc="80a7c02a"/>
+      <part repeat="131072">FF</part>
+    <!-- sprite -->
+      <interleave output="32">
+        <part name="opr-13552.ic90" crc="cc2cf706" map="0001"/>
+        <part name="opr-13551.ic94" crc="d6f276c1" map="0010"/>
+        <part name="opr-13550.ic98" crc="f16518dd" map="0100"/>
+        <part name="opr-13549.ic102" crc="cba407a7" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="opr-13548.ic91" crc="080fd805" map="0001"/>
+        <part name="opr-13547.ic95" crc="42d4dd68" map="0010"/>
+        <part name="opr-13546.ic99" crc="ca6fbf3d" map="0100"/>
+        <part name="opr-13545.ic103" crc="c9e58dd2" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="opr-13544.ic92" crc="9c1436d9" map="0001"/>
+        <part name="opr-13543.ic96" crc="2c1c8f0e" map="0010"/>
+        <part name="opr-13542.ic100" crc="01fd52b8" map="0100"/>
+        <part name="opr-13541.ic104" crc="a45c547b" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="opr-13540.ic93" crc="84b42ab0" map="0001"/>
+        <part name="opr-13539.ic97" crc="cd6e524f" map="0010"/>
+        <part name="opr-13538.ic101" crc="bf9a4586" map="0100"/>
+        <part name="opr-13537.ic105" crc="fa14ed3e" map="1000"/>
+      </interleave>
+      <part repeat="2097152">00</part>
+    <!-- tile -->
+      <part name="opr-13553.ic154" crc="8c418837"/>
+      <part name="opr-13554.ic153" crc="4e3df9f0"/>
+      <part name="opr-13555.ic152" crc="6c4a1d42"/>
+      <part repeat="65536">00</part>
+    <!-- key -->
+      <part name="317-0169b.key" crc="058da36e"/>
+  </rom>
+  <nvram index="3" size="32768"/>
+  <switches default="FF,F9" base="0">
+    <dip bits="0,3" name="Coin A" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="4,7" name="Coin B" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="8" name="Credits" ids="2 to Start 1 to Continue,1 to Start 1 to Continue"/>
+    <dip bits="9" name="Demo Sounds" ids="On,Off"/>
+    <dip bits="10" name="Allow Continue" ids="Yes,No"/>
+    <dip bits="12,13" name="Time" ids="Hardest,Easy,Hard,Normal"/>
+    <dip bits="14,15" name="Difficulty" ids="Hardest,Easy,Hard,Normal"/>
+  </switches>
+  <buttons names="Gas,Brake,-,Jump,Start,Coin,Pause,Test,Service" default="Y,L2,A,B,Start,R,X,L,Select"/>
+</misterromdescription>

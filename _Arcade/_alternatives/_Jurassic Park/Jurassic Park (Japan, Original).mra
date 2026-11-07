@@ -1,0 +1,57 @@
+<misterromdescription>
+    <name>Jurassic Park (Japan, Original)</name>
+    <setname>jparkja</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1993</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>2</players>
+    <buttons names="Fire,-,-,Start,Coin,Service,Test" default="A,Start,Select,-,-"/>
+
+    <region>Japan</region>
+
+    <rom index="1">
+        <part>00 81</part>
+    </rom>
+
+    <rom index="0" zip="jparkja.zip" md5="none" address="0x30000000">
+
+        <part name="epr-16400.ic8" crc="321c3411"/>
+        <part name="epr-16400.ic8" crc="321c3411"/>
+        <interleave output="16">
+            <part name="epr-16395.ic18" crc="ac5a01d6" map="01"/>
+            <part name="epr-16394.ic9" crc="c08c3a8a" map="10"/>
+        </interleave>
+
+        <part name="epr-16399.ic36" crc="b09b2fe3"/>
+        <part name="epr-16399.ic36" crc="b09b2fe3"/>
+        <part name="epr-16399.ic36" crc="b09b2fe3"/>
+        <part name="epr-16399.ic36" crc="b09b2fe3"/>
+        <part name="mpr-16398.ic35" crc="fa710ca6"/>
+        <part name="mpr-16397.ic34" crc="6e96e0be"/>
+        <part name="mpr-16396.ic24" crc="f69a2dc4"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-16404.ic14" crc="11283807" map="01"/>
+            <part name="mpr-16403.ic5" crc="02530a9b" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-16405.ic32" crc="b425f182" map="00000021"/>
+            <part name="mpr-16407.ic30" crc="bc49ffd9" map="00002100"/>
+            <part name="mpr-16409.ic28" crc="fe73660d" map="00210000"/>
+            <part name="mpr-16411.ic26" crc="71cabbc5" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-16406.ic31" crc="b9ed73d6" map="00000021"/>
+            <part name="mpr-16408.ic29" crc="7b2f476b" map="00002100"/>
+            <part name="mpr-16410.ic27" crc="49c8f952" map="00210000"/>
+            <part name="mpr-16412.ic25" crc="105dc26e" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

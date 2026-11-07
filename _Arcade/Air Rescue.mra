@@ -1,0 +1,82 @@
+<misterromdescription>
+    <name>Air Rescue</name>
+    <setname>arescue</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1992</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>1</players>
+    <buttons names="Shot,Missile,Throttle Up,-,Coin,Service,Test,Throttle Down" default="A,B,R,Select,-,-,L"/>
+    <region>World</region>
+
+    <rom index="1">
+        <part>00 01 04</part>
+    </rom>
+
+    <rom index="0" zip="arescue.zip" md5="none" address="0x30000000">
+
+        <part name="epr-14542.ic13" crc="6d39fc18"/>
+        <part name="epr-14542.ic13" crc="6d39fc18"/>
+        <part name="epr-14542.ic13" crc="6d39fc18"/>
+        <part name="epr-14542.ic13" crc="6d39fc18"/>
+        <part name="epr-14541.ic6" crc="5c3f2ec5"/>
+        <part name="epr-14541.ic6" crc="5c3f2ec5"/>
+        <part name="epr-14541.ic6" crc="5c3f2ec5"/>
+        <part name="epr-14541.ic6" crc="5c3f2ec5"/>
+        <interleave output="16">
+            <part name="epr-14509.ic14" crc="daa5a356" map="01"/>
+            <part name="epr-14508.ic7" crc="6702c14d" map="10"/>
+        </interleave>
+
+        <part name="epr-14513.ic35" crc="f9a884cd"/>
+        <part name="epr-14513.ic35" crc="f9a884cd"/>
+        <part name="epr-14513.ic35" crc="f9a884cd"/>
+        <part name="epr-14513.ic35" crc="f9a884cd"/>
+        <part name="mpr-14512.ic31" crc="9da48051"/>
+        <part name="mpr-14512.ic31" crc="9da48051"/>
+        <part name="mpr-14511.ic26" crc="074c53cc"/>
+        <part name="mpr-14511.ic26" crc="074c53cc"/>
+        <part name="mpr-14510.ic22" crc="5ea6d52d"/>
+        <part name="mpr-14510.ic22" crc="5ea6d52d"/>
+
+        <part name="d7725.01" crc="a7ec5644"/>
+        <part repeat="55296">00</part>
+
+        <interleave output="32">
+            <part name="mpr-14499.ic38" crc="fadc4b2b" map="0001"/>
+            <part name="mpr-14497.ic29" crc="ebd7ed17" map="0010"/>
+            <part name="mpr-14498.ic34" crc="d4a764bd" map="0100"/>
+            <part name="mpr-14496.ic25" crc="737da16c" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mpr-14499.ic38" crc="fadc4b2b" map="0001"/>
+            <part name="mpr-14497.ic29" crc="ebd7ed17" map="0010"/>
+            <part name="mpr-14498.ic34" crc="d4a764bd" map="0100"/>
+            <part name="mpr-14496.ic25" crc="737da16c" map="1000"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-14507.ic36" crc="db3f59ec" map="00000001"/>
+            <part name="mpr-14506.ic32" crc="5dd8fb6b" map="00000010"/>
+            <part name="mpr-14505.ic27" crc="be142c1f" map="00000100"/>
+            <part name="mpr-14504.ic23" crc="46dd038d" map="00001000"/>
+            <part name="mpr-14503.ic37" crc="90556aca" map="00010000"/>
+            <part name="mpr-14502.ic33" crc="988555a9" map="00100000"/>
+            <part name="mpr-14501.ic28" crc="4662bb41" map="01000000"/>
+            <part name="mpr-14500.ic24" crc="0a064e9b" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-14507.ic36" crc="db3f59ec" map="00000001"/>
+            <part name="mpr-14506.ic32" crc="5dd8fb6b" map="00000010"/>
+            <part name="mpr-14505.ic27" crc="be142c1f" map="00000100"/>
+            <part name="mpr-14504.ic23" crc="46dd038d" map="00001000"/>
+            <part name="mpr-14503.ic37" crc="90556aca" map="00010000"/>
+            <part name="mpr-14502.ic33" crc="988555a9" map="00100000"/>
+            <part name="mpr-14501.ic28" crc="4662bb41" map="01000000"/>
+            <part name="mpr-14500.ic24" crc="0a064e9b" map="10000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

@@ -1,0 +1,69 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>hotgm4ev</setname>
+	<mameversion>0155</mameversion>
+	<description>Taisen Hot Gimmick 4 Ever (Japan)</description>
+	<rotation>horizontal</rotation>
+	<year>2000</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="A,B,C,D,E,F,G,H,I,J,K,L,M,N,Chi,Pon,Kan,Reach,Ron,Start,Bet,Coin,Test,Service" />
+
+	<switches default="40">
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="hotgm4ev.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="f65986f7" name="0l.u2" map="125600" />
+			<part crc="51fd07a9" name="0h.u11" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="f59d21d7" name="1l.u3" map="125600" />
+			<part crc="60ea4797" name="1h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="fbaf05e3" name="2l.u4" map="125600" />
+			<part crc="61281612" name="2h.u13" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="e2e1bd9f" name="3l.u5" map="125600" />
+			<part crc="c4426542" name="3h.u14" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="7298a242" name="4l.u6" map="125600" />
+			<part crc="fe91b459" name="4h.u15" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="cc714a7d" name="5l.u7" map="125600" />
+			<part crc="2f149cf9" name="5h.u16" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="bfe97dfe" name="6l.u8" map="125600" />
+			<part crc="3473052a" name="6h.u17" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="022a8a31" name="7l.u9" map="125600" />
+			<part crc="77e47409" name="7h.u18" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="051e2fed" name="snd0.u10" map="12345678" />	
+		</interleave>
+		<interleave output="64">
+			<part crc="0de0232d" name="snd1.u19" map="12345678" />	
+		</interleave>
+
+		<interleave output="64">
+			<part crc="3334c21e" name="2.u22" map="216500" />
+			<part crc="b1a1c643" name="1.u23" map="2165" />
+		</interleave>
+		<part repeat="0x100000">00</part>
+		<interleave output="64">
+			<part crc="ad556d8e" name="prog.u1" map="21436587" length="0x200000" />
+		</interleave>
+		<part repeat="0x100">00</part>
+	</rom>
+	<rom index="2" md5="">
+		<part>12</part>
+	</rom>
+	<nvram index="4" size="256" />
+</misterromdescription>

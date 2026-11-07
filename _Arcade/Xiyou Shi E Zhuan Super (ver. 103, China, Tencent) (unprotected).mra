@@ -1,0 +1,81 @@
+<misterromdescription>
+	<name>Xiyou Shi E Zhuan Super (ver. 103, China, Tencent) (unprotected)</name>
+	<setname>olds103t</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|olds.zip|olds103t.zip">
+		<!-- REGION_BIOS_PROG_ROM  = 00 -->
+
+		<!-- REGION_BIOS_TILE_ROM  = 01 -->
+
+		<!-- REGION_BIOS_MUSIC_ROM = 02 -->
+
+		<!-- REGION_CART_PROG_ROM  = 03 -->
+
+		<!-- REGION_CART_TILE_ROM  = 04 -->
+
+		<!-- REGION_CART_MUSIC_ROM = 05 -->
+
+		<!-- REGION_CART_A_ROM     = 06 -->
+
+		<!-- REGION_CART_B_ROM     = 07 -->
+
+		<!-- SYSTEM INFO -->
+		<part>00 00</part>
+
+		<!-- BIOS PROG -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+
+		<!-- BIOS TILE -->
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+
+		<!-- BIOS MUSIC -->
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG -->
+		<part>03 00400000 00100000</part>
+		<part name="p0500.v103" crc="17e32e14"/>
+
+		<!-- CART TILE -->
+		<part>04 00600000 00180000</part>
+		<part name="pgm_t0500.u18" crc="d881726c"/>
+		<part name="pgm_t0501.u19" crc="d2106864"/>
+
+		<!-- CART MUSIC -->
+		<part>05 00200000 00400000</part>
+		<part name="pgm_m0500.u1" crc="37928cdd"/>
+
+		<!-- A ROM -->
+		<part>06 01C00000 00000000</part>
+		<part name="pgm_a0500.u5" crc="80a59197"/>
+		<part name="pgm_a0501.u6" crc="98c931b1"/>
+		<part name="pgm_a0502.u7" crc="c3fcdf1d"/>
+		<part name="pgm_a0503.u8" crc="066dffec"/>
+		<part name="pgm_a0504.u11" crc="45337583"/>
+		<part name="pgm_a0505.u12" crc="5b8cf3a5"/>
+		<part name="pgm_a0506.u13" crc="087ac60c"/>
+
+		<!-- B ROM -->
+		<part>07 01000000 00000000</part>
+		<part name="pgm_b0500.u9" crc="cde07f74"/>
+		<part name="pgm_b0501.u10" crc="1546c2e9"/>
+		<part name="pgm_b0502.u15" crc="e97b31c3"/>
+		<part name="pgm_b0503.u16" crc="e41d98e4"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

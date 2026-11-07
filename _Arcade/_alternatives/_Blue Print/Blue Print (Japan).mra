@@ -1,0 +1,76 @@
+<misterromdescription>
+    <n>Blue Print (Jaleco)</n>
+    <region>Japan</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series></series>
+    <year>1982</year>
+    <manufacturer>Zilec Electronics / Bally Midway</manufacturer>
+    <category>Maze</category>
+
+    <setname>blueprntj</setname>
+    <parent>blueprnt</parent>
+    <mameversion>0220</mameversion>
+    <rbf>BluePrint</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (ccw)</rotation>
+    <flip>no</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <button_names>Run</button_names>
+
+    <switches default="00,00">
+        <!-- DIP Switch 1 -->
+        <dip bits="4,5"   name="Bonus Life" ids="20K/100K+,40K/200K+,80K/400K+,120K/600K+"/>
+        <dip bits="6,7"   name="Lives" ids="2,3,4,5"/>
+        <!-- DIP Switch 2 -->
+        <dip bits="8,9"   name="Coinage" ids="2c/1cr,1c/1cr,1c/2cr,1c/3cr"/>
+        <dip bits="11"    name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="12,13" name="Difficulty" ids="Level 1,Level 2,Level 3,Level 4"/>
+    </switches>
+
+    <rom index="0" md5="none" zip="blueprnt.zip|blueprntj.zip">
+        <!-- Main CPU ROMs (5× 4KB = 20KB) -->
+        <part crc="2e746693" name="bp-1j.1m"/>
+        <part crc="a0eb0b8e" name="bp-2j.1n"/>
+        <part crc="c34981bb" name="bp-3j.1p"/>
+        <part crc="525e77b5" name="bp-4j.1r"/>
+        <part crc="431a015f" name="bp-5j.1s"/>
+        <part repeat="0x1000">FF</part>  // BluePrint Doesn't Use 6th Rom Slot
+        <!-- Tile ROMs (2× 4KB = 8KB) -->
+        <part crc="43718c34" name="bg-1j.3c" length="0x800"/>
+        <part repeat="0x800">FF</part>
+        <part crc="d3ce077d" name="bg-2j.3d" length="0x800"/>
+        <part repeat="0x800">FF</part>
+        <!-- Sprite ROMs (3× 4KB = 12KB, R/B/G bitplanes) -->
+        <part crc="83da108f" name="redj.17d"/>
+        <part crc="b440f32f" name="bluej.18d"/>
+        <part crc="23026765" name="greenj.20d"/>
+    </rom>
+    <rom index="1" md5="none" zip="blueprnt.zip|blueprntj.zip">
+        <!-- Sound CPU ROMs (2× 4KB = 8KB) -->
+        <part crc="fd38777a" name="snd-1.3u"/>
+        <part crc="33d5bf5b" name="snd-2.3v"/>
+    </rom>
+	<rom index="2"></rom>
+	<rom index="3" md5="none">
+		<part>
+		01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+		00 00 01 00 00 40 00 00
+		</part>
+	</rom>
+	<rom index="4"></rom>
+
+	<nvram index="4" size="40"></nvram>
+
+    <remark></remark>
+    <mratimestamp>20260213000000</mratimestamp>
+</misterromdescription>

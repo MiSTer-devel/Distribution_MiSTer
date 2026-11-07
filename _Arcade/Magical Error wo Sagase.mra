@@ -1,0 +1,62 @@
+<!--
+  Magical Error wo Sagase for the hyprduel MiSTer core. Same bitstream
+  as Hyper Duel: the <rom index="1"> mod byte 01 selects this game
+  (docs/single_rbf.md). Without it the core runs Hyper Duel.
+
+  ROM layout delivered to the core (identical byte offsets to Hyper Duel):
+    0x000000 - 0x07FFFF  main 68000 program (2x 256KB byte-interleaved,
+                         even byte = 24.u24, odd byte = 23.u23)
+    0x080000 - 0x47FFFF  GFX ROM (4x 1MB, 64-bit word interleave per
+                         ROM_LOAD64_WORD)
+    0x480000 - 0x4BFFFF  OKI M6295 samples (97.u97)
+-->
+<misterromdescription>
+    <name>Magical Error wo Sagase</name>
+    <setname>magerror</setname>
+    <rbf>hyprduel</rbf>
+    <mameversion>0288</mameversion>
+    <year>1994</year>
+    <manufacturer>Technosoft / Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>horizontal</rotation>
+    <region>Japan</region>
+
+    <!-- default bf,ff = 0xFFBF (bit6 low = Demo Sounds ON) -->
+    <switches default="bf,ff">
+        <dip name="Coinage" bits="0,5"
+             ids="4C/1C,3C/1C,2C/1C,1C/1C,1C/2C,1C/3C,1C/4C,Free Play"
+             values="9,18,27,63,54,45,36,0"/>
+        <dip name="Demo Sounds" bits="6" ids="On,Off"/>
+        <dip name="Start Up Mode" bits="7" ids="Test Mode,Game Mode"/>
+        <dip name="Flip Screen" bits="8" ids="On,Off"/>
+        <dip name="Difficulty" bits="10,11"
+             ids="Very Hard,Hard,Easy,Normal" values="0,1,2,3"/>
+        <dip name="Lives" bits="12,13" ids="5,4,2,3" values="0,1,2,3"/>
+    </switches>
+
+    <buttons names="Button 1,Button 2,Button 3,Start,Coin,Service"
+             default="A,B,X,Start,Select,L"/>
+
+    <!-- game select mod byte: 01 = Magical Error wo Sagase -->
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+    <rom index="0" zip="magerror.zip" type="merged">
+        <!-- main 68000 program -->
+        <interleave output="16">
+            <part name="24.u24" crc="5e78027f" map="01"/>
+            <part name="23.u23" crc="7271ec70" map="10"/>
+        </interleave>
+        <!-- GFX region: 64-bit groups -->
+        <interleave output="64">
+            <part name="mr93046-02.u74" crc="f7ba06fb" map="00000021"/>
+            <part name="mr93046-04.u75" crc="8c114d15" map="00002100"/>
+            <part name="mr93046-01.u76" crc="6cc3b928" map="00210000"/>
+            <part name="mr93046-03.u77" crc="6b1eb0ea" map="21000000"/>
+        </interleave>
+        <!-- OKI samples -->
+        <part name="97.u97" crc="2e62bca8"/>
+    </rom>
+</misterromdescription>

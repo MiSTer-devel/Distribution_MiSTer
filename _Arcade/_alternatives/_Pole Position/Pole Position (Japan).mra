@@ -1,0 +1,128 @@
+<misterromdescription>
+    <name>Pole Position (Japan)</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Pole Position</series>
+    <year>1982</year>
+    <manufacturer>Namco</manufacturer>
+    <category>Driving</category>
+
+    <setname>poleposj</setname>
+    <parent>polepos</parent>
+    <mameversion>0289</mameversion>
+    <rbf>PolePosition</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <buttons names="Accelerate,Brake,Gear,Service Mode,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <rom index="0" md5="none" zip="poleposj.zip|polepos.zip">
+        <!-- maincpu (Z80) 0x0000-0x2FFF -->
+        <part crc="94436b70" name="pp1_9b.6h"/>
+        <part crc="7174bcb7" name="pp1_10b.5h"/>
+        <!-- sub1 (Z8002 #1), ROM_LOAD16_BYTE: even=HIGH=.8l, odd=LOW=.8m -->
+        <interleave output="16">
+            <part crc="582b530a" name="pp1_2b.8l" map="01"/>
+            <part crc="361c56dd" name="pp1_1b.8m" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+        <!-- sub2 (Z8002 #2) -->
+        <interleave output="16">
+            <part crc="81696272" name="pp1_6b.4l" map="01"/>
+            <part crc="5cdf5294" name="pp1_5b.4m" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+    </rom>
+
+    <rom index="1" md5="none" zip="poleposj.zip|polepos.zip">
+        <!-- chars / tiles / sprites / bigsprites(GAP) / road / scalelut -->
+        <part crc="5b277daf" name="pp1_28.1f"/>
+        <part crc="5b277daf" name="pp1_28.1f"/>
+        <part crc="706e888a" name="pp1_29.1e"/>
+        <part crc="706e888a" name="pp1_29.1e"/>
+        <part crc="ac8e28c1" name="pp1_25.1n"/>
+        <part crc="94443079" name="pp1_26.1m"/>
+        <part crc="2e134b46" name="pp1_17.5n"/>
+        <part crc="43ff83e1" name="pp1_19.4n"/>
+        <part crc="5f958eb4" name="pp1_21.3n"/>
+        <part repeat="8192">00</part>
+        <part crc="6f9997d2" name="pp1_18.5m"/>
+        <part crc="ec18075b" name="pp1_20.4m"/>
+        <part crc="1d2f30b1" name="pp1_22.3m"/>
+        <part repeat="8192">00</part>
+        <part crc="ee6b3315" name="pp1_30.3a"/>
+        <part crc="6d1e7042" name="pp1_31.2a"/>
+        <part crc="4e97f101" name="pp1_32.1a"/>
+        <part crc="a61bff15" name="pp1_27.1l"/>
+    </rom>
+
+    <rom index="2" md5="none" zip="poleposj.zip|polepos.zip">
+        <part crc="f07ff2ad" name="pp1-7.8l"/>
+        <part crc="adbde7d7" name="pp1-8.9l"/>
+        <part crc="ddac786a" name="pp1-9.10l"/>
+        <part crc="1e8d0491" name="pp1-10.2h"/>
+        <part crc="0e4fe8a0" name="pp1-11.4d"/>
+        <part crc="2d502464" name="pp1-15.9a"/>
+        <part crc="027aa62c" name="pp1-16.10a"/>
+        <part crc="1f8d0df3" name="pp1-17.11a"/>
+        <part crc="7afc7cfc" name="pp1-12.3c"/>
+        <part crc="2f1079ee" name="pp1-6.6m"/>
+        <part crc="4330a51b" name="pp1-13.8e"/>
+        <part crc="4330a51b" name="pp1-14.9e"/>
+        <part crc="8568decc" name="pp1-5.3b"/>
+        <part crc="2401c817" name="pp1-4.9h"/>
+    </rom>
+
+    <!-- Index 3: hiscore config -->
+    <rom index="3" md5="none">
+        <part>
+        01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+        00 00 30 00 07 F2 B0 95
+        </part>
+    </rom>
+
+    <!-- Index 4: nvram config -->
+    <rom index="4"></rom>
+    <nvram index="4" size="2034"></nvram>
+
+    <rom index="5" md5="none" zip="poleposj.zip|polepos.zip">
+        <!-- engine sound, then 52xx voice padded to 0x8000 -->
+        <part crc="b5ad4d5f" name="pp1_15.6a"/>
+        <part crc="8fdd2f6f" name="pp1_16.5a"/>
+        <part crc="45b9bfeb" name="pp1_11.2e"/>
+        <part crc="a31b4be5" name="pp1_12.2f"/>
+        <part crc="a4237466" name="pp1_13.1e"/>
+        <part crc="944580f9" name="pp1_14.1f"/>
+    </rom>
+
+    <rom index="6" md5="none" zip="namco51.zip|namco52.zip|namco53.zip|namco54.zip">
+        <part crc="c2f57ef8" name="51xx.bin"/>
+        <part crc="b326fecb" name="53xx.bin"/>
+        <part crc="ee7357e0" name="54xx.bin"/>
+        <part crc="3257d11e" name="52xx.bin"/>
+    </rom>
+
+    <switches default="FF,6B" base="0">
+        <!-- DSWA -->
+        <dip name="Coin A"        bits="0,2"   ids="1C/5C,1C/6C,1C/3C,2C/1C,2C/3C,3C/1C,1C/2C,1C/1C"/>
+        <dip name="Coin B"        bits="3,4"   ids="2C/3C,1C/2C,2C/1C,1C/1C"/>
+        <dip name="Game Time"     bits="5,6"   ids="120 secs,100 secs,110 secs,90 secs"/>
+        <dip name="Racing Laps"   bits="7,7"   ids="4,3"/>
+        <!-- DSWB -->
+        <dip name="Extended Rank" bits="8,10"  ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Practice Rank" bits="11,13" ids="H,D,F,B,G,C,E,A"/>
+        <dip name="Speed Unit"    bits="14,14" ids="On,Off"/>
+        <dip name="Demo Sounds"   bits="15,15" ids="On,Off"/>
+    </switches>
+
+    <remark>Pole Position (Namco, Japan)</remark>
+    <mratimestamp>20260921000000</mratimestamp>
+</misterromdescription>

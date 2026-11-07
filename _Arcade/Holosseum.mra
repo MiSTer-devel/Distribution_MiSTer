@@ -1,0 +1,86 @@
+<misterromdescription>
+    <name>Holosseum (US, Rev A)</name>
+    <setname>holo</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1992</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>2</players>
+    <joystick>8</joystick>
+
+    <buttons names="Quick Tricks,Fierce Tricks,-,Start,Coin,Service,Test" default="A,B,Start,R,L,Select"/>
+
+    <region>US</region>
+
+    <rom index="1">
+        <part>02</part>
+    </rom>
+
+    <rom index="0" zip="holo.zip" md5="none" address="0x30000000">
+
+        <part name="epr-14977a" crc="e0d7e288"/>
+        <part name="epr-14977a" crc="e0d7e288"/>
+        <part name="epr-14977a" crc="e0d7e288"/>
+        <part name="epr-14977a" crc="e0d7e288"/>
+        <part name="epr-14976a" crc="e56f13be"/>
+        <part name="epr-14976a" crc="e56f13be"/>
+        <part name="epr-14976a" crc="e56f13be"/>
+        <part name="epr-14976a" crc="e56f13be"/>
+        <interleave output="16">
+            <part name="epr-15011" crc="b9f59f59" map="01"/>
+            <part name="epr-15010" crc="0c09c57b" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-15011" crc="b9f59f59" map="01"/>
+            <part name="epr-15010" crc="0c09c57b" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-15011" crc="b9f59f59" map="01"/>
+            <part name="epr-15010" crc="0c09c57b" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-15011" crc="b9f59f59" map="01"/>
+            <part name="epr-15010" crc="0c09c57b" map="10"/>
+        </interleave>
+
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="epr-14965" crc="3a918cfe"/>
+        <part name="mpr-14964" crc="7ff581d5"/>
+        <part name="mpr-14963" crc="0974a60e"/>
+        <part name="mpr-14962" crc="6b2e694e"/>
+
+        <part repeat="65536">00</part>
+
+        <part repeat="4194304">FF</part>
+
+        <interleave output="64">
+            <part name="mpr-14973" crc="b3c3ff6b" map="00000001"/>
+            <part name="mpr-14972" crc="0c161374" map="00000010"/>
+            <part name="mpr-14971" crc="dfcf6fdf" map="00000100"/>
+            <part name="mpr-14970" crc="cae3a745" map="00001000"/>
+            <part name="mpr-14969" crc="c06b7c15" map="00010000"/>
+            <part name="mpr-14968" crc="f413894a" map="00100000"/>
+            <part name="mpr-14967" crc="5377fce0" map="01000000"/>
+            <part name="mpr-14966" crc="dffba2e9" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-14973" crc="b3c3ff6b" map="00000001"/>
+            <part name="mpr-14972" crc="0c161374" map="00000010"/>
+            <part name="mpr-14971" crc="dfcf6fdf" map="00000100"/>
+            <part name="mpr-14970" crc="cae3a745" map="00001000"/>
+            <part name="mpr-14969" crc="c06b7c15" map="00010000"/>
+            <part name="mpr-14968" crc="f413894a" map="00100000"/>
+            <part name="mpr-14967" crc="5377fce0" map="01000000"/>
+            <part name="mpr-14966" crc="dffba2e9" map="10000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

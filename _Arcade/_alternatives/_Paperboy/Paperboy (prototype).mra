@@ -1,0 +1,118 @@
+<misterromdescription>
+	<name>Paperboy (prototype)</name>
+	<setname>paperboyp</setname>
+	<mameversion>0289</mameversion>
+	<mratimestamp>20260818000000</mratimestamp>
+	<year>1983</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<category>Arcade</category>
+	<rbf>atarisys2</rbf>
+	<mameinfo parent="paperboy" cpp="atarisy2" input="paperboy"/>
+	<display type="raster" rotate="0"/>
+
+	<!-- ALTERNATIVE: MAME clone of paperboy. It inherits the parent's stream
+	     layout, slapstic type, game id and TMS5220 flag; the manifest generator
+	     re-parses this set's own ROM_REGIONs and fails if any of them differs,
+	     so the inheritance is checked rather than assumed.
+	     -->
+	<!-- MACHINE_NOT_WORKING in MAME and every ROM entry is BAD_DUMP: the program ROMs did not
+	     read consistently, and there was no video board, so the graphics ROMs are the rev 1
+	     production ones and may not be what this board ran. Shipped for completeness; do not
+	     read a failure here as a core defect. -->
+
+	<!-- Button order MUST match the core's CONF_STR J1 (atarisys2.sv):
+	     MiSTer assigns these names to joystick_0[4],[5],[6]... IN ORDER, and an MRA
+	     name list overrides the OSD labels, so a mismatch silently drives the wrong
+	     core bit. -->
+	<buttons names="Throw Right,Throw Left,Coin,Service Credit,-,-" default="A,B,R,L"/>
+
+	<!-- Game descriptor, 4 bytes (rtl/rom/sys2_rom_layout.vh):
+	       [0] slapstic type  105
+	       [1] game id        0
+	       [2] flags          bit0 = TMS5220 populated -> 0x01
+	       [3] reserved       0
+	     The core validates all four AND checks the slapstic type against the game id,
+	     holding the T-11 in reset if they disagree. A pre-v2 MRA carrying only the
+	     single slapstic byte is rejected on that path. -->
+	<rom index="1">
+		<part>69 00 01 00</part>
+	</rom>
+
+	<!-- Fixed stream contract. Generated from the ROM manifest; the layout it
+	     targets is rtl/rom/sys2_rom_layout.vh. -->
+	<!-- zip list: paperboyp.zip first, then paperboy.zip for the files this set shares with its
+	     parent, which a split romset does not duplicate. -->
+	<rom index="0" zip="paperboyp.zip|paperboy.zip" md5="none">
+		<!-- maincpu: stream 0x000000-0x08ffff, region 0x90000 -->
+		<part repeat="32768">FF</part>
+		<interleave output="16">
+			<part name="fix-low.5p" crc="55a7137b" map="01"/>
+			<part name="fix-hi.5m" crc="e386b4f9" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="l-0.7t" crc="fbf26418" map="01"/>
+			<part name="h-0.6t" crc="ee4334ea" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+		<interleave output="16">
+			<part name="pagroml-1.6rs" crc="1414b432" map="01"/>
+			<part name="h-1.5t" crc="ee902968" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+		<interleave output="16">
+			<part name="pagroml-2.7rs" crc="be537e48" map="01"/>
+			<part name="pagromh-2.4t" crc="949defeb" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+		<interleave output="16">
+			<part name="low-3.5rs" crc="a0afde83" map="01"/>
+			<part name="hi-3.4rs" crc="7a1a4d69" map="10"/>
+		</interleave>
+		<part repeat="98304">FF</part>
+
+		<!-- audiocpu: stream 0x090000-0x09ffff, region 0x10000 -->
+		<part repeat="16384">FF</part>
+		<part name="paptst4000.2a" crc="e5ee1bca"/>
+		<part name="paptst8000.2c" crc="c51ebdb0"/>
+		<part name="paptstc000.2g" crc="e663d9c2"/>
+
+		<!-- tiles: stream 0x0a0000-0x11ffff, region 0x80000 -->
+		<!-- The two RGN_FRAC(1,2) plane halves of MAME's region (split at 0x10000) are
+		     byte-interleaved here, so one 16-bit word is {high-plane byte,
+		     low-plane byte}. That is the pair both tile readers want, which lets
+		     the loader stay a straight byte-through map. -->
+		<interleave output="16">
+			<part name="vid_a06.rv1" crc="b32ffddf" map="01"/>
+			<part name="vid_c06.rv1" crc="7bb59d68" map="10"/>
+		</interleave>
+		<part repeat="32768">FF</part>
+		<interleave output="16">
+			<part name="vid_b06.rv1" crc="301b849d" map="01"/>
+			<part name="vid_d06.rv1" crc="1a1d4ba8" map="10"/>
+		</interleave>
+		<part repeat="393216">FF</part>
+
+		<!-- sprites: stream 0x120000-0x21ffff, region 0x100000 -->
+		<part name="vid_l06.rv1" crc="067ef202"/>
+		<part name="vid_k06.rv1" crc="76b977c4"/>
+		<part name="vid_j06.rv1" crc="2a3cc8d0"/>
+		<part name="vid_h06.rv1" crc="6763a321"/>
+		<part name="vid_s06.rv1" crc="0a321b7b"/>
+		<part name="vid_p06.rv1" crc="5bd089ee"/>
+		<part name="vid_n06.rv1" crc="c34a517d"/>
+		<part name="vid_m06.rv1" crc="df723956"/>
+		<part repeat="786432">FF</part>
+
+		<!-- chars: stream 0x220000-0x223fff, region 0x4000 -->
+		<part name="vid_t06.rv1" crc="60d7aebb"/>
+		<part repeat="8192">FF</part>
+
+		<!-- eeprom: stream 0x224000-0x2241ff, region 0x200 -->
+		<part repeat="512">FF</part>
+	</rom>
+
+	<!-- 2804 EEPROM save-back: settings and high scores persist across power
+	     cycles. Restored after the factory default in the stream above. -->
+	<nvram index="2" size="512"/>
+</misterromdescription>

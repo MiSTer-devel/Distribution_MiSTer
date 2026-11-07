@@ -1,0 +1,82 @@
+<misterromdescription>
+    <name>SegaSonic The Hedgehog (Prototype)</name>
+    <setname>sonicp</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1992</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>3</players>
+    <buttons names="Spin Jump,-,-,Start,Coin,Service,Test" default="A,Start,Select,-,-"/>
+    <region>Japan</region>
+
+    <rom index="1">
+        <part>40</part>
+    </rom>
+
+    <rom index="0" zip="sonicp.zip" md5="none" address="0x30000000">
+
+        <part name="sonpg0.bin" crc="da05dcbb"/>
+        <part name="sonpg0.bin" crc="da05dcbb"/>
+        <part name="sonpg0.bin" crc="da05dcbb"/>
+        <part name="sonpg0.bin" crc="da05dcbb"/>
+        <part name="sonpg1.bin" crc="c57dc5c5"/>
+        <part name="sonpg1.bin" crc="c57dc5c5"/>
+        <part name="sonpg1.bin" crc="c57dc5c5"/>
+        <part name="sonpg1.bin" crc="c57dc5c5"/>
+        <interleave output="16">
+            <part name="sonpd0.bin" crc="a7da7546" map="01"/>
+            <part name="sonpd1.bin" crc="c30e4c70" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="sonpd0.bin" crc="a7da7546" map="01"/>
+            <part name="sonpd1.bin" crc="c30e4c70" map="10"/>
+        </interleave>
+
+        <part name="sonsnd0.bin" crc="569c8d4b"/>
+        <part name="sonsnd0.bin" crc="569c8d4b"/>
+        <part name="sonsnd0.bin" crc="569c8d4b"/>
+        <part name="sonsnd0.bin" crc="569c8d4b"/>
+        <part name="sonsnd1.bin" crc="f4fa5a21"/>
+        <part name="sonsnd2.bin" crc="e1bd45a5"/>
+        <part name="sonsnd3.bin" crc="cf56b5a0"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="32">
+            <part name="sonscl0.bin" crc="445e31b9" map="0001"/>
+            <part name="sonscl2.bin" crc="a5de28b2" map="0010"/>
+            <part name="sonscl1.bin" crc="3d234181" map="0100"/>
+            <part name="sonscl3.bin" crc="7ce7554b" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="sonscl0.bin" crc="445e31b9" map="0001"/>
+            <part name="sonscl2.bin" crc="a5de28b2" map="0010"/>
+            <part name="sonscl1.bin" crc="3d234181" map="0100"/>
+            <part name="sonscl3.bin" crc="7ce7554b" map="1000"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="sonobj0.bin" crc="ceea18e3" map="00000001"/>
+            <part name="sonobj1.bin" crc="6bbc226b" map="00000010"/>
+            <part name="sonobj2.bin" crc="fcd5ef0e" map="00000100"/>
+            <part name="sonobj3.bin" crc="b99b42ab" map="00001000"/>
+            <part name="sonobj4.bin" crc="c7ec1456" map="00010000"/>
+            <part name="sonobj5.bin" crc="bd5da27f" map="00100000"/>
+            <part name="sonobj6.bin" crc="313c92d1" map="01000000"/>
+            <part name="sonobj7.bin" crc="3784c507" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="sonobj0.bin" crc="ceea18e3" map="00000001"/>
+            <part name="sonobj1.bin" crc="6bbc226b" map="00000010"/>
+            <part name="sonobj2.bin" crc="fcd5ef0e" map="00000100"/>
+            <part name="sonobj3.bin" crc="b99b42ab" map="00001000"/>
+            <part name="sonobj4.bin" crc="c7ec1456" map="00010000"/>
+            <part name="sonobj5.bin" crc="bd5da27f" map="00100000"/>
+            <part name="sonobj6.bin" crc="313c92d1" map="01000000"/>
+            <part name="sonobj7.bin" crc="3784c507" map="10000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

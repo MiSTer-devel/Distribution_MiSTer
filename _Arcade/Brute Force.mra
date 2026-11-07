@@ -1,0 +1,80 @@
+<misterromdescription>
+	<name>Brute Force</name>
+	<mameversion>0.257</mameversion>
+	<setname>brutforc</setname>
+	<year>1991</year>
+	<manufacturer>Leland Corporation</manufacturer>
+	<category>Shooter</category>
+	<rbf>Leland</rbf>
+	<rotation>horizontal</rotation>
+
+	<rom index="0" address="0x30000000" zip="brutforc.zip" md5="None" type="merged">
+		<part>4C 01 05 05 02 6E 00 00 00 00 00 00 00 00 00 00</part>
+
+		<part name="u64" crc="008ae3b8" length="0x20000"/>
+		<part name="u65" crc="6036e3fa" length="0x20000"/>
+		<part name="u66" crc="7ebf0795" length="0x20000"/>
+		<part name="u67" crc="e3cbf8b4" length="0x20000"/>
+		<interleave output="16">
+			<part name="u68" crc="77c8de62" length="0x20000" map="01"/>
+			<part name="u69" crc="113aa6d5" length="0x20000" map="10"/>
+		</interleave>
+		<part repeat="0x40000">00</part>
+
+		<part name="u151" crc="bd3b677b" length="0x20000"/>
+		<part name="u152" crc="5f4434e7" length="0x20000"/>
+		<part name="u153" crc="20f7df53" length="0x20000"/>
+		<part name="u154" crc="69ce2329" length="0x20000"/>
+		<part name="u155" crc="33d92e25" length="0x20000"/>
+		<part name="u156" crc="de7eca8b" length="0x20000"/>
+		<part name="u157" crc="e42b3dba" length="0x20000"/>
+		<part name="u158" crc="a0aa3220" length="0x20000"/>
+		<part repeat="0x80000">00</part>
+		<part name="u8" crc="1e0ead72" length="0x20000"/>
+		<part name="u9" crc="3195b305" length="0x20000"/>
+		<part name="u10" crc="1dc5f375" length="0x20000"/>
+		<part name="u11" crc="5ed4877f" length="0x20000"/>
+
+		<part repeat="0x20000">00</part>
+		<interleave output="16">
+			<part name="u6" crc="c9c5a413" length="0x20000" map="01"/>
+			<part name="u3" crc="9984906c" length="0x20000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="u5" crc="cbdb914b" length="0x20000" map="01"/>
+			<part name="u4" crc="ca8ab3a6" length="0x20000" map="10"/>
+		</interleave>
+		<part repeat="0x20000">00</part>
+		<interleave output="16">
+			<part name="u5" crc="cbdb914b" length="0x20000" map="01"/>
+			<part name="u4" crc="ca8ab3a6" length="0x20000" map="10"/>
+		</interleave>
+
+		<!-- Graphics planes byte-interleaved into 8-byte tile rows (plane0..plane5, then 2 pad
+		     bytes), the layout the video reads directly; plane 0 is repeated for the pad lanes. -->
+		<interleave output="64">
+			<part name="u145" crc="c3d20d24" length="0x40000" map="00000001"/>
+			<part name="u146" crc="43e9dd87" length="0x40000" map="00000010"/>
+			<part name="u147" crc="fb855ce8" length="0x40000" map="00000100"/>
+			<part name="u148" crc="e4b54eae" length="0x40000" map="00001000"/>
+			<part name="u149" crc="cf48401c" length="0x40000" map="00010000"/>
+			<part name="u150" crc="ca9e1e33" length="0x40000" map="00100000"/>
+			<part name="u145" crc="c3d20d24" length="0x40000" map="01000000"/>
+			<part name="u145" crc="c3d20d24" length="0x40000" map="10000000"/>
+		</interleave>
+		<part repeat="0x100000">00</part>
+
+		<part name="eeprom-brutforc.bin" crc="508809af" length="0x100"/>
+	</rom>
+
+	<!--
+	  Buttons are ordered player controls, then coin, then start. Button 1 punches or kicks
+	  depending on the stick direction and button 2 dives. Players 2 and 3 use the second
+	  and third controllers. The operator menu is opened from the OSD "Service Menu"; in it
+	  player 1 Start moves to the next item and player 3 Start chooses, so Menu Enter acts
+	  as player 3 Start.
+	-->
+	<buttons names="Punch/Kick,Dive,Menu Enter,Coin,Start"></buttons>
+
+	<nvram index="4" size="256"/>
+</misterromdescription>

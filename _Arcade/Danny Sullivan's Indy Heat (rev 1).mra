@@ -1,0 +1,83 @@
+<misterromdescription>
+	<name>Danny Sullivan's Indy Heat (rev 1)</name>
+	<mameversion>0.257</mameversion>
+	<setname>indyheat</setname>
+	<year>1991</year>
+	<manufacturer>Leland Corporation</manufacturer>
+	<category>Racing</category>
+	<rbf>Leland</rbf>
+	<rotation>horizontal</rotation>
+
+	<rom index="0" address="0x30000000" zip="indyheat.zip" md5="None" type="merged">
+		<part>4C 01 05 04 00 0E 00 00 00 00 00 00 00 00 00 00</part>
+
+		<part name="e-302-33019-01.u64" crc="2b97a347" length="0x20000"/>
+		<part name="e-302-33020-01.u65" crc="71301d74" length="0x20000"/>
+		<part name="e-302-33017-01.u66" crc="c9612072" length="0x20000"/>
+		<part name="e-302-33018-01.u67" crc="4c4b25e0" length="0x20000"/>
+		<interleave output="16">
+			<part name="e-302-33015-01.u68" crc="9e88efb3" length="0x20000" map="01"/>
+			<part name="e-302-33016-01.u69" crc="aa39fcb3" length="0x20000" map="10"/>
+		</interleave>
+		<part repeat="0x40000">00</part>
+
+		<part name="e-302-33007-01.u151" crc="2622dfa4" length="0x20000"/>
+		<part name="e-302-33008-01.u152" crc="ad40e4e2" offset="0" length="0x20000"/>
+		<part name="e-302-33009-01.u153" crc="1e3803f7" offset="0" length="0x20000"/>
+		<part name="e-302-33010-01.u154" crc="76d3c235" length="0x20000"/>
+		<part name="e-302-33011-01.u155" crc="d5d866b3" length="0x20000"/>
+		<part name="e-302-33012-01.u156" crc="7fe71842" length="0x20000"/>
+		<part name="e-302-33013-01.u157" crc="a6462adc" length="0x20000"/>
+		<part name="e-302-33014-01.u158" crc="d6ef27a3" length="0x20000"/>
+		<part repeat="0x20000">00</part>
+		<part name="e-302-33008-01.u152" crc="ad40e4e2" offset="0x20000" length="0x20000"/>
+		<part name="e-302-33009-01.u153" crc="1e3803f7" offset="0x20000" length="0x20000"/>
+		<part repeat="0x20000">00</part>
+		<part name="e-302-33025-01.u8" crc="9f16e5b6" length="0x20000"/>
+		<part name="e-302-33026-01.u9" crc="0dc8f488" length="0x20000"/>
+		<part repeat="0x40000">00</part>
+
+		<part repeat="0x20000">00</part>
+		<interleave output="16">
+			<part name="e-302-33024-01.u6" crc="15a89962" length="0x20000" map="01"/>
+			<part name="e-302-33021-01.u3" crc="97413818" length="0x20000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="e-302-33023-01.u5" crc="198285d4" length="0x20000" map="01"/>
+			<part name="e-302-33022-01.u4" crc="fa7bfa04" length="0x20000" map="10"/>
+		</interleave>
+		<part repeat="0x20000">00</part>
+		<interleave output="16">
+			<part name="e-302-33023-01.u5" crc="198285d4" length="0x20000" map="01"/>
+			<part name="e-302-33022-01.u4" crc="fa7bfa04" length="0x20000" map="10"/>
+		</interleave>
+
+		<!-- Graphics planes byte-interleaved into 8-byte tile rows (plane0..plane5, then 2 pad
+		     bytes), the layout the video reads directly; plane 0 is repeated for the pad lanes. -->
+		<interleave output="64">
+			<part name="e-302-33001-01.u145" crc="612d4bf8" length="0x20000" map="00000001"/>
+			<part name="e-302-33002-01.u146" crc="77a725f6" length="0x20000" map="00000010"/>
+			<part name="e-302-33003-01.u147" crc="d6aac372" length="0x20000" map="00000100"/>
+			<part name="e-302-33004-01.u148" crc="5d19723e" length="0x20000" map="00001000"/>
+			<part name="e-302-33005-01.u149" crc="29056791" length="0x20000" map="00010000"/>
+			<part name="e-302-33006-01.u150" crc="cb73dd6a" length="0x20000" map="00100000"/>
+			<part name="e-302-33001-01.u145" crc="612d4bf8" length="0x20000" map="01000000"/>
+			<part name="e-302-33001-01.u145" crc="612d4bf8" length="0x20000" map="10000000"/>
+		</interleave>
+		<part repeat="0x200000">00</part>
+
+		<part name="eeprom-indyheat.bin" crc="896f7257" length="0x100"/>
+	</rom>
+
+	<!--
+	  Buttons are ordered player controls, then coin: Gas, Nitro, Menu Enter, Coin. The cabinet
+	  has one Nitro button per wheel (Red = player 1, Yellow = player 2, Blue = player 3) and
+	  a gas pedal, which is a digital button here. In the operator menu player 1 Nitro moves to
+	  the next item and player 3 Nitro chooses, so Menu Enter acts as player 3's Nitro. The
+	  menu is opened from the OSD "Service Menu". Players 2 and 3 use the second and third
+	  controllers. Steering is the analog stick, D-pad or a spinner.
+	-->
+	<buttons names="Gas,Nitro,Menu Enter,Coin"></buttons>
+
+	<nvram index="4" size="256"/>
+</misterromdescription>

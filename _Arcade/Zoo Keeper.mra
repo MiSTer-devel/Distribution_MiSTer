@@ -1,0 +1,59 @@
+<misterromdescription>
+	<name>Zoo Keeper</name>
+	<setname>zookeep</setname>
+	<rbf>Qix</rbf>
+	<mameversion>0272</mameversion>
+	<year>1982</year>
+	<manufacturer>Taito America Corporation</manufacturer>
+	<players>2</players>
+	<joystick>4-Way</joystick>
+	<mameversion>0.272</mameversion>
+    <rotation>horizontal</rotation>
+    <region>World</region>
+	<category>Arcade</category>
+
+    <buttons names="Jump,-,Test Advance,-,Coin,Start 1P,Start 2P,Pause,-,-,-,-,Test Next Line,Test Slew Up,Test Slew Down" default="A,X,Select,Start,R,L"/>
+
+    <!-- Index 1: Config -->
+    <rom index="1">
+	     <part>04</part>
+	</rom>
+
+	<!-- Index 0: ROM -->
+	<rom index="0" zip="zookeep.zip" md5="none">
+
+		<part name="za12.u12" crc="4e40d8dc"/>
+		<part name="za13.u13" crc="eebd5248"/>
+		<part name="za14.u14" crc="fab43297"/>
+		<part name="za15.u15" crc="ef8cd67c"/>
+		<part name="za16.u16" crc="ccfc15bc"/>
+		<part name="za17.u17" crc="358013f4"/>
+		<part name="za18.u18" crc="37886afe"/>
+		<part name="za19.u19" crc="bbfb30d9"/>
+
+		<part name="za5.u5"   crc="dc0c3cbd"/>
+		<part name="za6.u6"   crc="27c787dd"/>
+
+		<part name="za7.u7"   crc="1479f480"/>
+		<part name="za8.u8"   crc="4c96cdb2"/>
+		<part name="za9.u9"   crc="a4f7d9e0"/>
+		<part name="za10.u10" crc="05df1a5a"/>
+
+		<part name="za3.u3"   crc="cc4d0aee"/>
+		<part name="za4.u4"   crc="ec3b10b1"/>
+
+		<part name="za25.u25" crc="779b8558"/>
+		<part name="za26.u26" crc="60a810ce"/>
+		<part name="za27.u27" crc="99ed424e"/>
+
+	</rom>
+
+	<!-- Index 2: ROM -->
+	<rom index="2" zip="zookeep.zip" md5="none">
+		<part name="za_coin.bin" crc="364d3557"/>
+	</rom>
+
+	<!-- Index 4: NVRAM -->
+	<nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

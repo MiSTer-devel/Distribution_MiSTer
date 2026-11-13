@@ -1,0 +1,128 @@
+<misterromdescription>
+    <name>Gran Premio F1 (Italian Bootleg Of Pole Position II)</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>yes</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Pole Position</series>
+    <year>1984</year>
+    <manufacturer>bootleg</manufacturer>
+    <category>Driving</category>
+
+    <setname>polepos2bi</setname>
+    <parent>polepos2</parent>
+    <mameversion>0289</mameversion>
+    <rbf>PolePosition</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <buttons names="Accelerate,Brake,Gear,Service Mode,Coin,Start 1P,Start 2P,Pause" default="A,B,X,Y,Select,Start,R,L"/>
+
+    <!-- Index 0: ROM -->
+    <rom index="0" md5="none" zip="polepos2bi.zip|polepos2.zip">
+        <part crc="1a6412a1" name="5ita.bin"/>
+        <part crc="e7362148" name="6ita.bin"/>
+        <interleave output="16">
+            <part crc="2856d5b1" name="18.bin" map="01"/>
+            <part crc="41da3c28" name="19.bin" map="10"/>
+        </interleave>
+        <part repeat="16384">00</part>
+        <interleave output="16">
+            <part crc="fe9baeb6" name="4.bin" map="01"/>
+            <part crc="6c823932" name="17.bin" map="10"/>
+        </interleave>
+    </rom>
+
+    <!-- Index 1: ROM -->
+    <rom index="1" md5="none" zip="polepos2bi.zip|polepos2.zip">
+        <part crc="55bec6f3" name="05.bin"/>
+        <part crc="ec3ec6e6" name="04.bin"/>
+        <part crc="1c72041a" name="12.bin"/>
+        <part crc="1b38b257" name="11.bin"/>
+        <part crc="613ab0df" name="16.bin"/>
+        <part crc="f8e7f551" name="15.bin"/>
+        <part crc="17c798b0" name="14.bin"/>
+        <part crc="ed6a8052" name="13.bin"/>
+        <part crc="5fd933e3" name="10.bin"/>
+        <part crc="7053e219" name="09.bin"/>
+        <part crc="5fe9b365" name="08.bin"/>
+        <part crc="ca14ca7b" name="07.bin"/>
+        <part crc="ee6b3315" name="03.bin"/>
+        <part crc="6d1e7042" name="02.bin"/>
+        <part crc="4e97f101" name="01.bin"/>
+        <part crc="a61bff15" name="06.bin"/>
+    </rom>
+
+    <!-- Index 2: ROM -->
+    <rom index="2" md5="none" zip="polepos2bi.zip|polepos2.zip">
+        <part crc="16d69c31" name="7611-5-e.bin"/>
+        <part crc="07340311" name="7611-5-d.bin"/>
+        <part crc="1efc84d7" name="7611-5-c.bin"/>
+        <part crc="064d51a0" name="7611-5-b.bin"/>
+        <part crc="7880c5af" name="7611-5-a.bin"/>
+        <part crc="2d502464" name="7611-5-h.bin"/>
+        <part crc="027aa62c" name="7611-5-g.bin"/>
+        <part crc="1f8d0df3" name="7611-5-f.bin"/>
+        <part crc="8b270902" name="7643-5-b.bin"/>
+        <part crc="a079ed19" name="7643-5-a.bin"/>
+        <part crc="4330a51b" name="6331-1-b.bin"/>
+        <part crc="4330a51b" name="6331-1-a.bin"/>
+        <part crc="8568decc" name="74s287-b.bin"/>
+        <part crc="0e742cb1" name="74s287-a.bin"/>
+    </rom>
+
+    <!-- Index 3: Hiscore -->
+    <rom index="3" md5="none">
+        <part>
+        01 FF FF FF 00 FF 00 02 00 02 00 01 00 FF 00 00
+        00 00 30 00 07 F2 B0 95
+        </part>
+    </rom>
+
+    <!-- Index 7: Config -->
+    <rom index="7">
+        <part>06</part>
+    </rom>
+
+    <!-- Index 4: NVRAM -->
+    <rom index="4"></rom>
+    <nvram index="4" size="2034"></nvram>
+
+    <!-- Index 5: ROM -->
+    <rom index="5" md5="none" zip="polepos2bi.zip|polepos2.zip">
+        <part crc="7d93bc1c" name="pp4-15.bin"/>
+        <part crc="7d93bc1c" name="pp4-16.bin"/>
+        <part crc="1771fe1b" name="20.bin"/>
+        <part repeat="24576">00</part>
+    </rom>
+
+    <!-- Index 6: ROM -->
+    <rom index="6" md5="none" zip="namco51.zip|namco52.zip|namco53.zip|namco54.zip">
+        <part crc="c2f57ef8" name="51xx.bin"/>
+        <part crc="b326fecb" name="53xx.bin"/>
+        <part crc="ee7357e0" name="54xx.bin"/>
+        <part crc="3257d11e" name="52xx.bin"/>
+    </rom>
+
+    <switches default="DF,15" base="0">
+        <dip name="Coin A"        bits="0,2"   ids="1C/5C,1C/6C,1C/3C,2C/1C,2C/3C,3C/1C,1C/2C,1C/1C"/>
+        <dip name="Coin B"        bits="3,4"   ids="2C/3C,1C/2C,2C/1C,1C/1C"/>
+        <dip name="Speed Unit"    bits="5,5"   ids="km/h,mph"/>
+        <dip name="Demo Sounds"   bits="6,6"   ids="Off,On"/>
+        <dip name="Speed"         bits="7,7"   ids="High,Average"/>
+        <dip name="Extended Rank" bits="8,9"   ids="A,B,C,D"/>
+        <dip name="Practice Rank" bits="10,11" ids="A,B,C,D"/>
+        <dip name="Goal"          bits="12,13" ids="3,4,5,6"/>
+        <dip name="Game Time"     bits="14,14" ids="90 secs,120 secs"/>
+        <dip name="Freeze"        bits="15,15" ids="Off,On"/>
+    </switches>
+
+    <remark>Gran Premio F1 (Italian bootleg of Pole Position II)</remark>
+    <mratimestamp>20260921000000</mratimestamp>
+</misterromdescription>

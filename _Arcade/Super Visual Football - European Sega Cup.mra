@@ -1,0 +1,72 @@
+<misterromdescription>
+    <name>Super Visual Football: European Sega Cup (Rev A)</name>
+    <setname>svf</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1994</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>2</players>
+    <joystick>8</joystick>
+
+    <buttons names="Shoot,Pass A,Pass B,Start,Coin,Service,Test" default="A,B,X,Start,R,L,Select"/>
+    <region>Europe</region>
+
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <rom index="0" zip="svf.zip" md5="none" address="0x30000000">
+
+        <part name="epr-16872a.ic17" crc="1f383b00"/>
+        <part name="epr-16872a.ic17" crc="1f383b00"/>
+        <part name="epr-16872a.ic17" crc="1f383b00"/>
+        <part name="epr-16872a.ic17" crc="1f383b00"/>
+        <part name="epr-16871a.ic8" crc="f7061bd7"/>
+        <part name="epr-16871a.ic8" crc="f7061bd7"/>
+        <part name="epr-16871a.ic8" crc="f7061bd7"/>
+        <part name="epr-16871a.ic8" crc="f7061bd7"/>
+        <interleave output="16">
+            <part name="epr-16865.ic18" crc="9198ca9f" map="01"/>
+            <part name="epr-16864.ic9" crc="201a940e" map="10"/>
+        </interleave>
+
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="epr-16866.ic36" crc="74431350"/>
+        <part name="mpr-16779.ic35" crc="7055e859"/>
+        <part name="mpr-16778.ic34" crc="feedaecf"/>
+        <part name="mpr-16777.ic24" crc="14b5d5df"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-16784.ic14" crc="4608efe2" map="01"/>
+            <part name="mpr-16783.ic5" crc="042eabe7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="mpr-16784.ic14" crc="4608efe2" map="01"/>
+            <part name="mpr-16783.ic5" crc="042eabe7" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-16785.ic32" crc="51f775ce" map="00000021"/>
+            <part name="mpr-16787.ic30" crc="dee7a204" map="00002100"/>
+            <part name="mpr-16789.ic28" crc="6b6c8ad3" map="00210000"/>
+            <part name="mpr-16791.ic26" crc="4f7236da" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-16860.ic31" crc="578a7325" map="00000021"/>
+            <part name="mpr-16861.ic29" crc="d79c3f73" map="00002100"/>
+            <part name="mpr-16862.ic27" crc="00793354" map="00210000"/>
+            <part name="mpr-16863.ic25" crc="42338226" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

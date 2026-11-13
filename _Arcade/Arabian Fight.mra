@@ -1,0 +1,72 @@
+<misterromdescription>
+    <name>Arabian Fight</name>
+    <setname>arabfgt</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1991</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>4</players>
+    <joystick>8</joystick>
+    <buttons names="Attack,Jump,-,Start,Coin,Service,Test" default="A,B,Start,R,L,Select"/>
+
+    <region>World</region>
+
+    <rom index="1">
+        <part>04</part>
+    </rom>
+
+    <rom index="0" zip="arabfgt.zip" md5="none" address="0x30000000">
+
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <part name="epr-14609.ic8" crc="6a43c7fb"/>
+        <interleave output="16">
+            <part name="epr-14592.ic18" crc="f7dff316" map="01"/>
+            <part name="epr-14591.ic9" crc="bbd940fb" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-14592.ic18" crc="f7dff316" map="01"/>
+            <part name="epr-14591.ic9" crc="bbd940fb" map="10"/>
+        </interleave>
+
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="epr-14596.ic36" crc="bd01faec"/>
+        <part name="mpr-14595f.ic35" crc="5173d1af"/>
+        <part name="mpr-14594f.ic34" crc="01777645"/>
+        <part name="mpr-14593f.ic24" crc="aa037047"/>
+
+        <part name="epr-14468-01.u3" crc="c3c591e4"/>
+
+        <interleave output="16">
+            <part name="mpr-14599f.ic14" crc="94f1cf10" map="01"/>
+            <part name="mpr-14598f.ic5" crc="010656f3" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-14600f.ic32" crc="e860988a" map="00000021"/>
+            <part name="mpr-14602.ic30" crc="64524e4d" map="00002100"/>
+            <part name="mpr-14604.ic28" crc="5f8d5167" map="00210000"/>
+            <part name="mpr-14606.ic26" crc="7047f437" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-14601f.ic31" crc="a2f3bb32" map="00000021"/>
+            <part name="mpr-14603.ic29" crc="f6ce494b" map="00002100"/>
+            <part name="mpr-14605.ic27" crc="aaf52697" map="00210000"/>
+            <part name="mpr-14607.ic25" crc="b70b0735" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

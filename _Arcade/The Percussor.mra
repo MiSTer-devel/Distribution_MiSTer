@@ -1,0 +1,82 @@
+<misterromdescription>
+	<name>The Percussor</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>The Percussor</series>
+	<year>1981</year>
+	<manufacturer>Orca</manufacturer>
+	<category>Shooter</category>
+
+	<setname>percuss</setname>
+	<parent>percuss</parent>
+	<mameversion>0289</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Button 2</button_names>
+
+	<switches default="10,00">
+		<!-- DSW0 (6081); bit 6 is button 2 -->
+		<dip bits="0"     name="Unknown" ids="Off,On"/>
+		<dip bits="1"     name="Unknown" ids="Off,On"/>
+		<dip bits="2,3"   name="Bonus Life" ids="20000 100000,20000 200000,40000 100000,40000 200000"/>
+		<dip bits="4"     name="Cabinet" ids="Cocktail,Upright"/>
+		<dip bits="5"     name="Unknown" ids="Off,On"/>
+		<dip bits="7"     name="Unknown" ids="Off,On"/>
+		<!-- DSW1 (6082) -->
+		<dip bits="8,9"   name="Lives" ids="4,5,6,7"/>
+		<dip bits="10,11" name="Coinage" ids="1C/1C,1C/2C,2C/1C,Free Play"/>
+		<dip bits="12"    name="Unknown" ids="Off,On"/>
+		<dip bits="13"    name="Unknown" ids="Off,On"/>
+		<dip bits="14"    name="Unknown" ids="Off,On"/>
+		<dip bits="15"    name="Unknown" ids="Off,On"/>
+	</switches>
+
+	<!-- Index 0: Zodiack board main ROM (C000-CFFF stored at 5000), audio ROM, empty Vastar video regions, then the Orca
+	     OVG-40c video board -->
+	<rom index="0" md5="none" zip="percuss.zip">
+		<part crc="ff0364f7" name="percuss.1"/>
+		<part crc="7f646c59" name="percuss.3"/>
+		<part crc="6bf72dd2" name="percuss.2"/>
+		<part crc="fb1b15ba" name="percuss.4"/>
+		<part crc="8e5a9692" name="percuss.5"/>
+		<part repeat="0x3000"> 00 </part>
+		<part crc="d63f56f3" name="percuss.8"/>
+		<part crc="e08fef2f" name="percuss.9"/>
+		<part repeat="0x1000"> 00 </part>
+		<part repeat="0xA400"> 00 </part>
+		<part crc="797598aa" name="percuss.10"/>
+		<part crc="5285a580" name="percuss.6"/>
+		<part crc="8fc4175d" name="percuss.7"/>
+		<part repeat="0x800"> 00 </part>
+		<part crc="e2ee9637" name="percus2a.prm"/>
+		<part crc="e561b029" name="percus2b.prm"/>
+	</rom>
+
+	<!-- Index 1: core_config (bit1 OVG-40c video, bit2 Zodiack CPU board, bit3 percuss, bit4 horizontal ROT180), then the IN0 / IN1 / DSW0 input map, one control id
+	     per bit (rtl top level: 1-4 P1 U/D/L/R, 5 P1 button 1, 9-12 P2 U/D/L/R, 13 P2 button 1, 17 / 18 coin 1 / 2,
+	     19 / 20 start 1 / 2, 0 none) -->
+	<rom index="1">
+		<part>
+		0E
+		13 14 0B 0C 09 02 0A 0E
+		00 11 00 04 01 0D 05 03
+		00 00 00 00 00 00 06 00
+		</part>
+	</rom>
+
+	<remark>The Percussor (Orca)</remark>
+	<mratimestamp>20261010000000</mratimestamp>
+</misterromdescription>

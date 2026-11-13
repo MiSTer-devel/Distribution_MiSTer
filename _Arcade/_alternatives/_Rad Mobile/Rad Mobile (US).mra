@@ -1,0 +1,91 @@
+<misterromdescription>
+    <name>Rad Mobile (US)</name>
+    <setname>radmu</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1990</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>1</players>
+    <buttons names="Accelerator,Brake,Light,Start,Coin,Service,Test,Wiper" default="A,B,X,Start,Select,-,-,Y"/>
+    <region>USA</region>
+
+    <rom index="1">
+        <part>00 01</part>
+    </rom>
+
+    <rom index="0" zip="radmu.zip" md5="none" address="0x30000000">
+
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <part name="epr-13690.ic21" crc="21637dec"/>
+        <interleave output="16">
+            <part name="epr-13525.ic37" crc="62ad83a0" map="01"/>
+            <part name="epr-13526.ic38" crc="59ea372a" map="10"/>
+        </interleave>
+
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13527.ic9" crc="a2e3fbbe"/>
+        <part name="epr-13523.ic14" crc="d5563697"/>
+        <part name="epr-13523.ic14" crc="d5563697"/>
+        <part name="epr-13699.ic20" crc="33fd2913"/>
+        <part name="epr-13699.ic20" crc="33fd2913"/>
+        <part name="epr-13523.ic22" crc="d5563697"/>
+        <part name="epr-13523.ic22" crc="d5563697"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="32">
+            <part name="mpr-13519.ic3" crc="bedc9534" map="0001"/>
+            <part name="mpr-13521.ic12" crc="e9bca903" map="0010"/>
+            <part name="mpr-13520.ic7" crc="3532e91a" map="0100"/>
+            <part name="mpr-13522.ic18" crc="25e04648" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mpr-13519.ic3" crc="bedc9534" map="0001"/>
+            <part name="mpr-13521.ic12" crc="e9bca903" map="0010"/>
+            <part name="mpr-13520.ic7" crc="3532e91a" map="0100"/>
+            <part name="mpr-13522.ic18" crc="25e04648" map="1000"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-13511.ic1" crc="f8f15b11" map="00000001"/>
+            <part name="mpr-13512.ic5" crc="d0be34a6" map="00000010"/>
+            <part name="mpr-13513.ic10" crc="feef1982" map="00000100"/>
+            <part name="mpr-13514.ic16" crc="d0f9ebd1" map="00001000"/>
+            <part name="mpr-13515.ic2" crc="77bf2387" map="00010000"/>
+            <part name="mpr-13516.ic6" crc="8c4bc62d" map="00100000"/>
+            <part name="mpr-13517.ic11" crc="1d7d84a7" map="01000000"/>
+            <part name="mpr-13518.ic17" crc="9ea4b15d" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-13511.ic1" crc="f8f15b11" map="00000001"/>
+            <part name="mpr-13512.ic5" crc="d0be34a6" map="00000010"/>
+            <part name="mpr-13513.ic10" crc="feef1982" map="00000100"/>
+            <part name="mpr-13514.ic16" crc="d0f9ebd1" map="00001000"/>
+            <part name="mpr-13515.ic2" crc="77bf2387" map="00010000"/>
+            <part name="mpr-13516.ic6" crc="8c4bc62d" map="00100000"/>
+            <part name="mpr-13517.ic11" crc="1d7d84a7" map="01000000"/>
+            <part name="mpr-13518.ic17" crc="9ea4b15d" map="10000000"/>
+        </interleave>
+    </rom>
+
+    <rom index="2" zip="radmu.zip" md5="none">
+        <interleave output="16">
+            <part name="eeprom-radm.ic76" crc="b1737c06" map="12"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

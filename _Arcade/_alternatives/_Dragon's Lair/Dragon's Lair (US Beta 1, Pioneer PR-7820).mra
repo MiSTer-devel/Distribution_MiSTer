@@ -1,0 +1,65 @@
+<misterromdescription>
+    <name>Dragon's Lair (US Beta 1, Pioneer PR-7820)</name>
+    <region>US</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version>Beta 1</version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Dragon's Lair</series>
+    <year>1983</year>
+    <manufacturer>Cinematronics</manufacturer>
+    <category>LaserDisc</category>
+
+    <setname same_dir="1">dlair_1</setname>
+    <parent>dlair</parent>
+    <mameversion>0270</mameversion>
+    <rbf>LaserdiscGames</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>no</flip>
+
+    <players>1</players>
+    <joystick>4-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Sword,-,-,-,Coin,Start 1P,Start 2P,Pause" default="A,Select,Start,R,L"/>
+
+    <switches default="22,D8">
+        <dip bits="15" name="Difficulty" ids="Ramps Up,Always Easy"/>
+        <dip bits="2"  name="- Ramp Style" ids="Gradual,Instant (Hard)"/>
+        <dip bits="12" name="- Ramp After" ids="5 In A row,9 In A Row"/>
+        <dip bits="0"  name="Coinage" ids="2 Coins/1 Credit,3 Coins/1 Credit"/>
+        <dip bits="6"  name="Pay As You Go" ids="Off,On"/>
+        <dip bits="13,14" name="- Pay As You Go Option" ids="PAYG1,PAYG2,PAYG3,PAYG4"/>
+        <dip bits="4"  name="Free Play" ids="Off,On"/>
+        <dip bits="5"  name="Lives" ids="3,5"/>
+        <dip bits="10" name="Unlimited Dirks" ids="Off,On"/>
+        <dip bits="9"  name="Demo Sounds" ids="On,Off"/>
+        <dip bits="8"  name="- Demo Sound Reps" ids="Every 8,All"/>
+        <dip bits="3"  name="Engineering Mode" ids="Off,On"/>
+        <dip bits="7"  name="Service Mode" ids="Off,On"/>
+        <dip bits="11" name="Joystick Feedback Sound" ids="Off,On"/>
+    </switches>
+
+    <!-- GAME-ID byte 0: 00 = Dragon's Lair (LED band default). -->
+    <!-- POST-SEEK-FRAMES byte 1: extra film ticks before seek commits. 0=instant, 5≈208ms. -->
+    <!-- LD-PLAYER byte 2: 01 = LD-V1000, 02 = PR-7820. Pre-Rev-E ROMs use dsw[11] for joystick sound. -->
+    <rom index="1">
+        <part>00 03 02</part>
+    </rom>
+
+    <!-- Index 0: Main Z80 program ROMs. 5x 8KB @ 0x0000-0x9FFF. -->
+    <rom index="0" md5="none" zip="dlair_1.zip|dlair.zip">
+        <part crc="a1856eac" name="dl_n1_u1.bin"/>
+        <part crc="1b34406f" name="dl_n1_u2.bin"/>
+        <part crc="cf3f4d3c" name="dl_n1_u3.bin"/>
+        <part crc="a98880c5" name="dl_n1_u4.bin"/>
+        <part crc="17b7336b" name="dl_n1_u5.bin"/>
+    </rom>
+
+    <remark>Dragon's Lair (US Beta 1, Pioneer PR-7820) (Cinematronics)</remark>
+    <mratimestamp>20260703000000</mratimestamp>
+</misterromdescription>

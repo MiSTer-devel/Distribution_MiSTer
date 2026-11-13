@@ -1,0 +1,70 @@
+<misterromdescription>
+	<name>F-X (Bootleg Of S.R.D. Mission)</name>
+	<region>World</region>
+	<year>1986</year>
+	<manufacturer>bootleg</manufacturer>
+	<category>Shooter</category>
+
+	<setname>fx</setname>
+	<parent>srdmissn</parent>
+	<rbf>Kyugo</rbf>
+	<mameversion>0289</mameversion>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (cw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="BF,FF">
+		<!-- DSW1 (AY1 port A, read & inverted by sub) -->
+		<dip bits="0,1"      name="Lives"           ids="6,5,4,3"/>
+		<dip bits="2"        name="Bonus/Continue"  ids="70k/Yes,50k/No"/>
+		<dip bits="3"        name="Slow Motion"     ids="On,Off"/>
+		<dip bits="4"        name="Invulnerability" ids="On,Off"/>
+		<dip bits="5"        name="Sound Test"      ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"         ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"          ids="On,Off"/>
+		<!-- DSW2 (AY1 port B) -->
+		<dip bits="8,10"     name="Coin A"          ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"          ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: variant | rot_flip (bit 3) | landscape (bit 4). MAME machine config "srdmissn" = the parent's. -->
+	<rom index="1">
+		<part>0B</part>
+	</rom>
+
+	<!-- Index 0: main 32K, sub 32K, FG 4K, BG planes 3x 16K (8K + pad, in MAME's "plane N" order), sprite planes
+	     3x 32K, PROMs R / G / B, char lookup, timing (rtl/ram_rom/rom_loader.sv) -->
+	<rom index="0" md5="none" zip="fx.zip|srdmissn.zip">
+		<part crc="b651754b" name="fx.01"/>
+		<part crc="f3d2dcc1" name="fx.02"/>
+		<part crc="8907df6b" name="fx.03"/>
+		<part crc="c665834f" name="fx.04"/>
+		<part crc="4a504286" name="fx.05"/>
+		<part crc="740eccd4" name="18.10h"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="41211458" name="17.9h"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="c1f4a5db" name="16.11h"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="3d4c0447" name="14.6a"/>
+		<part crc="22414a67" name="13.7a"/>
+		<part crc="61e34283" name="12.8a"/>
+		<part crc="bbbaffef" name="11.9a"/>
+		<part crc="de564f97" name="10.10a"/>
+		<part crc="890dc815" name="9.11a"/>
+		<part crc="110a436e" name="mr.1j"/>
+		<part crc="0fbfd9f0" name="mg.1h"/>
+		<part crc="a342890c" name="mb.1f"/>
+		<part crc="190a55ad" name="m2.5j"/>
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<nvram index="4" size="2048"></nvram>
+	<remark>F-X (S.R.D. Mission bootleg)</remark>
+</misterromdescription>

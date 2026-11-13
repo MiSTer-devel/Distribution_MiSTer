@@ -1,0 +1,86 @@
+<!--
+  Hyper Duel (Japan set 2) for the hyprduel MiSTer core.
+  Clone of hyprduel: only the two program ROMs differ.
+
+  ROM layout delivered to the core (byte offsets in the download stream):
+    0x000000 - 0x07FFFF  main 68000 program (2x 256KB byte-interleaved,
+                         even byte = 24.u24, odd byte = 23.u23; the core
+                         reads 16-bit big-endian words)
+    0x080000 - 0x47FFFF  GFX ROM (4x 1MB, 64-bit word interleave per
+                         ROM_LOAD64_WORD: each ROM supplies bytes 2k..2k+1
+                         of every 8-byte group)
+    0x480000 - 0x4BFFFF  OKI M6295 samples (97.u97)
+
+  Byte-lane order within words is verified at hardware bring-up (M5);
+  see tools/build_gfxrom.py and tools/build_mainrom.py for the reference
+  layout the simulation uses.
+-->
+<misterromdescription>
+    <name>Hyper Duel (Set 2)</name>
+    <setname>hyprduel2</setname>
+    <rbf>hyprduel</rbf>
+    <mameversion>0288</mameversion>
+    <year>1993</year>
+    <manufacturer>Technosoft</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>horizontal</rotation>
+    <region>Japan</region>
+
+    <!-- default bf,ff = the MAME default port value 0xFFBF
+         (bit6 low = Demo Sounds ON); bytes are the raw DSW readback -->
+    <switches default="bf,ff">
+        <!-- DSW port, spec: docs/hyprduel_system_spec.md sec 6 -->
+        <!-- Coin A and Coin B set together: the game only honours Free
+             Play when BOTH slots are set to it (verified against MAME
+             0.288: DSW ff80 starts on 1P Start with 0 credits, ffb8
+             does not). A combined switch keeps Free Play one selection.
+             Values = CoinA | CoinB<<3 with both slots equal. -->
+        <dip name="Coinage" bits="0,5"
+             ids="4C/1C,3C/1C,2C/1C,1C/1C,1C/2C,1C/3C,1C/4C,Free Play"
+             values="9,18,27,63,54,45,36,0"/>
+        <dip name="Demo Sounds" bits="6" ids="On,Off"/>
+        <dip name="Start Up Mode" bits="7" ids="On,Off"/>
+        <dip name="Flip Screen" bits="8" ids="On,Off"/>
+        <dip name="Difficulty" bits="10,11"
+             ids="Very Hard,Hard,Easy,Normal" values="0,1,2,3"/>
+        <dip name="Lives" bits="12,13" ids="5,4,2,3" values="0,1,2,3"/>
+    </switches>
+
+    <!-- High score save/restore (Hiscores_MiSTer): MAME hiscore.dat
+         entries for hyprduel. Header: START_WAIT=0xFF, CHECK_WAIT=0xFF,
+         CHECK_HOLD=4, WRITE_HOLD=0x80 (spaces the byte writes so the
+         1-deep SDRAM queue in the shell always drains), REPEAT=1,
+         REPEATWAIT=0x80, PAUSEPAD=0, CHANGEMASK=0. Entries (8 bytes,
+         CFG_LENGTHWIDTH=1): fff2a2 len 3c start 00 end 01; flag byte
+         fff2e2 len 1 start ff end ff. -->
+    <rom index="3" md5="none">
+        <part>
+            00 00 00 ff 00 ff 00 04 00 80 00 01 00 80 00 00
+            00 ff f2 a2 3c 00 01 00
+            00 ff f2 e2 01 ff ff 00
+        </part>
+    </rom>
+    <nvram index="4" size="61"/>
+
+    <buttons names="Shot,Change,Bomb,Start,Coin,Service"
+             default="A,B,X,Start,Select,L"/>
+
+    <rom index="0" zip="hyprduel2.zip|hyprduel.zip" type="merged">
+        <!-- main 68000 program: byte interleave (even addr = high byte)
+             map="01" = output position 0 (high byte); 24a.u24 is the even/high ROM -->
+        <interleave output="16">
+            <part name="24a.u24" crc="2458f91d" map="01"/>
+            <part name="23a.u23" crc="98aedfca" map="10"/>
+        </interleave>
+        <!-- GFX region: 64-bit groups, one 16-bit word per ROM -->
+        <interleave output="64">
+            <part name="ts_hyper-1.u74" crc="4b3b2d3c" map="00000021"/>
+            <part name="ts_hyper-2.u75" crc="dc230116" map="00002100"/>
+            <part name="ts_hyper-3.u76" crc="2d770dd0" map="00210000"/>
+            <part name="ts_hyper-4.u77" crc="f88c6d33" map="21000000"/>
+        </interleave>
+        <!-- OKI samples -->
+        <part name="97.u97" crc="bf3f8574"/>
+    </rom>
+</misterromdescription>

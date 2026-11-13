@@ -1,0 +1,108 @@
+<misterromdescription>
+    <name>Exciting Soccer II</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Exciting Soccer</series>
+    <year>1984</year>
+    <manufacturer>Alpha Denshi Co.</manufacturer>
+    <category>Sports</category>
+
+    <setname>exctscc2</setname>
+    <parent>exctscc2</parent>
+    <mameversion>0270</mameversion>
+    <rbf>ChampionBaseball</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (ccw)</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>8-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>2</num_buttons>
+    <buttons names="Kick,Chase,-,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="13">
+        <dip bits="0,1" name="Coinage" ids="A 1C/3C B 1C/6C,A 1C/2C B 1C/4C,2C/1C,A 1C/1C B 3C/1C"/>
+        <dip bits="2"   name="Demo Sounds" ids="On,Off"/>
+        <dip bits="3"   name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="4"   name="Difficulty" ids="Hard,Easy"/>
+        <dip bits="5,6" name="Game Time" ids="2 Min.,1 Min.,4 Min.,3 Min."/>
+    </switches>
+
+    <!-- Index 0: Main CPU ROMs (0x6000) -->
+    <rom index="0" md5="none" zip="exctscc2.zip">
+        <part crc="c6115362" name="eprom_1_vr_b_alpha_denshi.3j"/>
+        <part crc="de36ba00" name="eprom_2_vr_alpha_denshi.3k"/>
+        <part crc="1ddfdf65" name="eprom_3_vr_v_alpha_denshi.3l"/>
+    </rom>
+
+    <!-- Index 1: Sound CPU ROMs (0x9000) -->
+    <rom index="1" md5="none" zip="exctscc2.zip">
+        <part crc="2c675a43" name="eprom_0_vr_alpha_denshi.7d"/>
+        <part crc="e571873d" name="eprom_9_vr_alpha_denshi.7e"/>
+        <part crc="88651ee1" name="eprom_8_vr_alpha_denshi.7f"/>
+        <part crc="6d51521e" name="eprom_7_vr_alpha_denshi.7h"/>
+        <part crc="20f2207e" name="eprom_1_vr_alpha_denshi.7k"/>
+    </rom>
+
+    <!-- Index 2: GFX planes 0/1 (0x4000) -->
+    <rom index="2" md5="none" zip="exctscc2.zip">
+        <part crc="4ff1783d" name="eprom_4_vr_alpha_denshi.5a" offset="0x0000" length="0x1000"/>
+        <part crc="5605b60b" name="eprom_5_vr_alpha_denshi.5b" offset="0x0000" length="0x1000"/>
+        <part crc="4ff1783d" name="eprom_4_vr_alpha_denshi.5a" offset="0x1000" length="0x1000"/>
+        <part crc="5605b60b" name="eprom_5_vr_alpha_denshi.5b" offset="0x1000" length="0x1000"/>
+    </rom>
+
+    <!-- Index 6: ALPHA-8201 MCU ROM (0x2000) -->
+    <rom index="6" md5="none" zip="exctscc2.zip">
+        <part crc="66adcb37" name="alpha-8303_44801b42.1d"/>
+    </rom>
+
+    <!-- Index 7: PROMs (0x220) -->
+    <rom index="7" md5="none" zip="exctscc2.zip">
+        <part crc="899d153d" name="tbp18s030.5j"/>
+        <part crc="75613784" name="tbp24s10.61d"/>
+        <part crc="1a52d6eb" name="tbp24s10.60h"/>
+    </rom>
+
+    <!-- Index 8: gfx1's plane-3 s -->
+    <rom index="8" md5="none" zip="exctscc2.zip">
+        <part crc="1fb84ee6" name="eprom_6_vr_alpha_denshi.5c"/>
+    </rom>
+
+    <!-- Index 9: gfx3, 4bpp sprites (0x2000) -->
+    <rom index="9" md5="none" zip="exctscc2.zip">
+        <part crc="1d37edfa" name="eprom_7_vr_alpha_denshi.5k"/>
+        <part crc="b97f396c" name="eprom_8_vr_alpha_denshi.5l"/>
+    </rom>
+
+    <!-- Index 5: game-select byte: 
+           0x00 champbas    0x01 champbasj   0x02 champbasja  0x03 champbasjb
+           0x04 champbb2    0x05 champbb2j   0x06 tbasebal    0x07 talbot
+           0x08 exctsccr    0x09 exctscc2    0x0A exctsccrb                    -->
+    <rom index="5"><part>09</part></rom>
+
+
+    <!-- Index 3: HiScore data - not working
+    <rom index="3" md5="none">
+        <part>
+        00 00 FF FF 00 FF 00 10 00 10 00 08 FF FF 00 00
+        00 00 7C 90 00 30 4D 00
+        00 00 7C 60 00 03 02 00
+        </part>
+    </rom>
+    -->
+
+    <!-- Index 4: hiscore data. 0x30 + 0x03 = 51 bytes -->
+    <rom index="4"></rom>
+    <nvram index="4" size="51"></nvram>
+
+    <remark>Exciting Soccer II (Alpha Denshi)</remark>
+    <mratimestamp>20260824000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,156 @@
+<misterromdescription>
+  <name>Bonze Adventure (World, prototype, older)</name>
+  <setname>bonzeadvp2</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TaitoAsuka</rbf>
+  <year>1988</year>
+  <manufacturer>Taito Corporation Japan</manufacturer>
+  <category>Platform</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches base="0" default="FE,BF">
+    <dip name="Cabinet"        bits="0"     ids="Upright,Cocktail"/>
+    <dip name="Flip Screen"    bits="1"     ids="On,Off"/>
+    <dip name="Service Mode"   bits="2"     ids="On,Off"/>
+    <dip name="Demo Sounds"    bits="3"     ids="Off,On"/>
+    <dip name="Coin A"         bits="4,5"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Coin B"         bits="6,7"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Difficulty"     bits="8,9"   ids="Hardest,Hard,Easy,Medium"/>
+    <dip name="Bonus Life"     bits="10,11" ids="80k 250k,60k 200k,40k 100k,50k 150k"/>
+    <dip name="Lives"          bits="12,13" ids="5,4,2,3"/>
+    <dip name="Allow Continue" bits="14"    ids="Yes,No"/>
+    <dip name="Unused"         bits="15"    ids="On,Off"/>
+  </switches>
+
+  <!-- Regione di configurazione, caricata PRIMA delle ROM.
+       byte 0 = game_id      : 0x05 = Bonze Adventure
+       byte 1 = link         : 0x01 accende il multiplayer (solo Cadash)
+       byte 2 = orientamento : 0x00 = set orizzontale (ROT0)
+       byte 3 = libero -->
+  <rom index="1">
+    <part>05 00 00 00</part>
+  </rom>
+
+  <!-- Bonze e' il set piu' diverso di tutto il driver. Non ha il TC0220IOC: i
+       DIP si leggono diretti a 390000 e 3B0000, e gli INGRESSI passano dentro
+       il C-Chip. Il sonoro e' YM2610 invece di YM2151 piu' MSM5205, e la
+       comunicazione col sonoro e' un TC0140SYT.
+
+       Il C-Chip (TC0030CMD) e' un modulo con quattro die: un uPD78C11 con 4 KB
+       di ROM mascherata, la EPROM da 8 KB del gioco, 8 KB di SRAM condivisa col
+       68000 a finestre bancate da 1 KB, e un ASIC. Ci vogliono tutte e due le
+       ROM, ed entrambe stanno in fondo a questa immagine.
+
+       La ROM mascherata da 4 KB e' la stessa per tutti i giochi col C-Chip e
+       gira in due modi: MAME la elenca dentro il set di Bonze, ma molti set
+       la tengono in un cchip.zip a parte. Per questo qui sopra ci sono DUE
+       zip: si cerca prima in bonzeadv.zip e poi in cchip.zip, cosi' funziona
+       in tutti e due i casi senza che nessuno debba spostare file. -->
+
+  <rom index="0" zip="bonzeadvp2.zip|bonzeadv.zip|cchip.zip" md5="None">
+
+    <!-- 0x000000 Main CPU 68000, 256 KB in due coppie da 128 KB. Le meta'
+         entrano coi byte SCAMBIATI rispetto a MAME: il core impacchetta la
+         parola SDRAM come {secondo byte, primo byte}, quindi la ROM dei byte
+         PARI di MAME va con map="10" e quella dei DISPARI con map="01". -->
+    <interleave output="16">
+      <part name="prg 0h.ic17" crc="ce530615" map="10"/>
+      <part name="prg 0l.ic26" crc="048a0dcb" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="prg 1h.ic16" crc="e5d63e9b" map="10"/>
+      <part name="prg 1l europe.ic25" crc="d04b8e2b" map="01"/>
+    </interleave>
+    <part repeat="0x40000"> FF</part>
+
+    <!-- 0x080000 Dati del gioco: su questo prototipo stanno su una scheda
+         ROM a parte, sei EPROM da 64 KB a byte pari e dispari. Sono 384 KB
+         invece di 512: gli zoccoli ic10 e ic5 non sono montati e la coda
+         della regione resta a FF, come ROMREGION_ERASEFF in MAME. -->
+    <interleave output="16">
+      <part name="map 0h ad2e.ic7" crc="ca894028" map="10"/>
+      <part name="map 0l 676f.ic2" crc="956bc558" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="map 1h 9cbd.ic8" crc="08a5320f" map="10"/>
+      <part name="map 1l 95f6.ic3" crc="f65988c0" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="map 2h 0e7e.ic9" crc="4513dcf7" map="10"/>
+      <part name="map 2l a418.ic4" crc="106475e3" map="01"/>
+    </interleave>
+    <part repeat="0x20000"> FF</part>
+    <part repeat="0x20000"> FF</part>
+
+    <!-- 0x120000 Z80 audio, 64 KB, byte lineari come in MAME. -->
+    <part name="sound main 3-9.ic20" crc="2b4fc69a"/>
+    <part repeat="0x10000"> FF</part>
+
+    <!-- 0x140000 Sprite PC090OJ, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="obj 0h 6ce2.ic7" crc="d5bff0fd" map="01"/>
+      <part name="obj 0l c67e.ic2" crc="2f9615a8" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="obj 1h 7708.ic8" crc="81357279" map="01"/>
+      <part name="obj 1l ccf7.ic3" crc="c7a654d9" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="obj 2h 818b.ic9" crc="d614732b" map="01"/>
+      <part name="obj 2l 6096.ic4" crc="6dd67af8" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="obj 3h 3756.ic10" crc="981e66a9" map="01"/>
+      <part name="obj 3l a355.ic5" crc="173ddd11" map="10"/>
+    </interleave>
+
+    <!-- 0x1C0000 Nessuna estensione sprite su questo set: 128 KB di FF. -->
+    <part repeat="0x20000"> FF</part>
+    <part repeat="0x160000"> FF</part>
+
+    <!-- 0x340000 Tile TC0100SCN, 512 KB (ROM_LOAD16_WORD_SWAP -> map="12"). -->
+    <interleave output="16">
+      <part name="scn 0h 8711.ic7" crc="17466da0" map="01"/>
+      <part name="scn 0l 7fe0.ic2" crc="c6413f92" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="scn 1h 83b7.ic8" crc="35fde3c7" map="01"/>
+      <part name="scn 1l 2bde.ic3" crc="ca459623" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="scn 2h f411.ic9" crc="229debcf" map="01"/>
+      <part name="scn 2l db08.ic4" crc="2431e8db" map="10"/>
+    </interleave>
+    <part repeat="0x20000"> FF</part>
+    <part repeat="0x80000"> FF</part>
+
+    <!-- 0x440000 ADPCM-A del YM2610, 1,5 MB: Bonze non ne ha (la scheda monta
+         solo il canale B). Resta riempita di FF perche' l'ADPCM-B deve cadere
+         all'offset che il caricatore si aspetta. -->
+    <part repeat="0x180000"> FF</part>
+
+    <!-- 0x5C0000 ADPCM-B del YM2610, 512 KB, byte lineari.
+         Il core la copia in DDRAM a 0x300000 (DDR_ADPCMB_OFF). -->
+    <part name="sound 0h 3-8.ic2" crc="2996e756"/>
+    <part name="sound 1h 3-8.ic3" crc="780368ac"/>
+    <part name="sound 2h 3-8.ic4" crc="8f3b9fa5"/>
+    <part name="sound 3h 3-8.ic5" crc="1a8be621"/>
+    <part name="sound 0l 3-8.ic7" crc="3711abfa"/>
+    <part name="sound 1l 3-8.ic8" crc="f24a3d1a"/>
+    <part name="sound 2l 3-8.ic9" crc="5987900c"/>
+    <part name="sound 3l 3-8.ic10" crc="e8a6a9e6"/>
+
+    <!-- 0x640000 ROM del C-Chip, 12 KB in un'unica regione: prima i 4 KB di
+         ROM mascherata interna del uPD78C11 (la stessa per tutti i giochi col
+         C-Chip), poi gli 8 KB della EPROM specifica di Bonze. Il modulo le
+         vuole proprio cosi': maschera a 0x0000, EPROM a 0x1000. -->
+    <part name="cchip_upd78c11.bin" crc="43021521"/>
+    <part name="generic 10-9 f3eb.ic43" crc="75c52553"/>
+
+  </rom>
+</misterromdescription>

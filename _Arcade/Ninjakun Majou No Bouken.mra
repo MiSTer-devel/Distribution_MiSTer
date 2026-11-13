@@ -1,0 +1,62 @@
+<misterromdescription>
+    <name>Ninjakun Majou No Bouken</name>
+    <setname>ninjakun</setname>
+    <parent>ninjakun</parent>
+    <year>1984</year>
+    <manufacturer>UPL (Taito license)</manufacturer>
+    <series>Ninja-Kun</series>
+    <category>Platform</category>
+    <bootleg>no</bootleg>
+    <mameversion>0289</mameversion>
+    <rbf>UPLFramebuffer</rbf>
+
+    <resolution>15kHz</resolution>
+    <rotation>horizontal</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>2-way horizontal</joystick>
+    <num_buttons>2</num_buttons>
+    <buttons names="Shuriken,Jump,Coin,Start 1P,Start 2P,Pause" default="A,B,Select,Start,R,L"/>
+
+    <switches default="AC,EF">
+        <dip bits="0" name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="1,2" name="Lives" ids="5,2,3,4"/>
+        <dip bits="3" name="First Bonus" ids="40000,30000"/>
+        <dip bits="4,5" name="Second Bonus" ids="None,Every 30000,Every 70000,Every 50000"/>
+        <dip bits="6" name="Demo Sounds" ids="On,Off"/>
+        <dip bits="7" name="Difficulty" ids="Hard,Normal"/>
+        <dip bits="8,10" name="Coinage" ids="4 Coins/2 Credits,3 Coins/2 Credits,2 Coins/2 Credits,1 Coin/2 Credits,4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit"/>
+        <dip bits="11" name="High Score Names" ids="3 Letters,8 Letters"/>
+        <dip bits="12" name="Allow Continue" ids="Yes,No"/>
+        <dip bits="14" name="Free Play" ids="On,Off"/>
+        <dip bits="15" name="Infinite Lives (Free Play)" ids="On,Off"/>
+    </switches>
+
+    <!-- Index 0: CPU 1 / shared program 0000-7FFF, gfx1 at 0x8000, gfx2 at 0x10000, file by file
+         (MAME's ROM_LOAD16_BYTE interleave is decoded in the core) -->
+    <rom index="0" md5="none" zip="ninjakun.zip">
+        <part name="ninja-1.7a" crc="1c1dc141"/>
+        <part name="ninja-2.7b" crc="39cc7d37"/>
+        <part name="ninja-3.7d" crc="d542bfe3"/>
+        <part name="ninja-4.7e" crc="a57385c6"/>
+        <part name="ninja-6.7n" crc="a74c4297"/>
+        <part name="ninja-7.7p" crc="53a72039"/>
+        <part name="ninja-8.7s" crc="4a99d857"/>
+        <part name="ninja-9.7t" crc="dede49e4"/>
+        <part name="ninja-10.2c" crc="0d55664a"/>
+        <part name="ninja-11.2d" crc="12ff9597"/>
+        <part name="ninja-12.4c" crc="e9b75807"/>
+        <part name="ninja-13.4d" crc="1760ed2c"/>
+    </rom>
+
+    <!-- Index 1: CPU 2 program 0000-1FFF -->
+    <rom index="1" md5="none" zip="ninjakun.zip">
+        <part name="ninja-5.7h" crc="164a42c4"/>
+    </rom>
+
+    <!-- Index 5: game-select byte -->
+    <rom index="5"><part>16</part></rom>
+
+    <remark>Ninjakun Majou no Bouken (UPL, Taito license)</remark>
+</misterromdescription>

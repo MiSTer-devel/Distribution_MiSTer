@@ -1,0 +1,96 @@
+<misterromdescription>
+    <name>Slip Stream (Hispanic)</name>
+    <setname>slipstrmh</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1995</year>
+    <manufacturer>Capcom</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>1</players>
+    <buttons names="Accelerator,Brake,Shift,Start,Coin,Service,Test" default="A,B,X,Start,Select,-,-"/>
+    <region>Hispanic</region>
+
+    <rom index="1">
+        <part>00 03</part>
+    </rom>
+
+    <rom index="0" zip="slipstrmh.zip|slipstrm.zip" md5="none" address="0x30000000">
+
+        <part name="s32h_prg01.ic6" crc="ab778297"/>
+        <part name="s32h_prg01.ic6" crc="ab778297"/>
+        <interleave output="16">
+            <part name="s32_dat00.ic14" crc="c3ff6309" map="01"/>
+            <part name="s32_dat01.ic7" crc="0e605c81" map="10"/>
+        </interleave>
+
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd00.ic35" crc="0fee2278"/>
+        <part name="s32_snd01.ic31" crc="ae7be5f2"/>
+        <part name="s32_snd01.ic31" crc="ae7be5f2"/>
+        <part repeat="2097152">00</part>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="32">
+            <part name="s32_scr00.ic38" crc="3cbb2d0b" map="0001"/>
+            <part name="s32_scr02.ic29" crc="52c4bb85" map="0010"/>
+            <part name="s32_scr01.ic34" crc="4167be55" map="0100"/>
+            <part name="s32_scr03.ic25" crc="4948604a" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="s32_scr00.ic38" crc="3cbb2d0b" map="0001"/>
+            <part name="s32_scr02.ic29" crc="52c4bb85" map="0010"/>
+            <part name="s32_scr01.ic34" crc="4167be55" map="0100"/>
+            <part name="s32_scr03.ic25" crc="4948604a" map="1000"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="s32_obj00.ic36" crc="cffe9e0d" map="00000001"/>
+            <part name="s32_obj01.ic32" crc="4ebd1383" map="00000010"/>
+            <part name="s32_obj02.ic27" crc="b3cf4fe2" map="00000100"/>
+            <part name="s32_obj03.ic23" crc="c6345391" map="00001000"/>
+            <part name="s32_obj04.ic37" crc="2de4288e" map="00010000"/>
+            <part name="s32_obj05.ic33" crc="6cfb74fb" map="00100000"/>
+            <part name="s32_obj06.ic28" crc="53234bf4" map="01000000"/>
+            <part name="s32_obj07.ic24" crc="22c129cf" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="s32_obj00.ic36" crc="cffe9e0d" map="00000001"/>
+            <part name="s32_obj01.ic32" crc="4ebd1383" map="00000010"/>
+            <part name="s32_obj02.ic27" crc="b3cf4fe2" map="00000100"/>
+            <part name="s32_obj03.ic23" crc="c6345391" map="00001000"/>
+            <part name="s32_obj04.ic37" crc="2de4288e" map="00010000"/>
+            <part name="s32_obj05.ic33" crc="6cfb74fb" map="00100000"/>
+            <part name="s32_obj06.ic28" crc="53234bf4" map="01000000"/>
+            <part name="s32_obj07.ic24" crc="22c129cf" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="s32_obj00.ic36" crc="cffe9e0d" map="00000001"/>
+            <part name="s32_obj01.ic32" crc="4ebd1383" map="00000010"/>
+            <part name="s32_obj02.ic27" crc="b3cf4fe2" map="00000100"/>
+            <part name="s32_obj03.ic23" crc="c6345391" map="00001000"/>
+            <part name="s32_obj04.ic37" crc="2de4288e" map="00010000"/>
+            <part name="s32_obj05.ic33" crc="6cfb74fb" map="00100000"/>
+            <part name="s32_obj06.ic28" crc="53234bf4" map="01000000"/>
+            <part name="s32_obj07.ic24" crc="22c129cf" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="s32_obj00.ic36" crc="cffe9e0d" map="00000001"/>
+            <part name="s32_obj01.ic32" crc="4ebd1383" map="00000010"/>
+            <part name="s32_obj02.ic27" crc="b3cf4fe2" map="00000100"/>
+            <part name="s32_obj03.ic23" crc="c6345391" map="00001000"/>
+            <part name="s32_obj04.ic37" crc="2de4288e" map="00010000"/>
+            <part name="s32_obj05.ic33" crc="6cfb74fb" map="00100000"/>
+            <part name="s32_obj06.ic28" crc="53234bf4" map="01000000"/>
+            <part name="s32_obj07.ic24" crc="22c129cf" map="10000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

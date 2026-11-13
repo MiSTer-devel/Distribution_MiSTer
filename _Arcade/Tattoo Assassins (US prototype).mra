@@ -1,0 +1,208 @@
+<misterromdescription>
+  <name>Tattoo Assassins (US prototype)</name>
+  <setname>tattass</setname>
+  <rbf>TattooAssassins</rbf>
+  <mameversion></mameversion>
+  <year>1994</year>
+  <manufacturer>Data East Pinball</manufacturer>
+  <category>Arcade</category>
+  <rotation>horizontal</rotation>
+  <players>2</players>
+  <num_buttons>6</num_buttons>
+  <buttons default="A,B,X,Y,L,R,Start" names="Low Punch,High Punch,Low Kick,High Kick,Defense,Tattoo Special,Start,Coin,Pause"/>
+  <!-- default = 1B,80,20,00 -> dsw 0x0020801B. NON scelti a gusto: sono quelli
+       scrive la routine di reset di fabbrica del firmware stesso (ARM 0x5A8),
+       che azzera i 0x400 byte del blocco e poi imposta SOLO quattro campi:
+         bl 0x10E1C con r0=2            -> coinage = indice 2 (USA 2)
+         strb r1,[fp,#0x11f] con r1=2   -> S/C Pricing "2 Start 2 Cont"
+         strb r0,[fp,#0x119] con r0=3   -> Game Difficulty Medium
+         strb r0,[fp,#0x11b] con r0=3   -> Violence Excessive
+       tutto il resto resta a ZERO: i sei toggle, Attract Sound, Advisory e
+       Life Meter. Mappatura sui bit:
+         bit  2:0  = 3  Game Difficulty Medium
+         bit  4:3  = 3  Violence Excessive
+         bit 10:5  = 0  i sei toggle a No (ordine dei bit provato sulla tabella
+                    di maschere del firmware a ROM 0x1160: FF FF 01 02 04 08
+                    10 20 = Flatulence, Diarrhea, Blood, Vomit, Nudity, Jewels)
+         bit   11  = 0  Attract Sound No
+         bit 13:12 = 0  Life Meter Normal
+         bit 15:14 = 2  S/C Pricing "2 Start 2 Cont"
+         bit 19:16 = 0  Advisory V2-S1-L1
+         bit 24:20 = 2  Coinage "USA 2", che e' la tariffa dell'EEPROM di fabbrica
+       Il Coinage occupa 5 bit (22 tariffe), quindi servono QUATTRO byte. -->
+  <switches default="1B,80,20,00" base="0">
+    <!-- Mappa ricavata disassemblando l'ARM: EEPROM offset N = RAM 0x104400+N.
+         0x119 difficolta' 0..7, 0x11A bitfield 6 toggle, 0x11B violence 0..3,
+         0x11C attract sound, 0x11D advisory 0..11, 0x11E life meter 0..3,
+         0x11F S/C pricing 0..3. Default = quelli di fabbrica della ROM. -->
+    <!-- Coinage = TARIFFA, non l'ingresso gettoni. E' un INDICE in una tabella
+         del firmware (ARM 0x11594) e il gioco ne accetta 22 (editor: `cmp #0x16
+         / movhs #0`). Ogni record e' [16 byte descrittore][nome], e il primo
+         byte del descrittore E' il suo indice. Il gioco usa davvero il
+         DESCRITTORE, che tiene a EEPROM 0xF4: la sua routine scrive indice e
+         descrittore SEMPRE INSIEME, quindi il core fa lo stesso e riscrive
+         entrambi a ogni reset. Di fabbrica l'EEPROM ha indice 2 = "USA 2".
+         Tariffe, dalla tabella del firmware:
+           Free Play   USA 1 1/50@,3/$1   USA 2..5 1/25@
+           Custom 1..7   1CR..7CR / 1COIN      Custom 8..10  1,3,5CR / 2COIN
+           Custom 11..13 1,2,4CR / 3COIN       Custom 14..16 1,3,5CR / 4COIN -->
+    <dip name="Coinage" bits="20,24" ids="Free Play,USA 1,USA 2,USA 3,USA 4,USA 5,Custom 1,Custom 2,Custom 3,Custom 4,Custom 5,Custom 6,Custom 7,Custom 8,Custom 9,Custom 10,Custom 11,Custom 12,Custom 13,Custom 14,Custom 15,Custom 16"/>
+    <dip name="Game Difficulty" bits="0,2" ids="Easiest,Very Easy,Easy,Medium,Medium Hard,Hard,Very Hard,Hardest"/>
+    <!-- Violence non e' un interruttore: e' una SOGLIA per singola animazione
+         (0x148B4 e 0x2481C confrontano il valore col livello richiesto e sotto
+         soglia sostituiscono l'animazione; a 0x16E9C c'e' un ramo che gira solo
+         se vale 3). Al massimo non sostituisce mai nulla: l'effetto si vede
+         solo ABBASSANDOLO. -->
+    <dip name="Violence" bits="3,4" ids="None,Mild,Harsh,Excessive"/>
+    <dip name="Flatulence" bits="5" ids="No,Yes"/>
+    <!-- Diarrhea e Vomit: NESSUN lettore in tutto il firmware (scansione
+         esaustiva dei byte della ROM). Le voci restano per completezza del
+         menu, ma non hanno alcun effetto: non e' il core. -->
+    <dip name="Diarrhea" bits="6" ids="No,Yes"/>
+    <!-- ATTENZIONE, stortura del FIRMWARE, non del core (verificata sul ferro):
+         con Blood = Yes il gioco SOPPRIME cinque effetti. La funzione ARM a
+         0x1E3E0 riceve l'ID dell'effetto da generare e, se e' uno di
+         0x28 / 0x8D / 0xDF / 0xE0 / 0xE1, con il bit Blood a 1 fa `mvn r0,#0`
+         ed esce senza generarlo (0x1E408..0x1E418). Con Blood = No li genera.
+         Il sangue "di base" del gioco non passa da questo bit, per questo si
+         vede comunque con Blood = No. Non si inverte la voce: il menu di
+         servizio DENTRO il gioco legge lo stesso byte e mostra la stessa cosa,
+         quindi invertire qui farebbe disaccordare i due. -->
+    <dip name="Blood" bits="7" ids="No,Yes"/>
+    <dip name="Vomit" bits="8" ids="No,Yes"/>
+    <dip name="Nudity" bits="9" ids="No,Yes"/>
+    <dip name="Jewels" bits="10" ids="No,Yes"/>
+    <dip name="Attract Sound" bits="11" ids="No,Yes"/>
+    <dip name="Life Meter" bits="12,13" ids="Normal,More Health,Less Health,Least Health"/>
+    <dip name="S/C Pricing" bits="14,15" ids="1 Start 1 Cont,2 Start 1 Cont,2 Start 2 Cont,3 Start 2 Cont"/>
+    <dip name="Advisory" bits="16,19" ids="V2-S1-L1,V2-S1,V2-L1,V2,V1-S1-L1,V1-S1,V1-L1,V1,S1,L1,General,None"/>
+  </switches>
+  <rom index="0" zip="tattass.zip" md5="none">
+    <!-- MAIN @ 0x000000  (da maincpu) -->
+    <interleave output="32">
+  <part name="pp44.cpu" crc="c3ca5b49" map="0021"/>
+  <part name="pp45.cpu" crc="d3f30de0" map="2100"/>
+</interleave>
+    <!-- AUDIO_DL @ 0x100000  (da decobsmt:soundcpu) -->
+    <part name="u7.snd" crc="a7228077"/>
+    <!-- TXL @ 0x110000  (da tiles1) -->
+    <interleave output="16">
+  <part name="abak_b01.s02" crc="bc805680" offset="0x0" length="0x8000" map="01"/>
+  <part name="abak_b01.s13" crc="350effcd" offset="0x0" length="0x8000" map="10"/>
+</interleave>
+    <!-- TXH @ 0x120000  (da tiles1) -->
+    <interleave output="16">
+  <part name="abak_b01.s02" crc="bc805680" offset="0x40000" length="0x8000" map="01"/>
+  <part name="abak_b01.s13" crc="350effcd" offset="0x40000" length="0x8000" map="10"/>
+</interleave>
+    <!-- BG1_LO @ 0x130000  (da tiles1) -->
+    <interleave output="16">
+  <part name="abak_b01.s02" crc="bc805680" offset="0x0" length="0x80000" map="01"/>
+  <part name="abak_b01.s13" crc="350effcd" offset="0x0" length="0x80000" map="10"/>
+</interleave>
+    <!-- BG1_MID @ 0x230000  (da tiles1) -->
+    <interleave output="16">
+  <part name="abak_b23.s02" crc="91abdc21" offset="0x0" length="0x80000" map="01"/>
+  <part name="abak_b23.s13" crc="80eb50fe" offset="0x0" length="0x80000" map="10"/>
+</interleave>
+    <part repeat="0x100000"> 00 </part>
+    <!-- FG0 @ 0x430000  (da tiles2) -->
+    <interleave output="16">
+  <part name="bbak_b01.s02" crc="611be9a6" map="01"/>
+  <part name="bbak_b01.s13" crc="097e0604" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="bbak_b23.s02" crc="3836531a" map="01"/>
+  <part name="bbak_b23.s13" crc="1210485a" map="10"/>
+</interleave>
+    <!-- FG1 @ 0x630000  (da tiles2) -->
+    <interleave output="16">
+  <part name="bbak_b01.s02" crc="611be9a6" map="01"/>
+  <part name="bbak_b01.s13" crc="097e0604" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="bbak_b23.s02" crc="3836531a" map="01"/>
+  <part name="bbak_b23.s13" crc="1210485a" map="10"/>
+</interleave>
+    <!-- SPR0_A @ 0x830000  (da sprites1) -->
+    <interleave output="16">
+  <part name="ob1_c0.b0" crc="053fecca" map="01"/>
+  <part name="ob1_c1.b0" crc="e183e6bc" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob1_c0.b1" crc="385434b0" map="01"/>
+  <part name="ob1_c1.b1" crc="0a3ec489" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob1_c0.b2" crc="946e9f59" map="01"/>
+  <part name="ob1_c1.b2" crc="9f66ad54" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob1_c0.b3" crc="cbbbc696" map="01"/>
+  <part name="ob1_c1.b3" crc="f7b1bdee" map="10"/>
+</interleave>
+    <!-- SPR0_B @ 0xC30000  (da sprites1) -->
+    <interleave output="16">
+  <part name="ob1_c2.b0" crc="1314f828" map="01"/>
+  <part name="ob1_c3.b0" crc="c63866df" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob1_c2.b1" crc="52f06081" map="01"/>
+  <part name="ob1_c3.b1" crc="a8a5cfbe" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob1_c2.b2" crc="a8df60eb" map="01"/>
+  <part name="ob1_c3.b2" crc="a1a753be" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob1_c2.b3" crc="97815619" map="01"/>
+  <part name="ob1_c3.b3" crc="fc3ccb7a" map="10"/>
+</interleave>
+    <!-- SPR0_P4 @ 0x1030000  (da sprites1) -->
+    <part name="ob1_c4.b0" crc="f71cdd1b"/>
+    <part name="ob1_c4.b1" crc="09d0acd6"/>
+    <part name="ob1_c4.b2" crc="b65b3c4b"/>
+    <part name="ob1_c4.b3" crc="dfdfd0ff"/>
+    <!-- SPR1_A @ 0x1230000  (da sprites2) -->
+    <interleave output="16">
+  <part name="ob2_c0.b0" crc="9080ebe4" map="01"/>
+  <part name="ob2_c1.b0" crc="c0464970" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob2_c0.b1" crc="2c2c15c9" map="01"/>
+  <part name="ob2_c1.b1" crc="d2c49a14" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob2_c0.b2" crc="aefa1b01" map="01"/>
+  <part name="ob2_c1.b2" crc="4af620ca" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob2_c0.b3" crc="a2a5dafd" map="01"/>
+  <part name="ob2_c1.b3" crc="6f0afd05" map="10"/>
+</interleave>
+    <!-- SPR1_B @ 0x1630000  (da sprites2) -->
+    <interleave output="16">
+  <part name="ob2_c2.b0" crc="35a2e621" map="01"/>
+  <part name="ob2_c3.b0" crc="99c7cc2d" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob2_c2.b1" crc="fbe957e8" map="01"/>
+  <part name="ob2_c3.b1" crc="d7238829" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob2_c2.b2" crc="8e58be07" map="01"/>
+  <part name="ob2_c3.b2" crc="1b5188c5" map="10"/>
+</interleave>
+    <interleave output="16">
+  <part name="ob2_c2.b3" crc="90fe5f4f" map="01"/>
+  <part name="ob2_c3.b3" crc="e3517e6e" map="10"/>
+</interleave>
+    <!-- BSMT @ 0x1A30000  (da decobsmt:bsmt) -->
+    <part name="u17.snd" crc="49303539"/>
+    <part name="u21.snd" crc="0ad8bc18"/>
+    <part name="u36.snd" crc="f558947b"/>
+    <part name="u37.snd" crc="7a3190bc"/>
+    <!-- EEPROM @ 0x1C30000  (da eeprom) -->
+    <part name="eeprom-tattass.bin" crc="7140f40c"/>
+  </rom>
+</misterromdescription>

@@ -1,0 +1,81 @@
+<misterromdescription>
+	<name>Klax (prototype set 1)</name>
+	<setname>klaxp1</setname>
+	<parent>klax</parent>
+	<mameversion>0254</mameversion>
+	<year>1989</year>
+	<manufacturer>Atari Games</manufacturer>
+	<rotation>horizontal</rotation>
+	<category>Arcade</category>
+	<rbf>Escape</rbf>
+	<mameinfo parent="klax" cpp="eprom" input="klaxp"/>
+	<display type="raster" rotate="0"/>
+	<!-- GAMESEL-167: index-1 byte 01 (game_sel 2'b01) = Klax prototype
+	     (single 68000, JSA-II).
+	     Controls: 8-way stick + ONE button per player, Flip/Start on D8
+	     (KLAXBTN-174: MAME klaxp declares four, but traced in MAME 0.289 the
+	     program reads only D8 - start/join and tile drop; D9..D11 are never
+	     acted on). Button 2 is "Flip (2nd)", the
+	     same function (KLAXFLIP2-178: a Klax cabinet has a Flip button each
+	     side of the stick). The "-" slots hide the unused positions from
+	     Define buttons; the order must still mirror the core's J1 line. Start is hidden (STARTHIDE-179): it drives
+	     260000 bit 0, which neither Klax set ever reads (traced in MAME); the
+	     game starts from Flip (D8). Start is
+	     the self-test step/continue switch, as on every game - the board has
+	     no Start switch, the prototype starts from a button. Coin goes
+	     through the sound board, as on Escape. Pause on the left shoulder as
+	     on the Escape MRA. -->
+	<buttons names="Flip/Start,Flip (2nd),-,-,-,Coin,Pause" default="A,B,X,Y,Start,Select,L"/>
+
+	<!--
+	  ROM STREAM LAYOUT (Klax prototype on Escape hardware, KLAX_GUTS.md)
+
+	    0x000000  0x020000  maincpu   68000 program (one pair)
+	    0x020000  0x0E0000  filler    (no extra CPU on this board)
+	    0x100000  0x010000  jsa:cpu   6502 program
+	    0x110000  0x004000  chars     alphanumerics (Escape's 125d under another name)
+	    0x114000  0x00C000  filler
+	    0x120000  0x040000  spr_tiles four interleaved bit-planes (repacked by the loader)
+	    0x160000  0x0E0000  filler
+	    0x240000  0x020000  jsa:oki1  ADPCM (written through raw)
+	-->
+	<rom index="0" zip="klaxp1.zip|klax.zip" md5="none">
+		<interleave output="16">
+			<part crc="87ee72d1" map="01" name="klax_ft1.50a"/>
+			<part crc="ba139fdb" map="10" name="klax_ft1.40a"/>
+		</interleave>
+		<part repeat="917504">00</part>
+
+		<!-- ============ JSA-II 6502 0x100000 ============================= -->
+		<part crc="744734cb" name="klaxsnd.10c"/>
+
+		<!-- ============ alphanumerics 0x110000 ========================== -->
+		<part crc="409d818e" name="klax125d"/>
+		<part repeat="49152">00</part>
+
+		<!-- ============ sprite / tile graphics 0x120000 (256 KB) ==========
+		     ROMREGION_INVERT, RGN_FRAC(1,4): four 64 KB bit-planes, plane 0 =
+		     MSB, interleaved so the loader repacks them to chunky 4bpp. -->
+		<interleave output="32">
+			<part crc="a523c966" map="0001" name="klaxprot.43s"/>
+			<part crc="dbc678cd" map="0010" name="klaxprot.76s"/>
+			<part crc="af184754" map="0100" name="klaxprot.47u"/>
+			<part crc="7a56ffab" map="1000" name="klaxprot.76u"/>
+		</interleave>
+		<!-- 0x160000 - 0x23FFFF: rest of the sprite slot, unused -->
+		<part repeat="917504">00</part>
+
+		<!-- ============ OKI6295 ADPCM 0x240000 ========================== -->
+		<part crc="ba1e864f" name="klaxadp0.1f"/>
+		<part crc="dec9a5ac" name="klaxadp1.1e"/>
+	</rom>
+	<rom index="1">
+		<part>01</part>
+	</rom>
+	<!-- NVRAM-170/171: the board's 2804 EEPROM (512 bytes: high scores,
+	     operator settings). Main loads the saved file after the ROMs. It is
+	     saved by the OSD's Save NVRAM, by Main's Save settings, or - with
+	     Autosave NVRAM on (default Off, the Arcade-Cave convention) - when
+	     the OSD opens after the game changed it. One file per MRA name. -->
+	<nvram index="4" size="512"/>
+</misterromdescription>

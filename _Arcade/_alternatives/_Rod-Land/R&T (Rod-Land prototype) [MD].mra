@@ -1,0 +1,98 @@
+<misterromdescription>
+    <name>R&amp;T (Rod-Land prototype)</name>
+    <setname>rittam</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1990</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: Rod-Land DIP sheet (names, order, standard settings) -->
+    <switches default="FF,FF">
+        <dip name="First Coinchute" bits="0,2" ids="1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,2C/1Cr,3C/1Cr,Free Play" values="7,3,5,1,6,2,4,0"/>
+        <dip name="Second Coinchute" bits="3,5" ids="1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,2C/1Cr,3C/1Cr,4C/1Cr" values="7,3,5,1,6,2,4,0"/>
+        <dip name="Attract Sound" bits="6" ids="Unnecessary,Necessary" values="1,0"/>
+        <dip name="Not Used" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Not Used" bits="8" ids="Off,On" values="1,0"/>
+        <dip name="Not Used" bits="9" ids="Off,On" values="1,0"/>
+        <dip name="Number Of Lives" bits="10,11" ids="2 Lives,3 Lives,4 Lives,Unlimited" values="1,3,2,0"/>
+        <dip name="Chapter" bits="12" ids="No. 1,No. 2" values="1,0"/>
+        <dip name="Difficulty" bits="13,14" ids="Easy,Standard,Difficult,More Difficult" values="0,3,1,2"/>
+        <dip name="Screen Display" bits="15" ids="Normal,Reverse" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Rod,Ladder,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>06</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 01 43 02   00 00 12 43
+            00 01 04 32   00 04 31 02   00 04 30 12   00 02 10 43
+            00 02 01 43   00 00 24 31   00 00 43 21   00 00 21 43
+            00 01 02 43   00 01 20 43   00 04 32 01   00 02 43 01
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="rittam.zip|rodland.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="2.rom2" crc="93085af2" map="01"/>
+            <part name="r+t_1.rom1" crc="20446c34" map="10"/>
+        </interleave>
+        <part repeat="0x40000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="jaleco_5.rom5" crc="ea6600ec" map="01"/>
+            <part name="jaleco_6.rom6" crc="51c3c0bc" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="jaleco_9.rom9" crc="065364bd"/>
+        <part name="jaleco_10.rom10" crc="395df3b2"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="jaleco_7.rom7" crc="76fd879f"/>
+        <part name="jaleco_8.rom8" crc="a771ab00"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="11.rom11" crc="ad2bf897"/>
+        <part name="12.rom12" crc="d0224ed6"/>
+        <part name="13.rom13" crc="b1d5d423"/>
+        <part name="14.rom14" crc="20f8c361"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="15.rom15" crc="90bc97ac"/>
+        <part name="16.rom16" crc="e38750aa"/>
+        <part repeat="0x20000">FF</part>
+        <part name="18.rom18" crc="57ccf24f"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="19.rom19" crc="6daa1081"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="r+t_20.rom20" crc="23bc2b0b"/>
+        <part name="21.rom21" crc="9d2b0ec4"/>
+        <part name="22.rom22" crc="bba2e2cf"/>
+        <part name="23.rom23" crc="05536a18"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="ps89013a.14m" crc="8914e72d"/>
+
+    </rom>
+</misterromdescription>

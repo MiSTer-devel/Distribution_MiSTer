@@ -1,0 +1,103 @@
+<misterromdescription>
+    <name>F1 Exhaust Note (US)</name>
+    <setname>f1enu</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1991</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>1</players>
+    <buttons names="Accelerator,Brake,Gear Up,Start,Coin,Service,Test,Gear Down" default="A,B,R,Start,Select,-,-,L"/>
+    <region>US</region>
+
+    <rom index="1">
+        <part>00 01 02</part>
+    </rom>
+
+    <rom index="0" zip="f1enu.zip" md5="none" address="0x30000000">
+
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <part name="epr-14451a.ic6" crc="e17259c9"/>
+        <interleave output="16">
+            <part name="epr-14445.ic14" crc="d06261ab" map="01"/>
+            <part name="epr-14444.ic7" crc="07724354" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-14445.ic14" crc="d06261ab" map="01"/>
+            <part name="epr-14444.ic7" crc="07724354" map="10"/>
+        </interleave>
+
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14449.ic35" crc="2d29699c"/>
+        <part name="epr-14448.ic31" crc="87ca1e8d"/>
+        <part name="epr-14448.ic31" crc="87ca1e8d"/>
+        <part name="epr-14447.ic26" crc="db1cfcbd"/>
+        <part name="epr-14447.ic26" crc="db1cfcbd"/>
+        <part name="epr-14446.ic22" crc="646ec2cb"/>
+        <part name="epr-14446.ic22" crc="646ec2cb"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="32">
+            <part name="mpr-14362.ic38" crc="fb1c4e79" map="0001"/>
+            <part name="mpr-14360.ic29" crc="c5e8da79" map="0010"/>
+            <part name="mpr-14361.ic34" crc="e3204bda" map="0100"/>
+            <part name="mpr-14359.ic25" crc="70305c68" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mpr-14362.ic38" crc="fb1c4e79" map="0001"/>
+            <part name="mpr-14360.ic29" crc="c5e8da79" map="0010"/>
+            <part name="mpr-14361.ic34" crc="e3204bda" map="0100"/>
+            <part name="mpr-14359.ic25" crc="70305c68" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mpr-14362.ic38" crc="fb1c4e79" map="0001"/>
+            <part name="mpr-14360.ic29" crc="c5e8da79" map="0010"/>
+            <part name="mpr-14361.ic34" crc="e3204bda" map="0100"/>
+            <part name="mpr-14359.ic25" crc="70305c68" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="mpr-14362.ic38" crc="fb1c4e79" map="0001"/>
+            <part name="mpr-14360.ic29" crc="c5e8da79" map="0010"/>
+            <part name="mpr-14361.ic34" crc="e3204bda" map="0100"/>
+            <part name="mpr-14359.ic25" crc="70305c68" map="1000"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-14370.ic36" crc="fda78289" map="00000001"/>
+            <part name="mpr-14369.ic32" crc="7765116d" map="00000010"/>
+            <part name="mpr-14368.ic27" crc="5744a30e" map="00000100"/>
+            <part name="mpr-14367.ic23" crc="77bb9003" map="00001000"/>
+            <part name="mpr-14366.ic37" crc="21078e83" map="00010000"/>
+            <part name="mpr-14365.ic33" crc="36913790" map="00100000"/>
+            <part name="mpr-14364.ic28" crc="0fa12ecd" map="01000000"/>
+            <part name="mpr-14363.ic24" crc="f3427a56" map="10000000"/>
+        </interleave>
+        <part repeat="4194304">00</part>
+        <interleave output="64">
+            <part name="mpr-14370.ic36" crc="fda78289" map="00000001"/>
+            <part name="mpr-14369.ic32" crc="7765116d" map="00000010"/>
+            <part name="mpr-14368.ic27" crc="5744a30e" map="00000100"/>
+            <part name="mpr-14367.ic23" crc="77bb9003" map="00001000"/>
+            <part name="mpr-14366.ic37" crc="21078e83" map="00010000"/>
+            <part name="mpr-14365.ic33" crc="36913790" map="00100000"/>
+            <part name="mpr-14364.ic28" crc="0fa12ecd" map="01000000"/>
+            <part name="mpr-14363.ic24" crc="f3427a56" map="10000000"/>
+        </interleave>
+        <part repeat="4194304">00</part>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

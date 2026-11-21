@@ -1,0 +1,111 @@
+<misterromdescription>
+    <name>Ninja Kazan (World)</name>
+    <setname>kazan</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1988</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="BF,BF">
+        <dip name="Coin A" bits="0,2" ids="3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,Free Play" values="4,2,7,3,5,1,6,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr" values="0,4,2,7,3,5,1,6"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="1,0"/>
+        <dip name="Freeze Screen (Cheat)" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="8,9" ids="2,3,4,Infinite (Cheat)" values="3,1,2,0"/>
+        <dip name="Bonus Life" bits="10" ids="50k,200k" values="1,0"/>
+        <dip name="Allow Continue" bits="11" ids="Off,On" values="0,1"/>
+        <dip name="Difficulty" bits="12,13" ids="Normal,Hard,Harder,Hardest" values="3,2,1,0"/>
+        <dip name="Cabinet" bits="14" ids="Upright,Cocktail" values="0,1"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Attack,Jump,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>0F</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 04 30 12   00 00 12 43
+            00 01 04 32   00 01 43 02   00 04 31 02   00 01 02 43
+            00 00 24 31   00 00 24 31   00 04 30 21   00 00 21 43
+            00 01 24 30   00 01 43 20   00 04 31 20   00 01 20 43
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="kazan.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="kazan.2" crc="072aa3d6" map="01"/>
+            <part name="kazan.1" crc="b9801e2d" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="iga_03.bin" crc="de5937ad" map="01"/>
+            <part name="iga_04.bin" crc="afaf0480" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="iga_05.bin" crc="13580868" map="01"/>
+            <part name="iga_06.bin" crc="7904d5dd" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="kazan.9" crc="5c28bd2d"/>
+        <part name="kazan.10" crc="cd6c7978"/>
+        <part repeat="0xd0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="kazan.7" crc="42f228f8"/>
+        <part name="kazan.8" crc="ebd1c883"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="kazan.11" crc="08e54137"/>
+        <part name="kazan.12" crc="e89d58bd"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="kazan.15" crc="48b28aa9"/>
+        <part name="kazan.16" crc="07eab526"/>
+        <part name="kazan.17" crc="617269ea"/>
+        <part name="kazan.18" crc="52fc1b4b"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="kazan.19" crc="b3a9a4ae"/>
+        <part repeat="0x70000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="kazan.20" crc="ee5819d8"/>
+        <part name="kazan.21" crc="abf14d39"/>
+        <part name="kazan.22" crc="646933c4"/>
+        <part name="kazan.23" crc="0b531aee"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="kazan.14m" crc="85b30ac4"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 40 01 00 97 20 AC
+            00 0F 00 04 00 04 00 00
+            00 0F 00 10 00 08 30 30
+        </part>
+    </rom>
+    <nvram index="5" size="163"/>
+</misterromdescription>

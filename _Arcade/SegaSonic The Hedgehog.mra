@@ -1,0 +1,71 @@
+<misterromdescription>
+    <name>SegaSonic The Hedgehog</name>
+    <setname>sonic</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1992</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>3</players>
+    <buttons names="Spin Jump,-,-,Start,Coin,Service,Test" default="A,Start,Select,-,-"/>
+    <region>Japan</region>
+
+    <rom index="1">
+        <part>C0</part>
+    </rom>
+
+    <rom index="0" zip="sonic.zip" md5="none" address="0x30000000">
+
+        <part name="epr-15787c.ic17" crc="25e3c27e"/>
+        <part name="epr-15787c.ic17" crc="25e3c27e"/>
+        <part name="epr-15787c.ic17" crc="25e3c27e"/>
+        <part name="epr-15787c.ic17" crc="25e3c27e"/>
+        <part name="epr-15786c.ic8" crc="efe9524c"/>
+        <part name="epr-15786c.ic8" crc="efe9524c"/>
+        <part name="epr-15786c.ic8" crc="efe9524c"/>
+        <part name="epr-15786c.ic8" crc="efe9524c"/>
+        <interleave output="16">
+            <part name="epr-15781c.ic18" crc="65b06c25" map="01"/>
+            <part name="epr-15780c.ic9" crc="2db66fd2" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-15781c.ic18" crc="65b06c25" map="01"/>
+            <part name="epr-15780c.ic9" crc="2db66fd2" map="10"/>
+        </interleave>
+
+        <part name="epr-15785.ic36" crc="0fe7422e"/>
+        <part name="epr-15785.ic36" crc="0fe7422e"/>
+        <part name="epr-15785.ic36" crc="0fe7422e"/>
+        <part name="epr-15785.ic36" crc="0fe7422e"/>
+        <part name="mpr-15784.ic35" crc="42f06714"/>
+        <part name="mpr-15783.ic34" crc="e4220eea"/>
+        <part name="mpr-15782.ic33" crc="cf56b5a0"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-15789.ic14" crc="4378f12b" map="01"/>
+            <part name="mpr-15788.ic5" crc="a6ed5d7a" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="mpr-15789.ic14" crc="4378f12b" map="01"/>
+            <part name="mpr-15788.ic5" crc="a6ed5d7a" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-15790.ic32" crc="c69d51b1" map="00000021"/>
+            <part name="mpr-15792.ic30" crc="1006bb67" map="00002100"/>
+            <part name="mpr-15794.ic28" crc="8672b480" map="00210000"/>
+            <part name="mpr-15796.ic26" crc="95b8011c" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-15791.ic31" crc="42217066" map="00000021"/>
+            <part name="mpr-15793.ic29" crc="75bafe55" map="00002100"/>
+            <part name="mpr-15795.ic27" crc="7f3dad30" map="00210000"/>
+            <part name="mpr-15797.ic25" crc="013c6cab" map="21000000"/>
+        </interleave>
+        <part repeat="4194304">00</part>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

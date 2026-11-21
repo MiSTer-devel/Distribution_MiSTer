@@ -1,0 +1,101 @@
+<misterromdescription>
+    <name>E.D.F.: Earth Defense Force (Japan, prototype)</name>
+    <setname>edfp</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1991</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="FF,FF">
+        <dip name="Coin A" bits="0,2" ids="3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,Free Play" values="4,2,7,3,5,1,6,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr" values="0,4,2,7,3,5,1,6"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="0,1"/>
+        <dip name="Service Mode" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="DSW bits 2-0" bits="8,10" ids="0,1,2,3,4,5,6,7" values="0,1,2,3,4,5,6,7"/>
+        <dip name="Lives" bits="11" ids="3,4" values="1,0"/>
+        <dip name="Difficulty" bits="12,13" ids="Easy,Normal,Hard,Very Hard" values="0,3,1,2"/>
+        <dip name="Unknown" bits="14" ids="Off,On" values="1,0"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Shot,Deploy Drone,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>09</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 41 32   00 00 24 13   00 00 31 42   00 00 00 00
+            00 00 00 00   00 00 00 00   00 00 00 00   00 00 00 00
+            00 00 00 00   00 00 00 00   00 00 00 00   00 00 00 00
+            00 00 00 00   00 00 00 00   00 00 00 00   00 00 00 00
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="edfp.zip|edf.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="2.rom2.27c010" crc="358a6ac3" map="01"/>
+            <part name="1.rom1.27c010" crc="f30cfb25" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="3.rom3.27512" crc="f0357ba2" map="01"/>
+            <part name="4.rom4.27512" crc="41e1a014" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="5.rom5.27512" crc="505d09ff" map="01"/>
+            <part name="6.rom6.27512" crc="13c14471" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="9.rom9.27c010" crc="7182f27c"/>
+        <part name="10.rom10.27c010" crc="f780d92f"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="7.rom7.27c010" crc="b9d79c1e"/>
+        <part name="8.rom8.27c010" crc="fa0d1887"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="11.rom11.27c010" crc="cfba8249"/>
+        <part name="12.rom12.27c010" crc="c2027f34"/>
+        <part name="13.rom13.27c010" crc="d4b87d60"/>
+        <part name="14.rom14.27c010" crc="9814fe96"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="15.rom15.27c010" crc="a91c027d"/>
+        <part name="16.rom16.27c010" crc="2caecbc7"/>
+        <part name="17.rom17.27c010" crc="3947efe8"/>
+        <part name="18.rom18.27c010" crc="2de832cb"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="19.rom19.27c010" crc="96e38983"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="20.rom20.27c010" crc="e6956a01"/>
+        <part name="21.rom21.27c010" crc="8e19ae9a"/>
+        <part name="22.rom22.27c010" crc="b5be39f3"/>
+        <part name="23.rom23.27c010" crc="01304689"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="rd.14m" crc="1d877538"/>
+
+    </rom>
+</misterromdescription>

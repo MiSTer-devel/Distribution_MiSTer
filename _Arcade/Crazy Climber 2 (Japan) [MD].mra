@@ -1,0 +1,104 @@
+<misterromdescription>
+  <name>Crazy Climber 2 (Japan)</name>
+  <mameversion>0288</mameversion>
+  <setname>cclimbr2</setname>
+  <year>1988</year>
+  <manufacturer>Nichibutsu</manufacturer>
+  <category>Platformer</category>
+  <rotation>horizontal</rotation>
+  <rbf>ArmedFMD</rbf>
+
+  <switches default="df,ff">
+    <!-- DSW1 -->
+    <dip name="Lives" bits="0,1" ids="3,4,5,6" values="3,2,1,0"/>
+    <dip name="Bonus Life" bits="2,3" ids="30K and 100k,60k and 130k,30k only,60k only" values="3,2,1,0"/>
+    <dip name="Demo Sounds" bits="4" ids="Off,On" values="0,1"/>
+    <dip name="Cabinet" bits="5" ids="Upright,Cocktail" values="0,1"/>
+    <dip name="Difficulty" bits="6" ids="Easy,Normal" values="1,0"/>
+    <dip name="Unused" bits="7" ids="Off,On" values="1,0"/>
+    <!-- DSW2 -->
+    <dip name="Coin A" bits="8,9" ids="2 Coins/1 Credit,1 Coin/1 Credit,1 Coin/2 Credits,Free Play" values="1,3,2,0"/>
+    <dip name="Coin B" bits="10,11" ids="2 Coins/1 Credit,1 Coin/1 Credit,2 Coins/3 Credits,1 Coin/2 Credits" values="1,3,0,2"/>
+    <dip name="Allow Continue" bits="12" ids="No,3 Times" values="0,1"/>
+    <dip name="Flip Screen" bits="13" ids="Off,On" values="1,0"/>
+    <dip name="Partial Invuln. (Cheat)" bits="14" ids="Off,On" values="1,0"/>
+    <dip name="Unused" bits="15" ids="Off,On" values="1,0"/>
+  </switches>
+
+  <buttons names="Right Stick/Up,Right Stick/Down,Right Stick/Left,Right Stick/Right,Start,Coin,Pause,-,-,Save/Load" default="X,B,Y,A,Start,Select,R,L"/>
+
+  <rom index="0" zip="cclimbr2.zip" md5="5d0c2ff136d31aba1a34945387e3be3c">
+    <!-- maincpu - starts at 0x0 -->
+    <interleave output="16">
+      <part name="4.bin" crc="7922ea14" map="01"/>
+      <part name="1.bin" crc="2ac7ed67" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="6.bin" crc="7905c992" map="01"/>
+      <part name="5.bin" crc="47be6c1e" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="3.bin" crc="1fb110d6" map="01"/>
+      <part name="2.bin" crc="0024c15b" map="10"/>
+    </interleave>
+    <part repeat="0x20000">FF</part>
+
+    <!-- foreground - starts at 0x80000 -->
+    <part name="7.bin" crc="cbdd3906"/>
+    <part name="8.bin" crc="b2a613c0"/>
+    <part repeat="0x20000">FF</part>
+
+    <!-- background - starts at 0xc0000 -->
+    <part name="17.bin" crc="e24bb2d7"/>
+    <part name="18.bin" crc="56834554"/>
+    <part repeat="0x20000">FF</part>
+
+    <!-- sprite - starts at 0x100000 -->
+    <interleave output="16">
+      <part name="15.bin" crc="4bf838be" map="01"/>
+      <part name="13.bin" crc="6b6ec999" map="10"/>
+    </interleave>
+    <interleave output="16">
+      <part name="16.bin" crc="21a265c5" map="01"/>
+      <part name="14.bin" crc="f426a4ad" map="10"/>
+    </interleave>
+
+    <!-- text - starts at 0x140000 -->
+    <part name="10.bin" crc="7f475266"/>
+    <part repeat="0x8000">FF</part>
+
+    <!-- audiocpu - starts at 0x150000 -->
+    <part name="11.bin" crc="fe0175be"/>
+    <part name="12.bin" crc="5ddf18f2"/>
+    <part repeat="0x4000">FF</part>
+
+    <!-- extra - starts at 0x160000 -->
+    <part repeat="0x10000">FF</part>
+
+    <!-- mcu - starts at 0x170000 -->
+    <part repeat="0x10000">FF</part>
+
+    <!-- nb1414m4 - starts at 0x180000 -->
+    <part name="9.bin" crc="740d260f"/>
+    <part repeat="0xc000">FF</part>
+
+    <!-- proms - starts at 0x190000 -->
+    <part repeat="0x4000">FF</part>
+
+    <!-- Total 0x194000 bytes -->
+  </rom>
+
+  <!-- game select (pcb) -->
+  <rom index="1">
+    <part>04</part>
+  </rom>
+
+  <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+  <rom index="3" md5="none">
+    <part>
+      00 06 12 A7 00 49 10 00
+      00 06 12 F2 00 01 50 50
+    </part>
+  </rom>
+  <nvram index="4" size="74"/>
+</misterromdescription>

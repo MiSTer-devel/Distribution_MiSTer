@@ -1,0 +1,102 @@
+<misterromdescription>
+    <name>Iga Ninjyutsuden (Japan)</name>
+    <setname>iganinju</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1988</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="BF,BF">
+        <dip name="Coin A" bits="0,2" ids="3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,Free Play" values="4,2,7,3,5,1,6,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr" values="0,4,2,7,3,5,1,6"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="1,0"/>
+        <dip name="Freeze Screen (Cheat)" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="8,9" ids="2,3,4,Infinite (Cheat)" values="3,1,2,0"/>
+        <dip name="Bonus Life" bits="10" ids="50k,200k" values="1,0"/>
+        <dip name="Allow Continue" bits="11" ids="Off,On" values="0,1"/>
+        <dip name="Difficulty" bits="12,13" ids="Normal,Hard,Harder,Hardest" values="3,2,1,0"/>
+        <dip name="Cabinet" bits="14" ids="Upright,Cocktail" values="0,1"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Attack,Jump,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>0F</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 41 32   00 00 24 13   00 00 31 42   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="iganinju.zip|kazan.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="iga_02.bin" crc="bd00c280" map="01"/>
+            <part name="iga_01.bin" crc="fa416a9e" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="iga_03.bin" crc="de5937ad" map="01"/>
+            <part name="iga_04.bin" crc="afaf0480" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="iga_05.bin" crc="13580868" map="01"/>
+            <part name="iga_06.bin" crc="7904d5dd" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="iga_10.bin" crc="67a89e0d"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="iga_08.bin" crc="857dbf60"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="iga_14.bin" crc="c707d513"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="iga_18.bin" crc="6c727519"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="iga_19.bin" crc="98a7e998"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="iga_23.bin" crc="fb58c5f4"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="iga.14m" crc="1d877538"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 00 04 00 04 00 00
+            00 0F 40 01 00 97 20 AC
+            00 0F 00 10 00 08 30 30
+        </part>
+    </rom>
+    <nvram index="5" size="163"/>
+</misterromdescription>

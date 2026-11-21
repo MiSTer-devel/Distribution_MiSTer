@@ -1,0 +1,134 @@
+<misterromdescription>
+    <name>Gang Wars (bootleg)</name>
+    <setname>gangwarsb</setname>
+    <parent>gangwars</parent>
+    <rbf>Alpha68kMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>bootleg</manufacturer>
+    <region>World</region>
+    <joystick>8-Way</joystick>
+    <rotation>horizontal</rotation>
+
+    <switches default="fe,ff">
+        <!-- IN3 -->
+        <dip name="Unused" bits="10" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="11" ids="3,4" values="1,0"/>
+        <dip name="Timer Speed" bits="12" ids="Slow,Normal" values="0,1"/>
+        <dip name="Difficulty" bits="13,14" ids="Easy,Normal,Hard,Hardest" values="2,3,1,0"/>
+        <dip name="Demo Sounds" bits="15" ids="Off,On" values="0,1"/>
+        <!-- IN4 -->
+        <dip name="Coin Slots" bits="0" ids="1,2" values="0,1"/>
+        <dip name="Coinage" bits="1,3" ids="5 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit,1 Coin/2 Credits,1 Coin/3 Credits,1 Coin/4 Credits,1 Coin/5 Credits" values="0,1,2,7,6,5,4,3"/>
+        <dip name="Flip Screen" bits="4" ids="Off,On" values="1,0"/>
+        <dip name="Freeze" bits="5" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <buttons names="Kick,Punch,Jump,-,-,Start,Coin,Pause,Save States" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>01 3A</part>
+    </rom>
+
+    <rom index="0" zip="gangwarsb.zip|gangwars.zip" md5="None">
+
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="gwb_ic.m15" crc="7752478e" map="01"/>
+            <part name="gwb_ic.m16" crc="c2f3b85e" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="gwb_ic.m17" crc="2a5fe86e" map="01"/>
+            <part name="gwb_ic.m18" crc="c8b60c53" map="10"/>
+        </interleave>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <part name="gwb_ic.380" crc="e6d6c9cf"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="gwb_ic.421" crc="7b9f2608"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="gwb_ic.420" crc="eb305d42"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="gwb_ic.419" crc="84e5c946"/>
+        <part repeat="0x10000"> FF</part>
+
+        <!-- gfx1 - starts at 0x100000 -->
+        <part name="gwb_ic.m19" crc="b75bf1d0"/>
+        <part repeat="0xF0000"> FF</part>
+
+        <!-- gfx2 - starts at 0x200000 -->
+        <interleave output="32">
+            <part name="gwb_ic.308" crc="321a2fdd" map="0001"/>
+            <part name="gwb_ic.300" crc="f3fa0877" map="0010"/>
+            <part name="gwb_ic.292" crc="c125f7be" map="0100"/>
+            <part name="gwb_ic.284" crc="4aa95d66" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.309" crc="4d908f65" map="0001"/>
+            <part name="gwb_ic.301" crc="f8c866de" map="0010"/>
+            <part name="gwb_ic.293" crc="c04fce8e" map="0100"/>
+            <part name="gwb_ic.285" crc="3a1f3ce0" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.310" crc="fc888541" map="0001"/>
+            <part name="gwb_ic.302" crc="5b0d587d" map="0010"/>
+            <part name="gwb_ic.294" crc="4eda3df5" map="0100"/>
+            <part name="gwb_ic.286" crc="886e298b" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.311" crc="181b128b" map="0001"/>
+            <part name="gwb_ic.303" crc="d8c0e102" map="0010"/>
+            <part name="gwb_ic.295" crc="6e60c475" map="0100"/>
+            <part name="gwb_ic.287" crc="b9542e6a" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.312" crc="930665f3" map="0001"/>
+            <part name="gwb_ic.304" crc="b02bc9d8" map="0010"/>
+            <part name="gwb_ic.296" crc="99b2a557" map="0100"/>
+            <part name="gwb_ic.288" crc="8e620056" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.313" crc="c18f4ca8" map="0001"/>
+            <part name="gwb_ic.305" crc="5e04a9aa" map="0010"/>
+            <part name="gwb_ic.297" crc="10373f63" map="0100"/>
+            <part name="gwb_ic.289" crc="c754d69f" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.314" crc="dfc44b60" map="0001"/>
+            <part name="gwb_ic.306" crc="e2172955" map="0010"/>
+            <part name="gwb_ic.298" crc="df37ec4d" map="0100"/>
+            <part name="gwb_ic.290" crc="306d1963" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.307" crc="28082a7f" map="0001"/>
+            <part name="gwb_ic.299" crc="e39f5599" map="0010"/>
+            <part name="gwb_ic.291" crc="beb07a2e" map="0100"/>
+            <part name="gwb_ic.283" crc="b46e5761" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.280" crc="222b3dcd" map="0001"/>
+            <part name="gwb_ic.320" crc="9a7b51d8" map="0010"/>
+            <part name="gwb_ic.318" crc="9aeaddf9" map="0100"/>
+            <part name="gwb_ic.316" crc="655b1518" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="gwb_ic.321" crc="6b421c7b" map="0001"/>
+            <part name="gwb_ic.319" crc="c5b862b7" map="0010"/>
+            <part name="gwb_ic.317" crc="1622fadd" map="0100"/>
+            <part name="gwb_ic.315" crc="e7c9b103" map="1000"/>
+        </interleave>
+
+        <!-- mcu - starts at 0x480000 -->
+        <!-- <part name="68705.mcu" crc=""/> -->
+
+        <!-- Total 0x481000 bytes - 4612 kBytes -->
+    </rom>
+
+    <!-- hiscore: address[4] length[2] start end, MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="3" md5="none">
+        <part>
+            00 04 3B B2 00 34 00 45
+        </part>
+    </rom>
+    <nvram index="4" size="52"/>
+</misterromdescription>

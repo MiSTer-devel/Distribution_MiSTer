@@ -1,0 +1,64 @@
+# Saturn RAM-cart database.
+# Source: https://www.satakore.com/cartridge.php
+# Source section: "Complete list of games and demos that require or are compatible with one of the external cartridges".
+# Source checked: 2026-05-28.
+# Satakore lists 57 external-cartridge entries. This file includes the 54 RAM-cart-relevant entries and excludes ROM-cart-only titles.
+# Format: <UUID> <cart-type> # <source title/notes>
+# UUID is the trimmed Saturn System ID product number at IP.BIN offset 0x20.
+# Supported cart types: 1M, 4M.
+# Selection policy: choose 4M when Satakore lists both 1M and 4M; choose 1M when Satakore marks the title 1M-only/corrupt with 4M.
+
+T-1521G 4M # Astra Superstars; Satakore: 1MB optional / 4MB optional.
+T-9904G 4M # Cotton 2; Satakore: 1MB optional / 4MB optional.
+T-1217G 4M # Cyberbots FullMetal Madness; Satakore: 1MB optional 3M RAM mode / 4MB optional 3M RAM mode.
+T-1216G 4M # Cyberbots FullMetal Madness Chou Genteiban; Satakore: 1MB optional 3M RAM mode / 4MB optional 3M RAM mode.
+T-1224G 4M # Dungeons & Dragons Collection; Satakore: 4MB only for Shadow Over Mystara CD2.
+T-1245G 4M # Dungeons & Dragons Collection RAM cart bundle; Satakore: 4MB only for Shadow Over Mystara CD2.
+GS-9107 4M # Fighter's History Dynamite; Satakore: 1MB / 4MB.
+GS-9153 4M # Fighter's History Dynamite RAM cart bundle; Satakore: 1MB / 4MB.
+T-1249G 4M # Final Fight Revenge; Satakore: 4MB.
+T-1248G 4M # Final Fight Revenge RAM cart bundle; Satakore: 4MB.
+T-20109G 4M # Friends Seishun no Kagayaki; Satakore: 1MB optional / 4MB optional.
+T-14411G 4M # Groove on Fight; Satakore: 1MB / 4MB.
+T-14413G 4M # Groove on Fight RAM cart bundle; Satakore: 1MB / 4MB.
+T-7032H-05 4M # Marvel Super Heroes; Satakore: unofficial 1MB optional 3M RAM mode / 4MB optional 3M RAM mode.
+T-7032H-50 4M # Marvel Super Heroes; Satakore: unofficial 1MB optional 3M RAM mode / 4MB optional 3M RAM mode.
+T-7032H-51 4M # Marvel Super Heroes; Satakore: unofficial 1MB optional 3M RAM mode / 4MB optional 3M RAM mode.
+T-1215G 4M # Marvel Super Heroes; Satakore: 1MB optional 3M RAM mode / 4MB optional 3M RAM mode.
+T-1214H 4M # Marvel Super Heroes; Satakore: unofficial 1MB optional 3M RAM mode / 4MB optional 3M RAM mode.
+T-1239G 4M # Marvel Super Heroes Vs. Street Fighter; Satakore: 4MB.
+T-1238G 4M # Marvel Super Heroes Vs. Street Fighter RAM cart bundle; Satakore: 4MB.
+T-3111G 4M # Metal Slug; Satakore: 1MB / 4MB.
+T-3114G 4M # Metal Slug RAM cart bundle; Satakore: 1MB / 4MB.
+T-22206G 4M # Noel 3; Satakore: 1MB optional / 4MB optional.
+T-22205G 4M # Noel 3 Shokai Genteiban; Satakore: 1MB optional / 4MB optional.
+T-20114G 4M # Pia Carrot he Youkoso!! 2; Satakore: 1MB optional / 4MB optional.
+T-1230G 4M # Pocket Fighter; Satakore: 4MB optional.
+T-3105G 1M # Real Bout Garou Densetsu; Satakore: 1MB only, corrupt graphics with 4MB.
+T-3124G 4M # Real Bout Garou Densetsu Best Collection; Satakore: 1MB / 4MB, 4MB only for Real Bout Garou Densetsu Special.
+T-3117G 4M # Real Bout Garou Densetsu Special; Satakore: 1MB / 4MB.
+T-3119G 4M # Real Bout Garou Densetsu Special RAM cart bundle; Satakore: 1MB / 4MB.
+T-3116G 1M # Samurai Spirits Amakusa Kourin; Satakore: 1MB only, corrupt graphics with 4MB.
+T-3118G 1M # Samurai Spirits Amakusa Kourin RAM cart bundle; Satakore: 1MB only, corrupt graphics with 4MB.
+T-3123G 4M # Samurai Spirits Best Collection; Satakore: 1MB / 4MB, 4MB only for Samurai Spirits Zankurou Musouken.
+T-3106G 4M # Samurai Spirits Zankurou Musouken; Satakore: 1MB / 4MB.
+T-3104G 4M # Samurai Spirits Zankurou Musouken RAM cart bundle; Satakore: 1MB / 4MB.
+T-1247G 4M # Street Fighter Zero 3; Satakore: 4MB.
+T-1246G 4M # Street Fighter Zero 3 RAM cart bundle; Satakore: 4MB.
+T-16509G 4M # Super Real Maajan P7; Satakore: 1MB optional / 4MB optional.
+T-16510G 4M # Super Real Maajan P7 P's Club Genteiban; Satakore: 1MB optional / 4MB optional.
+T-3108G 1M # The King of Fighters '96; Satakore: 1MB only, corrupt graphics with 4MB.
+T-3109G 1M # The King of Fighters '96 RAM cart bundle; Satakore: 1MB only, corrupt graphics with 4MB.
+T-3110G 1M # The King of Fighters '96 + '95 Double Pack; Satakore: ROM cartridge / 1MB only for KOF '96, corrupt graphics with 4MB.
+T-3120G 4M # The King of Fighters '97; Satakore: 1MB / 4MB.
+T-3121G 4M # The King of Fighters '97 RAM cart bundle; Satakore: 1MB / 4MB.
+T-3125G 4M # The King of Fighters Best Collection; Satakore: ROM cartridge / 1MB / 4MB, 4MB only for KOF '97.
+T-1228G 4M # Vampire Savior; Satakore: 4MB.
+T-1229G 4M # Vampire Savior RAM cart bundle; Satakore: 4MB.
+T-1516G 4M # Waku Waku 7; Satakore: 1MB / 4MB.
+T-1515G 4M # Waku Waku 7 RAM cart bundle; Satakore: 1MB / 4MB.
+T-1227G 4M # X-Men Vs. Street Fighter; Satakore: 4MB.
+T-1226G 4M # X-Men Vs. Street Fighter RAM cart bundle; Satakore: 4MB.
+6106730 1M # Samurai Spirits Amakusa Kourin Hibaihin; printed catalog serial: 610-6730. Satakore: 1MB only, corrupt graphics with 4MB.
+610-6869 4M # The King of Fighters '97 Sample Hibaihin; Satakore: 1MB / 4MB.
+610-6881 4M # Vampire Savior Taikenban; Satakore: 4MB.

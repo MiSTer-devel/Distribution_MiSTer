@@ -1,0 +1,110 @@
+<misterromdescription>
+    <name>Plus Alpha</name>
+    <setname>plusalph</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Vertical (CCW)</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="FF,BF">
+        <dip name="Coin A" bits="0,2" ids="3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,Free Play" values="4,2,7,3,5,1,6,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr" values="0,4,2,7,3,5,1,6"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="0,1"/>
+        <dip name="Freeze Screen (Cheat)" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="8,9" ids="3,4,5,Infinite (Cheat)" values="3,2,1,0"/>
+        <dip name="Hyper Laser Beams" bits="10" ids="2,3" values="0,1"/>
+        <dip name="Bonus Life" bits="11" ids="70k/every 200k,100k/300k Only" values="1,0"/>
+        <dip name="Difficulty" bits="12,13" ids="Easy,Normal,Hard,Hardest" values="0,3,1,2"/>
+        <dip name="Cabinet" bits="14" ids="Upright,Cocktail" values="0,1"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Hyper Shot,Hyper Laser Beam,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>0E</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 41 32   00 00 24 13   00 00 31 42   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="plusalph.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="pa-rom2.bin" crc="33244799" map="01"/>
+            <part name="pa-rom1.bin" crc="a32fdcae" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="pa-rom3.bin" crc="1b739835" map="01"/>
+            <part name="pa-rom4.bin" crc="ff760e80" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="pa-rom5.bin" crc="ddc2739b" map="01"/>
+            <part name="pa-rom6.bin" crc="f6f8a167" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="pa-rom9.bin" crc="065364bd"/>
+        <part name="pa-rom10.bin" crc="395df3b2"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="pa-rom7.bin" crc="9f5d800e"/>
+        <part name="pa-rom8.bin" crc="ae007750"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="pa-rom11.bin" crc="eb709ae7"/>
+        <part name="pa-rom12.bin" crc="cacbc350"/>
+        <part name="pa-rom13.bin" crc="fad093dd"/>
+        <part name="pa-rom14.bin" crc="d3676cd1"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="pa-rom15.bin" crc="8787735b"/>
+        <part name="pa-rom16.bin" crc="a06b813b"/>
+        <part name="pa-rom17.bin" crc="c6b38a4b"/>
+        <part repeat="0x20000">FF</part>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="pa-rom19.bin" crc="39ef193c"/>
+        <part repeat="0x70000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="pa-rom20.bin" crc="86c557a8"/>
+        <part name="pa-rom21.bin" crc="81140a88"/>
+        <part name="pa-rom22.bin" crc="97e39886"/>
+        <part name="pa-rom23.bin" crc="0383fb65"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="prom.14m" crc="1d877538"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 2F 36 01 68 00 43
+        </part>
+    </rom>
+    <nvram index="5" size="360"/>
+</misterromdescription>

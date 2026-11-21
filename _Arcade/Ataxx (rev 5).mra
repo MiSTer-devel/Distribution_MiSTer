@@ -1,0 +1,63 @@
+<misterromdescription>
+	<name>Ataxx (rev 5)</name>
+	<mameversion>0.257</mameversion>
+	<setname>ataxx</setname>
+	<year>1990</year>
+	<manufacturer>Leland Corp.</manufacturer>
+	<category>Puzzle</category>
+	<rbf>Leland</rbf>
+	<rotation>horizontal</rotation>
+
+	<rom index="0" address="0x30000000" zip="ataxx.zip" md5="None" type="merged">
+		<part>4C 01 04 03 03 02 00 00 00 00 00 00 00 00 00 00</part>
+
+		<part name="e-302-31005-05.u38" crc="3378937d" length="0x20000"/>
+		<part repeat="0xE0000">00</part>
+
+		<part name="e-302-31012-01.u111" crc="9a3297cc" length="0x20000"/>
+		<part name="e-302-31013-01.u112" crc="7e7c3e2f" length="0x20000"/>
+		<part name="e-302-31014-01.u113" crc="8cf3e101" length="0x20000"/>
+		<part repeat="0x1A0000">00</part>
+
+		<part repeat="0x20000">00</part>
+		<interleave output="16">
+			<part name="e-302-31001-01.u1"  crc="728d75f2" length="0x20000" map="01"/>
+			<part name="e-302-31003-01.u15" crc="8bb3233b" length="0x20000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="e-302-31002-01.u2"  crc="ca06a394" length="0x20000" map="01"/>
+			<part name="e-302-31004-01.u16" crc="f2bdff48" length="0x20000" map="10"/>
+		</interleave>
+		<part repeat="0x20000">00</part>
+		<interleave output="16">
+			<part name="e-302-31002-01.u2"  crc="ca06a394" length="0x20000" map="01"/>
+			<part name="e-302-31004-01.u16" crc="f2bdff48" length="0x20000" map="10"/>
+		</interleave>
+
+		<!-- Graphics planes byte-interleaved into 8-byte tile rows (plane0..plane5, then 2 pad
+		     bytes), the layout the video reads directly; plane 0 is repeated for the pad lanes. -->
+		<interleave output="64">
+			<part name="e-302-31006-01.u98" crc="59d0f2ae" length="0x20000" map="00000001"/>
+			<part name="e-302-31007-01.u99" crc="6ab7db25" length="0x20000" map="00000010"/>
+			<part name="e-302-31008-01.u100" crc="2352849e" length="0x20000" map="00000100"/>
+			<part name="e-302-31009-01.u101" crc="4c31e02b" length="0x20000" map="00001000"/>
+			<part name="e-302-31010-01.u102" crc="a951228c" length="0x20000" map="00010000"/>
+			<part name="e-302-31011-01.u103" crc="ed326164" length="0x20000" map="00100000"/>
+			<part name="e-302-31006-01.u98" crc="59d0f2ae" length="0x20000" map="01000000"/>
+			<part name="e-302-31006-01.u98" crc="59d0f2ae" length="0x20000" map="10000000"/>
+		</interleave>
+		<part repeat="0x200000">00</part>
+
+		<part name="eeprom-ataxx.bin" crc="989cdb8c" length="0x100"/>
+	</rom>
+
+	<!--
+	  Buttons are ordered player controls, then coin, then start: Place, Coin, Start. The two
+	  trackballs are driven by a mouse (player 1), the analog stick, the D-pad or a spinner;
+	  the operator menu is opened from the OSD "Service Menu". Re-run "Define joystick
+	  buttons" in the OSD after updating, since the order changed.
+	-->
+	<buttons names="Place,Coin,Start"></buttons>
+
+	<nvram index="4" size="256"/>
+</misterromdescription>

@@ -1,0 +1,100 @@
+<misterromdescription>
+    <name>Rod-Land (World, set 1)</name>
+    <setname>rodland</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1990</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: Rod-Land DIP sheet (names, order, standard settings) -->
+    <switches default="FF,FF">
+        <dip name="First Coinchute" bits="0,2" ids="1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,2C/1Cr,3C/1Cr,Free Play" values="7,3,5,1,6,2,4,0"/>
+        <dip name="Second Coinchute" bits="3,5" ids="1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,2C/1Cr,3C/1Cr,4C/1Cr" values="7,3,5,1,6,2,4,0"/>
+        <dip name="Attract Sound" bits="6" ids="Unnecessary,Necessary" values="1,0"/>
+        <dip name="Not Used" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Not Used" bits="8" ids="Off,On" values="1,0"/>
+        <dip name="Not Used" bits="9" ids="Off,On" values="1,0"/>
+        <dip name="Number Of Lives" bits="10,11" ids="2 Lives,3 Lives,4 Lives,Unlimited" values="1,3,2,0"/>
+        <dip name="Chapter" bits="12" ids="No. 1,No. 2" values="1,0"/>
+        <dip name="Difficulty" bits="13,14" ids="Easy,Standard,Difficult,More Difficult" values="0,3,1,2"/>
+        <dip name="Screen Display" bits="15" ids="Normal,Reverse" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Rod,Ladder,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>03</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 01 43 02   00 00 12 43
+            00 01 04 32   00 04 31 02   00 04 30 12   00 02 10 43
+            00 02 01 43   00 00 24 31   00 00 43 21   00 00 21 43
+            00 01 02 43   00 01 20 43   00 04 32 01   00 02 43 01
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="rodland.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="jaleco_rod_land_2.rom2" crc="c7e00593" map="01"/>
+            <part name="jaleco_rod_land_1.rom1" crc="2e748ca1" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="jaleco_rod_land_3.rom3" crc="62fdf6d7" map="01"/>
+            <part name="jaleco_rod_land_4.rom4" crc="44163c86" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="jaleco_rod_land_5.rom5" crc="c1617c28" map="01"/>
+            <part name="jaleco_rod_land_6.rom6" crc="663392b2" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="lh5321t5.rom10" crc="e1d1cd99"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="s202000dr.rom8" crc="8a49d3a7"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="lh534h31.rom14" crc="8201e1bb"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="lh534h32.rom18" crc="f3b30ca6"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="lh2311j0.rom19" crc="124d7e8f"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="lh534h33.rom23" crc="936db174"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="ps89013a.14m" crc="8914e72d"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 60 FC 02 26 00 01
+            00 0F 30 30 00 14 00 00
+        </part>
+    </rom>
+    <nvram index="5" size="570"/>
+</misterromdescription>

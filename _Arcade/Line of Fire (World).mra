@@ -1,0 +1,82 @@
+<misterromdescription>
+  <name>Line of Fire (World)</name>
+  <setname>loffire</setname>
+  <rbf>SegaXBoard</rbf>
+  <mameversion>0289</mameversion>
+  <year>1989</year>
+  <manufacturer>Sega</manufacturer>
+  <category>Shooter / Flight</category>
+  <rom index="0" zip="loffire.zip" md5="None">
+    <part>08 21 08 0a 70 05 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</part>
+    <!-- main -->
+      <interleave output="16">
+        <part name="epr-12849.58" crc="61cfd2fe" map="10"/>
+        <part name="epr-12850.63" crc="14598f2a" map="01"/>
+      </interleave>
+      <part repeat="262144">00</part>
+    <!-- sub -->
+      <interleave output="16">
+        <part name="epr-12804.20" crc="b853480e" map="10"/>
+        <part name="epr-12805.29" crc="4a7200c3" map="01"/>
+      </interleave>
+      <interleave output="16">
+        <part name="epr-12802.21" crc="d746bb39" map="10"/>
+        <part name="epr-12803.30" crc="c1d9e751" map="01"/>
+      </interleave>
+    <!-- z80 -->
+      <part name="epr-12798.17" crc="0587738d"/>
+    <!-- road -->
+      <part repeat="65536">00</part>
+    <!-- pcm -->
+      <part name="epr-12799.11" crc="bc60181c"/>
+      <part name="epr-12800.12" crc="1158c1a3"/>
+      <part name="epr-12801.13" crc="2d6567c4"/>
+      <part repeat="131072">FF</part>
+    <!-- sprite -->
+      <interleave output="32">
+        <part name="epr-12787.90" crc="6431a3a6" map="0001"/>
+        <part name="epr-12788.94" crc="1982a0ce" map="0010"/>
+        <part name="epr-12789.98" crc="97d03274" map="0100"/>
+        <part name="epr-12790.102" crc="816e76e6" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-12783.91" crc="c13feea9" map="0001"/>
+        <part name="epr-12784.95" crc="39b94c65" map="0010"/>
+        <part name="epr-12785.99" crc="05ed0059" map="0100"/>
+        <part name="epr-12786.103" crc="a4123165" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-12779.92" crc="ae58af7c" map="0001"/>
+        <part name="epr-12780.96" crc="ee670c1e" map="0010"/>
+        <part name="epr-12781.100" crc="538f6bc5" map="0100"/>
+        <part name="epr-12782.104" crc="5acc34f7" map="1000"/>
+      </interleave>
+      <interleave output="32">
+        <part name="epr-12775.93" crc="693056ec" map="0001"/>
+        <part name="epr-12776.97" crc="61efbdfd" map="0010"/>
+        <part name="epr-12777.101" crc="29d5b953" map="0100"/>
+        <part name="epr-12778.105" crc="2fb68e07" map="1000"/>
+      </interleave>
+      <part repeat="2097152">00</part>
+    <!-- tile -->
+      <part name="opr-12791.154" crc="acfa69ba"/>
+      <part name="opr-12792.153" crc="e506723c"/>
+      <part name="opr-12793.152" crc="0ce8cce3"/>
+      <part repeat="65536">00</part>
+    <!-- key -->
+      <part name="317-0136.key" crc="344bfe0c"/>
+  </rom>
+  <nvram index="3" size="32768"/>
+  <switches default="FF,9C" base="0">
+    <dip bits="0,3" name="Coin A" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="4,7" name="Coin B" ids="Free Play (if both) or 1C/1C,1C/1C 2/3,1C/1C 4/5,1C/1C 5/6,2C/1C 4/3,2C/1C 3/2 5/3 6/4,2C/3C,4C/1C,3C/1C,2C/1C,7C/1C,6C/1C,5C/1C,1C/3C,1C/2C,1C/1C"/>
+    <dip bits="8" name="Language" ids="English,Japanese"/>
+    <dip bits="9" name="Cabinet" ids="Upright,Cockpit"/>
+    <dip bits="10" name="2 Credits to Start" ids="On,Off"/>
+    <dip bits="11,12" name="Difficulty" ids="Hardest,Hard,Easy,Normal"/>
+    <dip bits="13" name="Allow Continue" ids="Yes,No"/>
+    <dip bits="14" name="Demo Sounds" ids="On,Off"/>
+    <dip bits="15" name="Coin Chute" ids="Twin,Single"/>
+  </switches>
+  <buttons names="Trigger,Bomb,Start,Coin,Pause,Test,Service" default="A,B,Start,R,X,L,Select"/>
+</misterromdescription>

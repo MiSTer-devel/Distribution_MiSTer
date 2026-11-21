@@ -1,0 +1,89 @@
+<misterromdescription>
+    <name>Spider-Man: The Videogame (US, Rev A)</name>
+    <setname>spidmanu</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1991</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>4</players>
+    <joystick>8</joystick>
+    <buttons names="Attack,Jump,-,Start,Coin,Service,Test" default="A,B,Start,R,L,Select"/>
+
+    <region>US</region>
+
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+    <rom index="0" zip="spidmanu.zip|spidman.zip" md5="none" address="0x30000000">
+
+        <part name="epr-14303a.ic13" crc="7f1bd28f"/>
+        <part name="epr-14303a.ic13" crc="7f1bd28f"/>
+        <part name="epr-14303a.ic13" crc="7f1bd28f"/>
+        <part name="epr-14303a.ic13" crc="7f1bd28f"/>
+        <part name="epr-14302a.ic7" crc="d954c40a"/>
+        <part name="epr-14302a.ic7" crc="d954c40a"/>
+        <part name="epr-14302a.ic7" crc="d954c40a"/>
+        <part name="epr-14302a.ic7" crc="d954c40a"/>
+        <interleave output="16">
+            <part name="epr-14281.ic14" crc="8a746c42" map="01"/>
+            <part name="epr-14280.ic6" crc="3c8148f7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-14281.ic14" crc="8a746c42" map="01"/>
+            <part name="epr-14280.ic6" crc="3c8148f7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-14281.ic14" crc="8a746c42" map="01"/>
+            <part name="epr-14280.ic6" crc="3c8148f7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-14281.ic14" crc="8a746c42" map="01"/>
+            <part name="epr-14280.ic6" crc="3c8148f7" map="10"/>
+        </interleave>
+
+        <part name="epr-14285.ic35" crc="25aefad6"/>
+        <part name="epr-14285.ic35" crc="25aefad6"/>
+        <part name="epr-14285.ic35" crc="25aefad6"/>
+        <part name="epr-14285.ic35" crc="25aefad6"/>
+        <part name="mpr-14284.ic31" crc="760542d4"/>
+        <part name="mpr-14284.ic31" crc="760542d4"/>
+        <part name="mpr-14283.ic26" crc="c863a91c"/>
+        <part name="mpr-14283.ic26" crc="c863a91c"/>
+        <part name="mpr-14282.ic22" crc="ea20979e"/>
+        <part name="mpr-14282.ic22" crc="ea20979e"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="32">
+            <part name="mpr-14291-s.ic38" crc="490f95a1" map="0001"/>
+            <part name="mpr-14289-s.ic29" crc="38570582" map="0010"/>
+            <part name="mpr-14290-s.ic34" crc="a144162d" map="0100"/>
+            <part name="mpr-14288-s.ic25" crc="3188b636" map="1000"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-14299-h.ic36" crc="ce59231b" map="00000001"/>
+            <part name="mpr-14298-h.ic32" crc="2745c84c" map="00000010"/>
+            <part name="mpr-14297-h.ic27" crc="29cb9450" map="00000100"/>
+            <part name="mpr-14296-h.ic23" crc="9d8cbd31" map="00001000"/>
+            <part name="mpr-14295-h.ic37" crc="29591f50" map="00010000"/>
+            <part name="mpr-14294-h.ic33" crc="fa86b794" map="00100000"/>
+            <part name="mpr-14293-s.ic28" crc="52899269" map="01000000"/>
+            <part name="mpr-14292-s.ic24" crc="41f71443" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-14299-h.ic36" crc="ce59231b" map="00000001"/>
+            <part name="mpr-14298-h.ic32" crc="2745c84c" map="00000010"/>
+            <part name="mpr-14297-h.ic27" crc="29cb9450" map="00000100"/>
+            <part name="mpr-14296-h.ic23" crc="9d8cbd31" map="00001000"/>
+            <part name="mpr-14295-h.ic37" crc="29591f50" map="00010000"/>
+            <part name="mpr-14294-h.ic33" crc="fa86b794" map="00100000"/>
+            <part name="mpr-14293-s.ic28" crc="52899269" map="01000000"/>
+            <part name="mpr-14292-s.ic24" crc="41f71443" map="10000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

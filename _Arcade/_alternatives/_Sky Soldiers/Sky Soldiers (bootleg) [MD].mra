@@ -1,0 +1,128 @@
+<misterromdescription>
+    <name>Sky Soldiers (bootleg)</name>
+    <setname>skysoldrbl</setname>
+    <parent>skysoldr</parent>
+    <rbf>Alpha68kMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1988</year>
+    <manufacturer>bootleg</manufacturer>
+    <region>US</region>
+    <joystick>8-Way</joystick>
+    <rotation>vertical (cw)</rotation>
+
+    <switches default="df,f7">
+        <!-- IN3 -->
+        <dip name="Flip Screen" bits="2" ids="Off,On" values="1,0"/>
+        <dip name="Difficulty" bits="3,4" ids="Easy,Normal,Hard,Hardest" values="1,2,3,0"/>
+        <dip name="Language" bits="5" ids="English,Japanese" values="0,1"/>
+        <dip name="Manufacturer" bits="6" ids="SNK,Romstar" values="1,0"/>
+        <dip name="Invulnerability (Cheat)" bits="7" ids="Off,On" values="1,0"/>
+        <!-- IN4 -->
+        <dip name="Coinage" bits="8,10" ids="A 1C/1C B 1C/1C,A 1C/2C B 2C/1C,A 1C/3C B 3C/1C,A 1C/4C B 4C/1C,A 1C/5C B 5C/1C,A 1C/6C B 6C/1C,A 2C/3C B 7C/1C,A 3C/2C B 8C/1C" values="7,6,5,4,3,2,1,0"/>
+        <dip name="Demo Sounds" bits="11" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="12,13" ids="3,4,5,6" values="3,2,1,0"/>
+    </switches>
+
+    <buttons names="Cannon System,Missile System,-,-,-,Start,Coin,Pause,Save States" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>05 00</part>
+    </rom>
+
+    <rom index="0" zip="skysoldrbl.zip|skysoldr.zip" md5="None">
+
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="g.bin" crc="4d3273e9" map="01"/>
+            <part name="c.bin" crc="86c7af62" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="e.bin" crc="03115b75" map="01"/>
+            <part name="a.bin" crc="7aa103c7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="h-gtop.bin" crc="f41dfeab" map="01"/>
+            <part name="d-ctop.bin" crc="56560a3c" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="f-etop.bin" crc="60a52583" map="01"/>
+            <part name="b-atop.bin" crc="028fd31b" map="10"/>
+        </interleave>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <part name="33.ic11" crc="b711fad4"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="34.ic12" crc="e5cf7b37"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="35.ic13" crc="76124ca2"/>
+        <part repeat="0x30000"> FF</part>
+
+        <!-- gfx1 - starts at 0x100000 -->
+        <interleave output="16">
+            <part name="xx.ic2" crc="928ba287" map="01"/>
+            <part name="xx.ic1" crc="93b30b55" map="10"/>
+        </interleave>
+        <part repeat="0xF0000"> FF</part>
+
+        <!-- gfx2 - starts at 0x200000 -->
+        <interleave output="32">
+            <part name="26.ica9" crc="2aad8c4d" map="0001"/>
+            <part name="18.ica1" crc="08419273" map="0010"/>
+            <part name="10.ic23" crc="8e67a39e" map="0100"/>
+            <part name="2.ic15" crc="022bcdc1" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="25.ica8" crc="7bca633e" map="0001"/>
+            <part name="17.ic30" crc="6258a61b" map="0010"/>
+            <part name="9.ic22" crc="6f6d2593" map="0100"/>
+            <part name="1.ic14" crc="129a58b5" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="28.ic41" crc="da94809d" map="0001"/>
+            <part name="20.ica3" crc="5e716c62" map="0010"/>
+            <part name="12.ic25" crc="549182ba" map="0100"/>
+            <part name="4.ic17" crc="ccaf1968" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="27.ica10" crc="dd1e56c0" map="0001"/>
+            <part name="19.ica2" crc="f3922f1e" map="0010"/>
+            <part name="11.ic24" crc="b5b06e28" map="0100"/>
+            <part name="3.ic16" crc="796999ba" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="30.ic43" crc="9eb10d3d" map="0001"/>
+            <part name="22.ica5" crc="1a7c2f20" map="0010"/>
+            <part name="14.ic27" crc="1498a515" map="0100"/>
+            <part name="6.ic19" crc="45b1ab8a" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="31.ic44" crc="6b6c4e56" map="0001"/>
+            <part name="23.ica6" crc="3155aca2" map="0010"/>
+            <part name="15.ic28" crc="34545c01" map="0100"/>
+            <part name="7.ic20" crc="052247d1" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="32.ic45" crc="fdf55eca" map="0001"/>
+            <part name="24.ica7" crc="8fc95590" map="0010"/>
+            <part name="16.ic29" crc="ea5c20a1" map="0100"/>
+            <part name="8.ic21" crc="f670ce4b" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="29.ic42" crc="cf888369" map="0001"/>
+            <part name="21.ica4" crc="f7ea25b0" map="0010"/>
+            <part name="13.ic26" crc="962a3e28" map="0100"/>
+            <part name="5.ic18" crc="fe34cd89" map="1000"/>
+        </interleave>
+
+        <!-- Total 0x400000 bytes -->
+    </rom>
+
+    <!-- hiscore: address[4] length[2] start end, MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="3" md5="none">
+        <part>
+            00 20 41 00 00 C0 00 0C
+            00 04 00 30 00 04 00 00
+        </part>
+    </rom>
+    <nvram index="4" size="196"/>
+</misterromdescription>

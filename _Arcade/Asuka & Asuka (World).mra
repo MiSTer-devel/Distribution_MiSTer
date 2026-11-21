@@ -1,0 +1,109 @@
+<misterromdescription>
+  <name>Asuka &amp; Asuka (World)</name>
+  <setname>asuka</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TaitoAsuka</rbf>
+  <year>1988</year>
+  <manufacturer>Taito Corporation</manufacturer>
+  <category>Action</category>
+  <rotation>vertical</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Shot,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches base="0" default="FF,BF">
+    <dip name="Unused"         bits="0"     ids="On,Off"/>
+    <dip name="Flip Screen"    bits="1"     ids="On,Off"/>
+    <dip name="Service Mode"   bits="2"     ids="On,Off"/>
+    <dip name="Demo Sounds"    bits="3"     ids="Off,On"/>
+    <dip name="Coin A"         bits="4,5"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Coin B"         bits="6,7"   ids="2 Coins/3 Credits,2 Coins/1 Credit,1 Coin/2 Credits,1 Coin/1 Credit"/>
+    <dip name="Difficulty"     bits="8,9"   ids="Hardest,Hard,Easy,Medium"/>
+    <dip name="Bonus Points"   bits="10,11" ids="2500,2000,1500,500"/>
+    <dip name="Lives"          bits="12,13" ids="4,1,2,3"/>
+    <dip name="Allow Continue" bits="14,15" ids="No,Yes,Up To Level 3,Up To Level 2"/>
+  </switches>
+
+  <!-- Regione di configurazione, caricata PRIMA delle ROM.
+       byte 0 = game_id      : 0x01 = Asuka & Asuka
+       byte 1 = link         : 0x01 accende il multiplayer (qui no)
+       byte 2 = orientamento : 0x01 = set verticale (ROT270)
+       byte 3 = libero
+       Quattro byte perche' l'ioctl e' a 16 bit: due parole intere. -->
+  <rom index="1">
+    <part>01 00 01 00</part>
+  </rom>
+
+  <rom index="0" zip="asuka.zip" md5="None">
+
+    <!-- ==================== Main CPU 68000 (256 KB) ==================== -->
+    <!-- 0x000000-0x03FFFF: interleaved 16-bit pairs -->
+    <interleave output="16">
+      <part name="b68-13.ic23" crc="855efb3e" map="10"/>
+      <part name="b68-12.ic8"  crc="271eeee9" map="01"/>
+    </interleave>
+
+    <!-- Pad fino a 0x080000 (main 256KB usato, slot main 512KB → pad 256KB) -->
+    <part repeat="0x40000"> FF</part>
+
+    <!-- ==================== Fix ROM 68K (512 KB) ==================== -->
+    <!-- 0x080000-0x0FFFFF: il 68000 la legge a PAROLE, quindi va caricata con
+         lo stesso ordine di byte del programma, cioe' dentro un interleave con
+         map="12". Il core impacchetta la parola SDRAM come {secondo byte, primo
+         byte}: caricata come <part> semplice la CPU la legge coi byte invertiti,
+         il checksum d'avvio da' 6DB8AE29 invece di A9EC392F e il gioco si ferma
+         su ROM ERROR. Con l'interleave il checksum torna esatto. -->
+    <!-- Prima metà 0x080000-0x0BFFFF nel slot main (768KB cap), -->
+    <!-- seconda metà 0x0C0000-0x0FFFFF cade nel slot sub (SDRAM bank replicated, -->
+    <!-- main CPU legge comunque correttamente perché banks duplicate) -->
+    <interleave output="16">
+      <part name="b68-03.ic30" crc="d3a59b10" map="12"/>
+    </interleave>
+
+    <!-- ==================== Pad slot sub fino a 0x120000 ==================== -->
+    <!-- Slot SUB era 384KB (Cadash Z180), Asuka non ha sub CPU. -->
+    <!-- Fix ROM occupa già 0x080000-0x0FFFFF, restano 0x100000-0x11FFFF da paddare -->
+    <part repeat="0x20000"> FF</part>
+
+    <!-- ==================== Audio Z80 ROM (64 KB) ==================== -->
+    <!-- 0x120000-0x12FFFF -->
+    <part name="b68-11.ic27" crc="c378b508"/>
+    <!-- Pad fino a 0x140000 (slot audio 128KB - usato 64KB → pad 64KB) -->
+    <part repeat="0x10000"> FF</part>
+
+    <!-- ==================== PC090OJ sprite ROM (640 KB) ==================== -->
+    <!-- 0x140000-0x1DFFFF: b68-02 main 512KB + b68-07/06 extension 128KB -->
+    <interleave output="16">
+      <part name="b68-02.ic6" crc="f5018cd3" map="12"/>
+    </interleave>
+    <!-- Extension sprite ROM a 0x080000 nel sprite region MAME -->
+    <!-- b68-07 (HI byte) + b68-06 (LO byte) interleaved -->
+    <!-- MAME: b68-06 a 0x80000 (byte PARI), b68-07 a 0x80001 (byte DISPARI).
+         Nel map il carattere piu' a DESTRA e' il byte 0 della parola: quindi
+         map="01" mette la parte nei byte pari e map="10" nei dispari.
+         Confrontato con la regione pc090oj di MAME: cosi' l'immagine coincide
+         byte per byte, come gia' fa b68-02. Invertendole gli sprite si
+         decodificano male. -->
+    <interleave output="16">
+      <part name="b68-06.ic4" crc="f517e64d" map="01"/>
+      <part name="b68-07.ic5" crc="c113acc8" map="10"/>
+    </interleave>
+    <!-- Pad fino a 0x340000 (slot sprite 2MB - usato 640KB → pad 1.375MB) -->
+    <part repeat="0x160000"> FF</part>
+
+    <!-- ==================== TC0100SCN tile ROM (512 KB) ==================== -->
+    <!-- 0x340000-0x3BFFFF: ROM_LOAD16_WORD_SWAP → map="12" -->
+    <interleave output="16">
+      <part name="b68-01.ic3" crc="89f32c94" map="12"/>
+    </interleave>
+    <part repeat="0x80000"> FF</part>
+
+    <!-- ==================== MSM5205 ADPCM (64 KB) ==================== -->
+    <!-- 0x440000-0x44FFFF: regione "msm" di MAME, byte lineari. -->
+    <!-- Il core la copia in DDRAM a 0x100000 (DDR_ADPCMA_OFF). -->
+    <part name="b68-10.ic24" crc="387aaf40"/>
+
+  </rom>
+</misterromdescription>

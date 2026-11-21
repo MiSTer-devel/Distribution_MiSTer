@@ -1,0 +1,93 @@
+# Basic Master Jr. tape list
+#
+# This file lives at /media/fat/games/BasicMasterJr/boot1.rom. MiSTer loads it
+# when the core starts, so reload the core after editing it. It is plain text,
+# despite the name.
+#
+# The tape doesn't record where a program starts. The core assumes it starts
+# where its first block loads. This list corrects that and adds a note to the
+# start hint ("TYPE G 2500 <space>" plus a second line).
+#
+# One program per line, fields separated by spaces:
+#
+#   NAME  LOAD  START  [END]  [| NOTE  [| PAD MAP]]
+#
+#   NAME   the 6-character name in the tape header, as L or LOAD prints it
+#   LOAD   the address the first block loads at (hex), or - for any
+#   START  the address to start it with G (hex), or - to keep LOAD
+#   END    optional: the last address the file loads (hex), to match
+#          only one version of a program
+#   NOTE   after a |, up to 22 characters, shown under the start command;
+#          upper case and ASCII only (the machine has no lower case)
+#   PAD MAP after a second |, what the gamepad types for this program, as
+#          BUTTON=KEY words. Buttons: UP DOWN LEFT RIGHT A B X Y L R SELECT
+#          START. Keys: one character (the shifted ones, ! to ?, add Shift),
+#          or SPACE RETURN BS UP DOWN LEFT RIGHT CTRL SHIFT ALT CAPS ESC NONE,
+#          named as on the PC keyboard; UP DOWN LEFT RIGHT move the cursor.
+#          Buttons not named keep the default: d-pad = cursor keys,
+#          A = SPACE, B = RETURN. START is the key that starts the game and
+#          SELECT the one that answers Y to play again. For a map without a
+#          note, leave the note empty: NAME - - | | A=Z
+#
+# For a tape with machine code then a BASIC program, the line is for the
+# BASIC one (its LOAD is 0600). Lines starting with # or ; are comments.
+# The first matching line wins.
+
+# Machine code that doesn't start at its load address
+CAR     2000  2500  | S GO NM STEER CTRL GAS        | START=S LEFT=N RIGHT=M A=CTRL
+CF      0C00  0F00  | S START ,. MOVE Z FIRE        | START=S LEFT=, RIGHT=. A=Z
+ALS     2500  34BC  | S START JK MOVE Z FIRE        | START=S LEFT=J RIGHT=K A=Z
+
+# inufuto. They start where they load; the lines are for the pad.
+AERIAL  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+ANTIAI  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+ASCEND  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+AWASS   -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+BATTLO  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+BOOTSK  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+CACORM  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+CAVIT   -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+CRACKY  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+GUNTUS  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+HOPMAN  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+IMPETU  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+LIFT    -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+MAZY    -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+MAZY2   -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+MIEYEN  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+NEURAS  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+OSOTOS  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+RUPTUS  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+SVELLA  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+SWORD   -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+UCHOTO  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+YEWDOW  -     -     | IJKM MOVE SPACE Z             | UP=I DOWN=M LEFT=J RIGHT=K A=SPACE B=Z START=SPACE
+
+# zu2
+GALAXY  -     -     | V N MOVE CTRL FAST            | LEFT=V RIGHT=N A=CTRL
+DENDAI  1000  -     | OK PROMPT: TRY PR.6*7
+LIFE2   3000  -     | @*# DRAW RET/SPC STEP         | A=@ B=* X=# Y=SPACE START=RETURN SELECT=1
+
+# Magazine type-ins (BASIC)
+HELMET  -     -     | S START ,. MOVE               | START=S LEFT=, RIGHT=. SELECT=Y
+GORILA  -     -     | S START                       | START=S A=Y B=N X=M Y=K SELECT=J L=1 R=2
+WINE    -     -     | Y PLAY AZ,. SPC THROW         | START=Y UP=A DOWN=Z LEFT=, RIGHT=. A=SPACE
+DRINKC  -     -     | S START AZ,. MOVE             | START=S UP=A DOWN=Z LEFT=, RIGHT=. SELECT=Y
+KUROKA  -     -     | ALT UP  CAPS DOWN             | UP=ALT DOWN=CAPS A=SPACE START=SPACE
+OPA     -     -     | S START IJKM SPC CAST         | START=S UP=I DOWN=M LEFT=J RIGHT=K A=SPACE
+WILWSP  -     -     | ,. MOVE                       | START=S LEFT=, RIGHT=.
+MISSIL  -     -     | SPACE START ,. MOVE           | START=SPACE LEFT=, RIGHT=. A=SPACE
+KONG    -     -     | IJKM MOVE A S JUMP            | START=S UP=I DOWN=M LEFT=J RIGHT=K A=A B=S
+URU     -     -     | S START IJKM MOVE             | START=S UP=I DOWN=M LEFT=J RIGHT=K B=N SELECT=Y
+GU      -     -     | S START ,. SPACE FIRE         | START=S LEFT=, RIGHT=. A=SPACE
+TOBI    -     -     | Y PLAY SPACE JUMP             | START=Y A=SPACE
+JUMPS   -     -     | RETURN START Z JUMP           | START=RETURN LEFT=, RIGHT=. A=Z
+SH      -     -     | AZ UP DOWN ,. TURN            | UP=A DOWN=Z LEFT=, RIGHT=.
+TR      -     -     | SEXD MOVE M FIRE              | UP=E DOWN=X LEFT=S RIGHT=D A=M
+DW      -     -     | IJKM MOVE                     | START=S UP=I DOWN=M LEFT=J RIGHT=K
+SMO     -     -     | O K M THROWS                  | A=O B=K X=M
+BF      -     -     | S START ,. SPACE FIRE         | START=S LEFT=, RIGHT=. A=SPACE
+PAL     -     -     | S START ,. MOVE Z FIRE        | START=S LEFT=, RIGHT=. A=Z
+FC      -     -     | WZ MOVE SPACE TONGUE          | START=R UP=W DOWN=Z A=SPACE
+MT      -     -     | P.L: MOVE Z FIRE              | START=SPACE UP=P DOWN=. LEFT=L RIGHT=: A=Z
+UB      -     -     | ,. MOVE Z MISSILE             | LEFT=, RIGHT=. A=Z SELECT=Y

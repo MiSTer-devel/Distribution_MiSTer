@@ -1,0 +1,106 @@
+<misterromdescription>
+    <name>P-47: The Phantom Fighter (World)</name>
+    <setname>p47</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1988</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="FF,FF">
+        <dip name="Coin A" bits="0,2" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,Free Play" values="1,2,3,7,6,5,4,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,Free Play" values="1,2,3,7,6,5,4,0"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="0,1"/>
+        <dip name="Invulnerability (Cheat)" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="8,9" ids="2,3,4,5" values="2,3,1,0"/>
+        <dip name="Unused" bits="10" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="11" ids="Off,On" values="1,0"/>
+        <dip name="Difficulty" bits="12,13" ids="Easy,Normal,Hard,Hardest" values="0,3,2,1"/>
+        <dip name="Unused" bits="14" ids="Off,On" values="1,0"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Machine Gun,Special Weapon,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 41 32   00 00 24 13   00 00 31 42   00 00 00 00
+            00 00 00 00   00 00 00 00   00 00 00 00   00 00 00 00
+            00 00 00 00   00 00 00 00   00 00 00 00   00 00 00 00
+            00 00 00 00   00 00 00 00   00 00 00 00   00 00 00 00
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="p47.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="p47us3.bin" crc="022e58b8" map="01"/>
+            <part name="p47us1.bin" crc="ed926bd8" map="10"/>
+        </interleave>
+        <part repeat="0x40000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="p47j_9.bin" crc="ffcf318e" map="01"/>
+            <part name="p47j_19.bin" crc="adb8c12e" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="p47j_20.bin" crc="2ed53624"/>
+        <part name="p47j_21.bin" crc="6f56b56d"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="p47j_10.bin" crc="b9d79c1e"/>
+        <part name="p47j_11.bin" crc="fa0d1887"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="p47j_5.bin" crc="fe65b65c"/>
+        <part name="p47j_6.bin" crc="e191d2d2"/>
+        <part name="p47j_7.bin" crc="f77723b7"/>
+        <part repeat="0x20000">FF</part>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="p47j_23.bin" crc="6e9bc864"/>
+        <part name="p47j_23.bin" crc="6e9bc864"/>
+        <part name="p47j_12.bin" crc="5268395f"/>
+        <part repeat="0x20000">FF</part>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="p47us16.bin" crc="5a682c8f"/>
+        <part repeat="0x70000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="p47j_27.bin" crc="9e2bde8e"/>
+        <part name="p47j_18.bin" crc="29d8f676"/>
+        <part name="p47j_26.bin" crc="4d07581a"/>
+        <part name="p47j_26.bin" crc="4d07581a"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="p-47.14m" crc="1d877538"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 18 00 00 78 00 4F
+        </part>
+    </rom>
+    <nvram index="5" size="120"/>
+</misterromdescription>

@@ -1,0 +1,114 @@
+<misterromdescription>
+    <name>Saint Dragon (bootleg)</name>
+    <setname>stdragonb</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>bootleg</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="FF,BF">
+        <dip name="Coin A" bits="0,2" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,Free Play" values="1,2,3,7,6,5,4,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,Free Play" values="1,2,3,7,6,5,4,0"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="0,1"/>
+        <dip name="Unused" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="8,9" ids="2,3,4,5" values="2,3,1,0"/>
+        <dip name="Unused" bits="10" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="11" ids="Off,On" values="1,0"/>
+        <dip name="Difficulty" bits="12,13" ids="Easy,Normal,Hard,Hardest" values="3,2,1,0"/>
+        <dip name="Cabinet" bits="14" ids="Upright,Cocktail" values="0,1"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Shot 1,Shot 2,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>12</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 41 32   00 00 24 13   00 00 31 42   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>5A</part>
+    </rom>
+
+    <rom index="0" zip="stdragonb.zip|stdragon.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="a-4.bin" crc="c58fe5c2" map="01"/>
+            <part name="a-2.bin" crc="46a7cdbb" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="a-3.bin" crc="f6a268c4" map="01"/>
+            <part name="a-1.bin" crc="0fb439bd" map="10"/>
+        </interleave>
+        <part repeat="0x40000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="b-20.bin" crc="8c04feaa" map="01"/>
+            <part name="b-19.bin" crc="0bb62f3a" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part repeat="0x100000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="a-29.bin" crc="0049aa65"/>
+        <part name="a-30.bin" crc="05bce2c7"/>
+        <part name="b-17.bin" crc="3e4e34d3"/>
+        <part name="b-18.bin" crc="738a6643"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="a-15.bin" crc="42f7d2cd"/>
+        <part name="a-16.bin" crc="4f519a97"/>
+        <part name="a-14.bin" crc="d8ba8d4c"/>
+        <part repeat="0x10000">FF</part>
+        <part name="a-18.bin" crc="5e35f269"/>
+        <part name="a-19.bin" crc="b818db20"/>
+        <part name="a-17.bin" crc="0f6094f9"/>
+        <part name="a-20.bin" crc="e8849b15"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="a-9.bin" crc="135c2e0e"/>
+        <part name="a-10.bin" crc="19cec47a"/>
+        <part name="a-5.bin" crc="da4ca7bf"/>
+        <part name="a-6.bin" crc="9d9b6470"/>
+        <part name="a-12.bin" crc="22382b5f"/>
+        <part name="a-11.bin" crc="26c2494d"/>
+        <part name="a-7.bin" crc="cee3a6f7"/>
+        <part name="a-8.bin" crc="883b99bb"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="a-13.bin" crc="9e487aa1"/>
+        <part repeat="0x78000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="a-22.bin" crc="c7ee6d89"/>
+        <part name="a-23.bin" crc="79552709"/>
+        <part name="a-25.bin" crc="d8926711"/>
+        <part name="a-26.bin" crc="41d76447"/>
+        <part name="a-21.bin" crc="5af84bd5"/>
+        <part name="a-24.bin" crc="09ae3173"/>
+        <part name="a-27.bin" crc="c9049e98"/>
+        <part name="a-28.bin" crc="b4d12106"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="prom.14m" crc="1d877538"/>
+
+    </rom>
+</misterromdescription>

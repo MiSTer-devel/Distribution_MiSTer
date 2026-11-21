@@ -1,0 +1,85 @@
+<misterromdescription>
+    <name>Sasuke Vs. Commander</name>
+    <region>World</region>
+    <homebrew>no</homebrew>
+    <bootleg>no</bootleg>
+    <version></version>
+    <alternative></alternative>
+    <platform></platform>
+    <series>Sasuke Vs. Commander</series>
+    <year>1980</year>
+    <manufacturer>SNK</manufacturer>
+    <category>Shooter</category>
+
+    <setname>sasuke</setname>
+    <parent>sasuke</parent>
+    <mameversion>0289</mameversion>
+    <rbf>SNK6502</rbf>
+    <about></about>
+
+    <resolution>15kHz</resolution>
+    <rotation>vertical (cw)</rotation>
+    <flip>yes</flip>
+
+    <players>2 (alternating)</players>
+    <joystick>2-way</joystick>
+    <special_controls></special_controls>
+    <num_buttons>1</num_buttons>
+    <buttons names="Fire,-,-,-,Coin,Start 1P,Start 2P,Pause,-,-,-" default="A,Select,Start,R,L"/>
+
+    <switches default="15">
+        <dip name="Cabinet" bits="0" ids="Upright,Cocktail" values="1,0"/>
+        <dip name="Bonus Life" bits="2" ids="5000,10000" values="1,0"/>
+        <dip name="Lives" bits="4,5" ids="3,4,5" values="0,1,2"/>
+        <dip name="RAM Test" bits="7" ids="Off,On"/>
+        <dip name="Coinage" bits="1" ids="1C/1C,1C/2C"/>
+    </switches>
+
+    <!-- Index 0: ROM -->
+    <rom index="0" md5="none" zip="sasuke.zip">
+        <part repeat="0x4000">00</part>
+        <part crc="34cbbe03" name="sc1"/>
+        <part crc="38cc14f0" name="sc2"/>
+        <part crc="54c41285" name="sc3"/>
+        <part crc="23edafcf" name="sc4"/>
+        <part crc="ca410e4f" name="sc5"/>
+        <part crc="80406afb" name="sc6"/>
+        <part crc="04d0f104" name="sc7"/>
+        <part crc="0219104b" name="sc8" offset="0x0" length="0x800"/>
+        <part crc="d6ff889a" name="sc9"/>
+        <part crc="19df6b9a" name="sc10"/>
+        <part repeat="0x6800">00</part>
+        <part crc="0219104b" name="sc8" offset="0x0" length="0x800"/>
+        <part crc="aff9743d" name="mcs_c"/>
+        <part repeat="0x800">00</part>
+        <part crc="9c805120" name="mcs_d"/>
+        <part repeat="0x800">00</part>
+        <part crc="b70f34c1" name="sasuke.clr"/>
+        <part repeat="0x20">00</part>
+        <part crc="24a0e121" name="sc11"/>
+    </rom>
+
+    <!-- Index 1: Config -->
+    <rom index="1">
+        <part>
+            00 94 00 00 00 00 00 15 FF FF 80 80 80 00 80 80
+            03 04 05 0B 0C 0D 13 14 00 00 00 00 00 00 00 00
+            11 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        </part>
+    </rom>
+
+    <!-- Index 3: Hiscore -->
+    <rom index="3" md5="none">
+        <part>
+            00 16 FB 23 00 FF 00 02 00 02 00 01 11 11 00 00
+            00 00 00 24 00 02 00 05
+        </part>
+    </rom>
+    <!-- Index 4: NVRAM -->
+    <rom index="4"></rom>
+    <nvram index="4" size="2"></nvram>
+
+    <remark>Sasuke Vs. Commander (Set 1) (SNK)</remark>
+    <mratimestamp>20261030000000</mratimestamp>
+</misterromdescription>

@@ -1,0 +1,100 @@
+<misterromdescription>
+  <name>Raiden (World set 2, newer hardware)</name>
+  <setname>raidenb</setname>
+  <mameversion>0264</mameversion>
+  <rbf>Raiden</rbf>
+  <year>1990</year>
+  <manufacturer>Seibu Kaihatsu</manufacturer>
+  <category>Shoot</category>
+  <rotation>vertical (ccw)</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Fire,Bomb,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="FF,FF">
+    <!-- DIP identici al World set 1: MAME raidenb usa INPUT_PORTS(raiden).
+         SW1: bit0 Coin Mode, 1-4 Coinage, 5 Credits to Start, 6 unused, 7 Flip.
+         SW2: bit8-9 Lives, 10-11 Bonus, 12-13 Difficulty, 14 Continue, 15 Demo. -->
+    <dip bits="0"     ids="B,A" name="Coin Mode"/>
+    <dip bits="1,4"   ids="Free Play,8C 3C,5C 3C,3C 2C,2C 3C,1C 6C,1C 5C,1C 4C,1C 3C,1C 2C,6C 1C,5C 1C,4C 1C,3C 1C,2C 1C,1C 1C" name="Coinage (Mode A)"/>
+    <dip bits="5"     ids="2,1" name="Credits to Start"/>
+    <dip bits="7"     ids="On,Off" name="Flip Screen"/>
+    <dip bits="8,9"   ids="5,2,1,3" name="Lives"/>
+    <dip bits="10,11" ids="1M/5M,300k/1M,80k/300k,150k/400k" name="Bonus Life"/>
+    <dip bits="12,13" ids="Very Hard,Hard,Easy,Normal" name="Difficulty"/>
+    <dip bits="14"    ids="No,Yes" name="Allow Continue"/>
+    <dip bits="15"    ids="Off,On" name="Demo Sounds"/>
+  </switches>
+
+  <!-- Board select (mod byte, caricato dall'HPS PRIMA delle ROM):
+       01 = raidenb "newer hardware" → il core bypassa i decrypt V30/Z80
+       (ROM in chiaro, il PCB B non ha PLD di cifratura ne' SEI80BU), mappa
+       main raidenb (I/O 0x0B00x, sound 0x0D000, shared 0x0A000), Seibu CRTC
+       a 0x0D040-0x0D08F, text layer SCAN_COLS. I set classici mandano 00. -->
+  <rom index="1">
+    <part>01</part>
+  </rom>
+  <rom index="0" zip="raidenb.zip|raiden.zip" md5="None">
+    <!-- ============================================================
+         Stesso layout di download del World set 1 (stesso RBF, stesso
+         sdram_bridge). Regioni byte ioctl → basi word SDRAM:
+           $000000-$01FFFF  Main 1   128K  → MAIN_BASE 0x000000
+           $020000-$05FFFF  Main 2   256K  (raidenb: IN CHIARO, no decrypt)
+           $060000-$09FFFF  Sub      256K  (raidenb: IN CHIARO) → SUB_BASE 0x030000
+           $0A0000-$0AFFFF  AudioZ80  64K  (raidenb: rai6.u212 in chiaro, BRAM)
+           $0B0000-$0BFFFF  Text      64K  → TXT_BASE 0x058000 (BRAM)
+           $0C0000-$13FFFF  bgtiles  512K  → BG_BASE  0x060000
+           $140000-$1BFFFF  fgtiles  512K  → FG_BASE  0x0A0000
+           $1C0000-$23FFFF  sprites  512K  → DDR3 (copia SDRAM 0x0E0000 non letta)
+           $240000-$24FFFF  oki       64K  → OKI_BASE 0x120000
+         Mask ROM grafiche/OKI/text/Main 1: identiche al parent (dal merged
+         raiden.zip); cambiano solo Main 2, Sub e Z80 (codice revisione B).
+         ============================================================ -->
+
+    <!-- Main 1: 0x000000-0x01FFFF (128K) - identiche al parent -->
+    <interleave output="16">
+      <part name="1.u0253" crc="a4b12785" map="01"/>
+      <part name="2.u0252" crc="17640bd5" map="10"/>
+    </interleave>
+
+    <!-- Main 2: 0x020000-0x05FFFF (256K) - raidenb, NON criptate -->
+    <interleave output="16">
+      <part name="3__,raidenb.u022" crc="9d735bf5" map="01"/>
+      <part name="4__,raidenb.u023" crc="8d184b99" map="10"/>
+    </interleave>
+
+    <!-- Sub V30: 0x060000-0x09FFFF (256K) - raidenb, NON criptate -->
+    <interleave output="16">
+      <part name="5__,raidenb.u042" crc="7aca6d61" map="01"/>
+      <part name="6__,raidenb.u043" crc="e3d35cc2" map="10"/>
+    </interleave>
+
+    <!-- Audio Z80: 0x0A0000-0x0AFFFF (64K raw byte-pack) - raidenb, in chiaro -->
+    <part name="rai6.u212" crc="723a483b"/>
+
+    <!-- Text: 0x0B0000-0x0BFFFF (64K SDRAM interleave 32K+32K)
+         MAME ROM_LOAD16_BYTE: "9" planes 2,3 (offset dispari), "10" planes 0,1 (offset pari).
+         SWAP pattern DCon/GundamSD: planes 2,3 in charrom_lo, planes 0,1 in charrom_hi
+         (decode mode SI per matchare il decoder DCon "Fix D3 swap"). -->
+    <interleave output="16">
+      <part name="10" crc="5f90786a" map="10"/>
+      <part name="9"  crc="1922b25e" map="01"/>
+    </interleave>
+
+    <!-- bgtiles: 0x0C0000-0x13FFFF (512K raw byte-pack) -->
+    <part name="sei420" crc="da151f0b"/>
+
+    <!-- fgtiles: 0x140000-0x1BFFFF (512K raw byte-pack) -->
+    <part name="sei430" crc="ac1f57ac"/>
+
+    <!-- sprites: 0x1C0000-0x23FFFF (512K raw byte-pack) -->
+    <part name="sei440" crc="946d7bde"/>
+
+    <!-- oki: 0x240000-0x24FFFF (64K raw byte-pack) -->
+    <part name="7.u203" crc="8f927822"/>
+  </rom>
+
+  <mratimestamp>20260820190000</mratimestamp>
+</misterromdescription>

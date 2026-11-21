@@ -1,0 +1,84 @@
+<misterromdescription>
+    <name>Kingdom Grandprix</name>
+    <setname>kingdmgp</setname>
+    <rbf>RaizingMD</rbf>
+    <mameversion>0270</mameversion>
+    <year>1994</year>
+    <manufacturer>Raizing / Eighting</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Vertical (CCW)</rotation>
+    <region>World</region>
+    <platform>Toaplan 2</platform>
+    <category>Shoot'em up</category>
+    <catver>Shooter / Flying Vertical</catver>
+
+    <buttons names="Shot,Bomb,-,Start,Coin,Pause,-,-,-,Save/Load" default="A,B,Start,Select,R,L" />
+
+    <switches default="00,00,F4">
+        <!-- DSW A -->
+        <dip name="Free Play" bits="0" ids="Off,On" />
+        <dip name="Screen Flip" bits="1" ids="Normal,Invert" />
+        <dip name="Test Mode" bits="2" ids="Off,On" />
+        <dip name="Advertise Sound" bits="3" ids="On,Off" />
+        <dip name="Coin A" bits="4,5" ids="1/1,1/2 (EU 2/1),2/1 (EU 3/1),2/3 (EU 4/1)" />
+        <dip name="Coin B" bits="6,7" ids="1/1 (EU 1/2),1/2 (EU 1/3),2/1 (EU 1/4),2/3 (EU 1/6)" />
+        <!-- DSW B -->
+        <dip name="Difficulty" bits="8,9" ids="Normal,Easy,Hard,Very Hard" />
+        <dip name="Extend" bits="10,11" ids="300k(E),200k/500k,200k,None" />
+        <dip name="Number of Heroes" bits="12,13" ids="3,5,2,1" />
+        <dip name="No Death/Stop Mode" bits="14" ids="Off,On" />
+        <dip name="Continue Play" bits="15" ids="On,Off" />
+        <!-- JMPR -->
+        <!-- Japan requires the shippumd text ROM; using it with kingdmgp corrupts the game text. -->
+        <dip name="Unused Jumper" bits="16" ids="Off,On" />
+        <dip name="Region" bits="17,19" ids="EU,USA,SEA,CHN,KOR,HK,TWN" values="2,1,3,4,5,6,7" />
+    </switches>
+
+    <!-- Raizing board descriptor: "RZ", contract version, board ID -->
+    <rom index="1">
+        <part>52 5A 01 02</part>
+    </rom>
+
+    <rom index="0" address="0x30000000" zip="kingdmgp.zip" md5="None">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="ma02rom1.bin" crc="a678b149" map="01" length="0x80000" />
+            <part name="ma02rom0.bin" crc="f226a212" map="10" length="0x80000" />
+        </interleave>
+        <!-- audiocpu - starts at 0x100000 -->
+        <part name="ma02rom2.bin" crc="dde8a57e" length="0x10000" />
+        <!-- gp9001_0 - starts at 0x110000 -->
+        <interleave output="16">
+            <part name="ma02rom3.bin" crc="0e797142" map="01" length="0x200000" />
+            <part name="ma02rom4.bin" crc="72a6fa53" map="10" length="0x200000" />
+        </interleave>
+        <!-- text - starts at 0x510000 -->
+        <part name="ma02rom5.eng" crc="8c28460b" length="0x8000" />
+        <!-- oki1 - starts at 0x518000 -->
+        <part name="ma02rom6.bin" crc="199e7cae" length="0x80000" />
+    </rom>
+
+    <rom index="2">
+        <part>
+            0010  0000  0010  0000  0008  0000  0006  0000
+            0004  0000  0002  0000  0000  0000  0000  0000
+            0000  0000  0000  0000  0000  0000  0005  0002
+            0007  0000  0006  0000  0000  0000  0000  0000
+            0000  0000  0000  0000  0000  0000  0000  0000
+            0000  0000  004D  0020  0041  0020  0048  0020
+            0020  0020  0052  0020  0041  0020  0059  0020
+            0020  0020  0052  0020  0041  0020  0049  0020
+            0020  0020  004E  0020  0045  0020  0042  0020
+            0020  0020  0053  0020  0045  0020  004E  2A30
+            2A30  2A30  FFFF  FFFF  FFFF  FFFF  FFFF  FFFF
+            FFFF  FFFF  FFFF  0000  0000  0000  0000  0000
+            0000  5A41  5400  5441  4300  4D41  5400  4D41
+            4300  5547  4D00  5347  4D00  462F  4100  5444
+            4600  5344  4600  534F  4200  4745  4E00  5439
+            39
+        </part>
+    </rom>
+
+    <nvram index="2" size="241" />
+</misterromdescription>

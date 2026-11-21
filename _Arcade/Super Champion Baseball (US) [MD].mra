@@ -1,0 +1,74 @@
+<misterromdescription>
+    <name>Super Champion Baseball (US)</name>
+    <setname>sbasebal</setname>
+    <rbf>Alpha68kMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>Alpha Denshi Co. (SNK of America license)</manufacturer>
+    <region>US</region>
+    <joystick>8-Way</joystick>
+    <rotation>horizontal</rotation>
+
+    <switches default="cf,bf">
+        <!-- IN3 -->
+        <dip name="Freeze" bits="10" ids="Off,On" values="1,0"/>
+        <dip name="Flip Screen" bits="11" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="12" ids="Off,On" values="1,0"/>
+        <dip name="Unknown" bits="13" ids="Off,On" values="1,0"/>
+        <dip name="Game Time" bits="14,15" ids="3:30,3:00,2:30,2:00" values="0,2,1,3"/>
+        <!-- IN4 -->
+        <dip name="Difficulty" bits="0,1" ids="Easy,Normal,Hard,Hardest" values="2,3,1,0"/>
+        <dip name="Coinage" bits="2,3" ids="2 Coins/1 Credit,1 Coin/1 Credit,1 Coin/2 Credits,Free Play" values="2,3,1,0"/>
+        <dip name="Cont. Price" bits="4" ids="1 Coin/1 Credit,Same as Start" values="1,0"/>
+        <dip name="Demo Sounds" bits="5" ids="Off,On" values="0,1"/>
+    </switches>
+
+    <buttons names="Swing/Pitch/Field,Steal/Pick Off/Run,Time-Out,-,-,Start,Coin,Pause,Save States" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>02 3A</part>
+    </rom>
+
+    <rom index="0" zip="sbasebal.zip" md5="None">
+
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="snksb1.c19" crc="304fef2d" map="01"/>
+            <part name="snksb2.e19" crc="35821339" map="10"/>
+        </interleave>
+        <part repeat="0x40000"> FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <part name="sb-3.g9" crc="89e12f25"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="sb-4.g11" crc="cca2555d"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="sb-5.g13" crc="f45ee36f"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="sb-6.g15" crc="651c9472"/>
+        <part repeat="0x10000"> FF</part>
+
+        <!-- gfx1 - starts at 0x100000 -->
+        <part name="sb-7.l3" crc="8f3c2e25"/>
+        <part repeat="0xF0000"> FF</part>
+
+        <!-- gfx2 - starts at 0x200000 -->
+        <interleave output="32">
+            <part name="kcb-chr3.h21" crc="719071c7" map="0001"/>
+            <part name="kcb-chr2.h19" crc="014f0f90" map="0010"/>
+            <part name="kcb-chr1.h18" crc="a5ce1e10" map="0100"/>
+            <part name="kcb-chr0.h16" crc="b8a1a088" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="kcb-chr3.h21" crc="719071c7" map="0001"/>
+            <part name="kcb-chr2.h19" crc="014f0f90" map="0010"/>
+            <part name="kcb-chr1.h18" crc="a5ce1e10" map="0100"/>
+            <part name="kcb-chr0.h16" crc="b8a1a088" map="1000"/>
+        </interleave>
+
+        <!-- mcu - starts at 0x400000 -->
+        <!-- <part name="alpha.mcu" crc=""/> -->
+
+        <!-- Total 0x401000 bytes - 4100 kBytes -->
+    </rom>
+</misterromdescription>

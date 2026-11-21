@@ -1,0 +1,50 @@
+<misterromdescription>
+    <name>Qix (Set 4)</name>
+    <setname>qixo</setname>
+    <rbf>Qix</rbf>
+    <mameversion>0268</mameversion>
+    <year>1981</year>
+    <manufacturer>Taito America Corporation</manufacturer>
+    <players>2</players>
+    <joystick>4-Way</joystick>
+    <rotation>vertical (ccw)</rotation>
+    <region>World</region>
+    <category>Maze</category>
+
+    <buttons names="Draw Fast,Draw Slow,Test Advance,-,Coin,Start 1P,Start 2P,Pause,-,-,-,-,Test Next Line,Test Slew Up,Test Slew Down" default="A,B,X,Select,Start,R,L"/>
+
+    <!-- Index 0: ROM -->
+    <rom index="0" zip="qix.zip|qixo.zip" md5="none">
+        <part repeat="0x2000">00</part>
+        <part name="qu12" crc="1c55b44d"/>
+        <part name="qu13" crc="20279e8c"/>
+        <part name="qu14" crc="bafe3ce3"/>
+        <part repeat="0x0800">00</part>
+        <part name="qu16" crc="db560753"/>
+        <part name="qu17" crc="8c7aeed8"/>
+        <part name="qu18" crc="353be980"/>
+        <part name="qu19" crc="f46a69ca"/>
+
+        <part repeat="0x2000">00</part>
+        <part name="qu3"  crc="8b4c0ef0"/>
+        <part name="qu4"  crc="66a5c260"/>
+        <part name="qu5"  crc="70160ea3"/>
+        <part repeat="0x0800">00</part>
+        <part name="qu7"  crc="d6733019"/>
+        <part name="qu8"  crc="66870dcc"/>
+        <part name="qu9"  crc="c99bf94d"/>
+        <part name="qu10" crc="88b45037"/>
+
+        <part repeat="0x2800">00</part>
+        <part name="qu27.u27" crc="f3782bd0"/>
+    </rom>
+
+    <!-- Index 1: Config -->
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <!-- Index 4: NVRAM -->
+    <nvram index="4" size="1024"></nvram>
+
+</misterromdescription>

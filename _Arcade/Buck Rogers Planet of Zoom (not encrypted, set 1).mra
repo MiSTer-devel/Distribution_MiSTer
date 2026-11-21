@@ -1,0 +1,87 @@
+<misterromdescription>
+	<name>Buck Rogers: Planet of Zoom (not encrypted, set 1)</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Not encrypted, set 1</version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Buck Rogers</series>
+	<year>1982</year>
+	<manufacturer>Sega</manufacturer>
+	<category>Shooter - Flying</category>
+
+	<setname>buckrogn</setname>
+	<parent>buckrog</parent>
+	<mameversion>0288</mameversion>
+	<rbf>segavco</rbf>
+	<mratimestamp>20261002000000</mratimestamp>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<special_controls>accelerator pedal</special_controls>
+	<num_buttons>3</num_buttons>
+	<button_names>Fire,Accel Fast,Accel Slow</button_names>
+
+	<buttons names="Fire,Accel Fast,Accel Slow,Start,Coin" default="A,B,X,Start,Select"></buttons>
+	<switches default="C0,92">
+		<dip bits="0,1,2" name="Coin A" ids="1C_1C,1C_2C,1C_3C,1C_6C,2C_1C,3C_1C,4C_1C,5C_1C"/>
+		<dip bits="3,4,5" name="Coin B" ids="1C_1C,1C_2C,1C_3C,1C_6C,2C_1C,3C_1C,4C_1C,5C_1C"/>
+		<dip bits="8" name="Collisions" ids="On,Off (Cheat)"/>
+		<dip bits="9" name="Accel By" ids="Pedal,Button"/>
+		<dip bits="10" name="Best 5 Scores" ids="On,Off"/>
+		<dip bits="11" name="Score Display" ids="Off,On"/>
+		<dip bits="12" name="Difficulty" ids="Hard,Normal"/>
+		<dip bits="13,14" name="Lives" ids="3,4,5,6"/>
+		<dip bits="15" name="Cabinet" ids="Cockpit,Upright"/>
+	</switches>
+	<rom index="1"><part>00</part></rom>
+	<rom index="0" zip="buckrogn.zip|buckrog.zip" md5="none">
+		<!-- maincpu @ 0x000000, 0x8000 bytes -->
+		<part name="epr-5257.cpu-ic3" crc="7f1910af"/>
+		<part name="epr-5258.cpu-ic4" crc="5ecd393b"/>
+		<!-- subcpu @ 0x008000, 0x2000 bytes -->
+		<part name="epr-5200.cpu-ic66" crc="0d58b154"/>
+		<part repeat="4096">FF</part>
+		<!-- fgtiles @ 0x00a000, 0x1000 bytes -->
+		<part name="epr-5201.cpu-ic102" crc="7f21b0a4"/>
+		<part name="epr-5202.cpu-ic103" crc="43f3e5a7"/>
+		<!-- proms @ 0x00b000, 0x2000 bytes -->
+		<part name="pr-5194.cpu-ic39" crc="bc88cced"/>
+		<part name="pr-5195.cpu-ic53" crc="181c6d23"/>
+		<part repeat="192">FF</part>
+		<part name="pr-5196.cpu-ic10" crc="04204bcf"/>
+		<part name="pr-5197.cpu-ic78" crc="a42674af"/>
+		<part name="pr-5198.cpu-ic93" crc="32e74bc8"/>
+		<part name="pr-5199.cpu-ic95" crc="45e997a8"/>
+		<part repeat="5376">FF</part>
+		<!-- bgcolor @ 0x00d000, 0x8000 bytes -->
+		<part name="epr-5203.cpu-ic91" crc="631f5b65"/>
+		<part repeat="24576">FF</part>
+		<!-- sprites @ 0x015000, 0x40000 bytes -->
+		<part name="epr-5216.prom-ic100" crc="8155bd73"/>
+		<part repeat="24576">FF</part>
+		<part name="epr-5213.prom-ic84" crc="fd78dda4"/>
+		<part repeat="24576">FF</part>
+		<part name="epr-5262.prom-ic68" crc="2a194270"/>
+		<part repeat="16384">FF</part>
+		<part name="epr-5260.prom-ic52" crc="b31a120f"/>
+		<part repeat="16384">FF</part>
+		<part name="epr-5259.prom-ic43" crc="d3584926"/>
+		<part repeat="16384">FF</part>
+		<part name="epr-5261.prom-ic59" crc="d83c7fcf"/>
+		<part name="epr-5208.prom-ic58" crc="d181fed2"/>
+		<part repeat="8192">FF</part>
+		<part name="epr-5263.prom-ic75" crc="1bd6e453"/>
+		<part name="epr-5237.prom-ic74" crc="c34e9b82"/>
+		<part repeat="8192">FF</part>
+		<part name="epr-5264.prom-ic91" crc="221f4ced"/>
+		<part name="epr-5238.prom-ic90" crc="7aff0886"/>
+		<part repeat="8192">FF</part>
+	</rom>
+</misterromdescription>

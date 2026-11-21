@@ -1,0 +1,106 @@
+<misterromdescription>
+    <name>Saint Dragon (set 1)</name>
+    <setname>stdragon</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>Jaleco / NMK</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="FF,BF">
+        <dip name="Coin A" bits="0,2" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,Free Play" values="1,2,3,7,6,5,4,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,Free Play" values="1,2,3,7,6,5,4,0"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="0,1"/>
+        <dip name="Unused" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="8,9" ids="2,3,4,5" values="2,3,1,0"/>
+        <dip name="Unused" bits="10" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="11" ids="Off,On" values="1,0"/>
+        <dip name="Difficulty" bits="12,13" ids="Easy,Normal,Hard,Hardest" values="3,2,1,0"/>
+        <dip name="Cabinet" bits="14" ids="Upright,Cocktail" values="0,1"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Shot 1,Shot 2,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>0B</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 41 32   00 00 24 13   00 00 31 42   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+            00 00 FF FF   00 00 FF FF   00 00 FF FF   00 00 FF FF
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>5A</part>
+    </rom>
+
+    <rom index="0" zip="stdragon.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="jsd-02.bin" crc="cc29ab19" map="01"/>
+            <part name="jsd-01.bin" crc="67429a57" map="10"/>
+        </interleave>
+        <part repeat="0x40000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="jsd-05.bin" crc="8c04feaa" map="01"/>
+            <part name="jsd-06.bin" crc="0bb62f3a" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="jsd-09.bin" crc="e366bc5a"/>
+        <part name="jsd-10.bin" crc="4a8f4fe6"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="jsd-07.bin" crc="6a48e979"/>
+        <part name="jsd-08.bin" crc="40704962"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="jsd-11.bin" crc="2783b7b1"/>
+        <part name="jsd-12.bin" crc="89466ab7"/>
+        <part name="jsd-13.bin" crc="9896ae82"/>
+        <part name="jsd-14.bin" crc="7e8da371"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="jsd-15.bin" crc="e296bf59"/>
+        <part name="jsd-16.bin" crc="d8919c06"/>
+        <part name="jsd-17.bin" crc="4f7ad563"/>
+        <part name="jsd-18.bin" crc="1f4da822"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="jsd-19.bin" crc="25ce807d"/>
+        <part repeat="0x70000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="jsd-20.bin" crc="2c6e93bb"/>
+        <part name="jsd-21.bin" crc="864bcc61"/>
+        <part name="jsd-22.bin" crc="44fe2547"/>
+        <part name="jsd-23.bin" crc="6b010e1a"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="prom.14m" crc="1d877538"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 8D 00 00 7C 00 D3
+        </part>
+    </rom>
+    <nvram index="5" size="124"/>
+</misterromdescription>

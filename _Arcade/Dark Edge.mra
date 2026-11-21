@@ -1,0 +1,70 @@
+<misterromdescription>
+    <name>Dark Edge</name>
+    <setname>darkedge</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1992</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>2</players>
+    <joystick>8</joystick>
+    <buttons names="-,Weak Punch,Strong Punch,Start,Coin,Service,Test,Jump,Weak Kick,Strong Kick" default="Y,X,Start,Select,-,-,R,B,A"/>
+    <region>World</region>
+
+    <rom index="1">
+        <part>28</part>
+    </rom>
+
+    <rom index="0" zip="darkedge.zip" md5="none" address="0x30000000">
+
+        <part name="epr-15246.ic8" crc="c0bdceeb"/>
+        <part name="epr-15246.ic8" crc="c0bdceeb"/>
+        <part repeat="1048576">00</part>
+
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="epr-15243.ic36" crc="08ca5f11"/>
+        <part name="mpr-15242.ic35" crc="ffb7d917"/>
+        <part name="mpr-15241.ic34" crc="8eccc4fe"/>
+        <part name="mpr-15240.ic24" crc="867d59e8"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-15248.ic14" crc="185b308b" map="01"/>
+            <part name="mpr-15247.ic5" crc="be21548c" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="mpr-15248.ic14" crc="185b308b" map="01"/>
+            <part name="mpr-15247.ic5" crc="be21548c" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="mpr-15248.ic14" crc="185b308b" map="01"/>
+            <part name="mpr-15247.ic5" crc="be21548c" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="mpr-15248.ic14" crc="185b308b" map="01"/>
+            <part name="mpr-15247.ic5" crc="be21548c" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-15249.ic32" crc="2b4371a8" map="00000021"/>
+            <part name="mpr-15251.ic30" crc="efe2d689" map="00002100"/>
+            <part name="mpr-15253.ic28" crc="8356ed01" map="00210000"/>
+            <part name="mpr-15255.ic26" crc="ff04a5b0" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-15250.ic31" crc="c5cab71a" map="00000021"/>
+            <part name="mpr-15252.ic29" crc="f8885fea" map="00002100"/>
+            <part name="mpr-15254.ic27" crc="7765424b" map="00210000"/>
+            <part name="mpr-15256.ic25" crc="44c36b62" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

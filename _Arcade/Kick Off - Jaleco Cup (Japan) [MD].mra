@@ -1,0 +1,96 @@
+<misterromdescription>
+    <name>Kick Off: Jaleco Cup (Japan)</name>
+    <setname>kickoff</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1988</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: Kick Off DIP sheet (names, order); defaults MAME 0.288 (sheet marks none) -->
+    <switches default="BF,BF">
+        <dip name="Coin 1" bits="0,2" ids="1C/1P,1C/2P,1C/3P,1C/4P,2C/1P,3C/1P,4C/1P,Free Play" values="7,6,5,4,3,2,1,0"/>
+        <dip name="Not Used" bits="3" ids="Off,On" values="1,0"/>
+        <dip name="Not Used" bits="4" ids="Off,On" values="1,0"/>
+        <dip name="Game Stop" bits="5" ids="Normal,Stop" values="1,0"/>
+        <dip name="Sound Of Demo" bits="6" ids="No,Yes" values="1,0"/>
+        <dip name="Version" bits="7" ids="Japan,English" values="1,0"/>
+        <dip name="Play Duration" bits="8,9" ids="3 Min,4 Min,5 Min,6 Min" values="3,2,1,0"/>
+        <dip name="Not Used" bits="10" ids="Off,On" values="1,0"/>
+        <dip name="Not Used" bits="11" ids="Off,On" values="1,0"/>
+        <dip name="Difficulty" bits="12,13" ids="Normal,Difficulty 1,Difficulty 2,Difficulty 3" values="3,2,1,0"/>
+        <dip name="Lever/Trackball" bits="14" ids="Track Ball,8 Way Lever" values="1,0"/>
+        <dip name="Monitor" bits="15" ids="Standard,Reverse" values="1,0"/>
+    </switches>
+
+    <!-- button names: MAME 0.288 (no game documentation names them) -->
+    <buttons names="Button 1,Button 2,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>01</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 04 30 12   00 00 12 43
+            00 01 04 32   00 01 43 02   00 04 31 02   00 01 02 43
+            00 00 24 31   00 00 24 31   00 04 30 21   00 00 24 43
+            00 01 24 30   00 01 43 20   00 04 31 20   00 01 20 43
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="kickoff.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="kioff03.rom" crc="3b01be65" map="01"/>
+            <part name="kioff01.rom" crc="ae6e68a1" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="kioff09.rom" crc="1770e980" map="01"/>
+            <part name="kioff19.rom" crc="1b03bbe4" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="kioff20.rom" crc="5c28bd2d"/>
+        <part name="kioff21.rom" crc="195940cf"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="kioff10.rom" crc="fd739fec"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="kioff05.rom" crc="e7232103"/>
+        <part name="kioff06.rom" crc="a0b3cb75"/>
+        <part name="kioff07.rom" crc="ed649919"/>
+        <part repeat="0x20000">FF</part>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part repeat="0x80000">FF</part>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="kioff16.rom" crc="22c46314"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="kioff27.rom" crc="ca221ae2"/>
+        <part name="kioff18.rom" crc="d7909ada"/>
+        <part name="kioff17.rom" crc="f171559e"/>
+        <part name="kioff26.rom" crc="2a90df1b"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="kick.14m" crc="85b30ac4"/>
+
+    </rom>
+</misterromdescription>

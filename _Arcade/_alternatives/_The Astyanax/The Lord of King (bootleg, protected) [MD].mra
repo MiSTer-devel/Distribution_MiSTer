@@ -1,0 +1,130 @@
+<misterromdescription>
+    <name>The Lord of King (bootleg, protected)</name>
+    <setname>lordofkbp</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>bootleg</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="BF,FF">
+        <dip name="Coin A" bits="0,2" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr" values="0,4,2,7"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr" values="0,4,2,7"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="1,0"/>
+        <dip name="Test Mode" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="8" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="9" ids="Off,On" values="1,0"/>
+        <dip name="Bonus Life" bits="10" ids="30k/70k/110k+30k,50k/100k/+40k" values="1,0"/>
+        <dip name="Lives" bits="11,12" ids="2,3,4,5" values="1,3,2,0"/>
+        <dip name="Difficulty" bits="13" ids="Normal,Hard" values="1,0"/>
+        <dip name="Swap 1P/2P Controls" bits="14" ids="Off,On" values="1,0"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Attack,Jump,Thunder Attack,Start,Coin,Pause,Save/Load" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>14</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 04 30 12   00 00 12 43
+            00 01 04 32   00 01 43 02   00 04 31 02   00 01 02 43
+            00 00 24 31   00 00 24 31   00 04 30 21   00 00 24 43
+            00 01 24 30   00 01 43 20   00 04 31 20   00 01 20 43
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="lordofkbp.zip|astyanax.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="load.d18" crc="36e4de06" map="01"/>
+            <part name="load.b18" crc="c0e1076f" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="load.d17" crc="b8cd3151" map="01"/>
+            <part name="load.dc" crc="cbb9728d" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="load.a10" crc="097b53a6" map="01"/>
+            <part name="load.a15" crc="1e1cbdb2" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="load.h15" crc="11c74045" map="01"/>
+            <part name="load.i15" crc="eecd4b16" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part repeat="0x100000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="load.h17" crc="6f18a8c9"/>
+        <part name="load.i17" crc="5a5bf82e"/>
+        <part name="load.j17" crc="7a818ada"/>
+        <part name="load.k17" crc="f8f0a2db"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="load.m17" crc="e8be2851"/>
+        <part name="load.m16" crc="b7b80980"/>
+        <part name="load.m18" crc="b3363955"/>
+        <part name="load.m14" crc="805ac7a9"/>
+        <part name="load.m13" crc="4bb43e5e"/>
+        <part name="load.m11b" crc="3a412a0f"/>
+        <part name="load.m11t" crc="92a5171e"/>
+        <part repeat="0x10000">FF</part>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="load.b3" crc="52d29b73"/>
+        <part name="load.b2" crc="0b48e8e5"/>
+        <part name="load.a8" crc="af3aa84d"/>
+        <part name="load.a6" crc="76dc6632"/>
+        <part name="load.d2" crc="07c27836"/>
+        <part name="load.d3" crc="e2c40977"/>
+        <part name="load.a4" crc="cdf45985"/>
+        <part repeat="0x10000">FF</part>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="load.g3b" crc="1c5df501"/>
+        <part name="load.g3t" crc="c0943ffe"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="load.g2" crc="8c82e91f"/>
+        <part name="load.g1" crc="82183cb3"/>
+        <part name="load.h2" crc="e747928b"/>
+        <part name="load.h1" crc="5ea64444"/>
+        <part name="load.g3" crc="6b1572b4"/>
+        <part name="load.h3" crc="88b5d7f8"/>
+        <part name="load.i2" crc="210eb169"/>
+        <part name="load.i1" crc="f6d91d5b"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="rd.bpr" crc="85b30ac4"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 89 21 00 97 00 4E
+            00 0F 88 75 00 0F 00 00
+            00 0F 88 7B 00 01 02 02
+        </part>
+    </rom>
+    <nvram index="5" size="167"/>
+</misterromdescription>

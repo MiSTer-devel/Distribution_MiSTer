@@ -1,0 +1,65 @@
+<misterromdescription>
+    <name>Alien3: The Gun</name>
+    <setname>alien3</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1993</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>2</players>
+    <buttons names="Fire,Bomb,-,-,Coin,Service,Test" default="A,B,Select,-,-"/>
+
+    <region>World</region>
+
+    <rom index="1">
+        <part>00 05</part>
+    </rom>
+
+    <rom index="0" zip="alien3.zip" md5="none" address="0x30000000">
+
+        <part name="epr-15943.ic17" crc="ac4591aa"/>
+        <part name="epr-15943.ic17" crc="ac4591aa"/>
+        <part name="epr-15942.ic8" crc="a1e1d0ec"/>
+        <part name="epr-15942.ic8" crc="a1e1d0ec"/>
+        <interleave output="16">
+            <part name="mpr-15855.ic18" crc="a6fadabe" map="01"/>
+            <part name="mpr-15854.ic9" crc="d1aec392" map="10"/>
+        </interleave>
+
+        <part name="epr-15859a.ic36" crc="91b55bd0"/>
+        <part name="epr-15859a.ic36" crc="91b55bd0"/>
+        <part name="epr-15859a.ic36" crc="91b55bd0"/>
+        <part name="epr-15859a.ic36" crc="91b55bd0"/>
+        <part name="mpr-15858.ic35" crc="2eb64c10"/>
+        <part name="mpr-15857.ic34" crc="915c56df"/>
+        <part name="mpr-15856.ic24" crc="a5ef4f1f"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-15863.ic14" crc="9d36b645" map="01"/>
+            <part name="mpr-15862.ic5" crc="9e277d25" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-15864.ic32" crc="58207157" map="00000021"/>
+            <part name="mpr-15866.ic30" crc="9c53732c" map="00002100"/>
+            <part name="mpr-15868.ic28" crc="62d556e8" map="00210000"/>
+            <part name="mpr-15870.ic26" crc="d31c0400" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-15865.ic31" crc="dd64f87b" map="00000021"/>
+            <part name="mpr-15867.ic29" crc="8cf9cb11" map="00002100"/>
+            <part name="mpr-15869.ic27" crc="dd4b137f" map="00210000"/>
+            <part name="mpr-15871.ic25" crc="58eb10ae" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <rom index="2" zip="alien3.zip" md5="none">
+        <interleave output="16">
+            <part name="93c45_eeprom.ic76" crc="6e1d9df3" map="12"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

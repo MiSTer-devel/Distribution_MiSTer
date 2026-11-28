@@ -1,0 +1,28 @@
+<misterromdescription>
+	<name>PGM (Polygame Master) System BIOS</name>
+	<setname>pgm</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" download="0x30000000" zip="pgm.zip">
+		<part>00 00</part>
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

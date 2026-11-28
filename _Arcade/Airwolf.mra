@@ -1,0 +1,70 @@
+<misterromdescription>
+	<name>Airwolf</name>
+	<region>World</region>
+	<year>1987</year>
+	<manufacturer>Kyugo</manufacturer>
+	<category>Shooter</category>
+
+	<setname>airwolf</setname>
+	<rbf>Kyugo</rbf>
+    <mameversion>0268</mameversion>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<button_names>Machine Gun,Missile</button_names>
+
+	<switches default="BB,FF">
+		<dip bits="0,1"      name="Lives"          ids="7,6,5,4"/>
+		<dip bits="2"        name="Allow Continue" ids="Yes,No"/>
+		<dip bits="3"        name="Slow Motion"    ids="On,Off"/>
+		<dip bits="4"        name="Invulnerability" ids="On,Off"/>
+		<dip bits="5"        name="Sound Test"     ids="On,Off"/>
+		<dip bits="6"        name="Cabinet"        ids="Upright,Cocktail"/>
+		<dip bits="7"        name="Freeze"         ids="On,Off"/>
+		<dip bits="8,10"     name="Coin A"         ids="Free Play,3C/2C,2C/1C,1C/6C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+		<dip bits="11,13"    name="Coin B"         ids="5C/1C,4C/1C,3C/1C,2C/1C,3C/4C,1C/3C,1C/2C,1C/1C"/>
+	</switches>
+
+	<!-- Index 1: Config -->
+	<rom index="1">
+		<part>13</part>
+	</rom>
+
+	<!-- Index 0: ROM -->
+	<rom index="0" md5="none" zip="airwolf.zip">
+		<part crc="8c993cce" name="b.2s"/>
+		<part crc="a3c7af5c" name="a.7s"/>
+		<part crc="4df44ce9" name="f.4a"/>
+		<part crc="cf0de5e9" name="10h_13.bin"/>
+		<part repeat="8192"> 00 </part>
+		<part crc="25e57e1f" name="09h_14.bin"/>
+		<part repeat="8192"> 00 </part>
+		<part crc="4050c048" name="11h_12.bin"/>
+		<part repeat="8192"> 00 </part>
+		<part crc="e8fbc7d2" name="e.6a" offset="0x0000" length="0x2000"/>
+		<part crc="e8fbc7d2" name="e.6a" offset="0x4000" length="0x2000"/>
+		<part crc="e8fbc7d2" name="e.6a" offset="0x2000" length="0x2000"/>
+		<part crc="e8fbc7d2" name="e.6a" offset="0x6000" length="0x2000"/>
+		<part crc="c5d4156b" name="d.8a" offset="0x0000" length="0x2000"/>
+		<part crc="c5d4156b" name="d.8a" offset="0x4000" length="0x2000"/>
+		<part crc="c5d4156b" name="d.8a" offset="0x2000" length="0x2000"/>
+		<part crc="c5d4156b" name="d.8a" offset="0x6000" length="0x2000"/>
+		<part crc="de91dfb1" name="c.10a" offset="0x0000" length="0x2000"/>
+		<part crc="de91dfb1" name="c.10a" offset="0x4000" length="0x2000"/>
+		<part crc="de91dfb1" name="c.10a" offset="0x2000" length="0x2000"/>
+		<part crc="de91dfb1" name="c.10a" offset="0x6000" length="0x2000"/>
+		<part crc="6a94b2a3" name="01j.bin"/>
+		<part crc="ec0923d3" name="01h.bin"/>
+		<part crc="ade97052" name="01f.bin"/>
+		<part crc="190a55ad" name="74s288-2.bin"/>
+		<part crc="83a39201" name="m1.2c"/>
+	</rom>
+
+	<!-- Index 4: NVRAM -->
+	<nvram index="4" size="2048"></nvram>
+</misterromdescription>

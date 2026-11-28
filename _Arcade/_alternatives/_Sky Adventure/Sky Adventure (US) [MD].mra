@@ -1,0 +1,78 @@
+<misterromdescription>
+    <name>Sky Adventure (US)</name>
+    <setname>skyadvntu</setname>
+    <parent>skyadvnt</parent>
+    <rbf>Alpha68kMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>Alpha Denshi Co. (SNK of America license)</manufacturer>
+    <region>US</region>
+    <joystick>8-Way</joystick>
+    <rotation>vertical (cw)</rotation>
+
+    <switches default="fe,ff">
+        <!-- IN3 -->
+        <dip name="Lives" bits="10,11" ids="2,3,4,5" values="2,3,1,0"/>
+        <dip name="Unused" bits="12" ids="Off,On" values="1,0"/>
+        <dip name="Difficulty" bits="13,14" ids="Easy,Normal,Hard,Hardest" values="2,3,1,0"/>
+        <dip name="Demo Sounds" bits="15" ids="Off,On" values="0,1"/>
+        <!-- IN4 -->
+        <dip name="Cont. Price" bits="0" ids="1 Coin/1 Credit,2 Coins" values="1,0"/>
+        <dip name="Allow Continue" bits="1" ids="No,Yes" values="0,1"/>
+        <dip name="Coinage" bits="2,3" ids="2 Coins/1 Credit,1 Coin/1 Credit,1 Coin/2 Credits,Free Play" values="1,3,2,0"/>
+        <dip name="Flip Screen" bits="4" ids="Off,On" values="1,0"/>
+        <dip name="Freeze" bits="5" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <buttons names="Fire,Weapon,Plane,-,-,Start,Coin,Pause,Save States" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>00 36</part>
+    </rom>
+
+    <rom index="0" zip="skyadvntu.zip|skyadvnt.zip" md5="None">
+
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="sa_v3.1" crc="862393b5" map="01"/>
+            <part name="sa_v3.2" crc="fa7a14d1" map="10"/>
+        </interleave>
+        <part repeat="0x40000"> FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <part name="sa.3" crc="3d0b32e0"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="sa.4" crc="c2e3c30c"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="sa.5" crc="11cdb868"/>
+        <part repeat="0x10000"> FF</part>
+        <part name="sa.6" crc="237d93fd"/>
+        <part repeat="0x18000"> FF</part>
+
+        <!-- gfx1 - starts at 0x100000 -->
+        <part name="sa.7" crc="ea26e9c5"/>
+        <part repeat="0xF8000"> FF</part>
+
+        <!-- gfx2 - starts at 0x200000 -->
+        <interleave output="32">
+            <part name="sachr3" crc="a986b8d5" map="0001"/>
+            <part name="sachr2" crc="504b07ae" map="0010"/>
+            <part name="sachr1" crc="e734dccd" map="0100"/>
+            <part name="sachr0" crc="e281b204" map="1000"/>
+        </interleave>
+
+        <!-- mcu - starts at 0x400000 -->
+        <!-- <part name="alpha.mcu" crc=""/> -->
+
+        <!-- Total 0x401000 bytes - 4100 kBytes -->
+    </rom>
+
+    <!-- hiscore: address[4] length[2] start end, MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="3" md5="none">
+        <part>
+            00 04 00 31 00 03 00 24
+            00 04 11 02 00 BC 00 20
+        </part>
+    </rom>
+    <nvram index="4" size="191"/>
+</misterromdescription>

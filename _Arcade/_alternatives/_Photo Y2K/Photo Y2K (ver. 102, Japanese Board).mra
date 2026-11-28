@@ -1,0 +1,72 @@
+<misterromdescription>
+	<name>Photo Y2K (ver. 102, Japanese Board)</name>
+	<setname>photoy2k102j</setname>
+	<rbf>IGSPGM</rbf>
+	<rotation>horizontal</rotation>
+	<mameversion>288</mameversion>
+	<buttons default="B,A,X,Y,Start,Select,L,R" names="A,B,C,D,-,-,Start,Coin,Pause,SS"/>
+	<switches default="ffff">
+		<dip name="Service Mode" bits="0" ids="On,Off"/>
+		<dip name="Music" bits="1" ids="Off,On"/>
+		<dip name="Voice" bits="2" ids="Off,On"/>
+		<dip name="Free Play" bits="3" ids="On,Off"/>
+		<dip name="Stop" bits="4" ids="On,Off"/>
+		<dip name="Unused 1" bits="5" ids="On,Off"/>
+		<dip name="Unused 2" bits="6" ids="On,Off"/>
+		<dip name="Debug" bits="7" ids="On,Off"/>
+	</switches>
+	<rom index="0" address="0x30000000" zip="pgm.zip|photoy2k.zip|photoy2k102j.zip">
+		<!-- REGION_CART_PROG_ROM=03 TILE=04 MUSIC=05 A=06 B=07 IGS027_IROM=09 -->
+
+		<!-- SYSTEM INFO (game = GAME_PHOTOY2K = 12) -->
+		<part>0c 00</part>
+
+		<!-- BIOS PROG -->
+		<part>00 00020000 00000000</part>
+		<part name="pgm_p02s.u20" crc="78c15fa2"/>
+
+		<!-- BIOS TILE -->
+		<part>01 00200000 00000000</part>
+		<part name="pgm_t01s.rom" crc="1a7123a0"/>
+
+		<!-- BIOS MUSIC -->
+		<part>02 00200000 00000000</part>
+		<part name="pgm_m01s.rom" crc="45ae7159"/>
+
+		<!-- CART PROG: 4x ROM_LOAD16_BYTE interleaved into 16-bit big-endian words
+		     (even=high byte, odd=low byte).  Decrypted in RTL. -->
+		<part>03 00200000 00100000</part>
+		<interleave output="16">
+			<part name="photo_y2k_v102_u6.u6" crc="b9ca5504" map="10"/>
+			<part name="photo_y2k_v102_u4.u4" crc="a65eda9f" map="01"/>
+		</interleave>
+		<interleave output="16">
+			<part name="photo_y2k_v102_u8.u8" crc="3be22b8f" map="10"/>
+			<part name="photo_y2k_v102_u5.u5" crc="9201621b" map="01"/>
+		</interleave>
+
+		<!-- CART TILE -->
+		<part>04 00080000 00180000</part>
+		<part name="pgm_t0700.u11" crc="93943b4d"/>
+
+		<!-- CART MUSIC -->
+		<part>05 00080000 00400000</part>
+		<part name="pgm_m0700.u5" crc="acc7afce"/>
+
+		<!-- A ROM (sprite colour) -->
+		<part>06 01080000 00000000</part>
+		<part name="pgm_a0700.u2" crc="503c855b"/>
+		<part name="pgm_a0701.u4" crc="845e11a8"/>
+		<part name="pgm_a0702.u3" crc="42239e1b"/>
+
+		<!-- B ROM (sprite mask) -->
+		<part>07 00820000 00000000</part>
+		<part name="pgm_b0700.u7" crc="8cd027f6"/>
+		<part name="photo_y2k_cg_v101_u6.u6" crc="da02ec3e"/>
+
+		<!-- IGS027A INTERNAL ARM ROM (16KB -> block RAM); v102j uses the _alt dump -->
+		<part>09 00004000 00000000</part>
+		<part name="igs027a_photoy2k_v100_china_alt.asic" crc="6dd7f257"/>
+	</rom>
+	<nvram index="8" size="131072"/>
+</misterromdescription>

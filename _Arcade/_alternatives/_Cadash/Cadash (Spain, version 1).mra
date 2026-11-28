@@ -1,0 +1,78 @@
+<misterromdescription>
+  <name>Cadash (Spain, version 1)</name>
+  <setname>cadashs</setname>
+  <mameversion>0264</mameversion>
+  <rbf>TaitoAsuka</rbf>
+  <year>1989</year>
+  <manufacturer>Taito Corporation Japan</manufacturer>
+  <category>Action / RPG</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>4</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Attack,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches base="0" default="FF,FF">
+    <dip name="Unused"                         bits="0"     ids="On,Off"/>
+    <dip name="Flip Screen"                    bits="1"     ids="On,Off"/>
+    <dip name="Service Mode"                   bits="2"     ids="On,Off"/>
+    <dip name="Demo Sounds"                    bits="3"     ids="Off,On"/>
+    <dip name="Coin A"                         bits="4,5"   ids="4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit"/>
+    <dip name="Coin B"                         bits="6,7"   ids="1 Coin/6 Credits,1 Coin/4 Credits,1 Coin/3 Credits,1 Coin/2 Credits"/>
+    <dip name="Difficulty"                     bits="8,9"   ids="Hardest,Hard,Easy,Medium"/>
+    <dip name="Starting Time"                  bits="10,11" ids="5:00,6:00,8:00,7:00"/>
+    <dip name="Added Time (after round clear)" bits="12,13" ids="Default - 2:00,Default - 1:00,Default + 1:00,Default"/>
+    <dip name="Communication Mode"             bits="14,15" ids="Slave,Stand alone,Master,Stand alone"/>
+  </switches>
+
+  <!-- CONF_STR F: ioctl_index=1 reserved byte (header) -->
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <rom index="0" zip="cadash.zip|cadashs.zip" md5="None">
+
+    <!-- ==================== Main CPU 68000 (512 KB) ==================== -->
+    <!-- 0x000000-0x07FFFF: interleaved 16-bit pairs -->
+    <!-- MAME ROM_LOAD16_BYTE: even=HIGH(map=10), odd=LOW(map=01) -->
+    <interleave output="16">
+      <part name="ic11" crc="6c11743e" map="10"/>
+      <part name="ic15" crc="73224356" map="01"/>
+    </interleave>
+    <interleave output="16">
+      <part name="ic10" crc="57d659d9" map="10"/>
+      <part name="ic14" crc="53c1b195" map="01"/>
+    </interleave>
+
+    <!-- Pad fino a 0x0C0000 (slot main 768KB - usato 512KB -> pad 256KB) -->
+    <part repeat="0x40000"> FF</part>
+
+    <!-- ==================== Sub CPU Z180 (32 KB) ==================== -->
+    <!-- 0x0C0000-0x0C7FFF: LAN multiplayer (stub nel core attuale) -->
+    <part name="c21-07.57" crc="f02292bd"/>
+    <!-- Pad fino a 0x120000 (slot sub 384KB - usato 32KB -> pad 352KB) -->
+    <part repeat="0x58000"> FF</part>
+
+    <!-- ==================== Audio Z80 ROM (64 KB) ==================== -->
+    <!-- 0x120000-0x12FFFF (banked, MAME slot 64KB nel chip 16KB pages) -->
+    <part name="c21-08.38" crc="dca495a0"/>
+    <!-- Pad fino a 0x140000 (slot audio 128KB - usato 64KB -> pad 64KB) -->
+    <part repeat="0x10000"> FF</part>
+
+    <!-- ==================== PC090OJ sprite ROM (512 KB) ==================== -->
+    <!-- 0x140000-0x1BFFFF: MAME ROM_LOAD16_WORD_SWAP -> map="12" -->
+    <interleave output="16">
+      <part name="c21-01.1" crc="1ff6f39c" map="12"/>
+    </interleave>
+    <!-- Pad fino a 0x340000 -->
+    <part repeat="0x180000"> FF</part>
+
+    <!-- ==================== TC0100SCN tile ROM (512 KB) ==================== -->
+    <interleave output="16">
+      <part name="c21-02.9" crc="205883b9" map="12"/>
+    </interleave>
+    <part repeat="0x80000"> FF</part>
+
+  </rom>
+</misterromdescription>

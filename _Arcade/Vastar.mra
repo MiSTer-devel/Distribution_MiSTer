@@ -1,0 +1,83 @@
+<misterromdescription>
+	<name>Vastar</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
+	<year>1983</year>
+	<manufacturer>Orca (Sesame Japan license)</manufacturer>
+	<category>Shooter</category>
+
+	<setname>vastar</setname>
+	<parent>vastar</parent>
+	<mameversion>0220</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>4-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="FF,FF">
+		<dip bits="0,3"  name="Credits A" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<dip bits="4,7"  name="Credits B" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<dip bits="8,9"   name="Lives" ids="6,5,4,3"/>
+		<dip bits="10,11" name="Bonus Life" ids="20k/60k,40k/120k,20k/every 60k,40k/every 120k"/>
+		<dip bits="12"    name="Unknown" ids="Off,On"/>
+		<dip bits="13,14" name="Difficulty" ids="Hardest,Hard,Normal,Easy"/>
+		<dip bits="15"    name="Cabinet" ids="Upright,Cocktail"/>
+	</switches>
+
+	<!-- Index 0: ROM -->
+	<rom index="0" md5="none" zip="vastar.zip">
+		<part crc="45fa5075" name="e_f4.rom"/>
+		<part crc="84531982" name="e_k4.rom"/>
+		<part crc="94a4f778" name="e_h4.rom"/>
+		<part crc="40e4d57b" name="e_l4.rom"/>
+		<part crc="bd607651" name="e_j4.rom"/>
+		<part crc="7a3779a4" name="e_n4.rom"/>
+		<part crc="31b6be39" name="e_n7.rom"/>
+		<part crc="f63f0e78" name="e_n5.rom"/>
+		<part crc="713478d8" name="e_f2.rom"/>
+		<part crc="e4535442" name="e_j2.rom"/>
+		<part crc="34f067b6" name="c_c9.rom"/>
+		<part crc="edbf3b13" name="c_f7.rom"/>
+		<part crc="8f309e22" name="c_f9.rom"/>
+		<part crc="b5f9c866" name="c_n4.rom"/>
+		<part crc="c9fbbfc9" name="c_s4.rom"/>
+		<part crc="a712d73a" name="tbp24s10.6p"/>
+		<part crc="0a7d48ec" name="tbp24s10.6s"/>
+		<part crc="4c3db907" name="tbp24s10.6m"/>
+		<part crc="b5297a3b" name="tbp24s10.8n"/>
+	</rom>
+	<!-- Index 1: Config -->
+	<rom index="1">
+	    <part>
+		00
+		</part>
+	</rom>
+	<!-- Index 2: Reserved -->
+	<rom index="2"></rom>
+	<!-- Index 3: Hiscore -->
+	<rom index="3" md5="none">
+		<part>
+		00 00 FF FF 00 FF 00 02 00 02 00 01 11 11 00 00
+		00 00 F1 27 00 86 00 16
+		</part>
+	</rom>
+	<!-- Index 4: NVRAM -->
+	<rom index="4"></rom>
+	<nvram index="4" size="134"></nvram>
+
+	<remark></remark>
+	<mratimestamp>20260224000000</mratimestamp>
+</misterromdescription>

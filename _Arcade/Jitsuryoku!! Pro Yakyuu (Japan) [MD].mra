@@ -1,0 +1,85 @@
+<misterromdescription>
+    <name>Jitsuryoku!! Pro Yakyuu (Japan)</name>
+    <setname>jitsupro</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="BF,FF">
+        <dip name="Coin A" bits="0,2" ids="3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,Free Play" values="4,2,7,3,5,1,6,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr" values="0,4,2,7,3,5,1,6"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="2P Innings per Credit" bits="8" ids="2,3" values="1,0"/>
+        <dip name="Catching Difficulty" bits="9" ids="Normal,Hard" values="1,0"/>
+        <dip name="Franchise Bat Power" bits="10,13" ids="Normal,G,D,C,S,W (B),T,L,Br (Bw),F,H,O (M),Bu" values="15,14,13,12,11,10,9,8,7,6,5,4,3"/>
+        <dip name="Scroll Follows" bits="14" ids="Ball Shadow,Ball Itself" values="1,0"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: MAME 0.288 (no game documentation names them) -->
+    <buttons names="Button 1,Button 2,Button 3,Start,Coin,Pause,Save/Load" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>10</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 04 30 12   00 00 12 43
+            00 01 04 32   00 01 43 02   00 04 31 02   00 01 02 43
+            00 00 24 31   00 00 24 31   00 04 30 21   00 00 24 43
+            00 01 24 30   00 01 43 20   00 04 31 20   00 01 20 43
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="jitsupro.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="jp_2.bin" crc="5d842ff2" map="01"/>
+            <part name="jp_1.bin" crc="0056edec" map="10"/>
+        </interleave>
+        <part repeat="0x40000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="jp_5.bin" crc="84454e9e" map="01"/>
+            <part name="jp_6.bin" crc="1fa9b75b" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="jp_10.bin" crc="178e43c0"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="jp_8.bin" crc="eca67632"/>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="jp_14.bin" crc="db112abf"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="jp_18.bin" crc="3ed855e3"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="jp_19.bin" crc="ff59111f"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="jp_23.bin" crc="275f48bd"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="bs.14m" crc="85b30ac4"/>
+
+    </rom>
+</misterromdescription>

@@ -1,0 +1,72 @@
+<misterromdescription>
+    <name>The Next Space</name>
+    <setname>tnextspc</setname>
+    <rbf>NextSpaceMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>SNK</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>vertical (cw)</rotation>
+    <region>World</region>
+
+    <switches default="bf,ff">
+        <!-- DSW1 -->
+        <dip name="Flip Screen" bits="0" ids="Off,On" values="1,0"/>
+        <dip name="Unused" bits="1" ids="Off,On" values="1,0"/>
+        <dip name="Add'l Bonus" bits="2" ids="2nd Extend ONLY,Every Extend" values="1,0"/>
+        <dip name="Unused" bits="3" ids="Off,On" values="1,0"/>
+        <dip name="Coinage" bits="4,5" ids="A 1C/1C B 1C/2C,A 2C/1C B 1C/3C,A 3C/1C B 1C/5C,A 4C/1C B 1C/6C" values="3,2,1,0"/>
+        <dip name="Lives" bits="6,7" ids="2,3,4,5" values="3,2,1,0"/>
+        <!-- DSW2 -->
+        <dip name="Difficulty" bits="8,9" ids="Easy,Normal,Hard,Hardest" values="2,3,1,0"/>
+        <dip name="Game Mode" bits="10,11" ids="Demo Sounds Off,Demo Sounds On,Freeze,Inf Lives (Cheat)" values="2,3,0,1"/>
+        <dip name="Bonus Life" bits="12,13" ids="100000 200000,150000 300000,300000 500000,None" values="3,2,1,0"/>
+        <dip name="Allow Continue" bits="14" ids="No,Yes" values="0,1"/>
+        <dip name="Service Mode" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <buttons names="Shot,Item Shot,Start,Coin,Pause,Save States" default="A,B,Start,Select,R,L"/>
+
+    <rom index="0" zip="tnexspce.zip|tnextspc.zip" md5="None">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="ns_4.4" crc="4617cba3" map="01"/>
+            <part name="ns_3.3" crc="a6c47fef" map="10"/>
+        </interleave>
+        <part repeat="0x40000"> FF</part>
+
+        <!-- gfx1 - starts at 0x80000 -->
+        <part name="ns_5678.bin" crc="22756451"/>
+
+        <!-- audiocpu - starts at 0x100000 -->
+        <part name="ns_1.1" crc="fc26853c"/>
+
+        <!-- color_proms - starts at 0x110000 -->
+        <part name="ns_2.bin" crc="05771d48"/>
+
+        <!-- clut_proms - starts at 0x118000 -->
+        <interleave output="16">
+            <part name="5.p5" crc="9c8527bf" map="01"/>
+            <part name="4.p4" crc="cc9ff769" map="10"/>
+        </interleave>
+
+        <!-- proms - starts at 0x118800 -->
+        <interleave output="32">
+            <part name="2.p2" crc="1f388d48" map="0001"/>
+            <part name="3.p3" crc="0254533a" map="0010"/>
+            <part name="1.p1" crc="488fd0e9" map="0100"/>
+        </interleave>
+
+        <!-- Total 0x118C00 bytes - 1123 kBytes -->
+    </rom>
+
+    <!-- hiscore: address[4] length[2] start end, MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="3" md5="none">
+        <part>
+            00 07 2B 40 00 4F 00 4B
+            00 07 00 16 00 04 00 00
+        </part>
+    </rom>
+    <nvram index="4" size="83"/>
+</misterromdescription>

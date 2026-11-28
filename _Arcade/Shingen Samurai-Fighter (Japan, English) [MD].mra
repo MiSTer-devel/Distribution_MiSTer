@@ -1,0 +1,104 @@
+<misterromdescription>
+    <name>Shingen Samurai-Fighter (Japan, English)</name>
+    <setname>tshingen</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1988</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: Samurai Fighter Shingen DIP sheet (names, order); defaults MAME 0.288 (sheet marks none) -->
+    <switches default="FF,DD">
+        <dip name="First Coinchute" bits="0,2" ids="1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,2C/1Cr,3C/1Cr,Free Play" values="7,3,5,1,6,2,4,0"/>
+        <dip name="Second Coinchute" bits="3,5" ids="1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,2C/1Cr,3C/1Cr,4C/1Cr" values="7,3,5,1,6,2,4,0"/>
+        <dip name="Attract Sound" bits="6" ids="Necessary,Unnecessary" values="1,0"/>
+        <dip name="Not Used" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Fighters" bits="8,9" ids="2,3,4,Unlimited" values="3,1,2,0"/>
+        <dip name="Extra Fighter" bits="10,11" ids="20000 Pts,30000 Pts,40000 Pts,50000 Pts" values="3,1,2,0"/>
+        <dip name="Difficulty" bits="12,13" ids="Easy,Difficult,More Difficult,Most Difficult" values="3,1,2,0"/>
+        <dip name="Continue" bits="14" ids="Necessary,Unnecessary" values="1,0"/>
+        <dip name="Screen Display" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: Jaleco instruction sheet (KLOV scan) -->
+    <buttons names="Attack Left,Attack Right,Jump,Start,Coin,Pause,Save/Load" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>05</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 04 30 12   00 00 12 43
+            00 01 04 32   00 01 43 02   00 04 31 02   00 01 02 43
+            00 00 24 31   00 00 24 31   00 04 30 21   00 00 24 43
+            00 01 24 30   00 01 43 20   00 04 31 20   00 01 20 43
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="tshingen.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="shing_02.rom" crc="d9ab5b78" map="01"/>
+            <part name="shing_01.rom" crc="a9d2de20" map="10"/>
+        </interleave>
+        <part repeat="0x40000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="takeda5.bin" crc="fbdc51c0" map="01"/>
+            <part name="takeda6.bin" crc="8fa65b69" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="takeda9.bin" crc="db7f3f4f"/>
+        <part name="takeda10.bin" crc="c9959d71"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="shing_07.rom" crc="c37ecbdc"/>
+        <part name="shing_08.rom" crc="36d56c8c"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="takeda11.bin" crc="bf0b40a6"/>
+        <part name="shing_12.rom" crc="5e4adedb"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="shing_15.rom" crc="9db18233"/>
+        <part name="takeda16.bin" crc="ceda9dd6"/>
+        <part name="takeda17.bin" crc="3d4371dc"/>
+        <part repeat="0x20000">FF</part>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="shing_19.rom" crc="97282d9d"/>
+        <part repeat="0x70000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="shing_20.rom" crc="7f6f8384"/>
+        <part name="takeda21.bin" crc="12fb006b"/>
+        <part name="takeda22.bin" crc="b165b6ae"/>
+        <part name="takeda23.bin" crc="37cb9214"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="ts.14m" crc="85b30ac4"/>
+
+    </rom>
+
+    <!-- hiscore table: address[4], length[2], start byte, end byte - MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="4" md5="none">
+        <part>
+            00 0F 0F 00 00 3A 00 4E
+        </part>
+    </rom>
+    <nvram index="5" size="58"/>
+</misterromdescription>

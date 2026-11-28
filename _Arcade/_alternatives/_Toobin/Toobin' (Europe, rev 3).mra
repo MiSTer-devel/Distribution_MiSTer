@@ -1,0 +1,100 @@
+<misterromdescription>
+    <name>Toobin' (Europe, rev 3)</name>
+    <setname>toobine</setname>
+    <rbf>Toobin</rbf>
+    <mameversion>0288</mameversion>
+    <mratimestamp>20260813000000</mratimestamp>
+    <year>1988</year>
+    <manufacturer>Atari Games</manufacturer>
+    <region>Europe</region>
+    <players>2</players>
+    <!-- MAME ROT270 == a monitor rotated counter-clockwise; the core rotates to match
+         (rotate_ccw=1 in Toobin.sv). -->
+    <rotation>vertical (ccw)</rotation>
+
+    <!-- Region order/sizes are decoded by rtl/mem/toobin_rom_loader.sv:
+         maincpu 0x000000 | jsa:cpu 0x080000 | tiles 0x090000 | sprites 0x110000 |
+         chars 0x310000 | EEPROM 0x314000, total 0x314200 bytes.
+         Layout follows MAME's ROM_START(toobine). -->
+    <rom index="0" zip="toobine.zip|toobin.zip" md5="none">
+        <!-- maincpu 0x080000 : 68010 program, MAME LOAD16_BYTE.  Inside an
+             interleave output="16", map="01" supplies the FIRST byte of each output
+             word (big-endian D15:8) and map="10" the second (D7:0), so the MAME-even
+             ROM takes map="01".  Proven on hardware: the opposite mapping
+             byte-swaps every opcode, so the reset vector reads 0x0804 instead of
+             0x0408 and the CPU runs garbage from its first instruction. -->
+        <interleave output="16">
+            <part name="3733-1j.061" crc="286c7fad" map="01"/>
+            <part name="3737-1f.061" crc="965c161d" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="3134-2j.061" crc="3dbe9a48" map="01"/>
+            <part name="3138-2f.061" crc="a17fb16c" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="3135-4j.061" crc="dc90b45c" map="01"/>
+            <part name="3139-4f.061" crc="6f8a719a" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="1136-5j.061" crc="5ae3eeac" map="01"/>
+            <part name="1140-5f.061" crc="dacbbd94" map="10"/>
+        </interleave>
+        <!-- jsa:cpu 0x010000 : 6502 sound program (Atari JSA-I) -->
+        <part name="1141-2k.061" crc="c0dcce1a"/>
+        <!-- tiles 0x080000 : playfield graphics -->
+        <part name="1101-1a.061" crc="02696f15"/>
+        <part name="1102-2a.061" crc="4bed4262"/>
+        <part name="1103-4a.061" crc="e62b037f"/>
+        <part name="1104-5a.061" crc="fa05aee6"/>
+        <part name="1105-1b.061" crc="ab1c5578"/>
+        <part name="1106-2b.061" crc="4020468e"/>
+        <part name="1107-4b.061" crc="fe6f6aed"/>
+        <part name="1108-5b.061" crc="26fe71e1"/>
+        <!-- sprites 0x200000 : motion objects.  The four 64K parts appear twice: MAME
+             ROM_RELOADs them to mirror 0x080000-0x0BFFFF at 0x0C0000-0x0FFFFF and
+             0x180000-0x1BFFFF at 0x1C0000-0x1FFFFF. -->
+        <part name="1143-10a.061" crc="211c1049"/>
+        <part name="1144-13a.061" crc="ef62ed2c"/>
+        <part name="1145-16a.061" crc="067ecb8a"/>
+        <part name="1146-18a.061" crc="fea6bc92"/>
+        <part name="1125-21a.061" crc="c37f24ac"/>
+        <part name="1126-23a.061" crc="015257f0"/>
+        <part name="1127-24a.061" crc="d05417cb"/>
+        <part name="1128-25a.061" crc="fba3e203"/>
+        <part name="1125-21a.061" crc="c37f24ac"/>
+        <part name="1126-23a.061" crc="015257f0"/>
+        <part name="1127-24a.061" crc="d05417cb"/>
+        <part name="1128-25a.061" crc="fba3e203"/>
+        <part name="1147-10b.061" crc="ca4308cf"/>
+        <part name="1148-13b.061" crc="23ddd45c"/>
+        <part name="1149-16b.061" crc="d77cd1d0"/>
+        <part name="1150-18b.061" crc="a37157b8"/>
+        <part name="1129-21b.061" crc="294aaa02"/>
+        <part name="1130-23b.061" crc="dd610817"/>
+        <part name="1131-24b.061" crc="e8e2f919"/>
+        <part name="1132-25b.061" crc="c79f8ffc"/>
+        <part name="1129-21b.061" crc="294aaa02"/>
+        <part name="1130-23b.061" crc="dd610817"/>
+        <part name="1131-24b.061" crc="e8e2f919"/>
+        <part name="1132-25b.061" crc="c79f8ffc"/>
+        <!-- chars 0x004000 : alpha (text) graphics -->
+        <part name="1142-20h.061" crc="a6ab551f"/>
+        <!-- X2804A EEPROM 0x200 at the stream tail (toobin_nvram_io EEP_BASE 0x314000),
+             shipped ERASED like the Atari System 1 MRAs: the game writes its own
+             defaults into a blank part.  No NVRAM data is embedded in the RTL. -->
+        <part repeat="512">FF</part>
+    </rom>
+
+    <!-- Saved settings/high scores are restored over the erased image above and add
+         the OSD "Save Settings" entry. -->
+    <nvram index="2" size="512"/>
+
+    <!-- Cabinet controls, in the core's J1 order (joystick bits 4..9).  These names
+         OVERRIDE the core's own J1 labels in the OSD mapping screen, so they are what
+         the player actually reads: keep them descriptive and do not silently retitle
+         them to match the CONF_STR.  Start is not a separate control: on the real
+         cabinet the Throw Can button starts the game.
+         No count= attribute: mra_loader.cpp reads only names= and default= from this
+         element, so count is inert (and the old count="5" contradicted the 6 names). -->
+    <buttons names="Left Back Paddle,Right Back Paddle,Left Forward Paddle,Right Forward Paddle,Throw Can/Start,Coin" default="A,B,X,Y,L,R"/>
+</misterromdescription>

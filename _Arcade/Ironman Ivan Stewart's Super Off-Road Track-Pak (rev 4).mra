@@ -1,0 +1,74 @@
+<misterromdescription>
+	<name>Ironman Ivan Stewart's Super Off-Road Track-Pak (rev 4?)</name>
+	<mameversion>0.257</mameversion>
+	<setname>offroadt</setname>
+	<year>1989</year>
+	<manufacturer>Leland Corp.</manufacturer>
+	<category>Driving</category>
+	<rbf>Leland</rbf>
+	<rotation>horizontal</rotation>
+
+	<rom index="0" address="0x30000000" zip="offroadt.zip" md5="None" type="merged">
+		<part>4C 01 03 01 00 00 00 00 00 00 00 00 00 00 00 00</part>
+
+		<part name="03-25016-0x.u58t" crc="adbc6211" length="0x10000"/>
+		<part name="03-25017-0x.u59t" crc="296dd3b6" length="0x10000"/>
+		<part name="03-22120-01.u57t" crc="e9f0f175" length="0x10000"/>
+		<part name="03-25015-01.u56t" crc="2c1a22b3" length="0x10000"/>
+		<part repeat="0xC0000">00</part>
+
+		<part name="03-25000-01.u3"   crc="95abb9f1" length="0x2000"/>
+		<part repeat="0xE000">00</part>
+		<part name="03-25001-01.u2t"  crc="c46c1627" length="0x10000"/>
+		<part name="03-25002-01.u3t"  crc="2276546f" length="0x10000"/>
+		<part name="03-25003-01.u4t"  crc="aa4b5975" length="0x10000"/>
+		<part name="03-25004-01.u5t"  crc="69100b06" length="0x10000"/>
+		<part name="03-25005-01.u6t"  crc="b75015b8" length="0x10000"/>
+		<part name="03-25006-01.u7t"  crc="a5af5b4f" length="0x10000"/>
+		<part name="03-25007-01.u8t"  crc="0f735078" length="0x10000"/>
+		<part repeat="0x180000">00</part>
+
+		<part repeat="0x40000">00</part>
+		<interleave output="16">
+			<part name="03-25018-01.u13t" crc="7beec9fc" length="0x10000" map="01"/>
+			<part name="03-25021-01.u25t" crc="f952f800" length="0x10000" map="10"/>
+		</interleave>
+		<interleave output="16">
+			<part name="03-25019-01.u14t" crc="0a44331d" length="0x10000" map="01"/>
+			<part name="03-25022-01.u26t" crc="6227ea94" length="0x10000" map="10"/>
+		</interleave>
+		<part repeat="0x60000">00</part>
+		<interleave output="16">
+			<part name="03-25020-01.u15t" crc="2a1a1c3c" length="0x10000" map="01"/>
+			<part name="03-25023-01.u27t" crc="b80c5f99" length="0x10000" map="10"/>
+		</interleave>
+
+		<part name="03-25012-01.u93" crc="f0c1d8b0" length="0x8000"/>
+		<part name="03-25013-01.u94" crc="7460d8c0" length="0x8000"/>
+		<part name="03-25014-01.u95" crc="081ee7a8" length="0x8000"/>
+		<part repeat="0x1E8000">00</part>
+
+		<part repeat="0x4000">00</part>
+		<part name="03-25011-01.u92" crc="f9988e28" length="0x4000"/>
+		<part name="03-25009-01.u69" crc="fe5f8d8f" length="0x4000"/>
+		<part repeat="0x8000">00</part>
+		<part name="03-25010-01.u90" crc="bda2ecb1" length="0x4000"/>
+		<part name="03-25008-01.u67" crc="38c9bf29" length="0x4000"/>
+		<part repeat="0x4000">00</part>
+
+		<part repeat="0xE0000">00</part>
+		<part name="eeprom-offroad.bin" crc="57955248" length="0x80"/>
+	</rom>
+
+	<!--
+	  Buttons are ordered player controls, then coin: Gas, Nitro, Menu Enter, Coin.
+	  Gas is digital here. Menu Enter acts as Blue Nitro and is used to choose items in the
+	  operator menu (manual p.17: Red Nitro selects, Blue Nitro enters). The menu itself is
+	  opened from the OSD ("Service Menu"), not from a controller button, so it can't be
+	  triggered by accident during play. Re-run "Define joystick buttons" in the OSD after
+	  updating, since the order changed.
+	-->
+	<buttons names="Gas,Nitro,Menu Enter,Coin"></buttons>
+
+	<nvram index="4" size="128"/>
+</misterromdescription>

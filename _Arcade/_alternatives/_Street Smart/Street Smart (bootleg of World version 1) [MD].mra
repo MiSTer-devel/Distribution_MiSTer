@@ -1,0 +1,138 @@
+<misterromdescription>
+    <name>Street Smart (bootleg of World version 1)</name>
+    <setname>streetsmwbl</setname>
+    <parent>streetsm</parent>
+    <rbf>SNK68MD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>bootleg</manufacturer>
+    <players>2</players>
+    <joystick>8-Way</joystick>
+    <rotation>horizontal</rotation>
+    <region>World</region>
+
+    <switches default="ff,ff">
+        <!-- DSW1 -->
+        <dip name="Lives" bits="0,1" ids="1,2,3,4" values="1,3,2,0"/>
+        <dip name="Coinage" bits="2,3" ids="A 4/1 B 1/4,A 3/1 B 1/3,A 2/1 B 1/2,1 Coin/1 Credit" values="0,2,1,3"/>
+        <dip name="Unknown" bits="4" ids="Off,On" values="1,0"/>
+        <dip name="Bonus Occur" bits="5" ids="1st+2nd only,1st+every 2nd" values="1,0"/>
+        <dip name="Unknown" bits="6" ids="Off,On" values="1,0"/>
+        <dip name="Flip Screen" bits="7" ids="Off,On" values="1,0"/>
+        <!-- DSW2 -->
+        <dip name="Service Mode" bits="8" ids="Off,On" values="1,0"/>
+        <dip name="Allow Continue" bits="9" ids="No,Yes" values="0,1"/>
+        <dip name="Bonus Life" bits="10,11" ids="200k 400k,400k 600k,600k 800k,None" values="3,1,2,0"/>
+        <dip name="Game Mode" bits="12,13" ids="Demo Sounds Off,Demo Sounds On,Freeze,Inf Lives (Cheat)" values="1,3,0,2"/>
+        <dip name="Difficulty" bits="14,15" ids="Easy,Normal,Hard,Hardest" values="1,3,2,0"/>
+    </switches>
+
+    <buttons names="Kick,Jump,Punch,-,-,Start,Coin,Pause,Save States" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <rom index="0" zip="streetsmwbl.zip|streetsm.zip" md5="None">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="1p.1" crc="a1f5ceab" map="01"/>
+            <part name="2p.2" crc="263f615d" map="10"/>
+        </interleave>
+        <part repeat="0x40000"> FF</part>
+        <!-- soundcpu - starts at 0x80000 -->
+        <part name="3s.3" crc="ca4b171e"/>
+        <part repeat="0x10000"> FF</part>
+        <!-- upd - starts at 0xA0000 -->
+        <part name="4s.4" crc="47db1605"/>
+        <!-- gfx1 - starts at 0xC0000 -->
+        <interleave output="16">
+            <part name="5c.5" crc="22bedfe5" map="01"/>
+            <part name="6c.6" crc="6a1c70ab" map="10"/>
+        </interleave>
+        <part repeat="0x30000"> FF</part>
+        <!-- gfx2 - starts at 0x100000: sprite region bytes 0x000000-0x17ffff in lanes 0-1, 0x200000-0x37ffff in lanes 2-3 -->
+        <interleave output="32">
+            <part name="24l.24" crc="01cd7ae0" map="0001"/>
+            <part name="15l.15" crc="9c81fcbe" map="0010"/>
+            <part name="32r.32" crc="376f0976" map="0100"/>
+            <part name="23r.23" crc="f5edc139" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="23l.23" crc="441cd7a2" map="0001"/>
+            <part name="14l.14" crc="4741c5ad" map="0010"/>
+            <part name="31r.31" crc="72901ea3" map="0100"/>
+            <part name="22r.22" crc="f1cda176" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="22l.22" crc="e1da555c" map="0001"/>
+            <part name="13l.13" crc="00861423" map="0010"/>
+            <part name="30r.30" crc="7084e2e2" map="0100"/>
+            <part name="21r.21" crc="19a6ad20" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="21l.21" crc="f36b4997" map="0001"/>
+            <part name="12l.12" crc="ccaed9aa" map="0010"/>
+            <part name="29r.29" crc="9a498dab" map="0100"/>
+            <part name="20r.20" crc="ea28d8e5" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="20l.20" crc="12bc66ee" map="0001"/>
+            <part name="11l.11" crc="49e545a2" map="0010"/>
+            <part name="28r.28" crc="3ca47063" map="0100"/>
+            <part name="19r.19" crc="c108820f" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="19l.19" crc="8f2f601d" map="0001"/>
+            <part name="10l.10" crc="fe486cbf" map="0010"/>
+            <part name="27r.27" crc="6986db59" map="0100"/>
+            <part name="18r.18" crc="a078895c" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="18l.18" crc="6ac354cb" map="0001"/>
+            <part name="9l.9" crc="cf6f140d" map="0010"/>
+            <part name="26r.26" crc="886a57ee" map="0100"/>
+            <part name="17r.17" crc="af1e58e4" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="17l.17" crc="34aa51b1" map="0001"/>
+            <part name="8l.8" crc="28f1bdc4" map="0010"/>
+            <part name="25r.25" crc="9fe6e970" map="0100"/>
+            <part name="16r.16" crc="466b39b7" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="6l.6" crc="56ebc520" map="0001"/>
+            <part name="4l.4" crc="54dc8dae" map="0010"/>
+            <part name="14r.14" crc="e9697bd1" map="0100"/>
+            <part name="12r.12" crc="8307f243" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="5l.5" crc="9943ce65" map="0001"/>
+            <part name="3l.3" crc="596e388e" map="0010"/>
+            <part name="13r.13" crc="3255af03" map="0100"/>
+            <part name="11r.11" crc="5bad15c1" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="16l.16" crc="7599dbb5" map="0001"/>
+            <part name="24r.24" crc="58099ef5" map="0010"/>
+            <part name="8r.8" crc="9c52f1ea" map="0100"/>
+            <part name="9r.9" crc="380dcee5" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="7l.7" crc="b36db591" map="0001"/>
+            <part name="15r.15" crc="2e9b47c5" map="0010"/>
+            <part name="7r.7" crc="0c474722" map="0100"/>
+            <part name="10r.10" crc="9d617689" map="1000"/>
+        </interleave>
+        <!-- Total 0x400000 bytes - 4096 kBytes -->
+    </rom>
+
+    <!-- hiscore: address[4] length[2] start end, MAME 0.288 plugins/hiscore/hiscore.dat -->
+    <rom index="3" md5="none">
+        <part>
+            00 04 14 70 00 A0 20 20
+            00 04 3F 7E 00 04 00 00
+        </part>
+    </rom>
+    <nvram index="4" size="164"/>
+</misterromdescription>

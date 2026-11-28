@@ -1,0 +1,155 @@
+<misterromdescription>
+	<name>Vs 10-Yard Fight</name>
+	<region>Japan</region>
+	<platform>Irem M58</platform>
+	<year>1984</year>
+	<manufacturer>Irem</manufacturer>
+	<category>Sports</category>
+
+	<setname>vs10yardj</setname>
+	<parent>10yard</parent>
+	<mameversion>0284</mameversion>
+	<rbf>10yardfight</rbf>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>8-way</joystick>
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,Start,Select,R,L" names="Sideways Pass,Forward Pass,Start 1P,Start 2P,Coin,Pause"></buttons>
+
+	<switches default="FF,FD">
+		<dip bits="2,3" name="Timer Speed" ids="Normal,x1.3,x1.5,x1.8" values="3,2,1,0"></dip>
+		<dip bits="4,5" name="Coin A (Mode 2)" ids="1C/1P,2C/1P,3C/1P,Free Play" values="3,2,1,0"></dip>
+		<dip bits="6,7" name="Coin B (Mode 2)" ids="1C/2P,1C/3P,1C/5P,1C/6P" values="3,2,1,0"></dip>
+		<dip bits="4,7" name="Coinage (Mode 1)" ids="1C/1P,2C/1P,3C/1P,4C/1P,5C/1P,6C/1P,1C/2P,1C/3P,1C/4P,1C/5P,1C/6P,Free Play" values="15,14,13,12,11,10,7,6,5,4,3,0"></dip>
+		<dip bits="0" name="Continue (Vs Mode)" ids="Yes,No"></dip>
+		<dip bits="1" name="Defensive Man Pause" ids="Off,On" values="1,0"></dip>
+		<dip bits="8" name="Screen Inversion" ids="Off,On" values="1,0"></dip>
+		<dip bits="9" name="Cabinet Type" ids="Cocktail,Upright" values="1,0"></dip>
+		<dip bits="10" name="Coin Mode" ids="Mode 1,Mode 2" values="1,0"></dip>
+		<dip bits="11" name="Slow Motion (Cheat)" ids="Off,On" values="1,0"></dip>
+		<dip bits="12" name="Freeze Picture" ids="Normal,Freeze" values="1,0"></dip>
+		<dip bits="13" name="Level Select (Cheat)" ids="Off,On" values="1,0"></dip>
+		<dip bits="14" name="Hit Mode (Cheat)" ids="Normal,No Hit" values="1,0"></dip>
+		<dip bits="15" name="Test Mode" ids="Normal,Test" values="1,0"></dip>
+	</switches>
+
+	<rom index="0" zip="vs10yardj.zip|10yard.zip" md5="none">
+		<!-- 00000-1FFFF  Z80 program -->
+		<part crc="418e01fc" name="vyf-a.3n"/>
+		<part crc="3b9330f8" name="vyf-a.3m"/>
+		<part crc="a0ec15bb" name="vyf-a.3k"/>
+		<part repeat="0x1A000">FF</part>
+
+		<!-- 20000-2FFFF  sound board 6803, ROMs at 0x8000-0xFFFF -->
+		<part repeat="0x8000">FF</part>
+		<part crc="0392a60c" name="yf-s.3b"/>
+		<part crc="6588f41a" name="yf-s.1b"/>
+		<part crc="bd054e44" name="yf-s.3a"/>
+		<part crc="2490d4c3" name="yf-s.1a"/>
+
+		<!-- 30000-4FFFF  tiles, lane 0 = MSB plane -->
+		<interleave output="32">
+			<part crc="354d7330" name="vyf-a.3a" map="0001"/>
+			<part crc="f48eedca" name="vyf-a.3c" map="0010"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="0100"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="354d7330" name="vyf-a.3a" map="0001"/>
+			<part crc="f48eedca" name="vyf-a.3c" map="0010"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="0100"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="354d7330" name="vyf-a.3a" map="0001"/>
+			<part crc="f48eedca" name="vyf-a.3c" map="0010"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="0100"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="354d7330" name="vyf-a.3a" map="0001"/>
+			<part crc="f48eedca" name="vyf-a.3c" map="0010"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="0100"/>
+			<part crc="7d1b4d93" name="vyf-a.3d" map="1000"/>
+		</interleave>
+
+		<!-- 50000-8FFFF  sprites, thirds interleaved -->
+		<interleave output="32">
+			<part crc="1299ae30" name="yf-b.5b" map="0001"/>
+			<part crc="d9bb8ab8" name="yf-b.5f" map="0010"/>
+			<part crc="713ef31f" name="yf-b.5j" map="0100"/>
+			<part crc="713ef31f" name="yf-b.5j" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="8708b888" name="yf-b.5c" map="0001"/>
+			<part crc="47077e8d" name="yf-b.5e" map="0010"/>
+			<part crc="f49651cc" name="yf-b.5k" map="0100"/>
+			<part crc="f49651cc" name="yf-b.5k" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="1299ae30" name="yf-b.5b" map="0001"/>
+			<part crc="d9bb8ab8" name="yf-b.5f" map="0010"/>
+			<part crc="713ef31f" name="yf-b.5j" map="0100"/>
+			<part crc="713ef31f" name="yf-b.5j" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="8708b888" name="yf-b.5c" map="0001"/>
+			<part crc="47077e8d" name="yf-b.5e" map="0010"/>
+			<part crc="f49651cc" name="yf-b.5k" map="0100"/>
+			<part crc="f49651cc" name="yf-b.5k" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="1299ae30" name="yf-b.5b" map="0001"/>
+			<part crc="d9bb8ab8" name="yf-b.5f" map="0010"/>
+			<part crc="713ef31f" name="yf-b.5j" map="0100"/>
+			<part crc="713ef31f" name="yf-b.5j" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="8708b888" name="yf-b.5c" map="0001"/>
+			<part crc="47077e8d" name="yf-b.5e" map="0010"/>
+			<part crc="f49651cc" name="yf-b.5k" map="0100"/>
+			<part crc="f49651cc" name="yf-b.5k" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="1299ae30" name="yf-b.5b" map="0001"/>
+			<part crc="d9bb8ab8" name="yf-b.5f" map="0010"/>
+			<part crc="713ef31f" name="yf-b.5j" map="0100"/>
+			<part crc="713ef31f" name="yf-b.5j" map="1000"/>
+		</interleave>
+		<interleave output="32">
+			<part crc="8708b888" name="yf-b.5c" map="0001"/>
+			<part crc="47077e8d" name="yf-b.5e" map="0010"/>
+			<part crc="f49651cc" name="yf-b.5k" map="0100"/>
+			<part crc="f49651cc" name="yf-b.5k" map="1000"/>
+		</interleave>
+
+		<!-- 90000-9FFFF  unused -->
+		<part repeat="0x10000">FF</part>
+
+		<!-- A0000+  PROMs, positioned for the core's palette RAMs -->
+		<part crc="b8554da5" name="yard.1f"/>
+		<part repeat="0xE0">FF</part>
+		<part crc="e1cdfb06" name="yard.2h"/>
+		<part repeat="0x100">FF</part>
+		<part crc="08fa5103" name="yard.1c"/>
+		<part crc="7c04994c" name="yard.1d"/>
+		<part repeat="0x100">FF</part>
+		<part crc="cd85b646" name="yard.2n"/>
+		<part crc="45384397" name="yard.2m"/>
+	</rom>
+
+	<!-- Hiscores, from MAME hiscore.dat (m58.cpp, shared by all six sets).
+	     Work RAM is E000-EFFF; the core's 12-bit hiscore port drops the E. -->
+	<nvram index="4" size="141"/>
+	<rom index="3" md5="none">
+		<part>00 00 FF FF 00 FF 00 02 00 02 00 01 11 11 00 00</part>
+		<part>00 00 E6 00 00 8A 00 4A</part>
+		<part>00 00 E0 08 00 03 00 03</part>
+	</rom>
+
+	<remark>Irem M58 hardware. Core derived from the MiSTer Irem M62 core.</remark>
+</misterromdescription>

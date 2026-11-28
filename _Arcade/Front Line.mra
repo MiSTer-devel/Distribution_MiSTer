@@ -1,0 +1,62 @@
+<misterromdescription>
+	<n>Front Line (AA1, 4 PCB version)</n>
+	<mameversion>0245</mameversion>
+	<setname>frontlin</setname>
+	<parent>frontlin</parent>
+	<mratimestamp>202603211728</mratimestamp>
+	<year>1982</year>
+	<manufacturer>Taito Corporation</manufacturer>
+	<category>Action</category>
+	<rbf>TaitoSJ</rbf>
+	<rotation>vertical (ccw)</rotation>
+	<joystick>8-way</joystick>
+	<buttons names="Fire,Grenade/Tank,Coin A,Start 1P,Coin B,Start 2P,Service,Pause,Gun Right,Gun Left,Gun Down,Gun Up"
+	         default="A,B,Select,Start,X,Y,L,R,Rright,Rleft,Rdown,Rup"/>
+	<switches default="00,7F,00,FF,00,00,00,00">
+		<dip bits="8,9" name="Bonus Life" ids="50000,30000,20000,10000"/>
+		<dip bits="10" name="Free Play" ids="On,Off"/>
+		<dip bits="11,12" name="Lives" ids="6,5,4,3"/>
+		<dip bits="14" name="Flip Screen" ids="On,Off"/>
+		<dip bits="15" name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="13" name="Service Mode" ids="On,Off"/>
+		<dip bits="16,19" name="Coin A" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="20,23" name="Coin B" ids="1C1C,1C2C,1C3C,1C4C,1C5C,1C6C,1C7C,1C8C,2C1C,3C1C,4C1C,5C1C,6C1C,7C1C,8C1C,9C1C"/>
+		<dip bits="28" name="Coinage Display" ids="InsertCoin,Coins/Credits"/>
+		<dip bits="29" name="Year Display" ids="No,Yes"/>
+		<dip bits="30" name="Hit Detection" ids="NoHit,NormalGame"/>
+		<dip bits="31" name="Coin Slots" ids="Aonly,AandB"/>
+	</switches>
+	<rom index="0" md5="none" zip="frontlin.zip" type="merged|nonmerged">
+		<!-- Main CPU - Pass 1 (base + bank 0) [0x8000/0x8000] -->
+		<part crc="4b7c0d81" name="aa1_05.ic1"/>
+		<part crc="caacdc02" name="aa1_06.ic2"/>
+		<part crc="df2b2691" name="aa1_07.ic3"/>
+		<part crc="f9bc3374" name="aa1_08.ic6"/>
+		<!-- Main CPU - Pass 2 (base + banked) [0x8000/0x8000] -->
+		<part crc="4b7c0d81" name="aa1_05.ic1"/>
+		<part crc="caacdc02" name="aa1_06.ic2"/>
+		<part crc="df2b2691" name="aa1_07.ic3"/>
+		<part crc="e24d1f05" name="aa1_09.ic7"/>
+		<!-- GFX ROMs [0x8000/0x8000] -->
+		<part crc="724fd755" name="aa1_01.ic4"/>
+		<part crc="b2d35070" name="aa1_02.ic5"/>
+		<part crc="d0723026" name="aa1_03.ic9"/>
+		<part crc="bdc0a4f0" name="aa1_04.ic10"/>
+		<!-- Audio CPU ROMs [0x2000/0x4000] -->
+		<part crc="15f4ed8c" name="aa1_11.ic70"/>
+		<part crc="c3eb38e7" name="aa1_12.ic71"/>
+		<!-- Padding audio: 0x2000 -->
+		<part repeat="0x2000"> 00 </part>
+		<!-- Layer PROM [0x100/0x800] -->
+		<part crc="b833b5ea" name="eb16.ic22"/>
+		<!-- Padding PROM: 0x700 -->
+		<part repeat="0x700"> 00 </part>
+		<!-- MCU ROM [0x800] -->
+		<part crc="7e78bdd3" name="aa1_13.ic24"/>
+		<!-- Extended ROM [0x1000/0x1000] -->
+		<part crc="2704aa4c" name="aa1_10.ic8"/>
+	</rom>
+	<rom index="1">
+		<part>5</part>
+	</rom>
+</misterromdescription>

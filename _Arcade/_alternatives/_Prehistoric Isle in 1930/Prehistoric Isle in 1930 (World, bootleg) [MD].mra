@@ -1,0 +1,87 @@
+<misterromdescription>
+    <name>Prehistoric Isle in 1930 (World, bootleg)</name>
+    <setname>prehisleb</setname>
+    <rbf>PrehistoricIsleMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>bootleg</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+    <region>World</region>
+
+    <switches default="FF,FF">
+        <!-- DSW0 -->
+        <dip name="Flip Screen" bits="0" ids="Off,On" values="1,0"/>
+        <dip name="Level Select" bits="1" ids="Off,On" values="1,0"/>
+        <dip name="Bonus Life" bits="2" ids="Only Twice,Always" values="1,0"/>
+        <dip name="Unknown" bits="3" ids="Off,On" values="1,0"/>
+        <dip name="Coinage" bits="4,5" ids="A 4C/1C B 1C/4C,A 3C/1C B 1C/3C,A 2C/1C B 1C/2C,1 Coin/1 Credit" values="0,1,2,3"/>
+        <dip name="Lives" bits="6,7" ids="2,3,4,5" values="2,3,1,0"/>
+        <!-- DSW1 -->
+        <dip name="Difficulty" bits="8,9" ids="Easy,Standard,Middle,Difficult" values="2,3,1,0"/>
+        <dip name="Game Mode" bits="10,11" ids="Demo Sounds Off,Demo Sounds On,Freeze,Infinite Lives" values="2,3,0,1"/>
+        <dip name="Bonus Life" bits="12,13" ids="100K 200K,150K 300K,300K 500K,None" values="3,2,1,0"/>
+        <dip name="Allow Continue" bits="14" ids="No,Yes" values="0,1"/>
+    </switches>
+
+    <buttons names="Shoot,Option,Start,Coin,Pause,Save States" default="A,B,Start,Select,R,L"/>
+
+    <rom index="0" zip="prehisleb.zip|prehisle.zip" md5="None">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="u_h1.bin" crc="04c1703b" map="01"/>
+            <part name="u_h3.bin" crc="62f04cd1" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="u_j2.bin" crc="7b12501d" map="01"/>
+            <part name="u_j3.bin" crc="2a86f7c4" map="10"/>
+        </interleave>
+
+        <!-- fgtiles - starts at 0x40000 -->
+        <part name="l_h17.bin" crc="79c42316"/>
+        <part name="l_h15.bin" crc="50e31fb0"/>
+        <part name="l_f17.bin" crc="2af1739d"/>
+        <part name="l_f15.bin" crc="cac11327"/>
+
+        <!-- bgtiles - starts at 0x80000 -->
+        <part name="l_b17.bin" crc="65a22ffc"/>
+        <part name="l_b16.bin" crc="b1e1f527"/>
+        <part name="l_b14.bin" crc="28e94d40"/>
+        <part name="l_b13.bin" crc="4dbb557a"/>
+
+        <!-- audiocpu - starts at 0xC0000 -->
+        <part name="u_e12.bin" crc="80a4c093"/>
+
+        <!-- upd - starts at 0xD0000 -->
+        <part name="u_f14.bin" crc="2fb32933"/>
+        <part name="u_j14.bin" crc="32d5f7c9"/>
+
+        <!-- bgtilemap - starts at 0xF0000 -->
+        <part name="l_a6.bin" crc="e2b9a44b"/>
+
+        <!-- sprites - starts at 0x100000 -->
+        <part name="u_k12.bin" crc="4b0215f0"/>
+        <part name="u_k13.bin" crc="68b8a698"/>
+        <part name="u_j4.bin" crc="06ce7b57"/>
+        <part name="u_j5.bin" crc="2ee8b401"/>
+        <part name="u_j7.bin" crc="35656cbc"/>
+        <part name="u_j8.bin" crc="1e7e9336"/>
+        <part name="u_j10.bin" crc="785bf046"/>
+        <part name="u_j11.bin" crc="c306b9fa"/>
+        <part name="u_j12.bin" crc="5ba5bbed"/>
+        <part name="u_j13.bin" crc="007dee47"/>
+        <part repeat="0x60000"> FF</part>
+
+        <!-- chars - starts at 0x200000 -->
+        <part name="l_a17.bin" crc="ac652412"/>
+
+        <!-- Total 0x208000 bytes - 2080 kBytes -->
+    </rom>
+
+    <!-- hiscore.dat entries: address, length, first byte, last byte -->
+    <rom index="3">
+        <part>00 07 00 A0 00 4E 00 00 00 07 00 3D 00 05 00 00 00 07 00 EC 00 01 01 01</part>
+    </rom>
+    <nvram index="4" size="84"/>
+</misterromdescription>

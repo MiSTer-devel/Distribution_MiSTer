@@ -1,0 +1,68 @@
+<misterromdescription>
+    <name>Wonsido 1930's (Korea)</name>
+    <setname>prehislek</setname>
+    <rbf>PrehistoricIsleMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1989</year>
+    <manufacturer>SNK (Victor license)</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+    <region>Korea</region>
+
+    <switches default="FF,FF">
+        <!-- DSW0 -->
+        <dip name="Flip Screen" bits="0" ids="Off,On" values="1,0"/>
+        <dip name="Level Select" bits="1" ids="Off,On" values="1,0"/>
+        <dip name="Bonus Life" bits="2" ids="Only Twice,Always" values="1,0"/>
+        <dip name="Unknown" bits="3" ids="Off,On" values="1,0"/>
+        <dip name="Coinage" bits="4,5" ids="A 4C/1C B 1C/4C,A 3C/1C B 1C/3C,A 2C/1C B 1C/2C,1 Coin/1 Credit" values="0,1,2,3"/>
+        <dip name="Lives" bits="6,7" ids="2,3,4,5" values="2,3,1,0"/>
+        <!-- DSW1 -->
+        <dip name="Difficulty" bits="8,9" ids="Easy,Standard,Middle,Difficult" values="2,3,1,0"/>
+        <dip name="Game Mode" bits="10,11" ids="Demo Sounds Off,Demo Sounds On,Freeze,Infinite Lives" values="2,3,0,1"/>
+        <dip name="Bonus Life" bits="12,13" ids="100K 200K,150K 300K,300K 500K,None" values="3,2,1,0"/>
+        <dip name="Allow Continue" bits="14" ids="No,Yes" values="0,1"/>
+    </switches>
+
+    <buttons names="Shoot,Option,Start,Coin,Pause,Save States" default="A,B,Start,Select,R,L"/>
+
+    <rom index="0" zip="prehislek.zip|prehisle.zip" md5="None">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="gt-k2.2h" crc="f2d3544d" map="01"/>
+            <part name="gt-k3.3h" crc="ebf7439b" map="10"/>
+        </interleave>
+
+        <!-- fgtiles - starts at 0x40000 -->
+        <part name="pi8916.h16" crc="7cffe0f6"/>
+
+        <!-- bgtiles - starts at 0x80000 -->
+        <part name="pi8914.b14" crc="207d6187"/>
+
+        <!-- audiocpu - starts at 0xC0000 -->
+        <part name="gt1.1" crc="80a4c093"/>
+
+        <!-- upd - starts at 0xD0000 -->
+        <part name="gt4.4" crc="85dfb9ec"/>
+
+        <!-- bgtilemap - starts at 0xF0000 -->
+        <part name="gt11.11" crc="b4f0fcf0"/>
+
+        <!-- sprites - starts at 0x100000 -->
+        <part name="pi8910.k14" crc="5a101b0b"/>
+        <part name="gt5.5" crc="3d3ab273"/>
+        <part repeat="0x60000"> FF</part>
+
+        <!-- chars - starts at 0x200000 -->
+        <part name="gt15k.b15" crc="4cad1451"/>
+
+        <!-- Total 0x208000 bytes - 2080 kBytes -->
+    </rom>
+
+    <!-- hiscore.dat entries: address, length, first byte, last byte -->
+    <rom index="3">
+        <part>00 07 00 A0 00 4E 00 00 00 07 00 3D 00 05 00 00 00 07 00 EC 00 01 01 01</part>
+    </rom>
+    <nvram index="4" size="84"/>
+</misterromdescription>

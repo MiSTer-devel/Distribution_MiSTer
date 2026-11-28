@@ -1,0 +1,103 @@
+<misterromdescription>
+    <name>In Your Face (North America, prototype)</name>
+    <setname>inyourfa</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1991</year>
+    <manufacturer>Jaleco</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="FF,FF">
+        <dip name="Coin A" bits="0,2" ids="3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,Free Play" values="4,2,7,3,5,1,6,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr" values="0,4,2,7,3,5,1,6"/>
+        <dip name="Demo Sounds" bits="6" ids="On,Off" values="1,0"/>
+        <dip name="Freeze Screen (Cheat)" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Game Time" bits="8,9" ids="00:50,01:00,01:10,01:20" values="2,1,3,0"/>
+        <dip name="Unknown" bits="10" ids="Off,On" values="1,0"/>
+        <dip name="Unknown" bits="11" ids="Off,On" values="1,0"/>
+        <dip name="Unknown" bits="12" ids="Off,On" values="1,0"/>
+        <dip name="Unknown" bits="13" ids="Off,On" values="1,0"/>
+        <dip name="Unknown" bits="14" ids="Off,On" values="1,0"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: MAME 0.288 (Buttons 1, 3), va7deo MRAs (Button 2) -->
+    <buttons names="Pass / Change Player,Shoot/Steal,Pass Target,Start,Coin,Pause,Save/Load" default="A,B,X,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>0A</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 01 04 32   00 00 24 13   00 01 40 32   00 00 24 13
+            00 01 40 32   00 00 41 32   00 01 30 42   00 00 31 42
+            00 04 13 20   00 04 03 21   00 02 41 30   00 02 40 31
+            00 02 31 40   00 02 30 41   00 01 42 30   00 00 42 31
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="inyourfa.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="02.27c1001" crc="ae77e5b7" map="01"/>
+            <part name="01.27c1001" crc="e5ea92ef" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="03.27c512" crc="a1efe9be" map="01"/>
+            <part name="04.27c512" crc="f786cf3e" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="05.27c512" crc="1737ed64" map="01"/>
+            <part name="06.27c512" crc="9f12bcb9" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part name="09.27c1001" crc="27f4bfb4"/>
+        <part name="10.27c1001" crc="cf5430ff"/>
+        <part repeat="0xc0000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="07.27c1001" crc="dc254c7c"/>
+        <part name="08.27c1001" crc="cadd4731"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="11.27c1001" crc="451a1428"/>
+        <part name="12.27c1001" crc="9ead7432"/>
+        <part name="13.27c1001" crc="7e39842a"/>
+        <part name="14.27c1001" crc="a91a3569"/>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="15.27c1001" crc="420081b6"/>
+        <part name="16.27c1001" crc="87b1a582"/>
+        <part name="17.27c1001" crc="00857146"/>
+        <part repeat="0x20000">FF</part>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="19.27c1001" crc="b82c94ec"/>
+        <part repeat="0x60000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="20.27c1001" crc="4a322d18"/>
+        <part name="21.27c1001" crc="7bb4b35d"/>
+        <part name="22.27c1001" crc="1dc040d2"/>
+        <part name="23.27c1001" crc="50478530"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="prom.14m" crc="21390e3a"/>
+
+    </rom>
+</misterromdescription>

@@ -1,0 +1,70 @@
+<misterromdescription>
+    <name>F1 Super Lap (Unprotected)</name>
+    <setname>f1lapt</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1993</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>1</players>
+    <buttons names="Accelerator,Brake,Gear Up,Start,Coin,Service,Test,Gear Down,Overtake" default="A,B,R,Start,Select,-,-,L,X"/>
+    <region>World</region>
+
+    <rom index="1">
+        <part>00 09</part>
+    </rom>
+
+    <rom index="0" zip="f1lapt.zip" md5="none" address="0x30000000">
+
+        <part name="epr-15598.ic17" crc="9feab7cd"/>
+        <part name="epr-15598.ic17" crc="9feab7cd"/>
+        <part name="epr-15598.ic17" crc="9feab7cd"/>
+        <part name="epr-15598.ic17" crc="9feab7cd"/>
+        <part name="epr-15611t.ic8" crc="7a57b792"/>
+        <part name="epr-15611t.ic8" crc="7a57b792"/>
+        <part name="epr-15611t.ic8" crc="7a57b792"/>
+        <part name="epr-15611t.ic8" crc="7a57b792"/>
+        <interleave output="16">
+            <part name="epr-15596t.ic18" crc="20e92909" map="01"/>
+            <part name="epr-15597t.ic9" crc="cd1ccddb" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-15596t.ic18" crc="20e92909" map="01"/>
+            <part name="epr-15597t.ic9" crc="cd1ccddb" map="10"/>
+        </interleave>
+
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="epr-15592.ic36" crc="7c055cc8"/>
+        <part name="mpr-15593.ic35" crc="e7300441"/>
+        <part name="mpr-15594.ic34" crc="7f4ca3bb"/>
+        <part name="mpr-15595.ic24" crc="3fbdad9a"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-15608.ic14" crc="64462c69" map="01"/>
+            <part name="mpr-15609.ic5" crc="d586e455" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-15600.ic32" crc="d2698d23" map="00000021"/>
+            <part name="mpr-15602.ic30" crc="1674764d" map="00002100"/>
+            <part name="mpr-15604.ic28" crc="1552bbb9" map="00210000"/>
+            <part name="mpr-15606.ic26" crc="2b4f5265" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-15601.ic31" crc="31a8f40a" map="00000021"/>
+            <part name="mpr-15603.ic29" crc="3805ecbc" map="00002100"/>
+            <part name="mpr-15605.ic27" crc="cbdbf35e" map="00210000"/>
+            <part name="mpr-15607.ic25" crc="6c8817c9" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

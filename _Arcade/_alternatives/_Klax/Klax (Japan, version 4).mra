@@ -1,0 +1,184 @@
+<misterromdescription>
+    <name>Klax (Japan, version 4)</name>
+    <mameversion>0288</mameversion>
+    <year>1990</year>
+    <manufacturer>Atari Games</manufacturer>
+    <setname>klaxj4</setname>
+    <rbf>Klax</rbf>
+
+    <about>
+        Klax for MiSTer — Atari Games. Set `klaxj4` (Japan, version 4), whose
+        internal ROM test date is 13FEB1990 11:10:09; MAME dates every Klax
+        set 1990 from those build stamps, though the game itself debuted in
+        1989.
+        ROM layout: CPU ROMs at ioctl index 0, tile ROMs at index 1,
+        the factory EEPROM/NVRAM image at index 2, OKI ADPCM sample ROMs
+        at index 3, and sprite ROMs at index 4. ROM parts are flat; the
+        core performs the deterministic byte interleaving in RTL.
+    </about>
+
+    <rom index="0" zip="klaxj4.zip|klax.zip" md5="none">
+        <part name="136075-4406.3n" crc="fc4045ec"/>
+        <part name="136075-4405.1n" crc="f017461a"/>
+        <part name="136075-4408.3k" crc="23231159"/>
+        <part name="136075-4407.1k" crc="8d8158b2"/>
+    </rom>
+
+    <rom index="1" zip="klaxj4.zip|klax.zip" md5="none">
+        <part name="136075-2010.17x" crc="15290a0d"/>
+        <part name="136075-2009.17u" crc="6368dbaf"/>
+        <part name="136075-2012.12x" crc="c0d9eb0f"/>
+        <part name="136075-2011.12u" crc="e83cca91"/>
+    </rom>
+
+    <rom index="2">
+        <part>
+            FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BA
+            58 B5 00 B6 00 00 1E 11 00 FF 46 BA 00 12 FF 00
+            00 00 00 FF FF FF FF FF FF FF FF FF FF BA 58 B5
+            00 B6 00 00 1E 11 00 FF 46 BA 00 12 BB CF D3 00
+            64 88 B8 0C 5E 86 00 80 F2 4D E7 D7 F9 8A 00 25
+            79 18 1F 93 91 00 59 D8 57 D4 8A 2B 25 00 5B 48
+            44 2C 28 11 00 42 68 1C 0F 9C 9F D5 00 47 40 10
+            3E B8 AB 00 3A 98 70 C1 C1 90 73 00 43 3D B8 1B
+            E0 0B 00 36 B0 8B E6 6C BA CB 00 93 27 10 46 7F
+            B8 00 25 1C 46 B8 75 BA 76 00 8A 26 AC 46 DA B8
+            00 24 B8 46 B8 8D 05 C1 00 8C 26 48 54 DA 48 00
+            24 54 1B F9 4D DC F3 00 63 25 E4 3F 3D 83 00 23
+            F0 66 0B 4E C8 86 00 24 25 80 7E 44 98 00 23 8C
+            28 5B FF 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+            FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+        </part>
+    </rom>
+
+    <rom index="3" zip="klaxj4.zip|klax.zip" md5="none">
+        <part name="136075-1015.14b" crc="4d24c768"/>
+        <part name="136075-1016.12b" crc="12e9b4b7"/>
+    </rom>
+
+    <rom index="4" zip="klaxj4.zip|klax.zip" md5="none">
+        <part name="136075-2014.17y" crc="5c551e92"/>
+        <part name="136075-2013.17w" crc="36764bbc"/>
+    </rom>
+
+    <!-- EEPROM persistence: the core requests a save via
+         ioctl upload after the game commits EEPROM writes; main_MiSTer
+         stores the 2 KB image in the saves directory and reloads it at
+         this index on the next boot (after the bootstrap image above,
+         rebooting the CPU system with the restored contents). -->
+    <nvram index="2" size="2048"/>
+
+</misterromdescription>

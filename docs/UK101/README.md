@@ -1,0 +1,66 @@
+# [Compukit UK101](https://en.wikipedia.org/wiki/Compukit_UK101) for [MiSTer](https://github.com/MiSTer-devel/Main_MiSTer/wiki)
+
+Port by [danielb0](https://github.com/danielb0)
+
+## Description
+
+This core is a port of [Grant Searle's UK101 FPGA project](http://searle.x10host.com/uk101FPGA/index.html) to MiSTer FPGA. It is a reconstruction of a kit computer from the late 1970s, which was based on a 6502 processor that ran at 1 MHz and originally came equipped with 8Kb of RAM.
+
+The core includes some enhancements over Grant's original project, such as extra selectable monitor software, two additional modes which simulate an Ohio Scientific C1P or C2P computer, selectable clock speed, selectable screen modes, selectable memory sizes, saving BASIC programs to text files, and emulation of the OSI floppy disk system with up to four read/write drives. The OSI C2P mode also supports software control of text resolution, in order to support games which use it. Select "auto" mode from the menu, and then POKE 56832,1 sets high res, POKE 56832,0 sets it back to low res.
+
+Basic programs can be loaded from text files, or via the UART at 9600 baud. Text files must have a .TXT extension. Instructions for loading can be found on Grant's page and in the [Compukit UK101 manual](http://uk101.sourceforge.net/docs/pdf/manual.pdf).
+
+### Saving BASIC programs
+
+Programs can be saved back out to a text file. Mount a pre-created `.txt` file (the MiSTer OSD file browser cannot create a new file, only select an existing one) in the "Save Ascii" slot, run `SAVE` from BASIC, then press the "Save" button in the OSD. This flushes the captured session text to the mounted file, overwriting its previous contents, and immediately re-arms for the next save. Re-mounting the same file (or picking a different one) always starts the capture buffer fresh.
+
+### Disk emulation
+
+The core emulates the OSI floppy disk controller (a 6821 PIA + 6850 ACIA pair) used by the OSI C1P/C2P machine types, allowing real OS-65D disk images (as used by the WinOSI emulator) to be mounted and booted. Both 5.25" (`.65D`, 40 tracks) and 8" (`.65U`, 77 tracks) disk images are supported - geometry is auto-detected from the image size, so no separate setting is needed.
+
+To boot: mount a disk image in the "Mount Disk" slot, set Machine to "OSI C1P" or "OSI C2P", select a monitor that supports disk boot (Cegmon, or Synmon in its "Disk" variant), and choose the "D" boot option from the monitor's startup prompt.
+
+Disk timing is modelled rotationally, with the index hole derived from the same rotation counter that positions the head, as on real hardware. This matters for software that watches the index signal to work out what kind of drive it is talking to - UCSD Pascal in particular.
+
+#### Multiple drives
+
+Up to four drives (A to D) are supported. "Drives fitted" chooses how many drive connectors exist - 2, 3 or 4 - which is a separate question from whether a diskette is in any of them, because OS-65D software identifies drives by their index-hole behaviour and an always-present drive C or D would look different to it. Mount slots for drives that are not fitted are greyed out.
+
+All four drives can be read and written, and each drive detects its own geometry from its own image. However, **mixing 8" and 5.25" images across drives in the same session does not work** - the booted DOS carries a single drive geometry for the whole session, so a 5.25" disk in drive B is unreadable after booting from an 8" disk in drive A, and vice versa (you will get a hang or `ERR#9`). This is a limitation of OS-65D itself rather than of this core; WinOSI does not allow the mix either.
+
+#### Writing to disk
+
+Disk writes are supported - `SAVE` from disk BASIC, saving from the assembler and editor, UCSD Pascal output, file creation and deletion - but are **disabled by default**. Set "Disk writes" to "Enabled" to allow them. While set to "Protected", the core reports write-protect status to OS-65D, so an attempted write produces that DOS's own in-band error rather than silently doing nothing, and nothing can reach the SD card.
+
+Writes modify the mounted image in place on the SD card. **Work on copies of any image you care about.**
+
+#### UCSD Pascal
+
+UCSD Pascal needs 48K of RAM, which is only reachable by banking the 8K BASIC ROM out of `$A000-$BFFF` - the two cannot coexist. Selecting "48K (Basic disabled)" as the memory size therefore also selects OSI C2P and the "Synmon (Disk)" monitor automatically and locks those menu rows, since that is the only combination this configuration works in. Choosing any other memory size releases them again; the previous machine and monitor selections are not restored.
+
+#### Screen mode
+
+The OSI C1P machine type also has a selectable 64x16 screen mode ("Screen resolution: High"), needed by some OS-65D disks that expect that screen geometry rather than the C1P's usual layout.
+
+### Original sources
+
+[Grant Searle's original UK101 FPGA site](http://searle.x10host.com/uk101FPGA/index.html)
+
+### Acknowledgements
+Many thanks to alanswx for the original text file loading code, and to Leslie Ayling for his help in adding the OSI mode to the core. Also, thanks to Doug Gilliland for the use of the outlatch.vhd code.
+
+### Licenses 
+
+#### Grant Searle's original license:
+```
+By downloading these files you must agree to the following:
+The original copyright owners of ROM contents are respectfully acknowledged.
+Use of the contents of any file within your own projects is permitted freely, but
+any publishing of material containing whole or part of any file distributed here, 
+or derived from the work that I have done here will contain an acknowledgement
+back to myself, Grant Searle, and a link back to this page.
+Any file published or distributed that contains all or part of any file from this 
+page must be made available free of charge.
+```
+
+

@@ -1,0 +1,86 @@
+<!--          FPGA arcade hardware by Jotego
+
+              This core is available for hardware compatible with MiST and MiSTer
+              Other FPGA systems may be supported by the time you read this.
+              This work is not mantained by the MiSTer project. Please contact the
+              core author for issues and updates.
+
+              (c) Jose Tejada, 2026. Please support this research
+              Patreon: https://patreon.com/jotego
+
+              The author does not endorse or participate in illegal distribution
+              of copyrighted material. This work can be used with compatible
+              software. This software can be homebrew projects or legally
+              obtained memory dumps of compatible games.
+
+              This file license is GNU GPLv2.
+              You can read the whole license file in
+              https://opensource.org/licenses/gpl-2.0.php
+
+-->
+
+<misterromdescription>
+    <about author="andrea bogazzi" webpage="https://patreon.com/jotego" twitter="@topapate" source="https://jotego/jtcores"/>
+    <rotation>horizontal</rotation>
+    <name>Joe &amp; Mac Returns (World, Version 1.0, 1994.05.19)</name>
+    <setname>joemacra</setname>
+    <mameversion>0288</mameversion>
+    <year>1994</year>
+    <manufacturer>Data East Corporation</manufacturer>
+    <players>2</players>
+    <rbf>Deco156Simple</rbf>
+    <joystick>8</joystick>
+    <region>World</region>
+    <rom index="0" zip="joemacra.zip|joemacr.zip" md5="None">
+        <!-- 
+  0[0]: jm         Joe & Mac Returns
+  0[1]: cr         Chain Reaction
+  0[2]: md         Magical Drop
+  0[3]: mdp        Magical Drop Plus
+  0[4]: cn         Charlie Ninja
+  0[5]: hv         Heavy Smash -->
+        <part>
+            01 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00
+        </part>
+        <!-- maincpu - starts at 0x0 - length 0x100000 (20 bits) -->
+        <interleave output="16">
+            <part name="mw00" crc="e1b78f40" map="12"/>
+        </interleave>
+        <part repeat="0x80000"> FF</part>
+        <!-- JTFRAME_BA1_START -->
+        <!-- tiles - starts at 0x100000 - length 0x200000 (21 bits) -->
+        <part name="mbn00" crc="11b2dac7"/>
+        <part repeat="0x100000"> FF</part>
+        <!-- JTFRAME_BA2_START -->
+        <!-- PCM1_START -->
+        <!-- oki1 - starts at 0x300000 - length 0x80000 (19 bits) -->
+        <part name="mbn04" crc="dcbd4771"/>
+        <part repeat="0x40000"> FF</part>
+        <!-- PCM2_START -->
+        <!-- oki2 - starts at 0x380000 - length 0x200000 (21 bits) -->
+        <part name="mbn03" crc="70b71a2a"/>
+        <!-- JTFRAME_BA3_START -->
+        <!-- sprites - starts at 0x580000 - length 0x100000 (20 bits) -->
+        <part name="mbn02" crc="aa2230c5"/>
+        <part name="mbn01" crc="a3a37353"/>
+        <!-- Total 0x680000 bytes - 6656 kBytes -->
+    </rom>
+    <rom index="2">
+        <part>
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+</part>
+    </rom>
+    <nvram index="2" size="128"/>
+    <rom index="1">
+        <part>00 80</part>
+    </rom>
+    <buttons names="Attack,Jump,-,Start,Coin,Core credits" default="A,B,Start,Select,-" count="2"/>
+</misterromdescription>

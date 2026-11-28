@@ -1,0 +1,23 @@
+<misterromdescription>
+    <name>Tank</name>
+    <setname>tank</setname>
+    <rbf>Tank</rbf>
+    <mameversion>0289</mameversion>
+    <about>Tank (Kee Games / Atari, 1974) - Discrete TTL Arcade, upright cabinet</about>
+    <year>1974</year>
+    <manufacturer>Kee Games (Atari)</manufacturer>
+    <category>Shooter / Maze</category>
+    <players>2 (simultaneous)</players>
+    <joystick>2 x 2-way (twin sticks per player)</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- 90-2006.k10: MK28000 2 KB graphics/motion ROM -->
+    <rom index="0" zip="tank.zip" md5="a18a083787ddf84ac6e8a0d1be67b906">
+        <part name="90-2006.k10" crc="87f5c365"/>
+    </rom>
+
+    <!-- Byte 0 [1:0] = monitor orientation (HDMI framebuffer rotation) -->
+    <switches default="00">
+        <dip bits="0,1" name="Monitor" ids="Upright,Cocktail CW,Cocktail CCW"/>
+    </switches>
+</misterromdescription>

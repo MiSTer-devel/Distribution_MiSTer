@@ -1,0 +1,63 @@
+<misterromdescription>
+	<rbf>PsikyoSH2</rbf>
+	<setname>sbombera</setname>
+	<mameversion>0141</mameversion>
+	<description>Space Bomber</description>
+	<rotation>Vertical (CCW)</rotation>
+	<year>1998</year>
+	<manufacturer>Psikyo</manufacturer>
+	<buttons names="Button 1,Button 2,Start,Coin,Test,Service" />
+
+	<switches default="41">
+		<dip bits="0,1,2,3" name="Region" ids="Japan,World"/>
+		<dip bits="6" name="Debug" ids="On,Off"/>
+	</switches>
+
+	<rom index="0" md5="" zip="sbombera.zip|sbomber.zip" address="0x30000000">
+		<interleave output="64">
+			<part crc="b7e4ac51" name="0l.u4" map="125600" />
+			<part crc="235e6c27" name="0h.u13" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="3c88c48c" name="1l.u3" map="125600" />
+			<part crc="15626a6e" name="1h.u12" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="41e92f64" name="2l.u2" map="125600" />
+			<part crc="4ae62e84" name="2h.u20" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="43ba5f0f" name="3l.u1" map="125600" />
+			<part crc="ff01bb12" name="3h.u19" map="1256" />
+		</interleave>
+		<interleave output="64">
+			<part crc="e491d593" name="4l.u10" map="125600" />
+			<part crc="7bdd377a" name="4h.u31" map="1256" />
+		</interleave>
+		<part repeat="0x1400000">00</part>
+		<interleave output="64">
+			<part crc="85cbff69" name="sound.u32" map="12345678" />
+		</interleave>
+
+		<part repeat="0x800000">00</part>
+		<interleave output="64">
+			<part crc="57819a26" name="2.u18" map="2165" />
+			<part crc="c388e847" name="1.u17" map="216500" />
+		</interleave>
+		<part repeat="0x300000">00</part>
+		<interleave output="64">
+			<part crc="7ac38846" name="eeprom-sbomber.bin" map="21436587" />
+		</interleave>
+	</rom>
+	<rom index="2" md5="">
+		<part>10</part>
+	</rom>
+
+	<rom index="3" md5="none">
+		<part>
+			00 00 C9 00 00 64 00 00
+			00 00 C9 59 00 01 01 01
+		</part>
+	</rom>
+	<nvram index="4" size="357" />
+</misterromdescription>

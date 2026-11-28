@@ -1,0 +1,79 @@
+<misterromdescription>
+    <name>Golden Axe: The Revenge of Death Adder (Japan)</name>
+    <setname>ga2j</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1992</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>4</players>
+    <joystick>8</joystick>
+    <buttons names="Attack,Jump,Magic,Start,Coin,Service,Test" default="A,B,X,Start,R,L,Select"/>
+    <region>Japan</region>
+
+    <rom index="1">
+        <part>00</part>
+    </rom>
+
+    <rom index="0" zip="ga2j.zip|ga2.zip" md5="none" address="0x30000000">
+
+        <part name="epr-14959.ic17" crc="f1929177"/>
+        <part name="epr-14959.ic17" crc="f1929177"/>
+        <part name="epr-14959.ic17" crc="f1929177"/>
+        <part name="epr-14959.ic17" crc="f1929177"/>
+        <part name="epr-14946.ic8" crc="eacafe94"/>
+        <part name="epr-14946.ic8" crc="eacafe94"/>
+        <part name="epr-14946.ic8" crc="eacafe94"/>
+        <part name="epr-14946.ic8" crc="eacafe94"/>
+        <interleave output="16">
+            <part name="epr-14941.ic18" crc="0ffb8203" map="01"/>
+            <part name="epr-14940.ic9" crc="3b5b3084" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="epr-14941.ic18" crc="0ffb8203" map="01"/>
+            <part name="epr-14940.ic9" crc="3b5b3084" map="10"/>
+        </interleave>
+
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="epr-14945.ic36" crc="4781d4cb"/>
+        <part name="mpr-14944.ic35" crc="fd4d4b86"/>
+        <part name="mpr-14943.ic34" crc="24d40333"/>
+        <part name="mpr-14942.ic24" crc="a89b0e90"/>
+
+        <part name="epr-14468-02.u3" crc="77634daa"/>
+
+        <interleave output="16">
+            <part name="mpr-14948.ic14" crc="75050d4a" map="01"/>
+            <part name="mpr-14947.ic5" crc="b53e62f4" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-14949.ic32" crc="152c716c" map="00000021"/>
+            <part name="mpr-14951.ic30" crc="fdb1a534" map="00002100"/>
+            <part name="mpr-14953.ic28" crc="33bd1c15" map="00210000"/>
+            <part name="mpr-14955.ic26" crc="e42684aa" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-14950.ic31" crc="15fd0026" map="00000021"/>
+            <part name="mpr-14952.ic29" crc="96f96613" map="00002100"/>
+            <part name="mpr-14954.ic27" crc="39b2ac9e" map="00210000"/>
+            <part name="mpr-14956.ic25" crc="298fca50" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

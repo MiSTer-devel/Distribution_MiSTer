@@ -1,0 +1,109 @@
+<misterromdescription>
+    <name>Vindicators (Europe, rev 5)</name>
+    <setname>vindictre</setname>
+    <rbf>Vindicators</rbf>
+    <mameversion>0289</mameversion>
+    <mratimestamp>20260916000000</mratimestamp>
+    <year>1988</year>
+    <manufacturer>Atari Games</manufacturer>
+    <region>Europe</region>
+    <players>2</players>
+    <!-- MAME ROT0: an upright horizontal monitor, no rotation in the core. -->
+    <rotation>horizontal</rotation>
+
+    <!-- DOWNLOAD STREAM MAP: the address map the core's ROM loader
+         (rtl/mem/vind_rom_loader.sv) decodes:
+           0x000000  0x060000  maincpu
+           0x060000  0x010000  jsa:cpu
+           0x070000  0x100000  sprites_pf
+           0x170000  0x004000  chars
+           0x174000  0x000200  EEPROM
+         total 0x174200 bytes.
+         Generated from MAME 0.289 vindictr.cpp ROM_START(vindictre);
+         part names and CRCs are MAME's. -->
+    <rom index="0" zip="vindictre.zip|vindictr.zip" md5="none">
+        <!-- maincpu 0x000000 + 0x60000 : 68010 program, six 27512s at 1D/2D, 1F/2F,
+             1K/2K (SP-317 sheet 4 sec 5.1).  The `1x` sockets drive D15:8 and the
+             `2x` sockets D7:0, which is MAME's even/odd LOAD16_BYTE pair (d1/f1/k1
+             even, d3/f3/k3 odd).  Inside an interleave output="16", map="01"
+             supplies the FIRST byte of each output word (big endian D15:8) and
+             map="10" the second (D7:0), so the MAME even ROM takes map="01".
+             With the opposite mapping every opcode is byte swapped and the CPU
+             fetches a garbage reset vector. -->
+        <interleave output="16">
+            <part name="136059-5717.d1" crc="af5ba4a8" map="01"/>
+            <part name="136059-5718.d3" crc="c87b0581" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136059-5719.f1" crc="1e5f94e1" map="01"/>
+            <part name="136059-5720.f3" crc="cace40d7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="136059-5721.k1" crc="96b150c5" map="01"/>
+            <part name="136059-5722.k3" crc="6415d312" map="10"/>
+        </interleave>
+        <!-- jsa:cpu 0x060000 + 0x10000 : 6502 sound program, the 27512 at 2K on the JSA I
+             audio PCB (sheet 15).  Pin 1 carries SA15, which is what proves 64 KB. -->
+        <part name="136059-1124.2k" crc="d2212c0a"/>
+        <!-- sprites_pf 0x070000 + 0x100000 : playfield AND motion object graphics, four
+             bit planes, BYTE INTERLEAVED so that the four plane bytes of one
+             graphics address are consecutive and one 32 bit read returns the whole
+             8 pixel row the sheet 9 SLAGS pair loads on /GLD.  Lane order is plane 0
+             (MSD0/PSD0, pen bit 0) first: map="0001" is the first emitted byte.
+             Sheet 9 plane assignment, from the SLAGS data buses and sheet 10's 17E
+             PAL pen equations:
+               plane 0 = R half lower group  = MAME 0x0C0000 quarter (8r + 2r)
+               plane 1 = R half upper group  = MAME 0x080000 quarter (12r + 19r)
+               plane 2 = P half lower group  = MAME 0x040000 quarter (8p + 2p)
+               plane 3 = P half upper group  = MAME 0x000000 quarter (12p + 19p)
+             Each lane is one 128 KB part (GA14=0) then the 64 KB part twice: GA13
+             does not reach the 28 pin socket, so MAME ROM_RELOADs it.  The 3N bank
+             PAL is undumped, so that mirror is MAME's evidence, not the sheet's.
+             Data is shipped RAW (the board's own active low pixel bits); MAME's
+             ROMREGION_INVERT is the same fact seen from the other side and is
+             applied in the core, not here. -->
+        <interleave output="32">
+            <!-- plane 0 (MSD0/PSD0), map="0001" -->
+            <part name="136059-1101.8r" crc="2d07fdaa" map="0001"/>
+            <part name="136059-1113.2r" crc="0a2aba63" map="0001"/>
+            <!-- (GA13 mirror of the part above) -->
+            <part name="136059-1113.2r" crc="0a2aba63" map="0001"/>
+            <!-- plane 1 (MSD1/PSD1), map="0010" -->
+            <part name="136059-1102.12r" crc="a5268c4f" map="0010"/>
+            <part name="136059-1114.19r" crc="609f619e" map="0010"/>
+            <!-- (GA13 mirror of the part above) -->
+            <part name="136059-1114.19r" crc="609f619e" map="0010"/>
+            <!-- plane 2 (MSD2/PSD2), map="0100" -->
+            <part name="136059-1103.8p" crc="09123b57" map="0100"/>
+            <part name="136059-1115.2p" crc="6b757bca" map="0100"/>
+            <!-- (GA13 mirror of the part above) -->
+            <part name="136059-1115.2p" crc="6b757bca" map="0100"/>
+            <!-- plane 3 (MSD3/PSD3), map="1000" -->
+            <part name="136059-1104.12p" crc="062f8e52" map="1000"/>
+            <part name="136059-1116.19p" crc="0e4366fa" map="1000"/>
+            <!-- (GA13 mirror of the part above) -->
+            <part name="136059-1116.19p" crc="0e4366fa" map="1000"/>
+        </interleave>
+        <!-- chars 0x170000 + 0x4000 : alphanumerics, the 16 KB 27128 at 16N, 8x8 2 bpp -->
+        <part name="136059-1123.16n" crc="f99b631a"/>
+        <!-- 2804A EEPROM 0x200 at the stream tail, shipped ERASED like the Atari
+             System 1, Toobin' and Xybots MRAs: the game writes its own defaults into
+             a blank part through the self test.  No NVRAM data is embedded in the
+             RTL. -->
+        <part repeat="512">FF</part>
+    </rom>
+
+    <!-- Saved settings and bookkeeping are restored over the erased image above and
+         add the OSD "Save Settings" entry.  Vindicators has no DIP switches: every
+         option lives in the 2804A at 1C and is set from the self test. -->
+    <nvram index="2" size="512"/>
+
+    <!-- Cabinet controls in the core's J1 order (Arcade-Vindicators.sv CONF_STR).
+         These names OVERRIDE the core's own J1 labels in the OSD mapping screen, so
+         they are what the player reads, and the CONF_STR list must stay in exactly
+         this order.  The panel is two twin tank sticks: the joystick's Up/Down
+         drives the LEFT stick forward/back and these buttons the RIGHT stick, with
+         the four trigger/thumb switches as fire buttons.  Coin is read on the JSA I
+         audio PCB. -->
+    <buttons names="R Forward,R Back,L Trigger,R Trigger,L Thumb,R Thumb,Start,Coin" default="A,B,L,R,X,Y,Start,Select"/>
+</misterromdescription>

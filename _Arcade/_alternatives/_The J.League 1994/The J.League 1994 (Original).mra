@@ -1,0 +1,68 @@
+<misterromdescription>
+    <name>The J.League 1994 (Japan)</name>
+    <setname>jleagueo</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1994</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>2</players>
+    <joystick>8</joystick>
+
+    <buttons names="Shoot,Pass A,Pass B,Start,Coin,Service,Test" default="A,B,X,Start,R,L,Select"/>
+    <region>Japan</region>
+
+    <rom index="1">
+        <part>00 00 01</part>
+    </rom>
+
+    <rom index="0" zip="jleagueo.zip" md5="none" address="0x30000000">
+
+        <part name="epr-16782.ic17" crc="f0278944"/>
+        <part name="epr-16782.ic17" crc="f0278944"/>
+        <part name="epr-16782.ic17" crc="f0278944"/>
+        <part name="epr-16782.ic17" crc="f0278944"/>
+        <part name="epr-16781.ic8" crc="7df9529b"/>
+        <part name="epr-16781.ic8" crc="7df9529b"/>
+        <part name="epr-16781.ic8" crc="7df9529b"/>
+        <part name="epr-16781.ic8" crc="7df9529b"/>
+        <interleave output="16">
+            <part name="epr-16776.ic18" crc="e8694626" map="01"/>
+            <part name="epr-16775.ic9" crc="e81e2c3d" map="10"/>
+        </interleave>
+
+        <part name="epr-16780.ic36" crc="47aa4ec7"/>
+        <part name="epr-16780.ic36" crc="47aa4ec7"/>
+        <part name="epr-16780.ic36" crc="47aa4ec7"/>
+        <part name="epr-16780.ic36" crc="47aa4ec7"/>
+        <part name="mpr-16779.ic35" crc="7055e859"/>
+        <part name="mpr-16778.ic34" crc="feedaecf"/>
+        <part name="mpr-16777.ic24" crc="14b5d5df"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-16784.ic14" crc="4608efe2" map="01"/>
+            <part name="mpr-16783.ic5" crc="042eabe7" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="mpr-16784.ic14" crc="4608efe2" map="01"/>
+            <part name="mpr-16783.ic5" crc="042eabe7" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-16785.ic32" crc="51f775ce" map="00000021"/>
+            <part name="mpr-16787.ic30" crc="dee7a204" map="00002100"/>
+            <part name="mpr-16789.ic28" crc="6b6c8ad3" map="00210000"/>
+            <part name="mpr-16791.ic26" crc="4f7236da" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-16786.ic31" crc="d08a2d32" map="00000021"/>
+            <part name="mpr-16788.ic29" crc="cd9d3605" map="00002100"/>
+            <part name="mpr-16790.ic27" crc="2ea75746" map="00210000"/>
+            <part name="mpr-16792.ic25" crc="9f416072" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

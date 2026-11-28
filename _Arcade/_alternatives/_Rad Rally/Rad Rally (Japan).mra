@@ -1,0 +1,103 @@
+<misterromdescription>
+    <name>Rad Rally (Japan)</name>
+    <setname>radrj</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1991</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>1</players>
+    <buttons names="Accelerator,Brake,Shift,Start,Coin,Service,Test" default="A,B,X,Start,Select,-,-"/>
+    <region>Japan</region>
+
+    <rom index="1">
+        <part>00 03</part>
+    </rom>
+
+    <rom index="0" zip="radrj.zip" md5="none" address="0x30000000">
+
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <part name="epr-14111.ic21" crc="7adc6d17"/>
+        <interleave output="16">
+            <part name="epr-14106.ic37" crc="e73c63bf" map="01"/>
+            <part name="epr-14107.ic38" crc="832f797a" map="10"/>
+        </interleave>
+
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14108.ic9" crc="38a99b4d"/>
+        <part name="epr-14109.ic14" crc="d5563697"/>
+        <part name="epr-14109.ic14" crc="d5563697"/>
+        <part name="epr-14110.ic20" crc="33fd2913"/>
+        <part name="epr-14110.ic20" crc="33fd2913"/>
+        <part name="epr-14237.ic22" crc="0a4b4b29"/>
+        <part name="epr-14237.ic22" crc="0a4b4b29"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="32">
+            <part name="epr-14102.ic3" crc="5626e80f" map="0001"/>
+            <part name="epr-14104.ic12" crc="b0173646" map="0010"/>
+            <part name="epr-14103.ic7" crc="08c7e804" map="0100"/>
+            <part name="epr-14105.ic16" crc="614843b6" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="epr-14102.ic3" crc="5626e80f" map="0001"/>
+            <part name="epr-14104.ic12" crc="b0173646" map="0010"/>
+            <part name="epr-14103.ic7" crc="08c7e804" map="0100"/>
+            <part name="epr-14105.ic16" crc="614843b6" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="epr-14102.ic3" crc="5626e80f" map="0001"/>
+            <part name="epr-14104.ic12" crc="b0173646" map="0010"/>
+            <part name="epr-14103.ic7" crc="08c7e804" map="0100"/>
+            <part name="epr-14105.ic16" crc="614843b6" map="1000"/>
+        </interleave>
+        <interleave output="32">
+            <part name="epr-14102.ic3" crc="5626e80f" map="0001"/>
+            <part name="epr-14104.ic12" crc="b0173646" map="0010"/>
+            <part name="epr-14103.ic7" crc="08c7e804" map="0100"/>
+            <part name="epr-14105.ic16" crc="614843b6" map="1000"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-13511.ic1" crc="f8f15b11" map="00000001"/>
+            <part name="mpr-13512.ic5" crc="d0be34a6" map="00000010"/>
+            <part name="mpr-13513.ic10" crc="feef1982" map="00000100"/>
+            <part name="mpr-13514.ic16" crc="d0f9ebd1" map="00001000"/>
+            <part name="mpr-13515.ic2" crc="77bf2387" map="00010000"/>
+            <part name="mpr-13516.ic6" crc="8c4bc62d" map="00100000"/>
+            <part name="mpr-13517.ic11" crc="1d7d84a7" map="01000000"/>
+            <part name="mpr-13518.ic17" crc="9ea4b15d" map="10000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-13511.ic1" crc="f8f15b11" map="00000001"/>
+            <part name="mpr-13512.ic5" crc="d0be34a6" map="00000010"/>
+            <part name="mpr-13513.ic10" crc="feef1982" map="00000100"/>
+            <part name="mpr-13514.ic16" crc="d0f9ebd1" map="00001000"/>
+            <part name="mpr-13515.ic2" crc="77bf2387" map="00010000"/>
+            <part name="mpr-13516.ic6" crc="8c4bc62d" map="00100000"/>
+            <part name="mpr-13517.ic11" crc="1d7d84a7" map="01000000"/>
+            <part name="mpr-13518.ic17" crc="9ea4b15d" map="10000000"/>
+        </interleave>
+    </rom>
+
+    <rom index="2" zip="radrj.zip" md5="none">
+        <interleave output="16">
+            <part name="eeprom-radr.ic76" crc="602032c6" map="12"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

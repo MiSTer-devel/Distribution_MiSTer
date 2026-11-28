@@ -1,0 +1,115 @@
+<misterromdescription>
+    <name>Iga Ninjyutsuden (Japan, bootleg)</name>
+    <setname>iganinjub</setname>
+    <rbf>MegaSys1_AMD</rbf>
+    <mameversion>0288</mameversion>
+    <year>1988</year>
+    <manufacturer>bootleg</manufacturer>
+    <players>2</players>
+    <joystick>8-way</joystick>
+    <rotation>Horizontal</rotation>
+
+    <!-- DIP switches: MAME 0.288 -listxml -->
+    <switches default="BF,BF">
+        <dip name="Coin A" bits="0,2" ids="3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr,Free Play" values="4,2,7,3,5,1,6,0"/>
+        <dip name="Coin B" bits="3,5" ids="4C/1Cr,3C/1Cr,2C/1Cr,1C/1Cr,1C/2Cr,1C/3Cr,1C/4Cr,1C/5Cr" values="0,4,2,7,3,5,1,6"/>
+        <dip name="Demo Sounds" bits="6" ids="Off,On" values="1,0"/>
+        <dip name="Freeze Screen (Cheat)" bits="7" ids="Off,On" values="1,0"/>
+        <dip name="Lives" bits="8,9" ids="2,3,4,Infinite (Cheat)" values="3,1,2,0"/>
+        <dip name="Bonus Life" bits="10" ids="50k,200k" values="1,0"/>
+        <dip name="Allow Continue" bits="11" ids="Off,On" values="0,1"/>
+        <dip name="Difficulty" bits="12,13" ids="Normal,Hard,Harder,Hardest" values="3,2,1,0"/>
+        <dip name="Cabinet" bits="14" ids="Upright,Cocktail" values="0,1"/>
+        <dip name="Flip Screen" bits="15" ids="Off,On" values="1,0"/>
+    </switches>
+
+    <!-- button names: va7deo MRAs -->
+    <buttons names="Attack,Jump,-,Start,Coin,Pause,Save/Load" default="A,B,Start,Select,R,L"/>
+
+    <rom index="1">
+        <part>13</part>
+    </rom>
+
+    <rom index="2">
+        <part>
+            00 00 14 32   00 00 43 12   00 04 30 12   00 00 12 43
+            00 01 04 32   00 01 43 02   00 04 31 02   00 01 02 43
+            00 00 24 31   00 00 24 31   00 04 30 21   00 00 21 43
+            00 01 24 30   00 01 43 20   00 04 31 20   00 01 20 43
+        </part>
+    </rom>
+
+    <rom index="3">
+        <part>10</part>
+    </rom>
+
+    <rom index="0" zip="iganinjub.zip|kazan.zip" md5="none">
+        <!-- maincpu - starts at 0x0 -->
+        <interleave output="16">
+            <part name="19.a12" crc="6b4c16ac" map="01"/>
+            <part name="23.13" crc="03bfda29" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="20.a13" crc="fa0705fb" map="01"/>
+            <part name="24.12" crc="2de40303" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="c" crc="de5937ad" map="01"/>
+            <part name="b" crc="afaf0480" map="10"/>
+        </interleave>
+        <part repeat="0x20000">FF</part>
+
+        <!-- audiocpu - starts at 0x80000 -->
+        <interleave output="16">
+            <part name="5.9.c" crc="13580868" map="01"/>
+            <part name="4.6.c" crc="7904d5dd" map="10"/>
+        </interleave>
+        <part repeat="0x60000">FF</part>
+
+        <!-- oki1 - starts at 0x100000 -->
+        <part repeat="0x100000">FF</part>
+
+        <!-- oki2 - starts at 0x200000 -->
+        <part name="1.a" crc="64f13da0"/>
+        <part name="2.a" crc="d33a8268"/>
+        <part repeat="0x10000">FF</part>
+        <part name="3.a" crc="e7268807"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll1 - starts at 0x280000 -->
+        <part name="15.20" crc="e2583bcd"/>
+        <part name="16.a21" crc="2f9fd524"/>
+        <part name="14.19" crc="ec835d5c"/>
+        <part name="17" crc="24751b73"/>
+        <part repeat="0x40000">FF</part>
+
+        <!-- scroll2 - starts at 0x300000 -->
+        <part name="25.a12" crc="c41a4c20"/>
+        <part name="a.a15" crc="69b3716b"/>
+        <part name="d" crc="71941062"/>
+        <part name="e" crc="89c4d42b"/>
+        <part name="22.a17" crc="5589325d"/>
+        <part name="21.a16" crc="5c42be93"/>
+        <part name="f" crc="a7a2aea7"/>
+        <part name="h" crc="d609e379"/>
+
+        <!-- scroll3 - starts at 0x380000 -->
+        <part name="18.18" crc="b3a9a4ae"/>
+        <part repeat="0x70000">FF</part>
+
+        <!-- sprites - starts at 0x400000 -->
+        <part name="7.2.q" crc="db4e04c7"/>
+        <part name="8.1.r" crc="1b7a0c3f"/>
+        <part name="10.5.q" crc="0f8e66d6"/>
+        <part name="11.4.r" crc="37f6277f"/>
+        <part name="6.p" crc="41d7ccaf"/>
+        <part name="9.p" crc="3178fac1"/>
+        <part name="12.8.q" crc="b8bdc11d"/>
+        <part name="13.7.r" crc="78449e50"/>
+        <part repeat="0x80000">FF</part>
+
+        <!-- proms - starts at 0x500000 -->
+        <part name="kazan.14m" crc="85b30ac4"/>
+
+    </rom>
+</misterromdescription>

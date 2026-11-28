@@ -1,0 +1,78 @@
+<misterromdescription>
+  <name>City Connection (Cruisin)</name>
+  <setname>cruisin</setname>
+  <mameversion>0264</mameversion>
+  <rbf>CityConnection</rbf>
+  <year>1985</year>
+  <manufacturer>Jaleco (Kitkorp license)</manufacturer>
+  <category>Driving / Action</category>
+  <rotation>horizontal</rotation>
+  <resolution>15kHz</resolution>
+  <players>2</players>
+  <joystick>8-way</joystick>
+  <num_buttons>2</num_buttons>
+  <buttons default="A,B,Start" names="Fire,Jump,-,-,-,-,Start,Coin,Pause"/>
+
+  <switches default="00,00">
+    <dip name="Lives"       bits="0,1"  ids="3,4,5,Infinite"           default="3"/>
+    <dip name="Unknown"     bits="2"    ids="Off,On"                   default="Off"/>
+    <dip name="Unknown"     bits="3"    ids="Off,On"                   default="Off"/>
+    <dip name="Unknown"     bits="4"    ids="Off,On"                   default="Off"/>
+    <dip name="Demo Sounds" bits="5"    ids="On,Off"                   default="On"/>
+    <dip name="Cabinet"     bits="6"    ids="Upright,Cocktail"         default="Upright"/>
+    <dip name="Coinage"     bits="8,10" ids="1C 1C,1C 2C,1C 3C,1C 4C,2C 1C,3C 1C,4C 1C,5C 1C" default="1C 1C"/>
+    <dip name="Difficulty"  bits="11"   ids="Easy,Hard"                default="Easy"/>
+    <dip name="Unknown"     bits="12"   ids="Off,On"                   default="Off"/>
+    <dip name="Unknown"     bits="13"   ids="Off,On"                   default="Off"/>
+    <dip name="Unknown"     bits="14"   ids="Off,On"                   default="Off"/>
+    <dip name="Unknown"     bits="15"   ids="Off,On"                   default="Off"/>
+  </switches>
+
+  <rom index="1">
+    <part>00</part>
+  </rom>
+
+  <rom index="0" zip="cruisin.zip|citycon.zip" md5="None">
+
+    <!-- ==================== Main CPU 6809 ==================== -->
+    <!-- cr10: 0x00000-0x03FFF (16KB, CPU addr $4000-$7FFF) — Cruisin variant -->
+    <part name="cr10" crc="cc7c52f3"/>
+    <!-- cr11: 0x04000-0x0BFFF (32KB, CPU addr $8000-$FFFF) — Cruisin variant -->
+    <part name="cr11" crc="5422f276"/>
+
+    <!-- ==================== Audio CPU 6809 ==================== -->
+    <!-- c1:   0x0C000-0x13FFF (32KB, CPU addr $8000-$FFFF) -->
+    <part name="c1" crc="1fad7589"/>
+
+    <!-- ==================== Chars (FG text, 2bpp) ============== -->
+    <!-- cr4:  0x14000-0x15FFF (8KB) — Cruisin variant -->
+    <part name="cr4" crc="8cd0308e"/>
+
+    <!-- ==================== Sprites ============================ -->
+    <!-- c12:  0x16000-0x17FFF (8KB, plane 0) -->
+    <part name="c12" crc="08eaaccd"/>
+    <!-- c13:  0x18000-0x19FFF (8KB, plane 1) -->
+    <part name="c13" crc="1819aafb"/>
+
+    <!-- ==================== BG tiles (bgtiles1) ================ -->
+    <!-- c9:   0x1A000-0x21FFF (32KB) -->
+    <part name="c9" crc="8aeb47e6"/>
+    <!-- c8:   0x22000-0x25FFF (16KB) -->
+    <part name="c8" crc="0d7a1eeb"/>
+    <!-- c6:   0x26000-0x2DFFF (32KB) -->
+    <part name="c6" crc="2246fe9d"/>
+    <!-- c7:   0x2E000-0x31FFF (16KB) -->
+    <part name="c7" crc="e8b97de9"/>
+
+    <!-- ==================== BG maps (bgtiles2) ================= -->
+    <!-- c2:   0x32000-0x39FFF (32KB, background maps) -->
+    <part name="c2" crc="f2da4f23"/>
+    <!-- c3:   0x3A000-0x3DFFF (16KB, background maps) -->
+    <part name="c3" crc="7ef3ac1b"/>
+    <!-- c5:   0x3E000-0x3FFFF (8KB, BG color codes) -->
+    <part name="c5" crc="c03d8b1b"/>
+
+  </rom>
+
+  <!-- Default DIP: all off — 3 lives, easy, upright, 1C/1C, Demo Sounds On -->
+</misterromdescription>

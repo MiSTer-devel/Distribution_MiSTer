@@ -1,0 +1,55 @@
+<misterromdescription>
+	<name>Lunar Lander (Rev 2)</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Rev 2</version>
+	<alternative></alternative>
+	<platform>Lunar Lander</platform>
+	<series></series>
+	<year>1979</year>
+	<manufacturer>Atari</manufacturer>
+	<category>Lander</category>
+
+	<setname>llander</setname>
+	<parent>llander</parent>
+	<mameversion>0287</mameversion>
+	<rbf>Asteroids</rbf>
+	<about author="Videodr0me" webpage="https://github.com/MiSTer-devel/Arcade-Asteroids_MiSTer">Atari Lunar Lander with a hardware-level DVG, analog thrust control, discrete audio, and high-resolution vector framebuffer.</about>
+
+	<rotation>horizontal</rotation>
+	<flip>yes</flip>
+
+	<players>1</players>
+	<joystick>2-way horizontal</joystick>
+	<special_controls>throttle</special_controls>
+	<num_buttons>2</num_buttons>
+	<buttons default="A,B,Start,Select,R,L,Y" names="Digital Thrust,Abort Thrust,-,Start,Select Mission,Coin Left,Pause,Coin Right"></buttons>
+
+	<switches default="40,00">
+		<dip bits="0,1" ids="x1,x4,x5,x6" name="Right Coin"></dip>
+		<dip bits="2,3" ids="English,French,Spanish,German" name="Language"></dip>
+		<dip bits="4" ids="Normal,Free Play" name="Coinage"></dip>
+		<dip bits="5,7" ids="450,600,750,900,1100,1300,1550,1800" name="Fuel Units Per Coin"></dip>
+		<dip bits="8" ids="Off,On" name="Service Mode"></dip>
+		<dip bits="9" ids="Off,On" name="Slam Switch"></dip>
+		<dip bits="10" ids="Off,On" name="Diagnostic Step"></dip>
+	</switches>
+
+	<rom index="1">
+		<part>2</part>
+	</rom>
+
+	<rom index="0" md5="none" type="merged|nonmerged" zip="llander.zip">
+		<part crc="b8763eea" name="034572-02.f1"></part>
+		<part crc="77da4b2f" name="034571-02.de1"></part>
+		<part crc="2724e591" name="034570-01.c1"></part>
+		<part crc="72837a4e" name="034569-02.b1"></part>
+		<part crc="355a9371" name="034599-01.r3"></part>
+		<part crc="9c4ffa68" name="034598-01.np3"></part>
+		<part crc="ebb744f2" name="034597-01.m3"></part>
+		<part crc="97953db8" name="034602-01.c8"></part>
+	</rom>
+
+	<mratimestamp>20260810000000</mratimestamp>
+</misterromdescription>

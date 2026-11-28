@@ -1,0 +1,67 @@
+<misterromdescription>
+    <name>Burning Rival</name>
+    <setname>brival</setname>
+    <rbf>S32</rbf>
+    <mameversion>0289</mameversion>
+    <year>1992</year>
+    <manufacturer>Sega</manufacturer>
+    <rotation>horizontal</rotation>
+    <players>2</players>
+    <joystick>8</joystick>
+    <buttons names="Light Punch,Medium Punch,Heavy Punch,Start,Coin,Service,Test,Light Kick,Medium Kick,Heavy Kick" default="Y,X,L,Start,Select,-,-,B,A,R"/>
+    <region>World</region>
+
+    <rom index="1">
+        <part>18</part>
+    </rom>
+
+    <rom index="0" zip="brival.zip" md5="none" address="0x30000000">
+
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <part name="epr-15722.ic8" crc="138141c0"/>
+        <interleave output="16">
+            <part name="epr-15723.ic18" crc="4ff40d39" map="01"/>
+            <part name="epr-15724.ic9" crc="3ff8a052" map="10"/>
+        </interleave>
+
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="epr-15725.ic36" crc="ea1407d7"/>
+        <part name="mpr-15627.ic35" crc="8a8388c5"/>
+        <part name="mpr-15626.ic34" crc="83306d1e"/>
+        <part name="mpr-15625.ic24" crc="3ce82932"/>
+
+        <part repeat="65536">00</part>
+
+        <interleave output="16">
+            <part name="mpr-15629.ic14" crc="2c8dd96d" map="01"/>
+            <part name="mpr-15628.ic5" crc="58d4ca40" map="10"/>
+        </interleave>
+
+        <interleave output="64">
+            <part name="mpr-15637.ic32" crc="b6cf2f05" map="00000021"/>
+            <part name="mpr-15635.ic30" crc="70f2eb2b" map="00002100"/>
+            <part name="mpr-15633.ic28" crc="005dfed5" map="00210000"/>
+            <part name="mpr-15631.ic26" crc="c35e2f21" map="21000000"/>
+        </interleave>
+        <interleave output="64">
+            <part name="mpr-15636.ic31" crc="d81ca97b" map="00000021"/>
+            <part name="mpr-15634.ic29" crc="b0c6c52a" map="00002100"/>
+            <part name="mpr-15632.ic27" crc="8476e52b" map="00210000"/>
+            <part name="mpr-15630.ic25" crc="bf7dd2f6" map="21000000"/>
+        </interleave>
+    </rom>
+
+    <nvram index="2" size="8320"/>
+</misterromdescription>

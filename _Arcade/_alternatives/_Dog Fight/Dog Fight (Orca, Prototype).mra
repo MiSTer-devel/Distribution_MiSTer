@@ -1,0 +1,67 @@
+<misterromdescription>
+	<name>Dog Fight (Orca, Prototype)</name>
+	<region>World</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Dog Fight</series>
+	<year>1983</year>
+	<manufacturer>Orca</manufacturer>
+	<category>Shooter</category>
+
+	<setname>dogfightp</setname>
+	<parent>dogfight</parent>
+	<mameversion>0289</mameversion>
+	<rbf>Vastar</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>no</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>4-way</joystick>
+	<special_controls></special_controls>
+	<num_buttons>2</num_buttons>
+	<button_names>Fire,Bomb</button_names>
+
+	<switches default="FF,FF">
+		<dip bits="0,3"  name="Credits A" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<dip bits="4,7"  name="Credits B" ids="Free Play,1c/1cr,1c/2cr,1c/3cr,1c/4cr,1c/5cr,1c/6cr,1c/7cr,2c/1cr,2c/3cr,2c/5cr,3c/1cr,3c/2cr,3c/4cr,4c/1cr,4c/3cr"/>
+		<dip bits="8,9"   name="Lives" ids="6,5,4,3"/>
+		<dip bits="10,11" name="Bonus Life" ids="20k/60k,40k/120k,20k/every 60k,40k/every 120k"/>
+		<dip bits="12"    name="Unknown" ids="Off,On"/>
+		<dip bits="13,14" name="Difficulty" ids="Hardest,Hard,Normal,Easy"/>
+		<dip bits="15"    name="Cabinet" ids="Upright,Cocktail"/>
+	</switches>
+
+	<!-- Index 0: ROM -->
+	<rom index="0" md5="none" zip="dogfightp.zip|dogfight.zip">
+		<part crc="03f21fc8" name="1.4f"/>
+		<part crc="5f93c5fc" name="4.4k"/>
+		<part crc="1739b24e" name="2.4h"/>
+		<part crc="8f3fda8d" name="5.4l"/>
+		<part crc="5bdf8ddc" name="3.4j"/>
+		<part crc="7c445c30" name="6.4n"/>
+		<part repeat="0x2000"> 00 </part>
+		<part crc="61c14b5d" name="7.2f"/>
+		<part repeat="0x1000"> 00 </part>
+		<part repeat="0xA400"> 00 </part>
+		<part crc="c62f2ea1" name="8.4r" offset="0x0000" length="0x0800"/>
+		<part crc="ffe05fee" name="9.7m"/>
+		<part crc="2cb51793" name="10.7p"/>
+		<part repeat="0x800"> 00 </part>
+		<part crc="aa839a24" name="blue.2a.82s123"/>
+		<part crc="596ae457" name="pink.2b.82s123"/>
+	</rom>
+
+	<!-- Index 1: Config -->
+	<rom index="1">
+		<part>02</part>
+	</rom>
+
+	<remark>Dog Fight (Orca prototype on Vastar hardware)</remark>
+	<mratimestamp>20261010000000</mratimestamp>
+</misterromdescription>

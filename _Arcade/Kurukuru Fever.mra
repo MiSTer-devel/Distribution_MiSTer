@@ -1,0 +1,34 @@
+<misterromdescription>
+  <name>Kurukuru Fever</name>
+  <mratimestamp>20260717</mratimestamp>
+  <mameversion>0287</mameversion>
+  <setname>kurufev</setname>
+  <year>2003</year>
+  <manufacturer>Aruze / Takumi</manufacturer>
+  <category>Puzzle</category>
+  <rbf>Aleck64</rbf>
+
+  <buttons names="Button 1,Button 2,-,Start,Coin,Service,Test,-,-,-,Soft Reset" default="A,B,Start,Select,R,L"/>
+  <switches default="FF,FF">
+    <dip bits="9" name="DIP SW2" ids="On,Off"/>
+    <dip bits="8" name="Test Mode" ids="On,Off"/>
+  </switches>
+  <remark>
+    Requires kurufev.zip and the parent BIOS aleck64.zip in games/mame.
+    Uses direct JAMMA controls with two action buttons per player.
+  </remark>
+
+  <rom index="3" md5="94d48080295c8dcf650de5245f26dd35"><part>4D 00</part></rom>
+  <rom index="0" zip="aleck64.zip" md5="4921d5f2165dee6e2496f4388c4c81da">
+    <part name="pifdata.bin" crc="5ec82be9"/>
+  </rom>
+  <rom index="2" zip="kurufev.zip" md5="none">
+    <interleave output="16"><part name="nus-zsij-0.u1" crc="2389576f" map="12"/></interleave>
+  </rom>
+  <rom index="1" address="0x32000000" zip="kurufev.zip" md5="none">
+    <interleave output="16"><part name="ua3088-all01.u3" crc="00db4dbc" map="12"/></interleave>
+    <interleave output="16"><part name="ua3088-alh04.u4" crc="c96bc7c0" map="12"/></interleave>
+    <patch offset="0x67c">00 00 00 00</patch>
+  </rom>
+  <nvram index="4" size="512"/>
+</misterromdescription>
